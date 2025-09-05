@@ -1,2 +1,2 @@
 # basestation-game
-Control system of the rover in the godot game engine
+ASTRA rover control system in the godot game engine

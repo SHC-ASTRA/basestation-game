@@ -11,9 +11,15 @@ config_version=5
 [application]
 
 config/name="basestation-game"
-config/features=PackedStringArray("4.4", "Forward Plus")
+run/main_scene="uid://bjwmxrn1okacu"
+config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
 
 project/assembly_name="basestation-game"
+
+[gui]
+
+theme/default_font_multichannel_signed_distance_field=true
+theme/default_font_generate_mipmaps=true
