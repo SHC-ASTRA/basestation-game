@@ -1,5 +1,13 @@
 # Godot 4+ specific ignores
-.godot/
+*.uid
+*.mov
+.tres
+.cache
+.local
+.nuget
+.godot
+.dotnet
+*.*~
 .nomedia
 
 # Godot-specific ignores

@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjwmxrn1okacu"]
+
+[ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Light.tres" id="1_ee4bf"]
+[ext_resource type="PackedScene" uid="uid://dh133i8yuxjts" path="res://small_panel.tscn" id="2_kbped"]
+[ext_resource type="Script" uid="uid://bimyit2wb51m0" path="res://scripts/userInput/inputDaemon.cs" id="2_qtu10"]
+[ext_resource type="Texture2D" uid="uid://dobdqxlqjdmjo" path="res://image.png" id="3_ee4bf"]
+[ext_resource type="PackedScene" uid="uid://b4x4xlqbw6usp" path="res://cam_button.tscn" id="6_fj5cn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fj5cn"]
+bg_color = Color(0.176471, 0.101961, 0.223529, 0.243137)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ee4bf")
+
+[node name="Container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="SmallPanel" parent="Container" instance=ExtResource("2_kbped")]
+layout_mode = 2
+
+[node name="Clucky" type="CanvasGroup" parent="."]
+texture_filter = 1
+script = ExtResource("2_qtu10")
+
+[node name="CamButtons" type="Node" parent="Clucky"]
+
+[node name="CamButton" parent="Clucky/CamButtons" instance=ExtResource("6_fj5cn")]
+offset_left = 626.0
+offset_top = 76.0
+offset_right = 626.0
+offset_bottom = 76.0
+
+[node name="CamButton2" parent="Clucky/CamButtons" instance=ExtResource("6_fj5cn")]
+offset_left = 901.0
+offset_top = 91.0
+offset_right = 901.0
+offset_bottom = 91.0
+
+[node name="CamButton3" parent="Clucky/CamButtons" instance=ExtResource("6_fj5cn")]
+offset_left = 990.0
+offset_top = 329.0
+offset_right = 990.0
+offset_bottom = 329.0
+
+[node name="CamButton4" parent="Clucky/CamButtons" instance=ExtResource("6_fj5cn")]
+offset_left = 540.0
+offset_top = 386.0
+offset_right = 540.0
+offset_bottom = 386.0
+
+[node name="CamButton5" parent="Clucky/CamButtons" instance=ExtResource("6_fj5cn")]
+offset_left = 640.0
+offset_top = 274.0
+offset_right = 640.0
+offset_bottom = 274.0
+
+[node name="Image" type="Sprite2D" parent="Clucky"]
+position = Vector2(832.75, 324.625)
+scale = Vector2(0.705592, 0.730791)
+texture = ExtResource("3_ee4bf")
+
+[node name="Panel" type="Panel" parent="Clucky/Image"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -456.0
+offset_top = -442.0
+offset_right = -420.0
+offset_bottom = -380.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fj5cn")

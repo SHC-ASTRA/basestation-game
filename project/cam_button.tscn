@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4x4xlqbw6usp"]
+
+[ext_resource type="Texture2D" uid="uid://bn3bh6cyx6h0c" path="res://CameraDisplay.svg" id="1_vajds"]
+
+[node name="CamButton" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 135.0
+offset_bottom = 70.0
+scale = Vector2(1.1, 1.1)
+text = "Cam 0"
+flat = true
+
+[node name="CameraDisplay" type="Sprite2D" parent="Button"]
+texture_filter = 1
+position = Vector2(67, 35)
+texture = ExtResource("1_vajds")
