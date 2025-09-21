@@ -1,3 +1,5 @@
+result/
+
 # Godot 4+ specific ignores
 *.uid
 *.mov
