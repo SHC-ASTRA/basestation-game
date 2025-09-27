@@ -1,5 +1,7 @@
 using Godot;
+using RosSharp.RosBridgeClient;
 using System.Collections.Generic;
+using RosSharp.RosBridgeClient.Protocols;
 
 public partial class inputDaemon : Node
 {
@@ -33,6 +35,10 @@ public partial class inputDaemon : Node
     public override void _Ready()
     {
         base._Ready();
+
+        RosSocket RC = new RosSocket(new WebSocketNetProtocol("ws://localhost:6969"));
+        Message M = new RosSharp.RosBridgeClient.MessageTypes.Std.String();
+        RC.Publish("a", M);
     }
 
     string r = "", s;

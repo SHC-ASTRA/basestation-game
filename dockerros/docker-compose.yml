@@ -1,0 +1,25 @@
+services:
+  ros2:
+    build: ./build
+    user: astra
+    networks:
+      network:
+        ipv4_address: "192.168.4.8"
+    dns:
+      - 192.168.4.1
+    ports:
+      - "6969:6969"
+    command: bash -c "source /opt/ros/humble/setup.bash && ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
+
+networks:
+  network:
+    driver: ipvlan
+    driver_opts:
+      parent: wlp0s20f3
+      ipvlan-mode: l2
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.4.0/24
+          gateway: 192.168.4.1
+          ip_range: 192.168.4.0/24
