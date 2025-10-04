@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjwmxrn1okacu"]
+
+[ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Light.tres" id="1_rf5wo"]
+[ext_resource type="PackedScene" uid="uid://dh133i8yuxjts" path="res://small_panel.tscn" id="2_ao1bj"]
+[ext_resource type="PackedScene" uid="uid://b4x4xlqbw6usp" path="res://cam_button.tscn" id="3_tm5h3"]
+[ext_resource type="Texture2D" uid="uid://dobdqxlqjdmjo" path="res://image.png" id="4_kgeht"]
+
+[node name="MAIN" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rf5wo")
+
+[node name="Container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="SmallPanel" parent="Container" instance=ExtResource("2_ao1bj")]
+layout_mode = 2
+
+[node name="Clucky" type="CanvasGroup" parent="."]
+texture_filter = 1
+
+[node name="CamButtons" type="Node" parent="Clucky"]
+
+[node name="CamButton" parent="Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
+offset_left = 626.0
+offset_top = 76.0
+offset_right = 626.0
+offset_bottom = 76.0
+
+[node name="CamButton2" parent="Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
+offset_left = 901.0
+offset_top = 91.0
+offset_right = 901.0
+offset_bottom = 91.0
+
+[node name="CamButton3" parent="Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
+offset_left = 990.0
+offset_top = 329.0
+offset_right = 990.0
+offset_bottom = 329.0
+
+[node name="CamButton4" parent="Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
+offset_left = 540.0
+offset_top = 386.0
+offset_right = 540.0
+offset_bottom = 386.0
+
+[node name="CamButton5" parent="Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
+offset_left = 640.0
+offset_top = 274.0
+offset_right = 640.0
+offset_bottom = 274.0
+
+[node name="Image" type="Sprite2D" parent="Clucky"]
+position = Vector2(832.75, 324.625)
+scale = Vector2(0.705592, 0.730791)
+texture = ExtResource("4_kgeht")

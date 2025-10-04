@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dh133i8yuxjts"]
+[gd_scene load_steps=4 format=3 uid="uid://dh133i8yuxjts"]
 
+[ext_resource type="Script" uid="uid://ccrofns82tpim" path="res://scripts/ui/tabs/coreUI.cs" id="2_dof6s"]
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Light.tres" id="3_gwotu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gwotu"]
@@ -12,6 +13,7 @@ corner_detail = 1
 [node name="SmallPanel" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+focus_behavior_recursive = 1
 theme = ExtResource("3_gwotu")
 
 [node name="Panel1" type="TabBar" parent="."]
@@ -21,9 +23,9 @@ offset_right = 2560.0
 offset_bottom = -292.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
-theme_override_colors/font_unselected_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hovered_color = Color(0.47912, 0.779756, 0.464104, 1)
 theme_override_colors/font_selected_color = Color(0.693015, 0.693015, 0.693015, 1)
+theme_override_colors/font_hovered_color = Color(0.47912, 0.779756, 0.464104, 1)
+theme_override_colors/font_unselected_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 70
 current_tab = 0
 clip_tabs = false
@@ -46,28 +48,31 @@ offset_bottom = -4.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+[node name="core" type="HBoxContainer" parent="Panel" node_paths=PackedStringArray("LMotor", "RMotor")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_dof6s")
+LMotor = NodePath("Motor Power/HBoxContainer/LMotors")
+RMotor = NodePath("Motor Power/HBoxContainer/RMotors")
 
-[node name="VSeparator2" type="VSeparator" parent="Panel/HBoxContainer"]
+[node name="VSeparator2" type="VSeparator" parent="Panel/core"]
 layout_mode = 2
 
-[node name="Motor Power" type="VBoxContainer" parent="Panel/HBoxContainer"]
+[node name="Motor Power" type="VBoxContainer" parent="Panel/core"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/HBoxContainer/Motor Power"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/core/Motor Power"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LMotors" type="ProgressBar" parent="Panel/HBoxContainer/Motor Power/HBoxContainer" groups=["MotorPower"]]
+[node name="LMotors" type="ProgressBar" parent="Panel/core/Motor Power/HBoxContainer" groups=["MotorPower"]]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -78,7 +83,7 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="RMotors" type="ProgressBar" parent="Panel/HBoxContainer/Motor Power/HBoxContainer" groups=["MotorPower"]]
+[node name="RMotors" type="ProgressBar" parent="Panel/core/Motor Power/HBoxContainer" groups=["MotorPower"]]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -89,7 +94,7 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/HBoxContainer/Motor Power"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/core/Motor Power"]
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
@@ -99,85 +104,85 @@ text = "MOTOR POWER
 scroll_active = false
 horizontal_alignment = 1
 
-[node name="VSeparator" type="VSeparator" parent="Panel/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="Panel/core"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/core"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/core/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="GridContainer" type="GridContainer" parent="Panel/HBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="Panel/core/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 columns = 3
 
-[node name="Control" type="Panel" parent="Panel/HBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Control" type="Panel" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
-[node name="Button" type="Button" parent="Panel/HBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇧"
 
-[node name="Control2" type="Panel" parent="Panel/HBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Control2" type="Panel" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
-[node name="Button2" type="Button" parent="Panel/HBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button2" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇦"
 
-[node name="Button3" type="Button" parent="Panel/HBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button3" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⊹"
 
-[node name="Button4" type="Button" parent="Panel/HBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button4" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇨"
 
-[node name="Button5" type="Button" parent="Panel/HBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button5" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "-"
 
-[node name="Button6" type="Button" parent="Panel/HBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button6" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇩"
 
-[node name="Button7" type="Button" parent="Panel/HBoxContainer/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button7" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "+"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/HBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/core/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
@@ -185,24 +190,24 @@ text = "PTZ Control"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Panel/HBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="Panel/core/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.35
 text = "Reset"
 
-[node name="VSeparator3" type="VSeparator" parent="Panel/HBoxContainer"]
+[node name="VSeparator3" type="VSeparator" parent="Panel/core"]
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/core"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer/VBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="Panel/core/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/HBoxContainer/VBoxContainer2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/core/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
@@ -210,10 +215,10 @@ text = "Y: 0    P: 0    Z: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VSeparator4" type="VSeparator" parent="Panel/HBoxContainer"]
+[node name="VSeparator4" type="VSeparator" parent="Panel/core"]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/core"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.5
