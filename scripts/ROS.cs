@@ -2,13 +2,16 @@ using static Godot.OS;
 using RosSharp.RosBridgeClient;
 using RosSharp.RosBridgeClient.Protocols;
 
-public static class ROS
+namespace IPC
 {
-    public static void Init()
+    public static class ROS
     {
-        Execute("", []);
-        RosSocket rs = new RosSocket(new WebSocketNetProtocol("ws://192.168.4.8:6969"));
+        public static void Init()
+        {
+            // Execute("", []);
+            // RosSocket rs = new(new WebSocketNetProtocol("ws://192.168.4.8:6969"));
 
 
+        }
     }
 }

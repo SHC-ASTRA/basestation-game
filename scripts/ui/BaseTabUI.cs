@@ -1,7 +1,7 @@
 using Godot;
 namespace ui
 {
-    public partial class baseUI : Control
+    public partial class BaseTabUI : Control
     {
         [Export]
         public Vector2 leftStick, rightStick;

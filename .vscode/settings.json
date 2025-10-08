@@ -1,0 +1,14 @@
+{
+  "explorer.excludeGitIgnore": true,
+  "files.exclude": {
+    ".uid" : true,
+    ".git/*" : true,
+    ".config/*" : true,
+    ".gitattributes" : true,
+    "*.old" : true,
+    "*.*~" : true,
+    "*.import" : true,
+    "*.tres" : true,
+    "*.tscn" : true
+  }
+}

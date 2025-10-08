@@ -1,7 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://dh133i8yuxjts"]
+[gd_scene load_steps=10 format=3 uid="uid://dh133i8yuxjts"]
 
-[ext_resource type="Script" uid="uid://ccrofns82tpim" path="res://scripts/ui/tabs/coreUI.cs" id="2_dof6s"]
+[ext_resource type="Script" uid="uid://ctflfd3yniesa" path="res://scripts/ui/TabController.cs" id="2_gwotu"]
+[ext_resource type="Script" uid="uid://buiou1q2apvmu" path="res://scripts/ui/tabs/CoreTabUI.cs" id="3_grmb5"]
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Light.tres" id="3_gwotu"]
+[ext_resource type="Script" uid="uid://qhnp11n23yxu" path="res://scripts/ui/BaseTabUI.cs" id="3_qlcr7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dof6s"]
+draw_center = false
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlcr7"]
+bg_color = Color(0.2159017, 0.21590173, 0.2159017, 1)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grmb5"]
+bg_color = Color(0.41757, 0.6064626, 0.9356313, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(1, 1, 1, 1)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_qlcr7"]
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_disabled_color = Color(1, 1, 1, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_qlcr7")
+Button/styles/normal = SubResource("StyleBoxFlat_grmb5")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gwotu"]
 bg_color = Color(0.312836, 0.312836, 0.312836, 1)
@@ -10,69 +35,139 @@ border_width_bottom = 6
 border_color = Color(0.424419, 0.424419, 0.424418, 1)
 corner_detail = 1
 
-[node name="SmallPanel" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[node name="SmallPanel" type="VBoxContainer"]
+offset_right = 2560.0
+offset_bottom = 1600.0
 focus_behavior_recursive = 1
 theme = ExtResource("3_gwotu")
 
-[node name="Panel1" type="TabBar" parent="."]
-layout_mode = 0
-offset_top = -462.0
-offset_right = 2560.0
-offset_bottom = -292.0
+[node name="MT Space" type="Panel" parent="."]
+layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.15
-theme_override_colors/font_selected_color = Color(0.693015, 0.693015, 0.693015, 1)
-theme_override_colors/font_hovered_color = Color(0.47912, 0.779756, 0.464104, 1)
-theme_override_colors/font_unselected_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 70
-current_tab = 0
-clip_tabs = false
-scrolling_enabled = false
-drag_to_rearrange_enabled = true
-tab_count = 7
-tab_0/title = "Core"
-tab_1/title = "Auto"
-tab_2/title = "Bio"
-tab_3/title = "Drone"
-tab_4/title = "Cams"
-tab_5/title = "Debug"
-tab_6/title = "Arm"
+theme_override_styles/panel = SubResource("StyleBoxFlat_dof6s")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+border_color = Color(0, 0, 0, 1)
+border_width = 3.0
+editor_only = false
+
+[node name="Tabbar" type="HBoxContainer" parent="ReferenceRect" node_paths=PackedStringArray("TabsParent")]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 0
-offset_top = -288.0
 offset_right = 2560.0
-offset_bottom = -4.0
+offset_bottom = 100.0
+grow_vertical = 0
+theme = SubResource("Theme_qlcr7")
+theme_override_constants/separation = 0
+script = ExtResource("2_gwotu")
+TabsParent = NodePath("../../TabsParent")
+
+[node name="Arm" type="Button" parent="ReferenceRect/Tabbar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Arm"
+
+[node name="Auto" type="Button" parent="ReferenceRect/Tabbar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Auto"
+
+[node name="Bio" type="Button" parent="ReferenceRect/Tabbar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bio"
+
+[node name="Core" type="Button" parent="ReferenceRect/Tabbar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Core"
+
+[node name="Spacer" type="VSeparator" parent="ReferenceRect/Tabbar"]
+layout_mode = 2
+
+[node name="Drone" type="Button" parent="ReferenceRect/Tabbar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Drone"
+
+[node name="Spacer2" type="VSeparator" parent="ReferenceRect/Tabbar"]
+layout_mode = 2
+
+[node name="Cams" type="Button" parent="ReferenceRect/Tabbar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cams"
+
+[node name="Debug" type="Button" parent="ReferenceRect/Tabbar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Debug"
+
+[node name="TabsParent" type="Panel" parent="."]
+layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="core" type="HBoxContainer" parent="Panel" node_paths=PackedStringArray("LMotor", "RMotor")]
+[node name="arm" type="HBoxContainer" parent="TabsParent"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_dof6s")
+script = ExtResource("3_qlcr7")
+
+[node name="VSeparator2" type="VSeparator" parent="TabsParent/arm"]
+layout_mode = 2
+
+[node name="auto" type="HBoxContainer" parent="TabsParent"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_qlcr7")
+
+[node name="bio" type="HBoxContainer" parent="TabsParent"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_qlcr7")
+
+[node name="core" type="HBoxContainer" parent="TabsParent" node_paths=PackedStringArray("LMotor", "RMotor")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_grmb5")
 LMotor = NodePath("Motor Power/HBoxContainer/LMotors")
 RMotor = NodePath("Motor Power/HBoxContainer/RMotors")
 
-[node name="VSeparator2" type="VSeparator" parent="Panel/core"]
+[node name="VSeparator2" type="VSeparator" parent="TabsParent/core"]
 layout_mode = 2
 
-[node name="Motor Power" type="VBoxContainer" parent="Panel/core"]
+[node name="Motor Power" type="VBoxContainer" parent="TabsParent/core"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/core/Motor Power"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/core/Motor Power"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LMotors" type="ProgressBar" parent="Panel/core/Motor Power/HBoxContainer" groups=["MotorPower"]]
+[node name="LMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/HBoxContainer" groups=["MotorPower"]]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -83,7 +178,7 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="RMotors" type="ProgressBar" parent="Panel/core/Motor Power/HBoxContainer" groups=["MotorPower"]]
+[node name="RMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/HBoxContainer" groups=["MotorPower"]]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -94,7 +189,7 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/core/Motor Power"]
+[node name="RichTextLabel" type="RichTextLabel" parent="TabsParent/core/Motor Power"]
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
@@ -104,85 +199,85 @@ text = "MOTOR POWER
 scroll_active = false
 horizontal_alignment = 1
 
-[node name="VSeparator" type="VSeparator" parent="Panel/core"]
+[node name="VSeparator" type="VSeparator" parent="TabsParent/core"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/core"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/core"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/core/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/core/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="GridContainer" type="GridContainer" parent="Panel/core/HBoxContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="TabsParent/core/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 columns = 3
 
-[node name="Control" type="Panel" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Control" type="Panel" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
-[node name="Button" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇧"
 
-[node name="Control2" type="Panel" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Control2" type="Panel" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
-[node name="Button2" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button2" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇦"
 
-[node name="Button3" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button3" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⊹"
 
-[node name="Button4" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button4" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇨"
 
-[node name="Button5" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button5" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "-"
 
-[node name="Button6" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button6" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇩"
 
-[node name="Button7" type="Button" parent="Panel/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button7" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "+"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/core/HBoxContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="TabsParent/core/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
@@ -190,24 +285,24 @@ text = "PTZ Control"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Panel/core/HBoxContainer"]
+[node name="Button" type="Button" parent="TabsParent/core/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.35
 text = "Reset"
 
-[node name="VSeparator3" type="VSeparator" parent="Panel/core"]
+[node name="VSeparator3" type="VSeparator" parent="TabsParent/core"]
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/core"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabsParent/core"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureRect" type="TextureRect" parent="Panel/core/VBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/core/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Panel/core/VBoxContainer2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="TabsParent/core/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
@@ -215,10 +310,40 @@ text = "Y: 0    P: 0    Z: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VSeparator4" type="VSeparator" parent="Panel/core"]
+[node name="VSeparator4" type="VSeparator" parent="TabsParent/core"]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/core"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabsParent/core"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.5
+
+[node name="drone" type="HBoxContainer" parent="TabsParent"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_qlcr7")
+
+[node name="cams" type="HBoxContainer" parent="TabsParent"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_qlcr7")
+
+[node name="debug" type="HBoxContainer" parent="TabsParent"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_qlcr7")

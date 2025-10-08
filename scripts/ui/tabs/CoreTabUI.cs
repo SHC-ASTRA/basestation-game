@@ -1,7 +1,7 @@
 using Godot;
 namespace ui
 {
-	public partial class coreUI : baseUI
+	public partial class CoreTabUI : BaseTabUI
 	{
 		public const bool TankDriving = true;
 
