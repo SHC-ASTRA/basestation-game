@@ -13,10 +13,10 @@ content_margin_left = 5.0
 content_margin_right = 5.0
 bg_color = Color(0.813263, 0.80068, 0.870103, 1)
 corner_detail = 1
-expand_margin_left = 2.0
-expand_margin_top = 2.0
-expand_margin_right = 2.0
-expand_margin_bottom = 2.0
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pfmjc"]
 
@@ -24,6 +24,8 @@ expand_margin_bottom = 2.0
 thickness = 8
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_pfmjc"]
+grow_begin = 4.0
+grow_end = 4.0
 thickness = 4
 vertical = true
 

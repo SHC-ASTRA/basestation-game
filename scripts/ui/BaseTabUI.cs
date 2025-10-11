@@ -3,7 +3,6 @@ namespace ui
 {
     public partial class BaseTabUI : Control
     {
-        [Export]
         public Vector2 leftStick, rightStick;
 
         // Left bumper slows down driving, right bumper speeds it up

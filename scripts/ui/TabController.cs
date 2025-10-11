@@ -9,6 +9,7 @@ namespace ui
         [Export]
         public Panel TabsParent;
 
+        [Export]
         public short selectedTab = 0;
 
 
@@ -37,7 +38,7 @@ namespace ui
             {
                 if (i == selectedTab)
                 {
-                    buttons[i].Flat = false;
+                    buttons[i].Disabled = false;
                     tabs[i].Hide();
                 }
                 if (buttons[i].ButtonPressed)
@@ -45,7 +46,7 @@ namespace ui
                 i++;
             }
             selectedTab = t;
-            buttons[t].Flat = true;
+            buttons[t].Disabled = true;
             tabs[t].Show();
         }
     }

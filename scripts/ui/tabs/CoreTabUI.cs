@@ -23,7 +23,8 @@ namespace ui
 				RMotor.Value = rightStick.Y;
 			}
 			else
-			{
+            {
+                #pragma warning disable
 				double MotorDrive = leftStick.Y;
 				LMotor.Value = MotorDrive + rightStick.X;
 				RMotor.Value = MotorDrive - rightStick.X;
