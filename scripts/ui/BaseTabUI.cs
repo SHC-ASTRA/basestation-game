@@ -1,9 +1,24 @@
 using Godot;
+
 namespace ui
 {
     public partial class BaseTabUI : Control
     {
-        public Vector2 leftStick, rightStick;
+        public bool UpButton, DownButton, LeftButton, RightButton;
+
+        public bool StartButton, BackButton;
+
+        public bool LeftStickPress, RightStickPress;
+
+        public float AButton, BButton, XButton, YButton;
+
+        public float BlackButton, WhiteButton;
+
+        public float LeftTrigger, RightTrigger;
+
+        public float LeftBumper, RightBumper;
+
+        public Vector2 LeftStick, RightStick;
 
         // Left bumper slows down driving, right bumper speeds it up
         // 'A' button (south) enables brake mode
@@ -15,9 +30,33 @@ namespace ui
 
         public override void _Process(double delta)
         {
-            leftStick = Input.GetVector("LStickHN", "LStickHP", "LStickVN", "LStickVP");
-            rightStick = Input.GetVector("RStickHN", "RStickHP", "RStickVN", "RStickVP");
+            UpButton = Input.IsActionJustPressed("UpBtn");
+            DownButton = Input.IsActionJustPressed("DownBtn");
+            LeftButton = Input.IsActionJustPressed("LeftBtn");
+            RightButton = Input.IsActionJustPressed("RightBtn");
 
+            StartButton = Input.IsActionJustPressed("StartBtn");
+            BackButton = Input.IsActionJustPressed("BackBtn");
+
+            LeftStickPress = Input.IsActionJustPressed("LStickPress");
+            RightStickPress = Input.IsActionJustPressed("RStickPress");
+
+            AButton = Input.GetActionStrength("ABtn");
+            BButton = Input.GetActionStrength("BBtn");
+            XButton = Input.GetActionStrength("XBtn");
+            YButton = Input.GetActionStrength("YBtn");
+
+            BlackButton = Input.GetActionStrength("BlackBtn");
+            WhiteButton = Input.GetActionStrength("WhiteBtn");
+
+            LeftTrigger = Input.GetActionStrength("LTrigger");
+            RightTrigger = Input.GetActionStrength("RTrigger");
+
+            LeftBumper = Input.GetActionStrength("LBumper");
+            RightBumper = Input.GetActionStrength("RBumper");
+
+            LeftStick = Input.GetVector("LStickHN", "LStickHP", "LStickVN", "LStickVP");
+            RightStick = Input.GetVector("RStickHN", "RStickHP", "RStickVN", "RStickVP");
         }
     }
 }

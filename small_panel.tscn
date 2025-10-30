@@ -1,13 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://dh133i8yuxjts"]
+[gd_scene load_steps=17 format=3 uid="uid://dh133i8yuxjts"]
 
-[ext_resource type="Script" uid="uid://ctflfd3yniesa" path="res://scripts/ui/TabController.cs" id="2_gwotu"]
+[ext_resource type="Script" uid="uid://g1fm7oxy6y1p" path="res://scripts/ui/TabController.cs" id="2_gwotu"]
 [ext_resource type="Script" uid="uid://buiou1q2apvmu" path="res://scripts/ui/tabs/CoreTabUI.cs" id="3_grmb5"]
-[ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Light.tres" id="3_gwotu"]
+[ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="3_gwotu"]
 [ext_resource type="Script" uid="uid://qhnp11n23yxu" path="res://scripts/ui/BaseTabUI.cs" id="3_qlcr7"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dof6s"]
-draw_center = false
-corner_detail = 1
+[ext_resource type="ArrayMesh" uid="uid://d140fswoxqbrf" path="res://PTZ/PTZbase.obj" id="5_m8v7i"]
+[ext_resource type="ArrayMesh" uid="uid://2wmjb5e4g57j" path="res://PTZ/PTZaxis1.obj" id="6_yplvc"]
+[ext_resource type="ArrayMesh" uid="uid://dwjygjucoh5bb" path="res://PTZ/PTZaxis2.obj" id="7_7oid2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlcr7"]
 bg_color = Color(0.25565878, 0.2556588, 0.2556587, 1)
@@ -27,7 +26,9 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grmb5"]
 bg_color = Color(0.43529502, 0.7147731, 0.9844368, 1)
+border_width_left = 2
 border_width_top = 6
+border_width_right = 2
 border_width_bottom = 6
 border_color = Color(0, 0.49019608, 0.84705883, 1)
 corner_detail = 1
@@ -66,16 +67,37 @@ border_width_bottom = 6
 border_color = Color(0.424419, 0.424419, 0.424418, 1)
 corner_detail = 1
 
-[node name="SmallPanel" type="VBoxContainer"]
-offset_right = 2560.0
-offset_bottom = 1600.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yplvc"]
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.251302, 0.25130185, 0.2513017, 1)
+border_blend = true
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="Environment" id="Environment_7oid2"]
+background_mode = 1
+background_color = Color(1, 1, 1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ssr_fade_in = 0.021538105
+ssao_enabled = true
+ssao_radius = 2.15
+ssao_power = 11.591239
+ssao_sharpness = 1.0
+
+[node name="ToolbarPanel" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
 focus_behavior_recursive = 1
 theme = ExtResource("3_gwotu")
-
-[node name="MT Space" type="Panel" parent="."]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_dof6s")
+alignment = 2
 
 [node name="Tabbar" type="HBoxContainer" parent="." node_paths=PackedStringArray("TabsParent")]
 custom_minimum_size = Vector2(0, 100)
@@ -146,19 +168,16 @@ text = "Debug"
 [node name="Spacer8" type="VSeparator" parent="Tabbar"]
 layout_mode = 2
 
-[node name="TabsParent" type="Panel" parent="."]
+[node name="TabsParent" type="PanelContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.25
+
+[node name="bg" type="ColorRect" parent="TabsParent"]
+layout_mode = 2
 
 [node name="arm" type="HBoxContainer" parent="TabsParent"]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 script = ExtResource("3_qlcr7")
 
 [node name="VSeparator2" type="VSeparator" parent="TabsParent/arm"]
@@ -166,225 +185,243 @@ layout_mode = 2
 
 [node name="auto" type="HBoxContainer" parent="TabsParent"]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 script = ExtResource("3_qlcr7")
 
 [node name="bio" type="HBoxContainer" parent="TabsParent"]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 script = ExtResource("3_qlcr7")
 
-[node name="core" type="HBoxContainer" parent="TabsParent" node_paths=PackedStringArray("LMotor", "RMotor")]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="core" type="HBoxContainer" parent="TabsParent" node_paths=PackedStringArray("LMotor", "RMotor", "PTZRenderer", "PTZSVP", "PTZAxis0", "PTZAxis1", "PTZRot", "Zoom")]
+layout_mode = 2
+size_flags_horizontal = 3
 script = ExtResource("3_grmb5")
-LMotor = NodePath("Motor Power/HBoxContainer/LMotors")
-RMotor = NodePath("Motor Power/HBoxContainer/RMotors")
+LMotor = NodePath("Motor Power/Motors/LMotors")
+RMotor = NodePath("Motor Power/Motors/RMotors")
+PTZRenderer = NodePath("PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZCamera")
+PTZSVP = NodePath("PTZDisplayContainer/SubViewportContainer/PTZDisplay")
+PTZAxis0 = NodePath("PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZBase/PTZAxis0")
+PTZAxis1 = NodePath("PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZBase/PTZAxis0/PTZAxis1")
+PTZRot = NodePath("PTZDisplayContainer/PTZRot")
+Zoom = NodePath("PTZControlContainer/VBoxContainer2/Zoom")
 
 [node name="VSeparator2" type="VSeparator" parent="TabsParent/core"]
 layout_mode = 2
 
 [node name="Motor Power" type="VBoxContainer" parent="TabsParent/core"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/core/Motor Power"]
+[node name="Motors" type="HBoxContainer" parent="TabsParent/core/Motor Power"]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/HBoxContainer" groups=["MotorPower"]]
+[node name="LMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/Motors" groups=["MotorPower"]]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-size_flags_stretch_ratio = 0.02
 theme = ExtResource("3_gwotu")
 min_value = -1.0
 max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="RMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/HBoxContainer" groups=["MotorPower"]]
+[node name="RMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/Motors" groups=["MotorPower"]]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-size_flags_stretch_ratio = 0.02
 theme = ExtResource("3_gwotu")
 min_value = -1.0
 max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TabsParent/core/Motor Power"]
-clip_contents = false
+[node name="Label" type="Label" parent="TabsParent/core/Motor Power"]
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.15
-text = "MOTOR POWER
-"
-scroll_active = false
+text = "Motor Power"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VSeparator" type="VSeparator" parent="TabsParent/core"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/core"]
+[node name="PTZControlContainer" type="HBoxContainer" parent="TabsParent/core"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 1.5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/core/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/core/PTZControlContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="GridContainer" type="GridContainer" parent="TabsParent/core/HBoxContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="TabsParent/core/PTZControlContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 columns = 3
 
-[node name="Control" type="Panel" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Control" type="Panel" parent="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
-[node name="Button" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button" type="Button" parent="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇧"
 
-[node name="Control2" type="Panel" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Control2" type="Panel" parent="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
-[node name="Button2" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button2" type="Button" parent="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇦"
 
-[node name="Button3" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button3" type="Button" parent="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⊹"
 
-[node name="Button4" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button4" type="Button" parent="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇨"
 
-[node name="Button5" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button5" type="Button" parent="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "-"
 
-[node name="Button6" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button6" type="Button" parent="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇩"
 
-[node name="Button7" type="Button" parent="TabsParent/core/HBoxContainer/VBoxContainer/GridContainer"]
+[node name="Button7" type="Button" parent="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "+"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TabsParent/core/HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/core/PTZControlContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.15
+
+[node name="RichTextLabel" type="Label" parent="TabsParent/core/PTZControlContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
 text = "PTZ Control"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="TabsParent/core/HBoxContainer"]
+[node name="Reset" type="Button" parent="TabsParent/core/PTZControlContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.35
 text = "Reset"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabsParent/core/PTZControlContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="TabsParent/core/PTZControlContainer/VBoxContainer2"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.01
+
+[node name="Zoom" type="VSlider" parent="TabsParent/core/PTZControlContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 3
+theme_override_styles/slider = SubResource("StyleBoxFlat_yplvc")
+page = 5.0
+scrollable = false
+
+[node name="Label" type="Label" parent="TabsParent/core/PTZControlContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Zoom"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VSeparator3" type="VSeparator" parent="TabsParent/core"]
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="TabsParent/core"]
+[node name="PTZDisplayContainer" type="VBoxContainer" parent="TabsParent/core"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/core/VBoxContainer2"]
+[node name="PTZRot" type="Label" parent="TabsParent/core/PTZDisplayContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-
-[node name="RichTextLabel" type="RichTextLabel" parent="TabsParent/core/VBoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.15
+size_flags_vertical = 1
 text = "Y: 0    P: 0    Z: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="TabsParent/core/PTZDisplayContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="PTZDisplay" type="SubViewport" parent="TabsParent/core/PTZDisplayContainer/SubViewportContainer"]
+handle_input_locally = false
+scaling_3d_scale = 2.0
+gui_disable_input = true
+oversampling_override = 1.0
+render_target_update_mode = 4
+
+[node name="PTZCamera" type="Camera3D" parent="TabsParent/core/PTZDisplayContainer/SubViewportContainer/PTZDisplay"]
+transform = Transform3D(-1, -6.1817246e-08, 6.1817246e-08, 0, 0.7071068, 0.7071068, -8.742278e-08, 0.7071068, -0.7071068, 0, 1.32, -2.5)
+keep_aspect = 0
+environment = SubResource("Environment_7oid2")
+projection = 1
+size = 3.5
+
+[node name="PTZBase" type="MeshInstance3D" parent="TabsParent/core/PTZDisplayContainer/SubViewportContainer/PTZDisplay"]
+mesh = ExtResource("5_m8v7i")
+skeleton = NodePath("../../../../../..")
+
+[node name="PTZAxis0" type="MeshInstance3D" parent="TabsParent/core/PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZBase"]
+mesh = ExtResource("6_yplvc")
+
+[node name="PTZAxis1" type="MeshInstance3D" parent="TabsParent/core/PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZBase/PTZAxis0"]
+mesh = ExtResource("7_7oid2")
 
 [node name="VSeparator4" type="VSeparator" parent="TabsParent/core"]
 layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="TabsParent/core"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.5
 
 [node name="drone" type="HBoxContainer" parent="TabsParent"]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 script = ExtResource("3_qlcr7")
 
 [node name="cams" type="HBoxContainer" parent="TabsParent"]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 script = ExtResource("3_qlcr7")
 
 [node name="debug" type="HBoxContainer" parent="TabsParent"]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 script = ExtResource("3_qlcr7")
+
+[connection signal="button_up" from="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer/Button" to="TabsParent/core" method="PTZUp"]
+[connection signal="button_up" from="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer/Button2" to="TabsParent/core" method="PTZLeft"]
+[connection signal="button_up" from="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer/Button3" to="TabsParent/core" method="PTZCenter"]
+[connection signal="button_up" from="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer/Button4" to="TabsParent/core" method="PTZRight"]
+[connection signal="button_up" from="TabsParent/core/PTZControlContainer/VBoxContainer/GridContainer/Button6" to="TabsParent/core" method="PTZDown"]

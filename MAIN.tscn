@@ -1,70 +1,87 @@
-[gd_scene load_steps=5 format=3 uid="uid://bjwmxrn1okacu"]
+[gd_scene load_steps=7 format=3 uid="uid://bjwmxrn1okacu"]
 
-[ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Light.tres" id="1_rf5wo"]
+[ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="1_rf5wo"]
 [ext_resource type="PackedScene" uid="uid://dh133i8yuxjts" path="res://small_panel.tscn" id="2_ao1bj"]
+[ext_resource type="Script" uid="uid://cvuyo1dh2p1ah" path="res://scripts/ui/KeepToScreenRect.cs" id="2_tm5h3"]
+[ext_resource type="Script" uid="uid://cxepc25iuwyh0" path="res://scripts/ROS.cs" id="3_kgeht"]
 [ext_resource type="PackedScene" uid="uid://b4x4xlqbw6usp" path="res://cam_button.tscn" id="3_tm5h3"]
-[ext_resource type="Texture2D" uid="uid://dobdqxlqjdmjo" path="res://image.png" id="4_kgeht"]
+[ext_resource type="Texture2D" uid="uid://dobdqxlqjdmjo" path="res://Assets/clucky.png" id="4_kgeht"]
 
-[node name="MAIN" type="Control"]
-layout_mode = 3
+[node name="MAIN" type="VSplitContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("1_rf5wo")
+theme_override_constants/autohide = 1
+split_offset = -480
+touch_dragger_enabled = true
+script = ExtResource("2_tm5h3")
 
-[node name="Container" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 2.0
-offset_bottom = -158.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 2
+[node name="ROS head" type="Node" parent="."]
+script = ExtResource("3_kgeht")
 
-[node name="SmallPanel" parent="Container" instance=ExtResource("2_ao1bj")]
+[node name="Clucky" type="Panel" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 
-[node name="Clucky" type="CanvasGroup" parent="."]
-texture_filter = 1
-
-[node name="CamButtons" type="Node" parent="Clucky"]
-
-[node name="CamButton" parent="Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
-offset_left = 626.0
-offset_top = 76.0
-offset_right = 626.0
-offset_bottom = 76.0
-
-[node name="CamButton2" parent="Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
-offset_left = 901.0
-offset_top = 91.0
-offset_right = 901.0
-offset_bottom = 91.0
-
-[node name="CamButton3" parent="Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
-offset_left = 990.0
-offset_top = 329.0
-offset_right = 990.0
-offset_bottom = 329.0
-
-[node name="CamButton4" parent="Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
-offset_left = 540.0
-offset_top = 386.0
-offset_right = 540.0
-offset_bottom = 386.0
-
-[node name="CamButton5" parent="Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
-offset_left = 640.0
-offset_top = 274.0
-offset_right = 640.0
-offset_bottom = 274.0
-
-[node name="Image" type="Sprite2D" parent="Clucky"]
-position = Vector2(832.75, 324.625)
-scale = Vector2(0.705592, 0.730791)
+[node name="Clucky" type="TextureRect" parent="Clucky"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -437.5
+offset_top = -437.5
+offset_right = 437.5
+offset_bottom = 437.5
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("4_kgeht")
+expand_mode = 4
+
+[node name="CamButtons" type="Control" parent="Clucky/Clucky"]
+anchors_preset = 0
+
+[node name="CamButton" parent="Clucky/Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
+layout_mode = 0
+offset_left = 259.0
+offset_top = 190.0
+offset_right = 259.0
+offset_bottom = 190.0
+
+[node name="CamButton2" parent="Clucky/Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
+layout_mode = 0
+offset_left = 645.0
+offset_top = 465.0
+offset_right = 645.0
+offset_bottom = 465.0
+
+[node name="CamButton3" parent="Clucky/Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
+layout_mode = 0
+offset_left = 562.0
+offset_top = 95.0
+offset_right = 562.0
+offset_bottom = 95.0
+
+[node name="CamButton4" parent="Clucky/Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
+layout_mode = 0
+offset_left = 274.0
+offset_top = 825.0
+offset_right = 274.0
+offset_bottom = 825.0
+
+[node name="CamButton5" parent="Clucky/Clucky/CamButtons" instance=ExtResource("3_tm5h3")]
+layout_mode = 0
+offset_left = 147.0
+offset_top = 471.0
+offset_right = 147.0
+offset_bottom = 471.0
+
+[node name="SmallPanel" parent="." instance=ExtResource("2_ao1bj")]
+layout_mode = 2
