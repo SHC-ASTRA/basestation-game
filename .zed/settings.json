@@ -8,6 +8,7 @@
     "*.*~",
     "*.import",
     "*.tres",
-    "*.tscn"
+    "*.tscn",
+    ".direnv"
   ]
 }
