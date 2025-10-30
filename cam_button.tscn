@@ -1,10 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://b4x4xlqbw6usp"]
+[gd_scene load_steps=4 format=3 uid="uid://b4x4xlqbw6usp"]
 
-[ext_resource type="Texture2D" uid="uid://bn3bh6cyx6h0c" path="res://CameraDisplay.svg" id="1_vajds"]
+[ext_resource type="Texture2D" uid="uid://bn3bh6cyx6h0c" path="res://Assets/CameraDisplay.svg" id="1_vajds"]
+
+[sub_resource type="SystemFont" id="SystemFont_vajds"]
+font_names = PackedStringArray("Terminess Nerd Font")
+oversampling = 16.0
+
+[sub_resource type="Theme" id="Theme_rs34q"]
+Button/font_sizes/font_size = 32
+Button/fonts/font = SubResource("SystemFont_vajds")
 
 [node name="CamButton" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+theme = SubResource("Theme_rs34q")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
