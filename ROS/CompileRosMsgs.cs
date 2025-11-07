@@ -1,5 +1,6 @@
 using Godot;
-using RosSharp.RosBridgeClient.MessageGeneration;
+using System.IO;
+using RosSharp.RosBridgeClient.CMessageGeneration;
 
 namespace IPC
 {
@@ -8,7 +9,8 @@ namespace IPC
     {
         public override void _Run()
         {
-            MessageAutoGen.GenerateDirectoryMessages("../astra_msgs/msg", "./.tmp/");
+            Directory.Delete("./tmp", true);
+            MessageAutoGen.GenerateDirectoryMessages("../astra_msgs/msg", "./tmp/", "astra_msgs", true);
             base._Run();
         }
     }

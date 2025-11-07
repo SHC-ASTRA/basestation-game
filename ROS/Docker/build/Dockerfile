@@ -5,7 +5,7 @@ ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 RUN apt update && \
     apt install -y \
-    iputils-ping \
+    git iputils-ping \
     software-properties-common \
     ros-humble-rmw-cyclonedds-cpp \
     ros-dev-tools \
@@ -24,4 +24,10 @@ RUN adduser --gecos '' --disabled-password --uid ${MYUID} --gid ${MYGID} ${MYUSE
     adduser ${MYUSER} adm && \
     echo "${MYUSER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+RUN export FASTDDS_BUILTIN_TRANSPORTS=UDPv4
+
+CMD ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
 USER ${MYUSER}

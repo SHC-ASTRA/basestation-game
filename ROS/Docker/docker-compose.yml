@@ -3,5 +3,3 @@ services:
     build: ./build
     user: astra
     network_mode: host
-    command: bash -c "source /opt/ros/humble/setup.bash && ros2 launch rosbridge_server rosbridge_websocket_launch.xml"
-    # command: bash -c "ros2 topic pub /test std_msgs/String \"{data:\ \'testing\'}\""
