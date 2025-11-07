@@ -18,7 +18,7 @@ using System.IO;
 
 using System.Collections.Generic;
 
-namespace RosSharp.RosBridgeClient.MessageGeneration
+namespace RosSharp.RosBridgeClient.CMessageGeneration
 {
     public static class ServiceAutoGen
     {

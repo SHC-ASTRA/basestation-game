@@ -25,7 +25,7 @@ using System.IO;
 
 using System.Collections.Generic;
 
-namespace RosSharp.RosBridgeClient.MessageGeneration
+namespace RosSharp.RosBridgeClient.CMessageGeneration
 {
     public static class ActionAutoGen
     {
@@ -281,9 +281,6 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
                 // Write block comment
                 writer.Write(MsgAutoGenUtilities.BLOCK_COMMENT + "\n");
 
-                // Write preprocessor directive: Begin
-                writer.Write("#if ROS2\n");
-
                 // Write imports
                 writer.Write(imports);
 
@@ -319,9 +316,6 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
                 writer.Write(ONE_TAB + "}\n");
                 // Close namespace
                 writer.Write("}\n");
-
-                // Write preprocessor directive: End
-                writer.Write("#endif\n");
             }
         }
 
@@ -339,9 +333,6 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
             {
                 // Write block comment
                 writer.Write(MsgAutoGenUtilities.BLOCK_COMMENT + "\n");
-
-                // Write preprocessor directive: Begin
-                writer.Write("#if ROS2\n");
 
                 // Write imports
                 writer.Write(imports);
@@ -386,9 +377,6 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
                 writer.Write(ONE_TAB + "}\n");
                 // Close namespace
                 writer.Write("}\n");
-
-                // Write preprocessor directive: End
-                writer.Write("#endif\n");
             }
         }
     }

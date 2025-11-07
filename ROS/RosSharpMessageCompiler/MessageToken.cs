@@ -16,7 +16,7 @@ limitations under the License.
     © Siemens AG, 2025, Mehmet Emre Cakal, emre.cakal@siemens.com/m.emrecakal@gmail.com
 */
 
-namespace RosSharp.RosBridgeClient.MessageGeneration
+namespace RosSharp.RosBridgeClient.CMessageGeneration
 {
 
     public class MessageToken

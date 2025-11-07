@@ -20,7 +20,7 @@ using System.Collections.Generic;
 
 using System.Linq;
 
-namespace RosSharp.RosBridgeClient.MessageGeneration
+namespace RosSharp.RosBridgeClient.CMessageGeneration
 {
 
     public static class MessageAutoGen
@@ -100,14 +100,12 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
             return warnings;
         }
 
-        public static List<string> GenerateDirectoryMessages(string inPath, string outPath, bool verbose = false)
+        public static List<string> GenerateDirectoryMessages(string inPath, string outPath, string messageNamespace = "", bool verbose = false)
         {
             List<string> warnings = new List<string>();
 
             if (inPath.EndsWith("/") || inPath.EndsWith("\\"))
-            {
                 inPath = inPath.Remove(inPath.Length - 1);
-            }
 
             string[] files = Directory.GetFiles(inPath, "*.msg", SearchOption.AllDirectories);
 
@@ -119,13 +117,9 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
             else
             {
                 if (verbose)
-                {
                     Console.WriteLine("Found " + files.Length + " message files.");
-                }
                 foreach (string file in files)
-                {
-                    warnings.AddRange(GenerateSingleMessage(file, outPath, verbose: verbose));
-                }
+                    warnings.AddRange(GenerateSingleMessage(file, outPath, messageNamespace, verbose));
             }
             return warnings;
         }

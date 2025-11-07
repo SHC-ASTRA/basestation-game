@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace RosSharp.RosBridgeClient.MessageGeneration
+namespace RosSharp.RosBridgeClient.CMessageGeneration
 {
     public static class MsgAutoGenUtilities
     {

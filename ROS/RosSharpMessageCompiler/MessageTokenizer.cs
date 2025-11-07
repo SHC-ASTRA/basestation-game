@@ -21,7 +21,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace RosSharp.RosBridgeClient.MessageGeneration
+namespace RosSharp.RosBridgeClient.CMessageGeneration
 {
     public class MessageTokenizer
     {
@@ -91,7 +91,7 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
             @"^(?<type>[A-Za-z_\/][A-Za-z0-9_\/]*)(?<strbound><=\d+)?(?<array>\[[^\]]*\])?\s+" +
             @"(?<identifier>[A-Za-z_][A-Za-z0-9_]*)" +                          // IDENTIFIER
             @"(?:\s*=\s*(?<constval>[^#]+?)|\s+(?<defval>[^#=\s][^#]*?))?" +    // VALUE (CONSTAT OR INITIAL)
-            @"(?:\s*#\s*(?<comment>.*))?$",                                     // COMMENT 
+            @"(?:\s*#\s*(?<comment>.*))?$",                                     // COMMENT
             RegexOptions.Compiled
         );
 

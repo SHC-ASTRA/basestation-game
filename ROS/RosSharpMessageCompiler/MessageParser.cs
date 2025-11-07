@@ -21,7 +21,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RosSharp.RosBridgeClient.MessageGeneration
+namespace RosSharp.RosBridgeClient.CMessageGeneration
 {
     public class MessageParser
     {
@@ -92,9 +92,6 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
 
                 body = ReadTokens();
 
-                // Write ROS version preprocessor directive
-                writer.Write("#if ROS2");
-
                 // Write imports
                 writer.Write(MsgAutoGenUtilities.GenerateImports(imports));
 
@@ -117,10 +114,9 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
                 if (symbolTable.Count != 0 && symbolTable.Keys.Except(constantValuedIdentifiers).Any())
                     writer.Write("\n" + GenerateParameterizedConstructor());
 
-                // Close class, namespace, and preprocessor directive
+                // Close class, namespace
                 writer.Write(MsgAutoGenUtilities.ONE_TAB + "}\n");
                 writer.Write("}\n");
-                writer.Write("#endif\n");
 
                 writer.Flush();
                 writer.Close();

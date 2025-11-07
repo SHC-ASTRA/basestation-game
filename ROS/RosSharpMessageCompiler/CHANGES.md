@@ -1,6 +1,6 @@
 # Main changes
 
-In accordance with the Apache 2.0 License, this folder is
+In accordance with the Apache 2.0 License, this file is
 required to track and maintain a list of changes made to
 the files herein and in relation to the parent repository.
 
@@ -9,7 +9,7 @@ The parent repository is located at
 
 ## Primary changes are as follows:
 
-- Removed RosSharpMessageCompiler from source to use employ
+- Removed RosSharpMessageCompiler from source to employ
   a custom implementation
 
 - Made ActionAutoGen, MessageAutoGen, ServiceAutoGen,
@@ -17,3 +17,7 @@ The parent repository is located at
   members were static as well.
 
 - Removed all Ros1 support (unused in our use case)
+
+- Changed base namespace to RosSharp.RosBridgeClient.CMessageGeneration, for compat with the true package.
+
+- Minor optimizations
