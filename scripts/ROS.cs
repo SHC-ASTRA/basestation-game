@@ -1,76 +1,160 @@
 using DEBUG;
+using Godot;
+using System;
 using System.IO;
+using System.Linq;
 using static Godot.OS;
-using System.Threading;
+using System.Net.Sockets;
+using System.Threading.Tasks;
 using RosSharp.RosBridgeClient;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using RosSharp.RosBridgeClient.Protocols;
+using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 namespace IPC
 {
     public partial class ROS : Godot.Node
     {
+        public static bool ROSReady = false;
         public static ROS ROSServer;
 
-        private static Godot.FileAccess RosBridgeIO;
-        private static int RosBridgeIOID;
-
-        private static Godot.FileAccess RosBridgeErr;
-        private static int RosBridgeErrID;
-
-        public static int RosBridgePID;
+        private static Godot.FileAccess RosBridgeIO, RosBridgeErr;
+        private static int RosBridgePID, RosBridgeIOID, RosBridgeErrID;
 
         public static RosSocket ROSSocket;
         public static WebSocketNetProtocol ROSWebSocket;
 
+        private readonly static HashSet<string> topicNames = new HashSet<string>();
+
+        private static readonly string ROSIP = new System.Net.IPAddress(new byte[] { 127, 0, 0, 1 }).ToString();
+        private const int ROSPort = 9090;
+        private static readonly string sockAddress = $"ws://{ROSIP}:{ROSPort}";
+
         public override void _Ready()
         {
-            Godot.Collections.Dictionary RosBridgeReturn = ExecuteWithPipe("bash", ["-c", "cd ROS/Docker && docker compose up"]);
+            StartROS();
+            base._Ready();
+        }
 
-            RosBridgeIO = RosBridgeReturn["stdio"].As<Godot.FileAccess>(); // Setup IO file accesses
+        public async static void StartROS()
+        {
+            Execute("bash", ["-c", "cd ROS/Docker && docker compose down"]);
+            Godot.Collections.Dictionary RosBridgeReturn = ExecuteWithPipe("bash", ["-c", "cd ROS/Docker && docker compose up"]);
+            if (!await WaitForRosbridgeAsync(ROSIP, ROSPort, 40, 5000))
+            {
+                Godot.GD.PrintErr("Could not initialize Rosbridge");
+                return;
+            }
+            Godot.GD.Print("Initialized Rosbridge");
+
+            RosBridgeIO = RosBridgeReturn["stdio"].As<Godot.FileAccess>();
             RosBridgeErr = RosBridgeReturn["stderr"].As<Godot.FileAccess>();
             RosBridgePID = RosBridgeReturn["pid"].As<int>();
 
             RosBridgeIOID = Debug.RegisterDebugData(RosBridgeIO);
             RosBridgeErrID = Debug.RegisterDebugData(RosBridgeErr);
 
-            RosBridgeIO.GetLine(); // Ingest PWD
-            RosBridgeIO.GetLine(); // Ingest startup response
+            RosBridgeIO.GetLine();
+            RosBridgeIO.GetLine();
 
-            // Ts literally just crashes if it doesn't work, even if it's in a try statement.
-            // So... Cope?
             string cfgpath = Path.Combine(Path.GetFullPath("."), "WebsocketIP.cfg");
             RosBridgeIO.StoreLine(string.Concat("Loading IP config from ", Path.Combine(Path.GetFullPath("."), "WebsocketIP.cfg")));
+            Debug.Log(RosBridgeIOID, $"Loading IP config from {cfgpath}");
+
             string ip;
             if (File.Exists(cfgpath))
                 ip = File.ReadAllText(cfgpath);
             else
             {
-                RosBridgeIO.StoreLine(string.Concat("File ", cfgpath, " does not exist, writing defaults."));
-                File.WriteAllText(cfgpath, "ws://192.168.1.33:9090");
-                ip = "ws://192.168.1.33:9090";
+                Debug.Log(RosBridgeIOID, $"File {cfgpath} does not exist, writing defaults.");
+                ip = $"ws://{ROSIP}:{ROSPort}";
+                File.WriteAllText(cfgpath, ip);
             }
-            ROSWebSocket = new WebSocketNetProtocol(File.ReadAllText(cfgpath));
+            ROSWebSocket = new WebSocketNetProtocol(sockAddress);
             ROSSocket = new(ROSWebSocket);
-            ROSSocket.Advertise<RosSharp.RosBridgeClient.MessageTypes.Std.String>("/test");
-            new Thread(pingTimer.cycle).Start();
-            base._Ready();
+
+            ROS.Advertise<CoreControl>("/core/control");
+
+            ROSReady = true;
         }
 
-        public static class pingTimer
+        public override void _ExitTree()
         {
-            public static void cycle()
+            foreach (string s in topicNames)
+                ROSSocket.Unadvertise(s);
+            Execute("bash", ["-c", "docker kill docker-ros2-1"]);
+            base._ExitTree();
+        }
+
+        public static bool CheckTopicExists(string topicName) => topicNames.Contains(topicName);
+
+        public static void Advertise<T>(string topicName) where T : Message
+        {
+            Debug.Log(RosBridgeIOID, $"Advertising {topicName}");
+            ROSSocket.Advertise<T>(topicName);
+            topicNames.Add(topicName);
+        }
+
+        public static void Publish(string topic, Message message)
+        {
+            Debug.Log(RosBridgeIOID, $"Writing {message.ToString()} to {topic}");
+            ROSSocket.Publish(topic, message);
+        }
+
+        public static void PublishSafe<T>(string topicName, Message message) where T : Message
+        {
+            if (!CheckTopicExists(topicName))
             {
-                while (true)
-                {
-                    ROS.ROSSocket.Publish("/test", new RosSharp.RosBridgeClient.MessageTypes.Std.String("Test ping"));
-                    Thread.Sleep(1);
-                }
+                Debug.Log(RosBridgeIOID, $"Topic {topicName} didn't exist yet, advertising it...");
+                ROSSocket.Advertise<T>(topicName);
+                topicNames.Add(topicName);
             }
+            Debug.Log(RosBridgeIOID, $"Writing {message.ToString()} to {topicName}");
+            ROSSocket.Publish(topicName, message);
         }
 
-        public static void Publish(string topic, Message messageType)
+        public static void AdvertiseAndPublish<T>(string topicName, Message message) where T : Message
         {
-            ROS.ROSSocket.Publish(topic, messageType);
+            if (!CheckTopicExists(topicName))
+            {
+                Debug.Log(RosBridgeIOID, $"Advertising {topicName} and publishing {message.ToString()} to it");
+                ROSSocket.Advertise<T>(topicName);
+                topicNames.Add(topicName);
+            }
+            else Debug.Log(RosBridgeIOID, $"Topic {topicName} already exists. Publishing message anyway, but please restructure to check for topic first");
+            ROSSocket.Publish(topicName, message);
+        }
+
+        public static async Task<bool> WaitForRosbridgeAsync(string host, int port, int timeoutSec = 400, int pollIntervalMs = 2000, int increaseMs = 1000)
+        {
+            int failCount = 0;
+            double startTime = Godot.Time.GetUnixTimeFromSystem();
+            while (Godot.Time.GetUnixTimeFromSystem() - startTime < timeoutSec)
+            {
+                try
+                {
+                    using (TcpClient client = new())
+                    {
+                        IAsyncResult result = client.BeginConnect(host, port, null, null);
+                        bool success = result.AsyncWaitHandle.WaitOne(pollIntervalMs);
+                        if (success && client.Connected)
+                        {
+                            client.EndConnect(result);
+                            return true;
+                        }
+                    }
+                }
+                catch { }
+                GD.Print($"Failed to connect to ROSBridge container. Retrying in {pollIntervalMs}Ms");
+                if (++failCount > 4)
+                {
+                    GD.Print($"Recorded five or more failures to connect to ROSBridge. Increasing retry time by {increaseMs * 0.001f}s");
+                    pollIntervalMs += increaseMs;
+                }
+                await Task.Delay(pollIntervalMs);
+            }
+            return false;
         }
     }
 }

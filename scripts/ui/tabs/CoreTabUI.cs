@@ -1,6 +1,7 @@
 using IPC;
 using DEBUG;
 using Godot;
+using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 namespace ui
 {
@@ -38,8 +39,15 @@ namespace ui
             base._Ready();
         }
 
+        double slow;
+
         public override void _Process(double delta)
         {
+            slow += delta;
+            if (slow < 0.004)
+                return;
+            else slow = 0;
+
             base._Process(delta);
 
             if (TankDriving)
@@ -62,6 +70,9 @@ namespace ui
                 PTZLeft();
             else if (RightButton)
                 PTZRight();
+
+            if (ROS.ROSReady && ROS.CheckTopicExists("/core/control"))
+                ROS.Publish("/core/control", new CoreControl((float)LMotor.Value, (float)RMotor.Value, 60, BButton > 0, false, 0f, 0f));
         }
 
         public static int ConstWrap(ref int value, int min, int max)
@@ -122,7 +133,6 @@ namespace ui
             PTZAxis0.RotationDegrees = Vector3.Up * PTZRotation.X;
             PTZAxis1.RotationDegrees = Vector3.Right * PTZRotation.Y;
             Debug.Log(debugID, $"Setting PTZ rotation to {PTZRotation} and zoom {PTZZoom}");
-            ROS.Publish("/test", new RosSharp.RosBridgeClient.MessageTypes.Std.String(""));
             PTZRot.Text = string.Join(' ', "Y:", PTZRotation.X, "P:", PTZRotation.Y, "R:", PTZRotation.Z);
         }
     }
