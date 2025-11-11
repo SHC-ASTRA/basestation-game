@@ -7,10 +7,11 @@ namespace IPC
     [Tool]
     public partial class CompileRosMsgs : EditorScript
     {
+        const string tmp = "./tmp";
         public override void _Run()
         {
-            Directory.Delete("./tmp", true);
-            MessageAutoGen.GenerateDirectoryMessages("../astra_msgs/msg", "./tmp/", "astra_msgs", true);
+            if (Directory.Exists(tmp))
+                Directory.Delete(tmp, true); MessageAutoGen.GenerateDirectoryMessages("astra_msgs/msg", tmp, "astra_msgs", true);
             base._Run();
         }
     }

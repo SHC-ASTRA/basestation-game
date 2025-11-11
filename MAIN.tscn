@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="1_rf5wo"]
 [ext_resource type="PackedScene" uid="uid://dh133i8yuxjts" path="res://small_panel.tscn" id="2_ao1bj"]
-[ext_resource type="Script" uid="uid://cvuyo1dh2p1ah" path="res://scripts/ui/KeepToScreenRect.cs" id="2_tm5h3"]
+[ext_resource type="Script" uid="uid://cp25csnv3hwuv" path="res://scripts/ui/KeepToScreenRect.cs" id="2_tm5h3"]
 [ext_resource type="Script" uid="uid://cxepc25iuwyh0" path="res://scripts/ROS.cs" id="3_kgeht"]
 [ext_resource type="PackedScene" uid="uid://b4x4xlqbw6usp" path="res://cam_button.tscn" id="3_tm5h3"]
 [ext_resource type="Texture2D" uid="uid://dobdqxlqjdmjo" path="res://Assets/clucky.png" id="4_kgeht"]

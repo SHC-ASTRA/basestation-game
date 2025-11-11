@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://dh133i8yuxjts"]
 
-[ext_resource type="Script" uid="uid://g1fm7oxy6y1p" path="res://scripts/ui/TabController.cs" id="2_gwotu"]
+[ext_resource type="Script" uid="uid://ctflfd3yniesa" path="res://scripts/ui/TabController.cs" id="2_gwotu"]
 [ext_resource type="Script" uid="uid://buiou1q2apvmu" path="res://scripts/ui/tabs/CoreTabUI.cs" id="3_grmb5"]
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="3_gwotu"]
 [ext_resource type="Script" uid="uid://qhnp11n23yxu" path="res://scripts/ui/BaseTabUI.cs" id="3_qlcr7"]

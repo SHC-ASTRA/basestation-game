@@ -8,7 +8,6 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using RosSharp.RosBridgeClient;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using RosSharp.RosBridgeClient.Protocols;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
@@ -31,6 +30,10 @@ namespace IPC
         private const int ROSPort = 9090;
         private static readonly string sockAddress = $"ws://{ROSIP}:{ROSPort}";
 
+        public static string term = System.OperatingSystem.IsLinux() ? "bash" : "pwsh";
+
+        private static string ROSDocker = Path.Combine("ROS", "Docker");
+
         public override void _Ready()
         {
             StartROS();
@@ -39,8 +42,8 @@ namespace IPC
 
         public async static void StartROS()
         {
-            Execute("bash", ["-c", "cd ROS/Docker && docker compose down"]);
-            Godot.Collections.Dictionary RosBridgeReturn = ExecuteWithPipe("bash", ["-c", "cd ROS/Docker && docker compose up"]);
+            Execute(term, ["-c", $"cd {ROSDocker} && docker compose down"]);
+            Godot.Collections.Dictionary RosBridgeReturn = ExecuteWithPipe(term, ["-c", $"cd {ROSDocker} docker compose up"]);
             if (!await WaitForRosbridgeAsync(ROSIP, ROSPort, 40, 5000))
             {
                 Godot.GD.PrintErr("Could not initialize Rosbridge");
@@ -83,7 +86,7 @@ namespace IPC
         {
             foreach (string s in topicNames)
                 ROSSocket.Unadvertise(s);
-            Execute("bash", ["-c", "docker kill docker-ros2-1"]);
+            Execute(term, ["-c", $"cd {ROSDocker} && docker compose down"]);
             base._ExitTree();
         }
 
