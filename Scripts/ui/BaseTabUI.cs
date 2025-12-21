@@ -1,24 +1,38 @@
+using IPC;
 using Godot;
+using DEBUG;
 
 namespace ui
 {
-    public partial class BaseTabUI : Control
+    public abstract partial class BaseTabUI : Control
     {
-        public bool UpButton, DownButton, LeftButton, RightButton;
+        [Export]
+        public string TopicName;
 
-        public bool StartButton, BackButton;
+        [Export]
+        public bool ROSDependent;
 
-        public bool LeftStickPress, RightStickPress;
+        protected double Slow;
 
-        public float AButton, BButton, XButton, YButton;
+        protected static Vector2 WindowSize;
 
-        public float BlackButton, WhiteButton;
+        protected static int? DebugID;
 
-        public float LeftTrigger, RightTrigger;
+        protected static bool UpButton, DownButton, LeftButton, RightButton;
 
-        public float LeftBumper, RightBumper;
+        protected static bool StartButton, BackButton;
 
-        public Vector2 LeftStick, RightStick;
+        protected static bool LeftStickPress, RightStickPress;
+
+        protected static float AButton, BButton, XButton, YButton;
+
+        protected static float BlackButton, WhiteButton;
+
+        protected static float LeftTrigger, RightTrigger;
+
+        protected static float LeftBumper, RightBumper;
+
+        protected static Vector2 LeftStick, RightStick;
 
         // Left bumper slows down driving, right bumper speeds it up
         // 'A' button (south) enables brake mode
@@ -28,8 +42,17 @@ namespace ui
         // Turning inverts when going backwards to make reversing more intuitive (kinda jank rn tho)
         // Turning follows curve (angular.z ** 3) to help with minor adjustments when driving in straight line
 
+        public override void _Ready()
+        {
+            DebugID = Debug.RegisterDebugData(Variant.From<string>(""), false);
+
+            AdvertiseToROS();
+        }
+
         public override void _Process(double delta)
         {
+            WindowSize = GetWindow().Size;
+
             UpButton = Input.IsActionJustPressed("UpBtn");
             DownButton = Input.IsActionJustPressed("DownBtn");
             LeftButton = Input.IsActionJustPressed("LeftBtn");
@@ -57,6 +80,16 @@ namespace ui
 
             LeftStick = Input.GetVector("LStickHN", "LStickHP", "LStickVN", "LStickVP");
             RightStick = Input.GetVector("RStickHN", "RStickHP", "RStickVN", "RStickVP");
+
+            Slow += delta;
+            if (Slow < 0.004 || !ROS.ROSReady)
+                return;
+            else Slow = 0;
+
+            EmitToROS();
         }
+
+        public abstract void AdvertiseToROS();
+        public abstract void EmitToROS();
     }
 }

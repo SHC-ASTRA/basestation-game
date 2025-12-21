@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cia5qesu3cdf5"]
+
+[ext_resource type="Script" uid="uid://c84e8xhvga70c" path="res://Scripts/ui/prefabs/MidwayHProgressBar.cs" id="1_6odbg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6odbg"]
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_6odbg"]
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 10
+vertical = true
+
+[node name="MidwayHprogressBar" type="Panel"]
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6odbg")
+script = ExtResource("1_6odbg")
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 10.0
+offset_bottom = 1600.0
+theme_override_styles/panel = SubResource("StyleBoxLine_6odbg")

@@ -1,13 +1,7 @@
 using Godot;
+using System.Threading;
+using System.Collections;
 using System.Collections.Generic;
-
-namespace ui
-{
-    public partial class DebugTabUI : BaseTabUI
-    {
-
-    }
-}
 
 namespace DEBUG
 {
@@ -18,17 +12,33 @@ namespace DEBUG
         // instead of using <int, string> or elsewise
         private static Dictionary<int, Variant> DebugData = new Dictionary<int, Variant>();
 
+        private static LogEmitter logEmitter = null;
+
         /// <summary>
         /// Creates a new key in the DebugData array. This key-value is typed
         /// with that of the Variable.CreateFrom(<paramref name="type"/>).
         /// </summary>
         /// <returns> The assigned debug position </returns>
         // This keeps the anonymized data overhead minimal (in my eyes at least)
-        public static int RegisterDebugData(Variant type)
+        public static int RegisterDebugData(Variant type, bool array)
         {
             int r = DebugData.Keys.Count;
             DebugData.Add(r, type);
+            if (logEmitter == null)
+            {
+                logEmitter = new LogEmitter();
+                new Thread(logEmitter.init);
+            }
+            if (array)
+                logEmitter.pushStream(type.AsGodotArray());
             return r;
+        }
+
+        public static void PullLogs()
+        {
+            foreach (string s in LogEmitter.outs)
+                GD.Print(s);
+            LogEmitter.callback = false;
         }
 
         /// <summary>
@@ -59,5 +69,45 @@ namespace DEBUG
         /// </summary>
         /// <returns> Raw DebugData[<paramref name="r"/>] </returns>
         public static Variant GetData(int r) => DebugData[r];
+
+        protected class LogEmitter
+        {
+            private static List<IEnumerable> logStreams = new();
+            public static List<string> outs;
+
+            public static bool callback = false;
+
+            public void init()
+            {
+                IEnumerable[] clogStreams = new IEnumerable[] { };
+                while (true)
+                {
+                    logStreams.CopyTo(clogStreams, 0);
+
+                    foreach (IEnumerable stream in clogStreams)
+                    {
+                        foreach (object o in stream)
+                        {
+                            outs.Add(o.ToString());
+                        }
+                        callback = true;
+                        while (callback)
+                            Thread.Sleep(1);
+                        Thread.Sleep(5);
+                    }
+                }
+            }
+
+            public int pushStream(IEnumerable i)
+            {
+                logStreams.Add(i);
+                return logStreams.Count - 1;
+            }
+
+            public void removeStream(int i)
+            {
+                logStreams.RemoveAt(i);
+            }
+        }
     }
 }

@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpojxp13gdd6l"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_0w4ow"]
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 8
+vertical = true
+
+[node name="VSep" type="VSeparator"]
+offset_right = 4.0
+offset_bottom = 3.0
+theme_override_styles/separator = SubResource("StyleBoxLine_0w4ow")

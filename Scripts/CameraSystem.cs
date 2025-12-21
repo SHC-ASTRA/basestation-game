@@ -10,7 +10,7 @@ namespace IPC
 
         public static void Init()
         {
-            debugID ??= Debug.RegisterDebugData(Godot.Variant.CreateFrom(string.Empty));
+            debugID ??= Debug.RegisterDebugData(Godot.Variant.CreateFrom(string.Empty), false);
             cameraPID ??= CreateProcess("basestation-cameras", []);
         }
 
