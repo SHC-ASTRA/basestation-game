@@ -7,6 +7,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Siemens.RosSharp.RosBridgeClient.ROS2" Version="2.2.0" />
-    <PackageReference Include="WebSocketSharp" Version="1.0.3-rc11" />
+    <PackageReference Include="WebSocketSharp" Version="1.0.3-rc11">
+        <NoWarn>NU1701</NoWarn>
+    </PackageReference>
   </ItemGroup>
 </Project>

@@ -1,8 +1,7 @@
 {
   "explorer.excludeGitIgnore": true,
   "files.exclude": {
-    ".uid": true,
-    ".git/*": true,
+    "*.uid": true,
     ".config/*": true,
     ".gitattributes": true,
     "*.old": true,
@@ -10,6 +9,12 @@
     "*.import": true,
     "*.tres": true,
     "*.tscn": true,
-    ".direnv": true
+    ".direnv": true,
+    "flake.lock": true,
+    ".envrc": true,
+    ".git*": true,
+    "project.godot": true,
+    ".godot": true,
+    ".zed": true
   }
 }

@@ -1,69 +1,59 @@
 #!/usr/bin/env python3
 import sys
+import time
 import csv
-import re
 
-# Goated ChadGPT script that tells you the PL of the ROS network that you subscribe to.
-# To launch, run ros2 topic echo {TOPIC} | python3 ros_pl_calculator.py
-# Where {TOPIC} is the topic you wish to target.
-# Even more useful with a shell integration like starship to tell you the elapsed time automagically
+# To use, pipe a ros2 topic echo into this file
+# ex. ros2 topic echo /core/control | python3 ros_pl_calculator.py
+# Doesn't actually calculate packet loss directly now, instead it
+# outputs what packets arrived late from what it was expecting.
+
+EXPECTED_INTERVAL = 0.001  # 3 ms
+CSV_FILE = "../discrepancy_log.csv"
 
 def main():
-    print("Listening for ROS2 message headers on stdin... (Ctrl+C to stop)")
-    print("Expecting messages in format:\n---\ndata: x\n---\n")
+    last_time = None
+    message_index = 0
 
-    packet_ids = []
-    output_csv = "../ros_packets.csv"
+    # Open CSV and write header
+    with open(CSV_FILE, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["message_index", "interval_ms", "excess_delay_ms"])
 
-    # Regex to extract "data: <number>"
-    data_pattern = re.compile(r"data:\s*(\d+)")
+        for line in sys.stdin:
+            line = line.strip()
+            if not line:
+                continue
 
-    with open(output_csv, "w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Packet_ID"])  # CSV header
+            now = time.time()
+            message_index += 1
 
-        buffer = []
-        try:
-            for line in sys.stdin:
-                line = line.strip()
-                if not line:
-                    continue
+            if last_time is not None:
+                interval = now - last_time
 
-                buffer.append(line)
+                # Only count as discrepancy if interval > expected
+                if interval > EXPECTED_INTERVAL:
+                    excess_delay = interval - EXPECTED_INTERVAL
+                    interval_ms = interval * 1000
+                    excess_delay_ms = excess_delay * 1000
 
-                # End of ROS2 message header
-                if line == "---":
-                    for bline in buffer:
-                        match = data_pattern.match(bline)
-                        if match:
-                            try:
-                                pid = int(match.group(1))
-                                packet_ids.append(pid)
-                                writer.writerow([pid])
-                                csvfile.flush()
-                                break
-                            except ValueError:
-                                print(f"⚠️  Invalid data value: {bline}")
-                    buffer = []  # Reset for next message
+                    # 🔸 Print to console
+                    print(
+                        f"[LATE] Msg {message_index}: "
+                        f"Interval = {interval_ms:.3f} ms, "
+                        f"Exceeded by = {excess_delay_ms:.3f} ms"
+                    )
 
-        except KeyboardInterrupt:
-            print("\n🛑 Stopped by user.\n")
+                    # 🔸 Write to CSV
+                    writer.writerow([
+                        message_index,
+                        interval_ms,
+                        excess_delay_ms
+                    ])
+                    f.flush()
 
-    # Analyze received packets
-    if not packet_ids:
-        print("No valid packet IDs were received.")
-        return
+            last_time = now
 
-    packet_ids = sorted(set(packet_ids))
-    start, end = packet_ids[0], packet_ids[-1]
-    total_expected = end - start + 1
-    total_received = len(packet_ids)
-    lost_count = total_expected - total_received
-    packet_loss_percent = (lost_count / total_expected) * 100
-
-    print(f"✅ Received {total_received}/{total_expected} packets.")
-    print(f"📄 Logged to: {output_csv}")
-    print(f"⚠️ Packet loss: {packet_loss_percent:.2f}% ({lost_count} packets lost)")
 
 if __name__ == "__main__":
     main()

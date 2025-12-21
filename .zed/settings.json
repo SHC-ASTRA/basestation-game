@@ -1,7 +1,6 @@
 {
   "file_scan_exclusions": [
-    ".uid",
-    ".git/*",
+    "*.uid",
     ".config/*",
     ".gitattributes",
     "*.old",
@@ -9,6 +8,12 @@
     "*.import",
     "*.tres",
     "*.tscn",
-    ".direnv"
+    ".direnv",
+    "flake.lock",
+    ".envrc",
+    ".git*",
+    "project.godot",
+    ".godot",
+    ".vscode"
   ]
 }
