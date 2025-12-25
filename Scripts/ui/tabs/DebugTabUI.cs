@@ -11,5 +11,6 @@ namespace ui
 
         public override void AdvertiseToROS() { }
         public override void EmitToROS() { }
+        public override void _ExitTree() { }
     }
 }

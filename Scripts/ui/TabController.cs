@@ -26,11 +26,14 @@ namespace ui
             }
 
             tabs = [.. TabsParent.GetChildren().Where(static _ => _ is BaseTabUI).Cast<BaseTabUI>()];
-        }
 
-        public override void _Process(double delta)
-        {
-
+            i = 0;
+            while (i < tabs.Count)
+            {
+                tabs[i].ProcessMode = ProcessModeEnum.Disabled;
+                i++;
+            }
+            tabs[selectedTab].ProcessMode = ProcessModeEnum.Inherit;
         }
 
         public void SwitchTab()
@@ -43,6 +46,7 @@ namespace ui
                 {
                     buttons[i].Disabled = false;
                     tabs[i].Hide();
+                    tabs[i].ProcessMode = ProcessModeEnum.Disabled;
                 }
                 if (buttons[i].ButtonPressed)
                     t = i;
@@ -50,6 +54,7 @@ namespace ui
             }
             selectedTab = t;
             buttons[t].Disabled = true;
+            tabs[t].ProcessMode = ProcessModeEnum.Inherit;
             tabs[t].Show();
         }
     }

@@ -8,11 +8,9 @@ namespace ui
     {
         public override void AdvertiseToROS()
         {
-
+            ROS.RequestTopic<AutoNav>(ControlTopicName);
         }
-        public override void EmitToROS()
-        {
-
-        }
+        public override void EmitToROS() { }
+        public override void _ExitTree() { }
     }
 }

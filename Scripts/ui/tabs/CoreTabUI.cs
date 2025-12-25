@@ -8,13 +8,22 @@ namespace ui
     public partial class CoreTabUI : BaseTabUI
     {
         private CoreControl msg = new();
+        private PtzControl ptzmsg = new();
+
 
         public const bool TankDriving = true;
 
+        [ExportCategory("Core")]
+        [ExportGroup("Motors")]
         [Export]
-        public ProgressBar LMotor, RMotor;
+        public ProgressBar LMotor;
+        [Export]
+        public ProgressBar RMotor;
 
-        [ExportCategory("PTZ")]
+        [ExportGroup("PTZ")]
+        [Export]
+        public string ControlPTZTopic;
+
         [ExportSubgroup("Rendering")]
         [Export]
         public Camera3D PTZRenderCam;
@@ -27,13 +36,20 @@ namespace ui
 
         [ExportSubgroup("Controlling")]
         [Export]
-        public Label PTZRotX, PTZRotY, PTZRotZ;
+        public Label PTZRotX, PTZRotY;
 
         [Export]
         public VSlider Zoom;
 
-        public Vector3I PTZRotation;
-        public float PTZZoom;
+        [ExportGroup("Brake")]
+        [Export]
+        private ColoredIndicator BrakeIndicator;
+        [Export]
+        private TextureRect Brake;
+        public bool BrakeState = true;
+
+        public int MaxSpeed = 60;
+        private double MaxSpeedCollector = 0;
 
         public override void _Ready()
         {
@@ -43,19 +59,21 @@ namespace ui
             if (windowSize < 16) windowSize = 16;
             PTZSubViewport.Size = new Vector2I(windowSize, windowSize);
 
-            PTZRotX.Text = "Y:" + PTZRotation.X.ToString().PadLeft(3, ' ');
-            PTZRotY.Text = "P:" + PTZRotation.Y.ToString().PadLeft(3, ' ');
-            PTZRotZ.Text = "R:" + PTZRotation.Z.ToString().PadLeft(3, ' ');
+            GetTree().Root.SizeChanged += Resize;
+
+            PTZRotX.Text = "Y:" + ptzmsg.yaw.ToString().PadLeft(3, ' ');
+            PTZRotY.Text = "P:" + ptzmsg.pitch.ToString().PadLeft(3, ' ');
+        }
+
+        public void Resize()
+        {
+            if (this.Size.Y < WindowSize.Y * 0.125f)
+                PTZSubViewport.Size = new Vector2I((int)(WindowSize.Y * 0.125f), (int)(WindowSize.Y * 0.125f));
         }
 
         public override void _Process(double delta)
         {
             base._Process(delta);
-
-            if (this.Size.Y < WindowSize.Y * 0.125f)
-            {
-                PTZSubViewport.Size = new Vector2I((int)(WindowSize.Y * 0.125f), (int)(WindowSize.Y * 0.125f));
-            }
 
             if (TankDriving)
             {
@@ -69,14 +87,43 @@ namespace ui
                 RMotor.Value = LeftStick.Y - RightStick.X;
             }
 
-            if (UpButton)
+            bool b = XButton + AButton + BButton > 0;
+            if (b != BrakeState)
+            {
+                BrakeState = b;
+                BrakeIndicator.Value = b;
+                Brake.Visible = b;
+            }
+
+            if (UpButtonDown)
                 PTZUp();
-            else if (DownButton)
+            else if (DownButtonDown)
                 PTZDown();
-            if (LeftButton)
+            if (LeftButtonDown)
                 PTZLeft();
-            else if (RightButton)
+            else if (RightButtonDown)
                 PTZRight();
+
+            if (RightTrigger > 0)
+            {
+                MaxSpeedCollector += delta * 15;
+                if (MaxSpeedCollector > 1)
+                {
+                    MaxSpeedCollector = 0;
+                    if (MaxSpeed < 100)
+                        MaxSpeed++;
+                }
+            }
+            else if (LeftTrigger > 0)
+            {
+                MaxSpeedCollector -= delta * 15;
+                if (MaxSpeedCollector < -1)
+                {
+                    MaxSpeedCollector = 0;
+                    if (MaxSpeed > 0)
+                        MaxSpeed--;
+                }
+            }
 
             // Meant to stress-test ROSBridge
             // if (ROS.ROSReady && !threadstarted)
@@ -86,90 +133,99 @@ namespace ui
             // }
         }
 
-        public static int ConstWrap(ref int value, int min, int max)
+        public static float ConstWrap(float value, float min, float max)
         {
-            int range = max - min;
+            float range = max - min;
             return min + ((((value - min) % range) + range) % range);
         }
 
         public void PTZUp()
         {
-            PTZRotation.Y += 5;
+            ptzmsg.pitch += 5;
             PushToPTZ();
         }
 
         public void PTZDown()
         {
-            PTZRotation.Y -= 5;
+            ptzmsg.pitch -= 5;
             PushToPTZ();
         }
 
         public void PTZLeft()
         {
-            PTZRotation.X -= 5;
+            ptzmsg.yaw -= 5;
             PushToPTZ();
         }
 
         public void PTZRight()
         {
-            PTZRotation.X += 5;
-            PushToPTZ();
-        }
-
-        public void PTZRollLeft()
-        {
-            PTZRotation.Z -= 5;
-            PushToPTZ();
-        }
-
-        public void PTZRollRight()
-        {
-            PTZRotation.Z += 5;
+            ptzmsg.yaw += 5;
             PushToPTZ();
         }
 
         public void PTZCenter()
         {
-            PTZRotation = Vector3I.Zero;
+            ptzmsg.pitch = ptzmsg.yaw = 0;
             PushToPTZ();
         }
 
-
         public void PushToPTZ()
         {
-            if (PTZRotation.Y > 105)
-                PTZRotation.Y = 105;
-            else if (PTZRotation.Y < -105)
-                PTZRotation.Y = -105;
+            if (ptzmsg.pitch > 134)
+                ptzmsg.pitch = 134;
+            else if (ptzmsg.pitch < -134)
+                ptzmsg.pitch = -134;
 
-            PTZRotation.Z = ConstWrap(ref PTZRotation.Z, 0, 360);
+            ptzmsg.yaw = ConstWrap(ptzmsg.yaw, 0, 360);
 
-            PTZRotation.X = ConstWrap(ref PTZRotation.X, 0, 360);
+            float ZoomAmount = (float)Zoom.Value;
 
-            PTZAxis0.RotationDegrees = Vector3.Up * PTZRotation.X;
-            PTZAxis1.RotationDegrees = Vector3.Right * PTZRotation.Y;
-            Debug.Log(DebugID, $"Setting PTZ rotation to {PTZRotation} and zoom {PTZZoom}");
-            PTZRotX.Text = "Y:" + PTZRotation.X.ToString().PadLeft(3, ' ');
-            PTZRotY.Text = "P:" + PTZRotation.Y.ToString().PadLeft(3, ' ');
-            PTZRotZ.Text = "R:" + PTZRotation.Z.ToString().PadLeft(3, ' ');
+            PTZAxis0.RotationDegrees = Vector3.Up * ptzmsg.pitch;
+            PTZAxis1.RotationDegrees = Vector3.Right * ptzmsg.yaw;
+            Debug.Log(DebugID, $"Setting PTZ rotation to (X:{ptzmsg.yaw},Y:{ptzmsg.pitch}) and zoom {ZoomAmount}");
+            PTZRotX.Text = "Y:" + ptzmsg.yaw.ToString().PadLeft(3, ' ');
+            PTZRotY.Text = "P:" + ptzmsg.pitch.ToString().PadLeft(3, ' ');
+
+            ptzmsg.control_mode = 1;
+            ROS.Publish(ControlPTZTopic, ptzmsg);
+            if (ptzmsg.zoom_level != ZoomAmount)
+            {
+                ptzmsg.control_mode = 3;
+                ptzmsg.zoom_level = ZoomAmount;
+                ROS.Publish(ControlPTZTopic, ptzmsg);
+            }
         }
 
         public override void AdvertiseToROS()
         {
-            ROS.RequestTopic<CoreControl>(TopicName);
+            ROS.RequestTopic<CoreControl>(ControlTopicName);
+            ROS.RequestTopic<PtzControl>(ControlPTZTopic);
         }
 
         public override void EmitToROS()
         {
             msg.left_stick = (float)LMotor.Value;
             msg.right_stick = (float)RMotor.Value;
-            msg.max_speed = 60;
-            msg.brake = BButton > 0;
+            msg.max_speed = MaxSpeed;
+            msg.brake = BrakeState;
             msg.turn_to_enable = false;
             msg.turn_to = 0f;
             msg.turn_to_timeout = 0f;
 
-            ROS.Publish("/core/control", msg);
+            ROS.Publish(ControlTopicName, msg);
+        }
+
+        public override void _ExitTree()
+        {
+            msg.left_stick = 0f;
+            msg.right_stick = 0f;
+            msg.max_speed = 0;
+            msg.brake = true;
+            msg.turn_to_enable = false;
+            msg.turn_to = 0f;
+            msg.turn_to_timeout = 0f;
+
+            ROS.Publish(ControlTopicName, msg);
         }
     }
 
