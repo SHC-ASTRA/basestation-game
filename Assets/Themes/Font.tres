@@ -1,5 +1,6 @@
 [gd_resource type="SystemFont" format=3 uid="uid://dppdymum6rgbi"]
 
 [resource]
-font_names = PackedStringArray("Julius Sans One", "Terminess Nerd Font", "ProFontWindows Nerd Font", "Minecraftia")
+font_names = PackedStringArray("Red Hat Mono", "Julius Sans One", "Terminess Nerd Font", "ProFontWindows Nerd Font", "Minecraftia")
+font_weight = 550
 oversampling = 4.0

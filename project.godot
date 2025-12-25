@@ -11,15 +11,19 @@ config_version=5
 [application]
 
 config/name="basestation-game"
+config/description="Control clucky"
+config/version="1.0.0.0"
 run/main_scene="uid://bjwmxrn1okacu"
+run/print_header=false
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
+run/low_processor_mode=true
 boot_splash/show_image=false
 config/icon="res://Assets/icon.svg"
 
 [display]
 
-window/size/viewport_width=2560
-window/size/viewport_height=1600
+window/size/viewport_width=1280
+window/size/viewport_height=800
 
 [dotnet]
 
@@ -29,10 +33,6 @@ project/assembly_name="basestation-game"
 
 run/main_run_args="basestation-cameras"
 
-[filesystem]
-
-import/blender/enabled=false
-
 [gui]
 
 theme/default_font_multichannel_signed_distance_field=true
@@ -41,131 +41,131 @@ theme/default_font_generate_mipmaps=true
 [input]
 
 LStickVP={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":1,"axis_value":-1.0,"script":null)
 ]
 }
 LStickVN={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":1,"axis_value":1.0,"script":null)
 ]
 }
 RStickVP={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":3,"axis_value":-1.0,"script":null)
 ]
 }
 RStickVN={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":3,"axis_value":1.0,"script":null)
 ]
 }
 LStickHP={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":0,"axis_value":1.0,"script":null)
 ]
 }
 LStickHN={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":0,"axis_value":-1.0,"script":null)
 ]
 }
 RStickHP={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":1.0,"script":null)
 ]
 }
 RStickHN={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":-1.0,"script":null)
 ]
 }
 UpBtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":11,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 DownBtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":12,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 LeftBtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":13,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 RightBtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":14,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 StartBtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":5,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 BackBtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": []
 }
 LStickPress={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":7,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 RStickPress={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":8,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 ABtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 BBtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":0,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 XBtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":3,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 YBtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":2,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 BlackBtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":4,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 WhiteBtn={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":6,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 LTrigger={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":4,"axis_value":1.0,"script":null)
 ]
 }
 RTrigger={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":5,"axis_value":1.0,"script":null)
 ]
 }
 LBumper={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":9,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 RBumper={
-"deadzone": 0.2,
+"deadzone": 0.08,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":10,"pressure":0.0,"pressed":true,"script":null)
 ]
 }

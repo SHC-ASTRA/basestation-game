@@ -7,7 +7,8 @@ namespace ui
     public abstract partial class BaseTabUI : Control
     {
         [Export]
-        public string TopicName;
+        public string ControlTopicName;
+        public string FeedbackTopicName;
 
         [Export]
         public bool ROSDependent;
@@ -18,6 +19,7 @@ namespace ui
 
         protected static int? DebugID;
 
+        protected static bool UpButtonDown, DownButtonDown, LeftButtonDown, RightButtonDown;
         protected static bool UpButton, DownButton, LeftButton, RightButton;
 
         protected static bool StartButton, BackButton;
@@ -53,16 +55,21 @@ namespace ui
         {
             WindowSize = GetWindow().Size;
 
-            UpButton = Input.IsActionJustPressed("UpBtn");
-            DownButton = Input.IsActionJustPressed("DownBtn");
-            LeftButton = Input.IsActionJustPressed("LeftBtn");
-            RightButton = Input.IsActionJustPressed("RightBtn");
+            UpButtonDown = Input.IsActionJustPressed("UpBtn");
+            DownButtonDown = Input.IsActionJustPressed("DownBtn");
+            LeftButtonDown = Input.IsActionJustPressed("LeftBtn");
+            RightButtonDown = Input.IsActionJustPressed("RightBtn");
+
+            UpButton = Input.IsActionPressed("UpBtn");
+            DownButton = Input.IsActionPressed("DownBtn");
+            LeftButton = Input.IsActionPressed("LeftBtn");
+            RightButton = Input.IsActionPressed("RightBtn");
 
             StartButton = Input.IsActionJustPressed("StartBtn");
             BackButton = Input.IsActionJustPressed("BackBtn");
 
-            LeftStickPress = Input.IsActionJustPressed("LStickPress");
-            RightStickPress = Input.IsActionJustPressed("RStickPress");
+            LeftStickPress = Input.IsActionPressed("LStickPress");
+            RightStickPress = Input.IsActionPressed("RStickPress");
 
             AButton = Input.GetActionStrength("ABtn");
             BButton = Input.GetActionStrength("BBtn");
@@ -91,5 +98,7 @@ namespace ui
 
         public abstract void AdvertiseToROS();
         public abstract void EmitToROS();
+
+        public override abstract void _ExitTree();
     }
 }

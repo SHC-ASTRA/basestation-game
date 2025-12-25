@@ -32,6 +32,8 @@ anti_aliasing = false
 anti_aliasing = false
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_y35kt"]
+grow_begin = 0.0
+grow_end = 0.0
 thickness = 8
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_pfmjc"]

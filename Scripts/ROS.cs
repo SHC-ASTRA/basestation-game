@@ -3,7 +3,6 @@ using Godot;
 using System;
 using System.IO;
 using static Godot.OS;
-using System.Threading;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using RosSharp.RosBridgeClient;

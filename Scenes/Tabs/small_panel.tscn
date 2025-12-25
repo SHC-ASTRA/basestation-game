@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dh133i8yuxjts"]
+[gd_scene load_steps=37 format=3 uid="uid://dh133i8yuxjts"]
 
 [ext_resource type="Script" uid="uid://g1fm7oxy6y1p" path="res://Scripts/ui/TabController.cs" id="2_gwotu"]
 [ext_resource type="Script" uid="uid://blj4w3gbpdv55" path="res://Scripts/ui/tabs/ArmTabUI.cs" id="2_qq4qf"]
@@ -6,20 +6,40 @@
 [ext_resource type="Script" uid="uid://buiou1q2apvmu" path="res://Scripts/ui/tabs/CoreTabUI.cs" id="3_grmb5"]
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="3_gwotu"]
 [ext_resource type="PackedScene" uid="uid://cia5qesu3cdf5" path="res://Scenes/Prefabs/midway_Hprogress_bar.tscn" id="3_mxw14"]
+[ext_resource type="Theme" uid="uid://df2oheltoiwvh" path="res://Assets/Themes/ControlIndicators.tres" id="4_th4gl"]
 [ext_resource type="ArrayMesh" uid="uid://d140fswoxqbrf" path="res://PTZ/PTZbase.obj" id="5_m8v7i"]
 [ext_resource type="Script" uid="uid://jxxjq8kicbx3" path="res://Scripts/ui/tabs/AutonomyTabUI.cs" id="5_u4qwe"]
+[ext_resource type="Texture2D" uid="uid://d4ba8c5m84h60" path="res://Assets/tire profile.png" id="6_lq3nq"]
 [ext_resource type="Script" uid="uid://d34iyid2av2ba" path="res://Scripts/ui/tabs/BiosensorTabUI.cs" id="6_th4gl"]
 [ext_resource type="ArrayMesh" uid="uid://2wmjb5e4g57j" path="res://PTZ/PTZaxis1.obj" id="6_yplvc"]
+[ext_resource type="PackedScene" uid="uid://wbjb3q0icoe5" path="res://Scenes/Prefabs/colored_indicator.tscn" id="6_yrw8b"]
 [ext_resource type="ArrayMesh" uid="uid://dwjygjucoh5bb" path="res://PTZ/PTZaxis2.obj" id="7_7oid2"]
 [ext_resource type="Script" uid="uid://x3w6x56pbn6j" path="res://Scripts/ui/tabs/DebugTabUI.cs" id="7_qq4qf"]
+[ext_resource type="Texture2D" uid="uid://d3qibna8eoiar" path="res://Assets/tire brake.png" id="7_yrw8b"]
 [ext_resource type="Script" uid="uid://bmu4lwo4u52gj" path="res://Scripts/ui/FontScaler.cs" id="8_yplvc"]
+[ext_resource type="Texture2D" uid="uid://bb3iqpbhicn5k" path="res://Assets/Laser.png" id="8_yrw8b"]
 [ext_resource type="Script" uid="uid://dparcksj3vfpt" path="res://Scripts/ui/tabs/DroneTabUI.cs" id="11_cjwn0"]
+[ext_resource type="Texture2D" uid="uid://c6jtf76trlo63" path="res://Assets/pump.png" id="12_a86w8"]
 [ext_resource type="Script" uid="uid://b4hy4ahso6mcu" path="res://Scripts/ui/tabs/CamsTabUI.cs" id="12_lq3nq"]
+[ext_resource type="PackedScene" uid="uid://d3cdd401jxq8c" path="res://Scenes/Prefabs/_|_.tscn" id="13_8exja"]
+[ext_resource type="Theme" uid="uid://b5luolcpyxkpc" path="res://Assets/Themes/RunButton.tres" id="13_hy72e"]
+[ext_resource type="Texture2D" uid="uid://dpbar0pn7rw1j" path="res://Assets/Fan.png" id="14_s2hv3"]
+[ext_resource type="Texture2D" uid="uid://b3ka5olqga8db" path="res://Assets/Servo.png" id="15_hy72e"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_7oid2"]
 grow_begin = 0.0
 grow_end = 0.0
 thickness = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2hv3"]
+bg_color = Color(0.32156864, 0.63529414, 0.22745098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_detail = 1
+anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gwotu"]
 bg_color = Color(0.312836, 0.312836, 0.312836, 1)
@@ -120,86 +140,657 @@ theme_override_styles/separator = SubResource("StyleBoxLine_7oid2")
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
-[node name="arm" type="HBoxContainer" parent="TabsParent" node_paths=PackedStringArray("Axis0drive", "Axis1drive", "Axis2drive", "Axis3drive")]
-layout_mode = 2
-script = ExtResource("2_qq4qf")
-Axis0drive = NodePath("VBoxContainer/Drive1/Axis0")
-Axis1drive = NodePath("VBoxContainer/Drive1/Axis1")
-Axis2drive = NodePath("VBoxContainer/Drive2/Axis2")
-Axis3drive = NodePath("VBoxContainer/Drive2/Axis3")
-TopicName = "/arm/control/manual"
-ROSDependent = true
-
-[node name="VSep" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/arm"]
+[node name="arm" type="HBoxContainer" parent="TabsParent" node_paths=PackedStringArray("Axis0drive", "Axis1drive", "Axis2drive", "Axis3drive", "BrakeIndicator", "Brake", "EndEffectorRoll", "EndEffectorYaw", "LinearActuatorDrive", "GripperDrive", "LaserIndicator", "Laser")]
+visible = false
 layout_mode = 2
 alignment = 1
+script = ExtResource("2_qq4qf")
+Axis0drive = NodePath("Axese/=/Drive01/Axis0")
+Axis1drive = NodePath("Axese/=/Drive01/Axis1")
+Axis2drive = NodePath("Axese/=/Drive23/Axis2")
+Axis3drive = NodePath("Axese/=/Drive23/Axis3")
+BrakeIndicator = NodePath("Brake/BrakeContainer/ColoredIndicator")
+Brake = NodePath("Brake/BrakeContainer/Brake")
+EndEffectorRoll = NodePath("EE/EER/Roll")
+EndEffectorYaw = NodePath("EE/EEY/Yaw")
+LinearActuatorDrive = NodePath("LA_Gripper/LA/LinearActuator")
+GripperDrive = NodePath("LA_Gripper/Gripper/Gripper")
+LaserIndicator = NodePath("Laser/LaserContainer/ColoredIndicator")
+Laser = NodePath("Laser/LaserContainer/TextureRect")
+ControlTopicName = "/arm/manual/control"
+ROSDependent = true
 
-[node name="Drive1" type="HBoxContainer" parent="TabsParent/arm/VBoxContainer"]
+[node name="I" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+layout_mode = 2
+
+[node name="Axese" type="HBoxContainer" parent="TabsParent/arm"]
+layout_mode = 2
+
+[node name="Axese" type="Label" parent="TabsParent/arm/Axese"]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+text = "Axese"
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="=" type="VBoxContainer" parent="TabsParent/arm/Axese"]
+layout_mode = 2
+theme = ExtResource("4_th4gl")
+alignment = 1
+
+[node name="Drive01" type="HBoxContainer" parent="TabsParent/arm/Axese/="]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Axis0" parent="TabsParent/arm/VBoxContainer/Drive1" instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(120, 0)
+[node name="Axis0" parent="TabsParent/arm/Axese/=/Drive01" instance=ExtResource("3_mxw14")]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-Max = 180.0
-Min = -180.0
+Max = 1.0
+Min = -1.0
 
-[node name="Axis1" parent="TabsParent/arm/VBoxContainer/Drive1" instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(120, 0)
+[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive01/Axis0"]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 27.0
+text = " 0"
+
+[node name="Axis1" parent="TabsParent/arm/Axese/=/Drive01" instance=ExtResource("3_mxw14")]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-Max = 180.0
-Min = -180.0
+Max = 1.0
+Min = -1.0
 
-[node name="Drive2" type="HBoxContainer" parent="TabsParent/arm/VBoxContainer"]
+[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive01/Axis1"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 27.0
+text = " 1"
+
+[node name="Drive23" type="HBoxContainer" parent="TabsParent/arm/Axese/="]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Axis2" parent="TabsParent/arm/VBoxContainer/Drive2" instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(120, 0)
+[node name="Axis2" parent="TabsParent/arm/Axese/=/Drive23" instance=ExtResource("3_mxw14")]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-Max = 180.0
-Min = -180.0
+Max = 1.0
+Min = -1.0
 
-[node name="Axis3" parent="TabsParent/arm/VBoxContainer/Drive2" instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(120, 0)
+[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive23/Axis2"]
+layout_mode = 0
+offset_right = 15.0
+offset_bottom = 27.0
+text = " 2"
+
+[node name="Axis3" parent="TabsParent/arm/Axese/=/Drive23" instance=ExtResource("3_mxw14")]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-Max = 180.0
-Min = -180.0
+Max = 1.0
+Min = -1.0
+
+[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive23/Axis3"]
+layout_mode = 0
+offset_right = 14.0
+offset_bottom = 27.0
+text = " 3"
+
+[node name="I2" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+layout_mode = 2
+
+[node name="Brake" type="VBoxContainer" parent="TabsParent/arm"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabsParent/arm/Brake"]
+layout_mode = 2
+text = "Brake"
+horizontal_alignment = 1
+
+[node name="BrakeContainer" type="AspectRatioContainer" parent="TabsParent/arm/Brake"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/arm/Brake/BrakeContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/arm/Brake/BrakeContainer"]
+layout_mode = 2
+texture = ExtResource("6_lq3nq")
+expand_mode = 1
+flip_v = true
+
+[node name="Brake" type="TextureRect" parent="TabsParent/arm/Brake/BrakeContainer"]
+layout_mode = 2
+texture = ExtResource("7_yrw8b")
+expand_mode = 1
+flip_v = true
+
+[node name="I3" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+layout_mode = 2
+
+[node name="EE" type="VBoxContainer" parent="TabsParent/arm"]
+layout_mode = 2
+theme = ExtResource("4_th4gl")
+
+[node name="EER" type="PanelContainer" parent="TabsParent/arm/EE"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Roll" parent="TabsParent/arm/EE/EER" instance=ExtResource("3_mxw14")]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+Max = 1.0
+Min = -1.0
+
+[node name="Label" type="Label" parent="TabsParent/arm/EE/EER"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "End effector
+Roll"
+horizontal_alignment = 1
+
+[node name="EEY" type="PanelContainer" parent="TabsParent/arm/EE"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Yaw" parent="TabsParent/arm/EE/EEY" instance=ExtResource("3_mxw14")]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+Max = 1.0
+Min = -1.0
+
+[node name="Label" type="Label" parent="TabsParent/arm/EE/EEY"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "End effector
+Yaw"
+horizontal_alignment = 1
+
+[node name="VSep3" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+layout_mode = 2
+
+[node name="LA_Gripper" type="VBoxContainer" parent="TabsParent/arm"]
+layout_mode = 2
+theme = ExtResource("4_th4gl")
+
+[node name="LA" type="PanelContainer" parent="TabsParent/arm/LA_Gripper"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LinearActuator" parent="TabsParent/arm/LA_Gripper/LA" instance=ExtResource("3_mxw14")]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+Max = 1.0
+Min = -1.0
+
+[node name="Label" type="Label" parent="TabsParent/arm/LA_Gripper/LA"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Linear Actuator"
+horizontal_alignment = 1
+
+[node name="Gripper" type="PanelContainer" parent="TabsParent/arm/LA_Gripper"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Gripper" parent="TabsParent/arm/LA_Gripper/Gripper" instance=ExtResource("3_mxw14")]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+Max = 1.0
+Min = -1.0
+
+[node name="Label" type="Label" parent="TabsParent/arm/LA_Gripper/Gripper"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 22
+text = "Gripper"
+horizontal_alignment = 1
+
+[node name="VSep4" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+layout_mode = 2
+
+[node name="Laser" type="VBoxContainer" parent="TabsParent/arm"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabsParent/arm/Laser"]
+layout_mode = 2
+text = "Laser"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LaserContainer" type="AspectRatioContainer" parent="TabsParent/arm/Laser"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/arm/Laser/LaserContainer" instance=ExtResource("6_yrw8b")]
+custom_minimum_size = Vector2(107, 29)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/arm/Laser/LaserContainer"]
+layout_mode = 2
+texture = ExtResource("8_yrw8b")
+stretch_mode = 3
+
+[node name="i^" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+layout_mode = 2
 
 [node name="auto" type="HBoxContainer" parent="TabsParent"]
 visible = false
 layout_mode = 2
+alignment = 1
 script = ExtResource("5_u4qwe")
-TopicName = "/autonomy/control"
+ControlTopicName = "/auto/control"
 ROSDependent = true
 
-[node name="bio" type="HBoxContainer" parent="TabsParent"]
-visible = false
+[node name="bio" type="HBoxContainer" parent="TabsParent" node_paths=PackedStringArray("PumpAmounts", "PumpRuns", "FanDurations", "FanRuns", "ServoStates", "ServoRun")]
 layout_mode = 2
+alignment = 1
 script = ExtResource("6_th4gl")
-TopicName = "/bio/control"
+PumpAmounts = [NodePath("Pumps/Pump1/Amount"), NodePath("Pumps/Pump2/Amount"), NodePath("Pumps/Pump3/Amount"), NodePath("Pumps/Pump4/Amount")]
+PumpRuns = [NodePath("Pumps/Pump1/Run"), NodePath("Pumps/Pump2/Run"), NodePath("Pumps/Pump3/Run"), NodePath("Pumps/Pump4/Run")]
+FanDurations = [NodePath("Fans/Fan1/Amount"), NodePath("Fans/Fan2/Amount"), NodePath("Fans/Fan3/Amount")]
+FanRuns = [NodePath("Fans/Fan1/Run"), NodePath("Fans/Fan2/Run"), NodePath("Fans/Fan3/Run")]
+ServoStates = [NodePath("Servos/Servo1/Wiggle"), NodePath("Servos/Servo2/Wiggle"), NodePath("Servos/Servo3/Wiggle")]
+ServoRun = [NodePath("Servos/Servo1/Run"), NodePath("Servos/Servo2/Run"), NodePath("Servos/Servo3/Run")]
+ControlTopicName = "/bio/control"
 ROSDependent = true
 
-[node name="core" type="HBoxContainer" parent="TabsParent" node_paths=PackedStringArray("LMotor", "RMotor", "PTZRenderCam", "PTZSubViewport", "PTZAxis0", "PTZAxis1", "PTZRotX", "PTZRotY", "PTZRotZ", "Zoom")]
+[node name="|" parent="TabsParent/bio" instance=ExtResource("3_5ljfu")]
+layout_mode = 2
+
+[node name="Pumps" type="HBoxContainer" parent="TabsParent/bio"]
+layout_mode = 2
+
+[node name="Pump1" type="VBoxContainer" parent="TabsParent/bio/Pumps"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/bio/Pumps/Pump1"]
+layout_mode = 2
+text = "Pump 1"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Pumps/Pump1"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/bio/Pumps/Pump1/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Pumps/Pump1/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("12_a86w8")
+
+[node name="Amount" type="SpinBox" parent="TabsParent/bio/Pumps/Pump1"]
+layout_mode = 2
+theme_override_constants/field_and_buttons_separation = -16
+theme_override_constants/buttons_width = 0
+max_value = 999.0
+alignment = 1
+suffix = "Ml"
+
+[node name="Run" type="Button" parent="TabsParent/bio/Pumps/Pump1"]
+layout_mode = 2
+theme = ExtResource("13_hy72e")
+text = "Run"
+
+[node name="-|-" parent="TabsParent/bio/Pumps" instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="Pump2" type="VBoxContainer" parent="TabsParent/bio/Pumps"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/bio/Pumps/Pump2"]
+layout_mode = 2
+text = "Pump 2"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Pumps/Pump2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/bio/Pumps/Pump2/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Pumps/Pump2/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("12_a86w8")
+
+[node name="Amount" type="SpinBox" parent="TabsParent/bio/Pumps/Pump2"]
+layout_mode = 2
+theme_override_constants/field_and_buttons_separation = -16
+theme_override_constants/buttons_width = 0
+max_value = 999.0
+alignment = 1
+suffix = "Ml"
+
+[node name="Run" type="Button" parent="TabsParent/bio/Pumps/Pump2"]
+layout_mode = 2
+theme = ExtResource("13_hy72e")
+text = "Run"
+
+[node name="-|-2" parent="TabsParent/bio/Pumps" instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="Pump3" type="VBoxContainer" parent="TabsParent/bio/Pumps"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/bio/Pumps/Pump3"]
+layout_mode = 2
+text = "Pump 3"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Pumps/Pump3"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/bio/Pumps/Pump3/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Pumps/Pump3/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("12_a86w8")
+
+[node name="Amount" type="SpinBox" parent="TabsParent/bio/Pumps/Pump3"]
+layout_mode = 2
+theme_override_constants/field_and_buttons_separation = -16
+theme_override_constants/buttons_width = 0
+max_value = 999.0
+alignment = 1
+suffix = "Ml"
+
+[node name="Run" type="Button" parent="TabsParent/bio/Pumps/Pump3"]
+layout_mode = 2
+theme = ExtResource("13_hy72e")
+text = "Run"
+
+[node name="-|-3" parent="TabsParent/bio/Pumps" instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="Pump4" type="VBoxContainer" parent="TabsParent/bio/Pumps"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/bio/Pumps/Pump4"]
+layout_mode = 2
+text = "Pump 4"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Pumps/Pump4"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/bio/Pumps/Pump4/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Pumps/Pump4/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("12_a86w8")
+
+[node name="Amount" type="SpinBox" parent="TabsParent/bio/Pumps/Pump4"]
+layout_mode = 2
+theme_override_constants/field_and_buttons_separation = -16
+theme_override_constants/buttons_width = 0
+max_value = 999.0
+alignment = 1
+suffix = "Ml"
+
+[node name="Run" type="Button" parent="TabsParent/bio/Pumps/Pump4"]
+layout_mode = 2
+theme = ExtResource("13_hy72e")
+text = "Run"
+
+[node name="|2" parent="TabsParent/bio" instance=ExtResource("3_5ljfu")]
+layout_mode = 2
+
+[node name="Fans" type="HBoxContainer" parent="TabsParent/bio"]
+layout_mode = 2
+
+[node name="Fan1" type="VBoxContainer" parent="TabsParent/bio/Fans"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/bio/Fans/Fan1"]
+layout_mode = 2
+text = "Fan 1"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Fans/Fan1"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/bio/Fans/Fan1/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Fans/Fan1/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("14_s2hv3")
+
+[node name="Amount" type="SpinBox" parent="TabsParent/bio/Fans/Fan1"]
+layout_mode = 2
+theme_override_constants/field_and_buttons_separation = -16
+theme_override_constants/buttons_width = 0
+max_value = 999.0
+alignment = 1
+suffix = "Ms"
+
+[node name="Run" type="Button" parent="TabsParent/bio/Fans/Fan1"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("13_hy72e")
+text = "Run"
+
+[node name="-|-" parent="TabsParent/bio/Fans" instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="Fan2" type="VBoxContainer" parent="TabsParent/bio/Fans"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/bio/Fans/Fan2"]
+layout_mode = 2
+text = "Fan 2"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Fans/Fan2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/bio/Fans/Fan2/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Fans/Fan2/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("14_s2hv3")
+
+[node name="Amount" type="SpinBox" parent="TabsParent/bio/Fans/Fan2"]
+layout_mode = 2
+theme_override_constants/field_and_buttons_separation = -16
+theme_override_constants/buttons_width = 0
+max_value = 999.0
+alignment = 1
+suffix = "Ms"
+
+[node name="Run" type="Button" parent="TabsParent/bio/Fans/Fan2"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("13_hy72e")
+text = "Run"
+
+[node name="-|-2" parent="TabsParent/bio/Fans" instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="Fan3" type="VBoxContainer" parent="TabsParent/bio/Fans"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/bio/Fans/Fan3"]
+layout_mode = 2
+text = "Fan 3"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Fans/Fan3"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/bio/Fans/Fan3/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Fans/Fan3/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("14_s2hv3")
+
+[node name="Amount" type="SpinBox" parent="TabsParent/bio/Fans/Fan3"]
+layout_mode = 2
+theme_override_constants/field_and_buttons_separation = -16
+theme_override_constants/buttons_width = 0
+max_value = 999.0
+alignment = 1
+suffix = "Ms"
+
+[node name="Run" type="Button" parent="TabsParent/bio/Fans/Fan3"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("13_hy72e")
+text = "Run"
+
+[node name="|3" parent="TabsParent/bio" instance=ExtResource("3_5ljfu")]
+layout_mode = 2
+
+[node name="Servos" type="HBoxContainer" parent="TabsParent/bio"]
+layout_mode = 2
+
+[node name="Servo1" type="VBoxContainer" parent="TabsParent/bio/Servos"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/bio/Servos/Servo1"]
+layout_mode = 2
+text = "Servo 1"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Servos/Servo1"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/bio/Servos/Servo1/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Servos/Servo1/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("15_hy72e")
+
+[node name="Wiggle" type="Button" parent="TabsParent/bio/Servos/Servo1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
+toggle_mode = true
+text = "Wiggle"
+
+[node name="Run" type="Button" parent="TabsParent/bio/Servos/Servo1"]
+layout_mode = 2
+theme = ExtResource("13_hy72e")
+text = "Run"
+
+[node name="-|-" parent="TabsParent/bio/Servos" instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="Servo2" type="VBoxContainer" parent="TabsParent/bio/Servos"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/bio/Servos/Servo2"]
+layout_mode = 2
+text = "Servo 2"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Servos/Servo2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/bio/Servos/Servo2/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Servos/Servo2/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("15_hy72e")
+
+[node name="Wiggle" type="Button" parent="TabsParent/bio/Servos/Servo2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
+toggle_mode = true
+text = "Wiggle"
+
+[node name="Run" type="Button" parent="TabsParent/bio/Servos/Servo2"]
+layout_mode = 2
+theme = ExtResource("13_hy72e")
+text = "Run"
+
+[node name="-|-2" parent="TabsParent/bio/Servos" instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="Servo3" type="VBoxContainer" parent="TabsParent/bio/Servos"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/bio/Servos/Servo3"]
+layout_mode = 2
+text = "Servo 3"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Servos/Servo3"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/bio/Servos/Servo3/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Servos/Servo3/AspectRatioContainer"]
+layout_mode = 2
+texture = ExtResource("15_hy72e")
+
+[node name="Wiggle" type="Button" parent="TabsParent/bio/Servos/Servo3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
+toggle_mode = true
+text = "Wiggle"
+
+[node name="Run" type="Button" parent="TabsParent/bio/Servos/Servo3"]
+layout_mode = 2
+theme = ExtResource("13_hy72e")
+text = "Run"
+
+[node name="-|-3" parent="TabsParent/bio/Servos" instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="core" type="HBoxContainer" parent="TabsParent" node_paths=PackedStringArray("LMotor", "RMotor", "PTZRenderCam", "PTZSubViewport", "PTZAxis0", "PTZAxis1", "PTZRotX", "PTZRotY", "Zoom", "BrakeIndicator", "Brake")]
 visible = false
 layout_mode = 2
+alignment = 1
 script = ExtResource("3_grmb5")
 LMotor = NodePath("Motor Power/Motors/LMotors")
 RMotor = NodePath("Motor Power/Motors/RMotors")
+ControlPTZTopic = "/ptz/control"
 PTZRenderCam = NodePath("PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZCamera")
 PTZSubViewport = NodePath("PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay")
 PTZAxis0 = NodePath("PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZBase/PTZAxis0")
 PTZAxis1 = NodePath("PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZBase/PTZAxis0/PTZAxis1")
 PTZRotX = NodePath("PTZ/PTZDisplayContainer/HBoxContainer/PTZRotationY")
 PTZRotY = NodePath("PTZ/PTZDisplayContainer/HBoxContainer/PTZRotationP")
-PTZRotZ = NodePath("PTZ/PTZDisplayContainer/HBoxContainer/PTZRotationR")
 Zoom = NodePath("PTZ/PTZControlContainer/VBoxContainer2/Zoom")
-TopicName = "/core/control"
+BrakeIndicator = NodePath("Brake/BrakeContainer/ColoredIndicator")
+Brake = NodePath("Brake/BrakeContainer/Brake")
+ControlTopicName = "/core/control"
 ROSDependent = true
 
 [node name="|" parent="TabsParent/core" instance=ExtResource("3_5ljfu")]
@@ -211,6 +802,15 @@ layout_mode = 2
 [node name="Motors" type="HBoxContainer" parent="TabsParent/core/Motor Power"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="TabsParent/core/Motor Power/Motors"]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Motors"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="LMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/Motors"]
 custom_minimum_size = Vector2(50, 0)
@@ -240,6 +840,32 @@ layout_mode = 2
 [node name="Brake" type="VBoxContainer" parent="TabsParent/core"]
 layout_mode = 2
 
+[node name="Label" type="Label" parent="TabsParent/core/Brake"]
+layout_mode = 2
+text = "Brake"
+horizontal_alignment = 1
+
+[node name="BrakeContainer" type="AspectRatioContainer" parent="TabsParent/core/Brake"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/core/Brake/BrakeContainer" instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/core/Brake/BrakeContainer"]
+layout_mode = 2
+texture = ExtResource("6_lq3nq")
+expand_mode = 1
+flip_v = true
+
+[node name="Brake" type="TextureRect" parent="TabsParent/core/Brake/BrakeContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("7_yrw8b")
+expand_mode = 1
+flip_v = true
+
 [node name="|4" parent="TabsParent/core" instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
@@ -259,20 +885,20 @@ layout_mode = 2
 size_flags_vertical = 3
 columns = 3
 
-[node name="Button5" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
+[node name="Control3" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "⟲"
+theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
 [node name="Button" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "⇧"
 
-[node name="Button7" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
+[node name="Control4" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "⟳"
+theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
 [node name="Button2" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -356,15 +982,6 @@ text = "P:111"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PTZRotationR" type="Label" parent="TabsParent/core/PTZ/PTZDisplayContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 1
-theme_override_font_sizes/font_size = 20
-text = "R:111"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="SubViewportContainer" type="SubViewportContainer" parent="TabsParent/core/PTZ/PTZDisplayContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -401,18 +1018,20 @@ layout_mode = 2
 [node name="drone" type="HBoxContainer" parent="TabsParent"]
 visible = false
 layout_mode = 2
+alignment = 1
 script = ExtResource("11_cjwn0")
-TopicName = "/drone/control"
 ROSDependent = true
 
 [node name="cams" type="HBoxContainer" parent="TabsParent"]
 visible = false
 layout_mode = 2
+alignment = 1
 script = ExtResource("12_lq3nq")
 
 [node name="debug" type="HBoxContainer" parent="TabsParent"]
 visible = false
 layout_mode = 2
+alignment = 1
 script = ExtResource("7_qq4qf")
 
 [node name="Tabbar" type="HBoxContainer" parent="." node_paths=PackedStringArray("TabsParent")]
@@ -423,7 +1042,6 @@ theme_override_constants/separation = -1
 alignment = 2
 script = ExtResource("2_gwotu")
 TabsParent = NodePath("../TabsParent")
-selectedTab = 3
 
 [node name="Arm" type="Button" parent="Tabbar"]
 layout_mode = 2
@@ -503,9 +1121,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_yplvc")
 
-[connection signal="button_up" from="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer/Button5" to="TabsParent/core" method="PTZRollLeft"]
 [connection signal="button_up" from="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer/Button" to="TabsParent/core" method="PTZUp"]
-[connection signal="button_up" from="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer/Button7" to="TabsParent/core" method="PTZRollRight"]
 [connection signal="button_up" from="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer/Button2" to="TabsParent/core" method="PTZLeft"]
 [connection signal="button_up" from="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer/Button3" to="TabsParent/core" method="PTZCenter"]
 [connection signal="button_up" from="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer/Button4" to="TabsParent/core" method="PTZRight"]

@@ -6,7 +6,7 @@ grow_end = 0.0
 thickness = 8
 vertical = true
 
-[node name="VSep" type="VSeparator"]
+[node name="|" type="VSeparator"]
 offset_right = 4.0
 offset_bottom = 3.0
 theme_override_styles/separator = SubResource("StyleBoxLine_0w4ow")
