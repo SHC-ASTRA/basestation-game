@@ -1,7 +1,6 @@
 FROM osrf/ros:humble-desktop
 WORKDIR /temp
 
-ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
 RUN apt update && \
     apt install -y \
@@ -19,6 +18,7 @@ ENV MYGID=1000
 RUN apt install -y sudo && \
     addgroup --gid ${MYGID} ${MYUSER}
 
+
 RUN adduser --gecos '' --disabled-password --uid ${MYUID} --gid ${MYGID} ${MYUSER} && \
     adduser ${MYUSER} sudo && \
     adduser ${MYUSER} adm && \
@@ -27,7 +27,7 @@ RUN adduser --gecos '' --disabled-password --uid ${MYUID} --gid ${MYGID} ${MYUSE
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-RUN export FASTDDS_BUILTIN_TRANSPORTS=UDPv4
+ENV FASTDDS_BUILTIN_TRANSPORTS=UDPv4
 
 CMD ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
 USER ${MYUSER}

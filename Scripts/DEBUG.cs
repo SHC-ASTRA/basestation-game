@@ -46,7 +46,16 @@ namespace DEBUG
         /// You better have the right datatype for your key,
         /// or it'll all blow up in your face.
         /// </summary>
-        public static void Log(int r, Variant d) => DebugData[r].AsGodotArray().Add(d);
+        public static void Log(int r, Variant d)
+        {
+            DebugData[r].AsGodotArray().Add(d);
+            if (DebugData[r].AsGodotArray().Count > 1)
+            {
+                Variant t = DebugData[r].AsGodotArray()[^2];
+                if (!t.Equals(d))
+                    GD.Print(d);
+            }
+        }
 
         /// <summary>
         /// Adds data <paramref name="d"/> to Key <paramref name="r"/>.

@@ -180,8 +180,8 @@ namespace ui
 
             float ZoomAmount = (float)Zoom.Value;
 
-            PTZAxis0.RotationDegrees = Vector3.Up * ptzmsg.pitch;
-            PTZAxis1.RotationDegrees = Vector3.Right * ptzmsg.yaw;
+            PTZAxis0.RotationDegrees = Vector3.Up * ptzmsg.yaw;
+            PTZAxis1.RotationDegrees = Vector3.Right * ptzmsg.pitch;
             Debug.Log(DebugID, $"Setting PTZ rotation to (X:{ptzmsg.yaw},Y:{ptzmsg.pitch}) and zoom {ZoomAmount}");
             PTZRotX.Text = "Y:" + ptzmsg.yaw.ToString().PadLeft(3, ' ');
             PTZRotY.Text = "P:" + ptzmsg.pitch.ToString().PadLeft(3, ' ');

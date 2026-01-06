@@ -44,7 +44,7 @@ namespace IPC
             // ExecuteWithPipe creates three different IOStreams bundled in a dictionary
             Godot.Collections.Dictionary RosBridgeReturn = ExecuteWithPipe(term, ["-c", $"cd {ROSDocker} && docker compose up"]);
             // Waits for ROSBridge to come up. Necessary as if we don't we might start sending/requesting data before it's ready
-            if (!await WaitForRosbridgeAsync(ROSIP, ROSPort, 40, 5000))
+            if (!await WaitForRosbridgeAsync(ROSIP, ROSPort, 40, 4000))
             {
                 GD.PrintErr("Could not initialize Rosbridge");
                 return;
@@ -91,10 +91,21 @@ namespace IPC
 
         public static bool CheckTopicExists(string topicName) => topicNames.Contains(topicName);
 
+        private static int requestDelay = 10;
         public static void RequestTopic<T>(string topicName) where T : Message
         {
             Debug.Log(RosBridgeIOID, $"Queuing {topicName} for advertisement");
-            Task.Run(() => { while (!ROSReady) continue; Advertise<T>(topicName); });
+            Task.Run(async () =>
+            {
+                while (!ROSReady) continue;
+                while (requestDelay > 0)
+                {
+                    requestDelay--;
+                    await Task.Delay(1);
+                }
+                requestDelay = 10;
+                Advertise<T>(topicName);
+            });
         }
 
         public static void Advertise<T>(string topicName) where T : Message

@@ -7,9 +7,9 @@ namespace ui
 {
     public partial class BiosensorTabUI : BaseTabUI
     {
-        private BioControl msg;
+        private BioControl msg = new();
 
-        [ExportCategory("Biosensor")]
+        [ExportCategory("CITADEL")]
         [ExportGroup("Pumps")]
         [Export]
         public SpinBox[] PumpAmounts;
@@ -26,27 +26,47 @@ namespace ui
 
         [ExportGroup("Servos")]
         [Export]
-        public Button[] ServoStates;
-        [Export]
         public Button[] ServoRun;
         private Queue<(int, bool)> ServoQueue = new();
 
+        [ExportGroup("Arm")]
+        [Export]
+        public VSlider BioArm;
+        [Export]
+        public Button VibrationMotor;
+
+        [ExportCategory("FAERIE")]
+        [Export]
+        public Button Laser;
+        [Export]
+        public Button LaserFailsafe;
+        [Export]
+        public VSlider DrillDrive;
+        [Export]
+        public VSlider DrillArm;
+
         public override void _Ready()
         {
-            msg = new();
+            base._Ready();
 
-            for (int i = 0; i < PumpAmounts.Length; i++)
+            for (int i = 0; i < PumpAmounts.Length - 1; i++)
                 PumpRuns[i].Pressed += (() => PumpQueue.Enqueue((i + 1, (float)PumpAmounts[i].Value)));
-            for (int i = 0; i < FanDurations.Length; i++)
+            for (int i = 0; i < FanDurations.Length - 1; i++)
                 FanRuns[i].Pressed += (() => FanQueue.Enqueue((i + 1, (int)FanDurations[i].Value)));
-            for (int i = 0; i < ServoStates.Length; i++)
-                ServoRun[i].Pressed += (() => ServoQueue.Enqueue((i + 1, ServoStates[i].ButtonPressed)));
+            for (int i = 0; i < ServoRun.Length - 1; i++)
+                ServoRun[i].Pressed += (() => ServoQueue.Enqueue((i + 1, ServoRun[i].ButtonPressed)));
+        }
+
+        public override void _Process(double delta)
+        {
+            base._Process(delta);
         }
 
         public override void AdvertiseToROS()
         {
             ROS.RequestTopic<BioControl>(ControlTopicName);
         }
+
         public override void EmitToROS()
         {
             (int, float) PumpToRun = (0, 0f);
@@ -69,11 +89,57 @@ namespace ui
             msg.servo_id = ServoToRun.Item1;
             msg.servo_state = ServoToRun.Item2;
 
+            msg.bio_arm = Mathf.RoundToInt(BioArm.Value);
+            msg.vibration_motor = VibrationMotor.ButtonPressed ? 1 : 0;
 
+            msg.laser = Laser.ButtonPressed && LaserFailsafe.ButtonPressed ? 1 : 0;
+            msg.drill = Mathf.RoundToInt(DrillDrive.Value);
+            msg.drill_arm = Mathf.RoundToInt(DrillArm.Value);
+
+            ROS.Publish(ControlTopicName, msg);
         }
 
         public override void _ExitTree()
         {
+            msg.pump_id = 1;
+            msg.pump_amount = 0;
+
+            msg.fan_id = 1;
+            msg.fan_duration = 0;
+
+            msg.servo_id = 1;
+            msg.servo_state = false;
+
+            msg.bio_arm = 0;
+            msg.vibration_motor = 0;
+
+            msg.laser = 0;
+            msg.drill = 0;
+            msg.drill_arm = 0;
+
+            ROS.Publish(ControlTopicName, msg);
+
+            msg.pump_id = 2;
+            msg.pump_amount = 0;
+
+            msg.fan_id = 2;
+            msg.fan_duration = 0;
+
+            msg.servo_id = 2;
+            msg.servo_state = false;
+
+            ROS.Publish(ControlTopicName, msg);
+
+            msg.pump_id = 3;
+            msg.pump_amount = 0;
+
+            msg.fan_id = 3;
+            msg.fan_duration = 0;
+
+            msg.servo_id = 3;
+            msg.servo_state = false;
+
+            ROS.Publish(ControlTopicName, msg);
         }
     }
 }
