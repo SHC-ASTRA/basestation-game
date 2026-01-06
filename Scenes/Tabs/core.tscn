@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://bp5ri1uu6aqdu"]
+
+[ext_resource type="PackedScene" uid="uid://bucrqt5wwg5gn" path="res://addons/map_tile_provider/examples/mosaic.tscn" id="1_4plru"]
+[ext_resource type="Script" uid="uid://fw0xlu8w0pc7" path="res://Scripts/ui/prefabs/Draggable.cs" id="1_eb16g"]
+[ext_resource type="PackedScene" uid="uid://cetxymmi0tyqv" path="res://Scenes/Prefabs/draggable_size_setter.tscn" id="1_u0c8n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4plru"]
+size = Vector2(662, 31)
+
+[node name="Core" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VScrollBar" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 61.0
+offset_bottom = 31.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VScrollBar"]
+layout_mode = 2
+
+[node name="DraggableSizeSetter" parent="VScrollBar/HBoxContainer" node_paths=PackedStringArray("target") instance=ExtResource("1_u0c8n")]
+layout_mode = 2
+folded = true
+title = "Map"
+target = NodePath("../../../Area2D/CollisionShape2D")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(617, 313)
+shape = SubResource("RectangleShape2D_4plru")
+script = ExtResource("1_eb16g")
+
+[node name="FoldableContainer" type="FoldableContainer" parent="Area2D/CollisionShape2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+folded = true
+title = "Map"
+title_alignment = 1
+
+[node name="mosaic" parent="Area2D/CollisionShape2D/FoldableContainer" instance=ExtResource("1_4plru")]
+visible = false
+layout_mode = 2
+latitude = 38.36
+longitude = -110.705
+zoom = 14.0
