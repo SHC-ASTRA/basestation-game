@@ -25,5 +25,4 @@ mono_crash.*.json
 
 .direnv
 flake.lock
-tmp
 WebsocketIP.cfg

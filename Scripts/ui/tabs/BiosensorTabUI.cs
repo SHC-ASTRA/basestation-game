@@ -80,14 +80,7 @@ namespace ui
             if (PumpQueue.Count > 0)
                 ServoToRun = ServoQueue.Dequeue();
 
-            msg.pump_id = PumpToRun.Item1;
-            msg.pump_amount = PumpToRun.Item2;
-
-            msg.fan_id = FanToRun.Item1;
-            msg.fan_duration = FanToRun.Item2;
-
-            msg.servo_id = ServoToRun.Item1;
-            msg.servo_state = ServoToRun.Item2;
+            DriveElectronics(PumpToRun.Item1, PumpToRun.Item2, FanToRun.Item1, FanToRun.Item2, ServoToRun.Item1, ServoToRun.Item2);
 
             msg.bio_arm = Mathf.RoundToInt(BioArm.Value);
             msg.vibration_motor = VibrationMotor.ButtonPressed ? 1 : 0;
@@ -101,45 +94,35 @@ namespace ui
 
         public override void _ExitTree()
         {
-            msg.pump_id = 1;
-            msg.pump_amount = 0;
-
-            msg.fan_id = 1;
-            msg.fan_duration = 0;
-
-            msg.servo_id = 1;
-            msg.servo_state = false;
-
-            msg.bio_arm = 0;
-            msg.vibration_motor = 0;
-
             msg.laser = 0;
             msg.drill = 0;
             msg.drill_arm = 0;
+            msg.bio_arm = 0;
+            msg.vibration_motor = 0;
+
+            DriveElectronics(1, 0, 1, 0, 1, false);
 
             ROS.Publish(ControlTopicName, msg);
 
-            msg.pump_id = 2;
-            msg.pump_amount = 0;
-
-            msg.fan_id = 2;
-            msg.fan_duration = 0;
-
-            msg.servo_id = 2;
-            msg.servo_state = false;
+            DriveElectronics(2, 0, 2, 0, 2, false);
 
             ROS.Publish(ControlTopicName, msg);
 
-            msg.pump_id = 3;
-            msg.pump_amount = 0;
-
-            msg.fan_id = 3;
-            msg.fan_duration = 0;
-
-            msg.servo_id = 3;
-            msg.servo_state = false;
+            DriveElectronics(3, 0, 3, 0, 3, false);
 
             ROS.Publish(ControlTopicName, msg);
+        }
+
+        private void DriveElectronics(int pumpid, float pump, int fanid, int fan, int servoid, bool servo)
+        {
+            msg.pump_id = pumpid;
+            msg.pump_amount = pump;
+
+            msg.fan_id = fanid;
+            msg.fan_duration = fan;
+
+            msg.servo_id = servoid;
+            msg.servo_state = servo;
         }
     }
 }

@@ -1,2 +1,3 @@
 dotnet add package Siemens.RosSharp.RosBridgeClient.ROS2 --version 2.2.0
 dotnet add package WebSocketSharp --version 1.0.3-rc11
+	<NoWarn>NU1701</NoWarn>

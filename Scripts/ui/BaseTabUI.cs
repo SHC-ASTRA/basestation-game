@@ -53,6 +53,8 @@ namespace ui
 
         public override void _Process(double delta)
         {
+            base._Process(delta);
+
             WindowSize = GetWindow().Size;
 
             UpButtonDown = Input.IsActionJustPressed("UpBtn");
@@ -89,7 +91,7 @@ namespace ui
             RightStick = Input.GetVector("RStickHN", "RStickHP", "RStickVN", "RStickVP");
 
             Slow += delta;
-            if (Slow < 0.004 || !ROS.ROSReady)
+            if (Slow < 0.4 || !ROS.ROSReady)
                 return;
             else Slow = 0;
 
