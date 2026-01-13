@@ -29,7 +29,7 @@
               with pkgs.godotPackages_4_5;
               [
                 godot-mono
-                dotnet-sdk_8
+                dotnet-sdk_10
               ];
 
             env = { };
@@ -50,7 +50,7 @@
               mono
               unzip
               makeWrapper
-              dotnet-sdk_8
+              dotnet-sdk_10
               godotPackages_4_5.godot-mono
             ];
 
@@ -58,7 +58,7 @@
               mono
               unzip
               makeWrapper
-              dotnet-sdk_8
+              dotnet-sdk_10
               godotPackages_4_5.godot-mono
             ];
 

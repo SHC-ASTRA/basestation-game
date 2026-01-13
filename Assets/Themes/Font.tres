@@ -3,4 +3,5 @@
 [resource]
 font_names = PackedStringArray("Red Hat Mono", "Julius Sans One", "Terminess Nerd Font", "ProFontWindows Nerd Font", "Minecraftia")
 font_weight = 550
+subpixel_positioning = 0
 oversampling = 4.0

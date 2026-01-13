@@ -1,3 +1,3 @@
-[submodule "astra_msgs"]
-	path = astra_msgs
-	url = git@github.com:SHC-ASTRA/astra_msgs.git
+[submodule "ROS/Docker/build/astra_msgs"]
+	path = ROS/Docker/build/astra_msgs
+	url = https://github.com/SHC-ASTRA/astra_msgs

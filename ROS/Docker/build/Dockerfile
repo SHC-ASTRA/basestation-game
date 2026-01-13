@@ -1,33 +1,29 @@
-FROM osrf/ros:humble-desktop
+FROM ros:humble-ros-core
 WORKDIR /temp
-
 
 RUN apt update && \
     apt install -y \
-    git iputils-ping \
     software-properties-common \
-    ros-humble-rmw-cyclonedds-cpp \
     ros-dev-tools \
     ros-humble-rosbridge-server
 
 ENV MYUSER=astra
-ENV MYGROUP=astra
 ENV MYUID=1000
 ENV MYGID=1000
 
-RUN apt install -y sudo && \
-    addgroup --gid ${MYGID} ${MYUSER}
+RUN addgroup --gid ${MYGID} ${MYUSER}
 
 
 RUN adduser --gecos '' --disabled-password --uid ${MYUID} --gid ${MYGID} ${MYUSER} && \
-    adduser ${MYUSER} sudo && \
-    adduser ${MYUSER} adm && \
-    echo "${MYUSER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+    adduser ${MYUSER} adm
+
+COPY astra_msgs /usr/local/astra_msgs
+RUN chown -R ${MYUSER} /usr/local/astra_msgs
+RUN chmod -R 777 /usr/local/astra_msgs
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-ENV FASTDDS_BUILTIN_TRANSPORTS=UDPv4
-
 CMD ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
+
 USER ${MYUSER}

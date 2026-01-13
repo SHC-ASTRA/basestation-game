@@ -49,12 +49,24 @@ namespace ui
         {
             base._Ready();
 
-            for (int i = 0; i < PumpAmounts.Length - 1; i++)
-                PumpRuns[i].Pressed += (() => PumpQueue.Enqueue((i + 1, (float)PumpAmounts[i].Value)));
-            for (int i = 0; i < FanDurations.Length - 1; i++)
-                FanRuns[i].Pressed += (() => FanQueue.Enqueue((i + 1, (int)FanDurations[i].Value)));
-            for (int i = 0; i < ServoRun.Length - 1; i++)
-                ServoRun[i].Pressed += (() => ServoQueue.Enqueue((i + 1, ServoRun[i].ButtonPressed)));
+            int i = 0;
+            for (; i < PumpAmounts.Length; i++)
+            {
+                QueueButton QB = new(i + 1);
+                PumpRuns[i].Pressed += (() => QB.call(ref PumpQueue, ref PumpAmounts));
+            }
+            i = 0;
+            for (; i < FanDurations.Length; i++)
+            {
+                QueueButton QB = new(i + 1);
+                FanRuns[i].Pressed += (() => QB.call(ref FanQueue, ref FanDurations));
+            }
+            i = 0;
+            for (; i < ServoRun.Length; i++)
+            {
+                QueueButton QB = new(i + 1);
+                ServoRun[i].Pressed += (() => QB.call(ref ServoQueue, ref ServoRun));
+            }
         }
 
         public override void _Process(double delta)
@@ -75,9 +87,9 @@ namespace ui
 
             if (PumpQueue.Count > 0)
                 PumpToRun = PumpQueue.Dequeue();
-            if (PumpQueue.Count > 0)
+            if (FanQueue.Count > 0)
                 FanToRun = FanQueue.Dequeue();
-            if (PumpQueue.Count > 0)
+            if (ServoQueue.Count > 0)
                 ServoToRun = ServoQueue.Dequeue();
 
             DriveElectronics(PumpToRun.Item1, PumpToRun.Item2, FanToRun.Item1, FanToRun.Item2, ServoToRun.Item1, ServoToRun.Item2);

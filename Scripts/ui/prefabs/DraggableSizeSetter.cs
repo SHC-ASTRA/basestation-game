@@ -4,24 +4,23 @@ public partial class DraggableSizeSetter : FoldableContainer
 {
     [Export]
     Draggable target;
-    FoldableContainer tfc;
 
     [Export]
     Button enable;
     [Export]
     Button reset;
 
-    [Export]
-    TextEdit X;
-    [Export]
-    TextEdit Y;
-
+    TextEdit X, Y;
 
     public override void _Ready()
     {
-        tfc = (target.GetChild(0) as FoldableContainer);
-        X.Text = tfc.Size.X.ToString();
-        Y.Text = tfc.Size.Y.ToString();
+        X = GetChild(0).GetChild(1) as TextEdit;
+        Y = GetChild(0).GetChild(2) as TextEdit; 
+
+        target.Size = new Vector2(500, 500);
+
+        X.Text = target.Size.X.ToString();
+        Y.Text = target.Size.Y.ToString();
 
         X.TextChanged += Resize;
         Y.TextChanged += Resize;
@@ -35,10 +34,7 @@ public partial class DraggableSizeSetter : FoldableContainer
         ResetPos();
     }
 
-    void ResetPos()
-    {
-        target.Position = GetWindow().Size / 2;
-    }
+    void ResetPos() => target.Position = (GetWindow().Size / 2) - (target.Size / 2);
 
     void Resize()
     {
@@ -53,6 +49,6 @@ public partial class DraggableSizeSetter : FoldableContainer
             return;
         }
 
-        tfc.Size = new Vector2(float.Parse(X.Text), float.Parse(Y.Text));
+        target.Size = new Vector2(float.Parse(X.Text), float.Parse(Y.Text));
     }
 }
