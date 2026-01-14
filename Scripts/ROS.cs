@@ -1,7 +1,9 @@
+using ui;
 using DEBUG;
 using Godot;
 using System;
 using System.IO;
+using System.Linq;
 using static Godot.OS;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -14,8 +16,8 @@ namespace IPC
     public partial class ROS : Godot.Node
     {
         public static bool ROSReady = false;
+        public static bool ReadvertiseOnStart = false;
         public static ROS ROSServer;
-
         private static Godot.FileAccess RosBridgeIO, RosBridgeErr;
         private static int RosBridgePID, RosBridgeIOID, RosBridgeErrID;
 
@@ -31,8 +33,11 @@ namespace IPC
 
         private static string ROSDocker = Path.Combine("ROS", "Docker");
 
+        private static ROSAlerter alerter;
+
         public override void _Ready()
         {
+            alerter = GetChild(0) as ROSAlerter;
             StartROS();
             base._Ready();
         }
@@ -72,6 +77,12 @@ namespace IPC
                 File.WriteAllText(cfgpath, ip);
             }
             ROSSocket = new(new WebSocketNetProtocol(sockAddress));
+            if (ReadvertiseOnStart)
+            {
+                ReadvertiseOnStart = false;
+                foreach (BaseTabUI tabs in TabController.StaticTabsParent.GetChildren().Where(static _ => _ is BaseTabUI).Cast<BaseTabUI>())
+                    tabs.AdvertiseToROS();
+            }
             ROSReady = true;
         }
 
@@ -125,6 +136,7 @@ namespace IPC
 
         public static async Task<bool> WaitForRosbridgeAsync(string host, int port, int timeoutSec = 400, int pollIntervalMs = 2000, int increaseMs = 1000)
         {
+            alerter.Disconnected();
             int failCount = 0;
             while (true)
             {
@@ -137,6 +149,7 @@ namespace IPC
                         if (success && client.Connected)
                         {
                             client.EndConnect(result);
+                            alerter.Connected();
                             return true;
                         }
                     }

@@ -1,12 +1,14 @@
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
+
 namespace ui
 {
     public partial class TabController : HBoxContainer
     {
         [Export]
         public Control TabsParent;
+        public static Control StaticTabsParent;
 
         [Export]
         public short selectedTab = 0;
@@ -16,6 +18,8 @@ namespace ui
 
         public override void _Ready()
         {
+            StaticTabsParent = TabsParent;
+
             buttons = [.. GetChildren().Where(static _ => _ is Button).Cast<Button>()];
 
             short i = 0;

@@ -1,21 +1,24 @@
 using Godot;
 
-public partial class ColoredIndicator : Control
+namespace ui
 {
-    public bool Value
+    public partial class ColoredIndicator : Control
     {
-        set
+        public bool Value
         {
-            True.Visible = value;
-            False.Visible = !value;
+            set
+            {
+                True.Visible = value;
+                False.Visible = !value;
+            }
         }
-    }
-    private Panel True, False;
-    public override void _Ready()
-    {
-        True = GetChild<Panel>(0);
-        False = GetChild<Panel>(1);
-        Value = false;
-        base._Ready();
+        private Panel True, False;
+        public override void _Ready()
+        {
+            True = GetChild<Panel>(0);
+            False = GetChild<Panel>(1);
+            Value = false;
+            base._Ready();
+        }
     }
 }

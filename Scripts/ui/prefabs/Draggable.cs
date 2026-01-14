@@ -1,25 +1,28 @@
 using Godot;
 
-public partial class Draggable : FoldableContainer
+namespace ui
 {
-    private bool dragging = false;
-    private Vector2 originalDownPosition;
-
-    public override void _GuiInput(InputEvent @event)
+    public partial class Draggable : FoldableContainer
     {
-        if (@event is InputEventMouseButton)
+        private bool dragging = false;
+        private Vector2 originalDownPosition;
+
+        public override void _GuiInput(InputEvent @event)
         {
-            InputEventMouseButton IEMB = @event as InputEventMouseButton;
-            if (IEMB.IsReleased())
-                dragging = false;
-            else if (IEMB.IsPressed())
+            if (@event is InputEventMouseButton)
             {
-                dragging = true;
-                originalDownPosition = GetLocalMousePosition();
+                InputEventMouseButton IEMB = @event as InputEventMouseButton;
+                if (IEMB.IsReleased())
+                    dragging = false;
+                else if (IEMB.IsPressed())
+                {
+                    dragging = true;
+                    originalDownPosition = GetLocalMousePosition();
+                }
+                else base._Input(@event);
             }
-            else base._Input(@event);
+            if (dragging)
+                SetPosition(GetGlobalMousePosition() - originalDownPosition);
         }
-        if (dragging)
-            SetPosition(GetGlobalMousePosition() - originalDownPosition);
     }
 }

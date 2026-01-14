@@ -1,11 +1,21 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjwmxrn1okacu"]
+[gd_scene load_steps=11 format=3 uid="uid://bjwmxrn1okacu"]
 
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="1_rf5wo"]
 [ext_resource type="PackedScene" uid="uid://dh133i8yuxjts" path="res://Scenes/Tabs/SmallPanel.tscn" id="2_ao1bj"]
 [ext_resource type="Script" uid="uid://cxepc25iuwyh0" path="res://Scripts/ROS.cs" id="3_kgeht"]
+[ext_resource type="Theme" uid="uid://ce3coqe5tlutx" path="res://Assets/Themes/NoAAorCorners.tres" id="3_kjvde"]
 [ext_resource type="PackedScene" uid="uid://b4x4xlqbw6usp" path="res://Scenes/Prefabs/cam_button.tscn" id="3_tm5h3"]
+[ext_resource type="Script" uid="uid://sole1bwdttyr" path="res://Scripts/ui/ROSAlerter.cs" id="4_1tvcf"]
 [ext_resource type="Texture2D" uid="uid://dobdqxlqjdmjo" path="res://Assets/clucky.png" id="4_kgeht"]
 [ext_resource type="PackedScene" uid="uid://bp5ri1uu6aqdu" path="res://Scenes/Tabs/core.tscn" id="5_125yk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1tvcf"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5c1w6"]
 bg_color = Color(1, 1, 1, 1)
@@ -23,7 +33,67 @@ size_flags_vertical = 3
 theme = ExtResource("1_rf5wo")
 
 [node name="ROS head" type="Node" parent="."]
+process_priority = -1
 script = ExtResource("3_kgeht")
+
+[node name="ROSAlerter" type="VBoxContainer" parent="ROS head" node_paths=PackedStringArray("connectText", "connectBubble", "reconnectButton")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -140.0
+offset_bottom = 45.0
+grow_horizontal = 0
+theme = ExtResource("3_kjvde")
+theme_override_constants/separation = 0
+script = ExtResource("4_1tvcf")
+connectText = NodePath("Panel/Label")
+connectBubble = NodePath("Panel/AspectRatioContainer/Panel/Identifier")
+reconnectButton = NodePath("Reset ROS")
+
+[node name="Panel" type="Panel" parent="ROS head/ROSAlerter"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="ROS head/ROSAlerter/Panel"]
+layout_mode = 0
+offset_right = 140.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+alignment_horizontal = 0
+
+[node name="Panel" type="Panel" parent="ROS head/ROSAlerter/Panel/AspectRatioContainer"]
+self_modulate = Color(0.78431374, 0.78431374, 0.78431374, 1)
+layout_mode = 2
+
+[node name="Identifier" type="Panel" parent="ROS head/ROSAlerter/Panel/AspectRatioContainer/Panel"]
+self_modulate = Color(0.8235294, 0.26666668, 0.26666668, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1tvcf")
+
+[node name="Label" type="Label" parent="ROS head/ROSAlerter/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 13
+text = "ROS disconnected"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Reset ROS" type="Button" parent="ROS head/ROSAlerter"]
+layout_mode = 2
+theme = ExtResource("3_kjvde")
+text = "Reset ROS"
 
 [node name="LargePanel" type="HBoxContainer" parent="."]
 layout_mode = 2
