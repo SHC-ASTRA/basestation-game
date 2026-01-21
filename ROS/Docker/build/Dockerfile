@@ -24,6 +24,8 @@ RUN chmod -R 777 /usr/local/astra_msgs
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+COPY rosbridge_websocket_launch.xml /opt/ros/humble/share/rosbridge_server/launch/rosbridge_websocket_launch.xml
+
 CMD ["/bin/bash", "/usr/local/bin/entrypoint.sh"]
 
 USER ${MYUSER}

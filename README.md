@@ -29,3 +29,7 @@ making a pull request.
 
 - Roald Schaum
 - David Sharpe
+
+### External credit
+
+A big think you to user "AngryMeenky" for their MapTileProvider plugin.
