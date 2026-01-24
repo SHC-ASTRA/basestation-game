@@ -7,11 +7,21 @@ namespace IPC
     [Tool]
     public partial class CompileRosMsgs : EditorScript
     {
+        const string successDir = "./ROS/RosSharpInterfaces";
         const string tmp = "./tmp";
         public override void _Run()
         {
-            if (Directory.Exists(tmp))
-                Directory.Delete(tmp, true); MessageAutoGen.GenerateDirectoryMessages("astra_msgs/msg", tmp, "astra_msgs", true);
+            Directory.CreateDirectory(tmp);
+
+            ServiceAutoGen.GenerateDirectoryServices("ROS/Docker/build/astra_msgs/srv", tmp, false);
+            MessageAutoGen.GenerateDirectoryMessages("ROS/Docker/build/astra_msgs/msg", tmp, "astra_msgs", false);
+            ActionAutoGen.GenerateDirectoryActions("ROS/Docker/build/astra_msgs/action", tmp, false);
+
+            if (Directory.Exists(successDir))
+                Directory.Delete(successDir, true);
+
+            Directory.Move(tmp, successDir);
+
             base._Run();
         }
     }
