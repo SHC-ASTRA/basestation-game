@@ -19,7 +19,7 @@ namespace ui
 
         public override void _Ready()
         {
-            reconnectButton.Pressed += () => { ROS.ReadvertiseOnStart = true; ROS.StartROS(); };
+            reconnectButton.Pressed += () => { ROS.Readvertise = true; ROS.StartROS(); };
         }
 
         public void Disconnected()

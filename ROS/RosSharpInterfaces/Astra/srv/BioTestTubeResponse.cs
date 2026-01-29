@@ -11,14 +11,14 @@
 
 namespace RosSharp.RosBridgeClient.MessageTypes.Astra
 {
-    public class BioTestTubesResponse : Message
+    public class BioTestTubeResponse : Message
     {
-        public const string RosMessageName = "astra_msgs/srv/BioTestTubes";
+        public const string RosMessageName = "astra_msgs/srv/BioTestTube";
 
         //  Result
         //  Nothing.
 
-        public BioTestTubesResponse()
+        public BioTestTubeResponse()
         {
         }
     }

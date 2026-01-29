@@ -1,23 +1,18 @@
 using IPC;
 using Godot;
-using DEBUG;
+using System.Threading.Tasks;
 
 namespace ui
 {
+    // Base tab UI. Han
     public abstract partial class BaseTabUI : Control
     {
-        [Export]
-        public string ControlTopicName;
-        public string FeedbackTopicName;
-
         [Export]
         public bool ROSDependent;
 
         protected double Slow;
 
         protected static Vector2 WindowSize;
-
-        protected static int? DebugID;
 
         protected static bool UpButtonDown, DownButtonDown, LeftButtonDown, RightButtonDown;
         protected static bool UpButton, DownButton, LeftButton, RightButton;
@@ -36,19 +31,13 @@ namespace ui
 
         protected static Vector2 LeftStick, RightStick;
 
-        // Left bumper slows down driving, right bumper speeds it up
-        // 'A' button (south) enables brake mode
-        // Joysticks have deadzones (0.05) so the motors don't sound angry when it's sitting still
-        // Controller rumbles when headless is loaded and ready for control
-        // Default driving speed should be closer to walking speed now, pending testing
-        // Turning inverts when going backwards to make reversing more intuitive (kinda jank rn tho)
-        // Turning follows curve (angular.z ** 3) to help with minor adjustments when driving in straight line
-
         public override void _Ready()
         {
-            DebugID = Debug.RegisterDebugData(Variant.From<string>(""), false);
-
-            AdvertiseToROS();
+            Task.Run(async () =>
+            {
+                await ROS.AwaitRosReady();
+                AdvertiseToROS();
+            });
         }
 
         public override void _Process(double delta)
@@ -91,7 +80,7 @@ namespace ui
             RightStick = Input.GetVector("RStickHN", "RStickHP", "RStickVN", "RStickVP");
 
             Slow += delta;
-            if (Slow < 0.4 || !ROS.ROSReady)
+            if (Slow < 0.05 || !ROS.ROSReady)
                 return;
             else Slow = 0;
 

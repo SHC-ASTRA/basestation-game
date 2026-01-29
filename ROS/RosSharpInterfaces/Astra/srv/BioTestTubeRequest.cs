@@ -11,22 +11,25 @@
 
 namespace RosSharp.RosBridgeClient.MessageTypes.Astra
 {
-    public class BioTestTubesRequest : Message
+    public class BioTestTubeRequest : Message
     {
-        public const string RosMessageName = "astra_msgs/srv/BioTestTubes";
+        public const string RosMessageName = "astra_msgs/srv/BioTestTube";
 
-        //  Topic: /bio/control/testtubes
+        //  Topic: /bio/control/test_tube
         //  Goal
         public sbyte tube_id { get; set; }
+        public sbyte extension_percent { get; set; }
 
-        public BioTestTubesRequest()
+        public BioTestTubeRequest()
         {
             this.tube_id = 0;
+            this.extension_percent = 0;
         }
 
-        public BioTestTubesRequest(sbyte tube_id)
+        public BioTestTubeRequest(sbyte tube_id, sbyte extension_percent)
         {
             this.tube_id = tube_id;
+            this.extension_percent = extension_percent;
         }
     }
 }

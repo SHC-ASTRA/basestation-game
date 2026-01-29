@@ -17,7 +17,7 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
 
         //  Result
         //  Nothing.
-        //  Request the valve to open and the duration to run the fan for.
+        //  Request the valve to open and the duty cycle and duration to run the fan for.
         //  process: open valve n, wait (x)ms, run fan for y, close valve n, wait (x)ms, result
 
         public BioVacuumFeedback()

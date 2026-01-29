@@ -11,21 +11,21 @@
 
 namespace RosSharp.RosBridgeClient.MessageTypes.Astra
 {
-    public class BioVacuumResult : Message
+    public class BioDistributor : Message
     {
-        public const string RosMessageName = "astra_msgs/action/BioVacuumResult";
+        public const string RosMessageName = "astra_msgs/msg/BioDistributor";
 
-        //  Feedback
-        public int fan_time_remaining { get; set; }
+        //  Topic: /bio/control/distributor
+        public bool[] distibutor { get; set; }
 
-        public BioVacuumResult()
+        public BioDistributor()
         {
-            this.fan_time_remaining = 0;
+            this.distibutor = new bool[3];
         }
 
-        public BioVacuumResult(int fan_time_remaining)
+        public BioDistributor(bool[] distibutor)
         {
-            this.fan_time_remaining = fan_time_remaining;
+            this.distibutor = distibutor;
         }
     }
 }

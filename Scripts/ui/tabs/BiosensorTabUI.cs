@@ -1,37 +1,55 @@
 using IPC;
 using Godot;
-using System.Collections.Generic;
+using RosSharp.RosBridgeClient.Actionlib;
+using RosSharp.RosBridgeClient.MessageTypes.Std;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
+using RosSharp.RosBridgeClient.MessageTypes.Action;
 
 namespace ui
 {
     public partial class BiosensorTabUI : BaseTabUI
     {
-        private BioControl msg = new();
+        ROSActionClient<BioVacuumAction, BioVacuumActionGoal, BioVacuumActionResult, BioVacuumActionFeedback, BioVacuumGoal, BioVacuumResult, BioVacuumFeedback> VacuumClient;
+        BioVacuumActionGoal BVAG = new BioVacuumActionGoal(new Header(), new GoalInfo(), new BioVacuumGoal());
+        private BioVacuumAction BioVacuumHandler = new();
+        private const string VacuumCtrl = "/valve_fan";
+
+        private BioDistributor controlMsg = new();
+        private const string ctrl = "/bio/control/distributor";
+
+        private BioTestTubeRequest tubeMsg = new();
+        private const string TubeCtrl = "/bio/control/testtubes";
 
         [ExportCategory("CITADEL")]
-        [ExportGroup("Pumps")]
-        [Export]
-        public SpinBox[] PumpAmounts;
-        [Export]
-        public Button[] PumpRuns;
-        private Queue<(int, float)> PumpQueue = new();
 
-        [ExportGroup("Fans")]
+        [ExportGroup("Vacuum system")]
         [Export]
-        public SpinBox[] FanDurations;
+        public SpinBox FanSpeed;
         [Export]
-        public Button[] FanRuns;
-        private Queue<(int, int)> FanQueue = new();
+        public SpinBox FanTime;
+        [Export]
+        public SelectionBox VacuumSelector;
 
-        [ExportGroup("Servos")]
         [Export]
-        public Button[] ServoRun;
-        private Queue<(int, bool)> ServoQueue = new();
+        public Button VacuumCommit;
+        [Export]
+        public TextureRect VacuumCommitTexture;
+
+        [ExportGroup("Distributors")]
+        [Export]
+        public Button[] Distributors;
+
+        [ExportGroup("Test Tubes")]
+        [Export]
+        public SpinBox ExtensionAmount;
+        [Export]
+        public SelectionBox TestTubeSelector;
+        [Export]
+        public Button TestTubeCommit;
+        [Export]
+        public TextureRect TestTubeCommitTexture;
 
         [ExportGroup("Arm")]
-        [Export]
-        public VSlider BioArm;
         [Export]
         public Button VibrationMotor;
 
@@ -40,101 +58,100 @@ namespace ui
         public Button Laser;
         [Export]
         public Button LaserFailsafe;
+
+        [ExportCategory("SFX")]
         [Export]
-        public VSlider DrillDrive;
+        public AudioStreamMP3 Failsafe;
         [Export]
-        public VSlider DrillArm;
+        public AudioStreamMP3 Fire;
+        [Export]
+        public AudioStreamPlayer2D Source;
 
         public override void _Ready()
         {
             base._Ready();
 
-            int i = 0;
-            for (; i < PumpAmounts.Length; i++)
+            VacuumCommit.ButtonDown += () =>
             {
-                QueueButton QB = new(i + 1);
-                PumpRuns[i].Pressed += (() => QB.call(ref PumpQueue, ref PumpAmounts));
-            }
-            i = 0;
-            for (; i < FanDurations.Length; i++)
-            {
-                QueueButton QB = new(i + 1);
-                FanRuns[i].Pressed += (() => QB.call(ref FanQueue, ref FanDurations));
-            }
-            i = 0;
-            for (; i < ServoRun.Length; i++)
-            {
-                QueueButton QB = new(i + 1);
-                ServoRun[i].Pressed += (() => QB.call(ref ServoQueue, ref ServoRun));
-            }
-        }
+                VacuumCommitTexture.Visible = true;
+                BVAG.args.valve_id = (sbyte)VacuumSelector.prevIndex;
+                BVAG.args.fan_time_ms = (int)FanTime.Value;
+                BVAG.args.fan_duty_cycle = (sbyte)FanTime.Value;
+                VacuumClient.PublishActionGoal(BVAG);
+            };
+            VacuumCommit.ButtonUp += () => { VacuumCommitTexture.Visible = false; };
 
-        public override void _Process(double delta)
-        {
-            base._Process(delta);
+
+            TestTubeCommit.ButtonDown += () =>
+            {
+                TestTubeCommitTexture.Visible = true;
+                tubeMsg.tube_id = (sbyte)TestTubeSelector.prevIndex;
+                tubeMsg.extension_percent = (sbyte)ExtensionAmount.Value;
+                ROS.PublishServiceGoal<BioTestTubeRequest, BioTestTubeResponse>(TubeCtrl, (_) => { }, tubeMsg);
+            };
+            TestTubeCommit.ButtonUp += () => { TestTubeCommitTexture.Visible = false; };
+
+
+            LaserFailsafe.Toggled += (bool t) => { if (t) { Source.Stream = Failsafe; Source.Play(); } };
+            Laser.Pressed += () => { Source.Stream = Fire; Source.Play(); };
         }
 
         public override void AdvertiseToROS()
         {
-            ROS.RequestTopic<BioControl>(ControlTopicName);
+            // HP Lovecraft couldn't dream of something this horrendous
+            VacuumClient = ROS.AdvertiseAction<
+                BioVacuumAction,
+                BioVacuumActionGoal,
+                BioVacuumActionResult,
+                BioVacuumActionFeedback,
+                BioVacuumGoal,
+                BioVacuumResult,
+                BioVacuumFeedback
+            >(
+                actionName: VacuumCtrl,
+                act: new BioVacuumAction(),
+                actionGoalHandler: (_) => { },
+                actionCancelHandler: (_, _) => { },
+                goalStatus: new GoalStatus(),
+                feedbackCallback: () => { },
+                resultCallback: () =>
+                {
+                    if (VacuumClient.lastResultSuccess == false)
+                        GD.Print("Request failed!");
+                },
+                statusCallback: () =>
+                {
+                    GD.Print("\n" + ((ActionStatus)(VacuumClient.goalStatus.status)).ToString() + "\n");
+                }
+            );
+
+            ROS.AdvertiseService<
+                BioTestTubeRequest,
+                BioTestTubeResponse
+            >(
+                serviceName: TubeCtrl,
+                handler: (BioTestTubeRequest _, out BioTestTubeResponse a) =>
+                {
+                    GD.Print($"Extending tube {_.tube_id}, By {_.extension_percent}%");
+                    a = new();
+                    return true;
+                }
+            );
+
+            ROS.AdvertiseMessage<BioDistributor>(ctrl);
         }
 
         public override void EmitToROS()
         {
-            (int, float) PumpToRun = (0, 0f);
-            (int, int) FanToRun = (0, 0);
-            (int, bool) ServoToRun = (0, false);
-
-            if (PumpQueue.Count > 0)
-                PumpToRun = PumpQueue.Dequeue();
-            if (FanQueue.Count > 0)
-                FanToRun = FanQueue.Dequeue();
-            if (ServoQueue.Count > 0)
-                ServoToRun = ServoQueue.Dequeue();
-
-            DriveElectronics(PumpToRun.Item1, PumpToRun.Item2, FanToRun.Item1, FanToRun.Item2, ServoToRun.Item1, ServoToRun.Item2);
-
-            msg.bio_arm = Mathf.RoundToInt(BioArm.Value);
-            msg.vibration_motor = VibrationMotor.ButtonPressed ? 1 : 0;
-
-            msg.laser = Laser.ButtonPressed && LaserFailsafe.ButtonPressed ? 1 : 0;
-            msg.drill = Mathf.RoundToInt(DrillDrive.Value);
-            msg.drill_arm = Mathf.RoundToInt(DrillArm.Value);
-
-            ROS.Publish(ControlTopicName, msg);
+            controlMsg.distibutor[0] = Distributors[0].ButtonPressed;
+            controlMsg.distibutor[1] = Distributors[1].ButtonPressed;
+            controlMsg.distibutor[2] = Distributors[2].ButtonPressed;
+            ROS.Publish(ctrl, controlMsg);
         }
 
         public override void _ExitTree()
         {
-            msg.laser = 0;
-            msg.drill = 0;
-            msg.drill_arm = 0;
-            msg.bio_arm = 0;
-            msg.vibration_motor = 0;
-
-            DriveElectronics(1, 0, 1, 0, 1, false);
-
-            ROS.Publish(ControlTopicName, msg);
-
-            DriveElectronics(2, 0, 2, 0, 2, false);
-
-            ROS.Publish(ControlTopicName, msg);
-
-            DriveElectronics(3, 0, 3, 0, 3, false);
-
-            ROS.Publish(ControlTopicName, msg);
-        }
-
-        private void DriveElectronics(int pumpid, float pump, int fanid, int fan, int servoid, bool servo)
-        {
-            msg.pump_id = pumpid;
-            msg.pump_amount = pump;
-
-            msg.fan_id = fanid;
-            msg.fan_duration = fan;
-
-            msg.servo_id = servoid;
-            msg.servo_state = servo;
+            ROS.ROSSocket.Unadvertise("/valve_fan");
         }
     }
 }
