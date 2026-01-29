@@ -6,7 +6,8 @@ namespace ui
 {
     public partial class ArmTabUI : BaseTabUI
     {
-        private ArmManual msg = new();
+        private ArmManual controlMsg = new();
+        private const string ctrl = "/arm/control/manual";
 
         [ExportCategory("Arm")]
         [ExportSubgroup("Axese")]
@@ -78,37 +79,37 @@ namespace ui
 
         public override void AdvertiseToROS()
         {
-            ROS.RequestTopic<ArmManual>(ControlTopicName);
+            ROS.AdvertiseMessage<ArmManual>(ctrl);
         }
 
         public override void EmitToROS()
         {
-            msg.axis0 = Mathf.RoundToInt(Axis0drive.Value);
-            msg.axis1 = Mathf.RoundToInt(Axis1drive.Value);
-            msg.axis2 = Mathf.RoundToInt(Axis2drive.Value);
-            msg.axis3 = Mathf.RoundToInt(Axis3drive.Value);
+            controlMsg.axis0 = Mathf.RoundToInt(Axis0drive.Value);
+            controlMsg.axis1 = Mathf.RoundToInt(Axis1drive.Value);
+            controlMsg.axis2 = Mathf.RoundToInt(Axis2drive.Value);
+            controlMsg.axis3 = Mathf.RoundToInt(Axis3drive.Value);
 
-            msg.brake = BrakeState;
+            controlMsg.brake = BrakeState;
 
-            msg.effector_roll = Mathf.RoundToInt(EndEffectorRoll.Value);
-            msg.effector_yaw = Mathf.RoundToInt(EndEffectorYaw.Value);
+            controlMsg.effector_roll = Mathf.RoundToInt(EndEffectorRoll.Value);
+            controlMsg.effector_yaw = Mathf.RoundToInt(EndEffectorYaw.Value);
 
-            msg.gripper = Mathf.RoundToInt(GripperDrive.Value);
-            msg.linear_actuator = Mathf.RoundToInt(LinearActuatorDrive.Value);
+            controlMsg.gripper = Mathf.RoundToInt(GripperDrive.Value);
+            controlMsg.linear_actuator = Mathf.RoundToInt(LinearActuatorDrive.Value);
 
-            msg.laser = LaserState ? 1 : 0;
+            controlMsg.laser = LaserState ? 1 : 0;
 
-            ROS.Publish(ControlTopicName, msg);
+            ROS.Publish(ctrl, controlMsg);
         }
 
         public override void _ExitTree()
         {
-            msg.axis0 = msg.axis1 = msg.axis2 = msg.axis3 = 0;
-            msg.brake = true;
-            msg.effector_roll = msg.effector_yaw = 0;
-            msg.gripper = 0;
-            msg.linear_actuator = msg.laser = 0;
-            ROS.Publish(ControlTopicName, msg);
+            controlMsg.axis0 = controlMsg.axis1 = controlMsg.axis2 = controlMsg.axis3 = 0;
+            controlMsg.brake = true;
+            controlMsg.effector_roll = controlMsg.effector_yaw = 0;
+            controlMsg.gripper = 0;
+            controlMsg.linear_actuator = controlMsg.laser = 0;
+            ROS.Publish(ctrl, controlMsg);
         }
     }
 }

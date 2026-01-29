@@ -45,13 +45,11 @@ offset_right = 769.0
 offset_bottom = 192.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-folded = true
 title = "Map"
 title_alignment = 1
 script = ExtResource("1_eb16g")
 
 [node name="mosaic" parent="DraggableArea/Control/FoldableContainer" instance=ExtResource("1_4plru")]
-visible = false
 layout_mode = 2
 latitude = 38.36
 longitude = -110.705

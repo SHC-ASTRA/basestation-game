@@ -1,5 +1,4 @@
 using IPC;
-using Godot;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 namespace ui
@@ -8,7 +7,7 @@ namespace ui
     {
         public override void AdvertiseToROS()
         {
-            ROS.RequestTopic<AutoNav>(ControlTopicName);
+            // ROS.RequestTopic<AutoNav>("");
         }
         public override void EmitToROS() { }
         public override void _ExitTree() { }

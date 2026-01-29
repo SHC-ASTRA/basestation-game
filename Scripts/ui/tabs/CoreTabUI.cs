@@ -1,17 +1,22 @@
 using IPC;
-using DEBUG;
 using Godot;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
+using Geometry = RosSharp.RosBridgeClient.MessageTypes.Geometry;
 
 namespace ui
 {
     public partial class CoreTabUI : BaseTabUI
     {
-        private CoreControl msg = new();
-        private PtzControl ptzmsg = new();
+        private CoreCtrlState controlMsg = new();
+        private const string ctrl = "/core/control/state";
 
+        private Geometry.Twist twistMsg = new() { angular = new(0, 0, 0), linear = new(0, 0, 0) };
+        private const string twist = "/core/twist";
 
-        public const bool TankDriving = true;
+        private PtzControl ptzMsg = new();
+        private const string ptz = "/ptz/control";
+
+        public bool TankDriving = false;
 
         [ExportCategory("Core")]
         [ExportGroup("Motors")]
@@ -19,10 +24,22 @@ namespace ui
         public ProgressBar LMotor;
         [Export]
         public ProgressBar RMotor;
+        [Export]
+        public Button DrivingMode;
+        [Export]
+        public Texture2D Tank, Wheel;
+
+        [ExportGroup("Brake")]
+        [Export]
+        private ColoredIndicator BrakeIndicator;
+        [Export]
+        private TextureRect Brake;
+        public bool BrakeState = true;
+
+        public float MaxSpeed = 0.6f;
+        private double MaxSpeedCollector = 0;
 
         [ExportGroup("PTZ")]
-        [Export]
-        public string ControlPTZTopic;
 
         [ExportSubgroup("Rendering")]
         [Export]
@@ -36,20 +53,12 @@ namespace ui
 
         [ExportSubgroup("Controlling")]
         [Export]
+        public Button[] PTZButtons = new Button[5];
+        [Export]
         public Label PTZRotX, PTZRotY;
 
         [Export]
         public VSlider Zoom;
-
-        [ExportGroup("Brake")]
-        [Export]
-        private ColoredIndicator BrakeIndicator;
-        [Export]
-        private TextureRect Brake;
-        public bool BrakeState = true;
-
-        public int MaxSpeed = 60;
-        private double MaxSpeedCollector = 0;
 
         public override void _Ready()
         {
@@ -61,8 +70,35 @@ namespace ui
 
             GetTree().Root.SizeChanged += Resize;
 
-            PTZRotX.Text = "Y:" + ptzmsg.yaw.ToString().PadLeft(3, ' ');
-            PTZRotY.Text = "P:" + ptzmsg.pitch.ToString().PadLeft(3, ' ');
+            PTZRotX.Text = "Y:" + ptzMsg.yaw.ToString().PadLeft(3, ' ');
+            PTZRotY.Text = "P:" + ptzMsg.pitch.ToString().PadLeft(3, ' ');
+
+            PTZButtons[0].Pressed += () =>
+            {
+                ptzMsg.pitch += 5;
+                PushToPTZ();
+            };
+            PTZButtons[1].Pressed += () =>
+            {
+                ptzMsg.yaw -= 5;
+                PushToPTZ();
+            };
+            PTZButtons[2].Pressed += () =>
+            {
+                ptzMsg.pitch = ptzMsg.yaw = 0;
+                PushToPTZ();
+            };
+            PTZButtons[3].Pressed += () =>
+            {
+                ptzMsg.yaw += 5;
+                PushToPTZ();
+            };
+            PTZButtons[4].Pressed += () =>
+            {
+                ptzMsg.pitch -= 5;
+                PushToPTZ();
+            };
+            DrivingMode.Toggled += (pressed) => { TankDriving = pressed; (DrivingMode.GetChild(0) as TextureRect).Texture = pressed ? Tank : Wheel; };
         }
 
         public void Resize()
@@ -82,7 +118,6 @@ namespace ui
             }
             else
             {
-#pragma warning disable
                 LMotor.Value = LeftStick.Y + RightStick.X;
                 RMotor.Value = LeftStick.Y - RightStick.X;
             }
@@ -95,23 +130,14 @@ namespace ui
                 Brake.Visible = b;
             }
 
-            if (UpButtonDown)
-                PTZUp();
-            else if (DownButtonDown)
-                PTZDown();
-            if (LeftButtonDown)
-                PTZLeft();
-            else if (RightButtonDown)
-                PTZRight();
-
             if (RightTrigger > 0)
             {
                 MaxSpeedCollector += delta * 15;
                 if (MaxSpeedCollector > 1)
                 {
                     MaxSpeedCollector = 0;
-                    if (MaxSpeed < 100)
-                        MaxSpeed++;
+                    if (MaxSpeed < 1)
+                        MaxSpeed += (float)delta;
                 }
             }
             else if (LeftTrigger > 0)
@@ -121,16 +147,9 @@ namespace ui
                 {
                     MaxSpeedCollector = 0;
                     if (MaxSpeed > 0)
-                        MaxSpeed--;
+                        MaxSpeed -= (float)delta;
                 }
             }
-
-            // Meant to stress-test ROSBridge
-            // if (ROS.ROSReady && !threadstarted)
-            // {
-            //     new Thread(new e().a).Start();
-            //     threadstarted = true;
-            // }
         }
 
         public static float ConstWrap(float value, float min, float max)
@@ -139,111 +158,64 @@ namespace ui
             return min + ((((value - min) % range) + range) % range);
         }
 
-        public void PTZUp()
-        {
-            ptzmsg.pitch += 5;
-            PushToPTZ();
-        }
-
-        public void PTZDown()
-        {
-            ptzmsg.pitch -= 5;
-            PushToPTZ();
-        }
-
-        public void PTZLeft()
-        {
-            ptzmsg.yaw -= 5;
-            PushToPTZ();
-        }
-
-        public void PTZRight()
-        {
-            ptzmsg.yaw += 5;
-            PushToPTZ();
-        }
-
-        public void PTZCenter()
-        {
-            ptzmsg.pitch = ptzmsg.yaw = 0;
-            PushToPTZ();
-        }
-
         public void PushToPTZ()
         {
-            if (ptzmsg.pitch > 134)
-                ptzmsg.pitch = 134;
-            else if (ptzmsg.pitch < -134)
-                ptzmsg.pitch = -134;
+            if (ptzMsg.pitch > 134)
+                ptzMsg.pitch = 134;
+            else if (ptzMsg.pitch < -134)
+                ptzMsg.pitch = -134;
 
-            ptzmsg.yaw = ConstWrap(ptzmsg.yaw, 0, 360);
+            ptzMsg.yaw = ConstWrap(ptzMsg.yaw, 0, 360);
 
             float ZoomAmount = (float)Zoom.Value;
 
-            PTZAxis0.RotationDegrees = Vector3.Up * ptzmsg.yaw;
-            PTZAxis1.RotationDegrees = Vector3.Right * ptzmsg.pitch;
-            Debug.Log(DebugID, $"Setting PTZ rotation to (X:{ptzmsg.yaw},Y:{ptzmsg.pitch}) and zoom {ZoomAmount}");
-            PTZRotX.Text = "Y:" + ptzmsg.yaw.ToString().PadLeft(3, ' ');
-            PTZRotY.Text = "P:" + ptzmsg.pitch.ToString().PadLeft(3, ' ');
+            PTZAxis0.RotationDegrees = Godot.Vector3.Up * ptzMsg.yaw;
+            PTZAxis1.RotationDegrees = Godot.Vector3.Right * ptzMsg.pitch;
+            GD.Print($"Setting PTZ rotation to (X:{ptzMsg.yaw},Y:{ptzMsg.pitch}) and zoom {ZoomAmount}");
+            PTZRotX.Text = "Y:" + ptzMsg.yaw.ToString().PadLeft(3, ' ');
+            PTZRotY.Text = "P:" + ptzMsg.pitch.ToString().PadLeft(3, ' ');
 
-            ptzmsg.control_mode = 1;
-            ROS.Publish(ControlPTZTopic, ptzmsg);
-            if (ptzmsg.zoom_level != ZoomAmount)
+            ptzMsg.control_mode = 1;
+            ROS.Publish(ptz, ptzMsg);
+            if (ptzMsg.zoom_level != ZoomAmount)
             {
-                ptzmsg.control_mode = 3;
-                ptzmsg.zoom_level = ZoomAmount;
-                ROS.Publish(ControlPTZTopic, ptzmsg);
+                ptzMsg.control_mode = 3;
+                ptzMsg.zoom_level = ZoomAmount;
+                ROS.Publish(ptz, ptzMsg);
             }
         }
 
         public override void AdvertiseToROS()
         {
-            ROS.RequestTopic<CoreControl>(ControlTopicName);
-            ROS.RequestTopic<PtzControl>(ControlPTZTopic);
+            ROS.AdvertiseMessage<CoreCtrlState>(ctrl);
+            ROS.AdvertiseMessage<Geometry.Twist>(twist);
+            ROS.AdvertiseMessage<PtzControl>(ptz);
         }
 
         public override void EmitToROS()
         {
-            msg.left_stick = (float)LMotor.Value;
-            msg.right_stick = (float)RMotor.Value;
-            msg.max_speed = MaxSpeed;
-            msg.brake = BrakeState;
-            msg.turn_to_enable = false;
-            msg.turn_to = 0f;
-            msg.turn_to_timeout = 0f;
+            twistMsg.linear.x = LMotor.Value - (LMotor.Value - RMotor.Value);
+            twistMsg.angular.z = (LMotor.Value - RMotor.Value) * 0.5f;
 
-            ROS.Publish(ControlTopicName, msg);
+            ROS.Publish(twist, twistMsg);
+
+            controlMsg.max_duty = MaxSpeed;
+            controlMsg.brake_mode = BrakeState;
+
+            ROS.Publish(ctrl, controlMsg);
         }
 
         public override void _ExitTree()
         {
-            msg.left_stick = 0f;
-            msg.right_stick = 0f;
-            msg.max_speed = 0;
-            msg.brake = true;
-            msg.turn_to_enable = false;
-            msg.turn_to = 0f;
-            msg.turn_to_timeout = 0f;
+            twistMsg.linear = new(0, 0, 0);
+            twistMsg.angular = new(0, 0, 0);
 
-            ROS.Publish(ControlTopicName, msg);
+            ROS.Publish(twist, twistMsg);
+
+            controlMsg.max_duty = 0f;
+            controlMsg.brake_mode = true;
+
+            ROS.Publish(ctrl, controlMsg);
         }
     }
-
-    // Meant to stress-test ROSBridge
-    // public class e
-    // {
-    //     public void a()
-    //     {
-    //         ROS.ROSSocket.Advertise<SocketFeedback>("/arm/feedback/socket");
-    //         System.Random r = new System.Random();
-    //         SocketFeedback sf = new SocketFeedback(r.NextSingle(), r.NextSingle(), r.NextSingle(), r.NextSingle(), r.NextSingle(), r.NextSingle(),
-    //             r.NextSingle(), r.NextSingle(), r.NextSingle(), r.NextSingle(), r.NextSingle(), r.NextSingle(), r.NextSingle(), r.NextSingle(),
-    //             r.NextSingle(), r.NextSingle(), r.NextSingle(), r.NextSingle(), r.NextSingle(), r.NextSingle());
-    //         while (true)
-    //         {
-    //             ROS.ROSSocket.Publish("/arm/feedback/socket", sf);
-    //             Thread.Sleep(1);
-    //         }
-    //     }
-    // }
 }

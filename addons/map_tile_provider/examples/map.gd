@@ -87,7 +87,7 @@ func recenter():
 		coords = loader.gps_to_tile(latitude, longitude, idx)
 		bounds = loader.get_tile_bounds(coords.x, coords.y, idx)
 		step = sprite.texture.get_size()
-		
+
 		layer.position = Vector2(
 				(coords.x + (longitude - bounds.position.x) / bounds.size.x) * -step.x,
 				(coords.y - (latitude - bounds.position.y) / bounds.size.y) * -step.y
@@ -134,7 +134,7 @@ func _update_visible_rect() -> void:
 			if level.has(key):
 				continue
 			loader.load_tile(
-				base_lat + y * tile_bounds.size.y, 
+				base_lat + y * tile_bounds.size.y,
 				base_lon + x * tile_bounds.size.x,
 				center_tile.z,
 				true
@@ -206,4 +206,10 @@ func shift(amount: Vector2) -> void:
 	# update the current coordinates
 	longitude -= amount.x * deg_per_pix.x
 	latitude += amount.y * deg_per_pix.y
+	call_deferred("_update_visible_rect")
+
+func setPosition(pos: Vector2) -> void:
+	# update the current coordinates
+	longitude = pos.x
+	latitude = pos.y
 	call_deferred("_update_visible_rect")

@@ -9,9 +9,9 @@
 .dotnet
 *.*~
 .nomedia
+*.import
 
 # Godot-specific ignores
-.import/
 export.cfg
 export_credentials.cfg
 

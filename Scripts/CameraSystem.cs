@@ -1,16 +1,14 @@
-using DEBUG;
+using Godot;
 using static Godot.OS;
 
 namespace IPC
 {
     public static class CameraSystem
     {
-        private static int? debugID;
         private static int? cameraPID;
 
         public static void Init()
         {
-            debugID ??= Debug.RegisterDebugData(Godot.Variant.CreateFrom(string.Empty), false);
             cameraPID ??= CreateProcess("basestation-cameras", []);
         }
 
@@ -22,7 +20,7 @@ namespace IPC
 
         public static void AddStream(int id, string url = "192.168.1.")
         {
-            Debug.Log(debugID, $"Opening stream ID{id}");
+            GD.Print($"Opening stream ID{id}");
             Execute("bash", ["-c", $"printf '{{\"cmd\":\"add_stream\",\"payload\":{{\"id\":%s,\"url\":%s}}\n' ${id} ${url} | socat - UNIX-CONNECT:/tmp/basestation-cameras-ipc"]);
         }
 
@@ -34,7 +32,7 @@ namespace IPC
 
         public static void RemoveStream(int id)
         {
-            Debug.Log(debugID, $"Closing stream ID{id}");
+            GD.Print($"Closing stream ID{id}");
             Execute("bash", ["-c", $"printf '{{\"cmd\":\"remove_stream\",\"payload\":{{\"id\":%s}}\n' ${id} | socat - UNIX-CONNECT:/tmp/basestation-cameras-ipc"]);
         }
 
@@ -53,7 +51,7 @@ namespace IPC
         /// </summary>
         public static void SetGridDims(byte rows, byte cols)
         {
-            Debug.Log(debugID, $"Setting grid size to {rows}x{cols}");
+            GD.Print($"Setting grid size to {rows}x{cols}");
             Execute("bash", ["-c", $"printf '{{\"cmd\":\"grid\",\"payload\":{{\"rows\":%s,\"cols\":%s}}\n' ${rows} ${cols} | socat - UNIX-CONNECT:/tmp/basestation-cameras-ipc"]);
         }
     }
