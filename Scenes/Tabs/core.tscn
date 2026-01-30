@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bp5ri1uu6aqdu"]
+[gd_scene format=3 uid="uid://bp5ri1uu6aqdu"]
 
 [ext_resource type="PackedScene" uid="uid://bucrqt5wwg5gn" path="res://addons/map_tile_provider/examples/mosaic.tscn" id="1_4plru"]
 [ext_resource type="Script" uid="uid://fw0xlu8w0pc7" path="res://Scripts/ui/prefabs/Draggable.cs" id="1_eb16g"]
 [ext_resource type="PackedScene" uid="uid://cetxymmi0tyqv" path="res://Scenes/Prefabs/draggable_size_setter.tscn" id="1_u0c8n"]
 
-[node name="Core" type="Control"]
+[node name="Core" type="Control" unique_id=121019408]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,23 +12,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VScrollBar" type="VBoxContainer" parent="."]
+[node name="VScrollBar" type="VBoxContainer" parent="." unique_id=780462811]
 layout_mode = 0
 offset_right = 61.0
 offset_bottom = 31.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VScrollBar"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VScrollBar" unique_id=365359251]
 layout_mode = 2
 
-[node name="DraggableSizeSetter" parent="VScrollBar/HBoxContainer" node_paths=PackedStringArray("target") instance=ExtResource("1_u0c8n")]
+[node name="Map" parent="VScrollBar/HBoxContainer" unique_id=1112474284 node_paths=PackedStringArray("target") instance=ExtResource("1_u0c8n")]
 layout_mode = 2
 folded = true
 title = "Map"
-target = NodePath("../../../DraggableArea/Control/FoldableContainer")
+target = NodePath("../../../DraggableArea/Sandbox/Map")
 
-[node name="DraggableArea" type="Node" parent="."]
+[node name="DraggableArea" type="Node" parent="." unique_id=2137241488]
 
-[node name="Control" type="Control" parent="DraggableArea"]
+[node name="Sandbox" type="Control" parent="DraggableArea" unique_id=1259495816]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,7 +37,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="FoldableContainer" type="FoldableContainer" parent="DraggableArea/Control"]
+[node name="Map" type="FoldableContainer" parent="DraggableArea/Sandbox" unique_id=1597852753]
+visible = false
 layout_mode = 0
 offset_left = 708.0
 offset_top = 161.0
@@ -49,7 +50,7 @@ title = "Map"
 title_alignment = 1
 script = ExtResource("1_eb16g")
 
-[node name="mosaic" parent="DraggableArea/Control/FoldableContainer" instance=ExtResource("1_4plru")]
+[node name="mosaic" parent="DraggableArea/Sandbox/Map" unique_id=565245909 instance=ExtResource("1_4plru")]
 layout_mode = 2
 latitude = 38.36
 longitude = -110.705
