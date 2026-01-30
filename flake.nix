@@ -1,4 +1,5 @@
 {
+  inputs.modernpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
   outputs =
@@ -14,6 +15,7 @@
         inputs.nixpkgs.lib.genAttrs supportedSystems (
           system:
           f {
+            mpkgs = import inputs.modernpkgs { inherit system; };
             pkgs = import inputs.nixpkgs { inherit system; };
             inherit system;
           }
@@ -21,15 +23,14 @@
     in
     {
       devShells = forEachSupportedSystem (
-        { pkgs, system }:
+        { mpkgs, pkgs, system }:
         {
           default = pkgs.mkShell {
             packages =
-              with pkgs;
-              with pkgs.godotPackages_4_5;
+              with mpkgs;
               [
-                godot-mono
                 dotnet-sdk_10
+                godotPackages_4_6.godot-mono
               ];
 
             env = { };
@@ -39,27 +40,27 @@
       );
 
       packages = forEachSupportedSystem (
-        { pkgs, system }:
+        { mpkgs, pkgs, system }:
         {
-          default = pkgs.stdenv.mkDerivation {
+          default = mpkgs.stdenv.mkDerivation {
             pname = "basestation-game";
             version = "0.1.0";
             src = ./.;
 
-            nativeBuildInputs = with pkgs; [
+            nativeBuildInputs = with mpkgs; [
               mono
               unzip
               makeWrapper
               dotnet-sdk_10
-              godotPackages_4_5.godot-mono
+              godotPackages_4_6.godot-mono
             ];
 
-            buildInputs = with pkgs; [
+            buildInputs = with mpkgs; [
               mono
               unzip
               makeWrapper
               dotnet-sdk_10
-              godotPackages_4_5.godot-mono
+              godotPackages_4_6.godot-mono
             ];
 
             buildPhase = ''
@@ -68,7 +69,7 @@
                 	      export HOME=$TMPDIR
 
                 	      mkdir -p $HOME/.local/share/godot
-                	      ln -s ${pkgs.godotPackages_4_5.export-template-mono}/share/godot/export_templates $HOME/.local/share/godot
+                	      ln -s ${pkgs.godotPackages_4_6.export-template-mono}/share/godot/export_templates $HOME/.local/share/godot
 
                 	      mkdir -p $out/bin/
                 	      godot-mono --path . --headless --export-release "nix ${system}" $out/bin/basestation-game

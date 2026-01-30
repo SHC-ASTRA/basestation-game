@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://dfxg1gnuaoylo"]
+[gd_resource type="Theme" format=3 uid="uid://dfxg1gnuaoylo"]
 
 [ext_resource type="SystemFont" uid="uid://dppdymum6rgbi" path="res://Assets/Themes/Font.tres" id="1_e3d0t"]
 

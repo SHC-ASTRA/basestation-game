@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://dh133i8yuxjts"]
+[gd_scene format=3 uid="uid://dh133i8yuxjts"]
 
 [ext_resource type="Script" uid="uid://g1fm7oxy6y1p" path="res://Scripts/ui/TabController.cs" id="2_gwotu"]
 [ext_resource type="Script" uid="uid://blj4w3gbpdv55" path="res://Scripts/ui/tabs/ArmTabUI.cs" id="2_qq4qf"]
@@ -169,7 +169,7 @@ Button/styles/normal = SubResource("StyleBoxFlat_grmb5")
 Button/styles/pressed = SubResource("StyleBoxFlat_m8v7i")
 VSeparator/styles/separator = SubResource("StyleBoxLine_grmb5")
 
-[node name="ToolbarPanel" type="VBoxContainer"]
+[node name="ToolbarPanel" type="VBoxContainer" unique_id=1314126726]
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -182,11 +182,11 @@ size_flags_horizontal = 3
 theme = ExtResource("3_gwotu")
 theme_override_constants/separation = 0
 
-[node name="TabsParent" type="PanelContainer" parent="."]
+[node name="TabsParent" type="PanelContainer" parent="." unique_id=388945239]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
-[node name="arm" type="HBoxContainer" parent="TabsParent" node_paths=PackedStringArray("Axis0drive", "Axis1drive", "Axis2drive", "Axis3drive", "BrakeIndicator", "Brake", "EndEffectorRoll", "EndEffectorYaw", "LinearActuatorDrive", "GripperDrive", "LaserIndicator", "Laser")]
+[node name="arm" type="HBoxContainer" parent="TabsParent" unique_id=748735401 node_paths=PackedStringArray("Axis0drive", "Axis1drive", "Axis2drive", "Axis3drive", "BrakeIndicator", "Brake", "EndEffectorRoll", "EndEffectorYaw", "LinearActuatorDrive", "GripperDrive", "LaserIndicator", "Laser")]
 visible = false
 layout_mode = 2
 alignment = 1
@@ -205,131 +205,131 @@ LaserIndicator = NodePath("Laser/LaserContainer/ColoredIndicator")
 Laser = NodePath("Laser/LaserContainer/TextureRect")
 ROSDependent = true
 
-[node name="I" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+[node name="I" parent="TabsParent/arm" unique_id=1744664029 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Axese" type="HBoxContainer" parent="TabsParent/arm"]
+[node name="Axese" type="HBoxContainer" parent="TabsParent/arm" unique_id=16590867]
 layout_mode = 2
 
-[node name="Axese" type="Label" parent="TabsParent/arm/Axese"]
+[node name="Axese" type="Label" parent="TabsParent/arm/Axese" unique_id=283616436]
 custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 text = "Axese"
 horizontal_alignment = 1
 autowrap_mode = 1
 
-[node name="=" type="VBoxContainer" parent="TabsParent/arm/Axese"]
+[node name="=" type="VBoxContainer" parent="TabsParent/arm/Axese" unique_id=496443348]
 layout_mode = 2
 theme = ExtResource("4_th4gl")
 alignment = 1
 
-[node name="Drive01" type="HBoxContainer" parent="TabsParent/arm/Axese/="]
+[node name="Drive01" type="HBoxContainer" parent="TabsParent/arm/Axese/=" unique_id=548985050]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Axis0" parent="TabsParent/arm/Axese/=/Drive01" instance=ExtResource("3_mxw14")]
+[node name="Axis0" parent="TabsParent/arm/Axese/=/Drive01" unique_id=1119868046 instance=ExtResource("3_mxw14")]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
-[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive01/Axis0"]
+[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive01/Axis0" unique_id=734124998]
 layout_mode = 0
 offset_right = 16.0
 offset_bottom = 27.0
 text = " 0"
 
-[node name="Axis1" parent="TabsParent/arm/Axese/=/Drive01" instance=ExtResource("3_mxw14")]
+[node name="Axis1" parent="TabsParent/arm/Axese/=/Drive01" unique_id=889509728 instance=ExtResource("3_mxw14")]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
-[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive01/Axis1"]
+[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive01/Axis1" unique_id=1299536346]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 27.0
 text = " 1"
 
-[node name="Drive23" type="HBoxContainer" parent="TabsParent/arm/Axese/="]
+[node name="Drive23" type="HBoxContainer" parent="TabsParent/arm/Axese/=" unique_id=157856883]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Axis2" parent="TabsParent/arm/Axese/=/Drive23" instance=ExtResource("3_mxw14")]
+[node name="Axis2" parent="TabsParent/arm/Axese/=/Drive23" unique_id=478997247 instance=ExtResource("3_mxw14")]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
-[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive23/Axis2"]
+[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive23/Axis2" unique_id=1533000581]
 layout_mode = 0
 offset_right = 15.0
 offset_bottom = 27.0
 text = " 2"
 
-[node name="Axis3" parent="TabsParent/arm/Axese/=/Drive23" instance=ExtResource("3_mxw14")]
+[node name="Axis3" parent="TabsParent/arm/Axese/=/Drive23" unique_id=101876443 instance=ExtResource("3_mxw14")]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
-[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive23/Axis3"]
+[node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive23/Axis3" unique_id=1930233293]
 layout_mode = 0
 offset_right = 14.0
 offset_bottom = 27.0
 text = " 3"
 
-[node name="I2" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+[node name="I2" parent="TabsParent/arm" unique_id=1897115626 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Brake" type="VBoxContainer" parent="TabsParent/arm"]
+[node name="Brake" type="VBoxContainer" parent="TabsParent/arm" unique_id=949804281]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabsParent/arm/Brake"]
+[node name="Label" type="Label" parent="TabsParent/arm/Brake" unique_id=1315319778]
 layout_mode = 2
 text = "Brake"
 horizontal_alignment = 1
 
-[node name="BrakeContainer" type="AspectRatioContainer" parent="TabsParent/arm/Brake"]
+[node name="BrakeContainer" type="AspectRatioContainer" parent="TabsParent/arm/Brake" unique_id=265451638]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/arm/Brake/BrakeContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/arm/Brake/BrakeContainer" unique_id=1093311010 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/arm/Brake/BrakeContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/arm/Brake/BrakeContainer" unique_id=177362331]
 layout_mode = 2
 texture = ExtResource("6_lq3nq")
 expand_mode = 1
 flip_v = true
 
-[node name="Brake" type="TextureRect" parent="TabsParent/arm/Brake/BrakeContainer"]
+[node name="Brake" type="TextureRect" parent="TabsParent/arm/Brake/BrakeContainer" unique_id=2110818364]
 layout_mode = 2
 texture = ExtResource("7_yrw8b")
 expand_mode = 1
 flip_v = true
 
-[node name="I3" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+[node name="I3" parent="TabsParent/arm" unique_id=1575501378 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="EE" type="VBoxContainer" parent="TabsParent/arm"]
+[node name="EE" type="VBoxContainer" parent="TabsParent/arm" unique_id=1312437310]
 layout_mode = 2
 theme = ExtResource("4_th4gl")
 
-[node name="EER" type="PanelContainer" parent="TabsParent/arm/EE"]
+[node name="EER" type="PanelContainer" parent="TabsParent/arm/EE" unique_id=1172922126]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Roll" parent="TabsParent/arm/EE/EER" instance=ExtResource("3_mxw14")]
+[node name="Roll" parent="TabsParent/arm/EE/EER" unique_id=2025476360 instance=ExtResource("3_mxw14")]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
-[node name="Label" type="Label" parent="TabsParent/arm/EE/EER"]
+[node name="Label" type="Label" parent="TabsParent/arm/EE/EER" unique_id=1254608191]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 1
@@ -337,17 +337,17 @@ text = "End effector
 Roll"
 horizontal_alignment = 1
 
-[node name="EEY" type="PanelContainer" parent="TabsParent/arm/EE"]
+[node name="EEY" type="PanelContainer" parent="TabsParent/arm/EE" unique_id=1758748205]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Yaw" parent="TabsParent/arm/EE/EEY" instance=ExtResource("3_mxw14")]
+[node name="Yaw" parent="TabsParent/arm/EE/EEY" unique_id=965329038 instance=ExtResource("3_mxw14")]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
-[node name="Label" type="Label" parent="TabsParent/arm/EE/EEY"]
+[node name="Label" type="Label" parent="TabsParent/arm/EE/EEY" unique_id=1985039299]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 1
@@ -355,41 +355,41 @@ text = "End effector
 Yaw"
 horizontal_alignment = 1
 
-[node name="VSep3" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+[node name="VSep3" parent="TabsParent/arm" unique_id=1940334204 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="LA_Gripper" type="VBoxContainer" parent="TabsParent/arm"]
+[node name="LA_Gripper" type="VBoxContainer" parent="TabsParent/arm" unique_id=1473515587]
 layout_mode = 2
 theme = ExtResource("4_th4gl")
 
-[node name="LA" type="PanelContainer" parent="TabsParent/arm/LA_Gripper"]
+[node name="LA" type="PanelContainer" parent="TabsParent/arm/LA_Gripper" unique_id=731815758]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="LinearActuator" parent="TabsParent/arm/LA_Gripper/LA" instance=ExtResource("3_mxw14")]
+[node name="LinearActuator" parent="TabsParent/arm/LA_Gripper/LA" unique_id=2126170413 instance=ExtResource("3_mxw14")]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
-[node name="Label" type="Label" parent="TabsParent/arm/LA_Gripper/LA"]
+[node name="Label" type="Label" parent="TabsParent/arm/LA_Gripper/LA" unique_id=1741239318]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 1
 text = "Linear Actuator"
 horizontal_alignment = 1
 
-[node name="Gripper" type="PanelContainer" parent="TabsParent/arm/LA_Gripper"]
+[node name="Gripper" type="PanelContainer" parent="TabsParent/arm/LA_Gripper" unique_id=1647281021]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Gripper" parent="TabsParent/arm/LA_Gripper/Gripper" instance=ExtResource("3_mxw14")]
+[node name="Gripper" parent="TabsParent/arm/LA_Gripper/Gripper" unique_id=829445497 instance=ExtResource("3_mxw14")]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
-[node name="Label" type="Label" parent="TabsParent/arm/LA_Gripper/Gripper"]
+[node name="Label" type="Label" parent="TabsParent/arm/LA_Gripper/Gripper" unique_id=343951693]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 1
@@ -397,42 +397,42 @@ theme_override_font_sizes/font_size = 22
 text = "Gripper"
 horizontal_alignment = 1
 
-[node name="VSep4" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+[node name="VSep4" parent="TabsParent/arm" unique_id=46349101 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Laser" type="VBoxContainer" parent="TabsParent/arm"]
+[node name="Laser" type="VBoxContainer" parent="TabsParent/arm" unique_id=2115507604]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabsParent/arm/Laser"]
+[node name="Label" type="Label" parent="TabsParent/arm/Laser" unique_id=526157727]
 layout_mode = 2
 text = "Laser"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LaserContainer" type="AspectRatioContainer" parent="TabsParent/arm/Laser"]
+[node name="LaserContainer" type="AspectRatioContainer" parent="TabsParent/arm/Laser" unique_id=785172543]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/arm/Laser/LaserContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/arm/Laser/LaserContainer" unique_id=917691600 instance=ExtResource("6_yrw8b")]
 custom_minimum_size = Vector2(107, 29)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/arm/Laser/LaserContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/arm/Laser/LaserContainer" unique_id=771172720]
 layout_mode = 2
 texture = ExtResource("8_yrw8b")
 stretch_mode = 3
 
-[node name="i^" parent="TabsParent/arm" instance=ExtResource("3_5ljfu")]
+[node name="i^" parent="TabsParent/arm" unique_id=1987127462 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="auto" type="HBoxContainer" parent="TabsParent"]
+[node name="auto" type="HBoxContainer" parent="TabsParent" unique_id=2012457773]
 visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("5_u4qwe")
 ROSDependent = true
 
-[node name="bio" type="HBoxContainer" parent="TabsParent" node_paths=PackedStringArray("FanSpeed", "FanTime", "VacuumSelector", "VacuumCommit", "VacuumCommitTexture", "Distributors", "ExtensionAmount", "TestTubeSelector", "TestTubeCommit", "TestTubeCommitTexture", "VibrationMotor", "Laser", "LaserFailsafe", "Source")]
+[node name="bio" type="HBoxContainer" parent="TabsParent" unique_id=194178564 node_paths=PackedStringArray("FanSpeed", "FanTime", "VacuumSelector", "VacuumCommit", "VacuumCommitTexture", "Distributors", "ExtensionAmount", "TestTubeSelector", "TestTubeCommit", "TestTubeCommitTexture", "VibrationMotor", "Laser", "LaserFailsafe", "Source")]
 visible = false
 layout_mode = 2
 alignment = 1
@@ -455,93 +455,93 @@ Fire = ExtResource("13_gbrgi")
 Source = NodePath("Laser/AudioStreamPlayer2D")
 ROSDependent = true
 
-[node name="|" parent="TabsParent/bio" instance=ExtResource("3_5ljfu")]
+[node name="|" parent="TabsParent/bio" unique_id=1267749996 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Vacuum system" type="HBoxContainer" parent="TabsParent/bio"]
+[node name="Vacuum system" type="HBoxContainer" parent="TabsParent/bio" unique_id=485832669]
 layout_mode = 2
 
-[node name="Speed" type="VBoxContainer" parent="TabsParent/bio/Vacuum system"]
+[node name="Speed" type="VBoxContainer" parent="TabsParent/bio/Vacuum system" unique_id=2097604546]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Speed"]
+[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Speed" unique_id=248502953]
 layout_mode = 2
 text = "Speed"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vacuum system/Speed"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vacuum system/Speed" unique_id=974444698]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Vacuum system/Speed/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/bio/Vacuum system/Speed/AspectRatioContainer" unique_id=2078662727 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vacuum system/Speed/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vacuum system/Speed/AspectRatioContainer" unique_id=432531560]
 layout_mode = 2
 texture = ExtResource("14_s2hv3")
 
-[node name="Amount" type="SpinBox" parent="TabsParent/bio/Vacuum system/Speed"]
+[node name="Amount" type="SpinBox" parent="TabsParent/bio/Vacuum system/Speed" unique_id=152467717]
 layout_mode = 2
 theme_override_constants/field_and_buttons_separation = -16
 max_value = 50.0
 alignment = 1
 suffix = "%"
 
-[node name="-|-3" parent="TabsParent/bio/Vacuum system" instance=ExtResource("13_8exja")]
+[node name="-|-3" parent="TabsParent/bio/Vacuum system" unique_id=1560221724 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Time" type="VBoxContainer" parent="TabsParent/bio/Vacuum system"]
+[node name="Time" type="VBoxContainer" parent="TabsParent/bio/Vacuum system" unique_id=1256269669]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Time"]
+[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Time" unique_id=763811958]
 layout_mode = 2
 text = "RTime"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vacuum system/Time"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vacuum system/Time" unique_id=144117494]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Vacuum system/Time/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/bio/Vacuum system/Time/AspectRatioContainer" unique_id=2132483309 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vacuum system/Time/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vacuum system/Time/AspectRatioContainer" unique_id=698679435]
 layout_mode = 2
 texture = ExtResource("14_s2hv3")
 
-[node name="Amount" type="SpinBox" parent="TabsParent/bio/Vacuum system/Time"]
+[node name="Amount" type="SpinBox" parent="TabsParent/bio/Vacuum system/Time" unique_id=2022761685]
 layout_mode = 2
 theme_override_constants/field_and_buttons_separation = -16
 max_value = 999.0
 alignment = 1
 suffix = "Ms"
 
-[node name="-|-5" parent="TabsParent/bio/Vacuum system" instance=ExtResource("13_8exja")]
+[node name="-|-5" parent="TabsParent/bio/Vacuum system" unique_id=640189801 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Vacs" type="VBoxContainer" parent="TabsParent/bio/Vacuum system"]
+[node name="Vacs" type="VBoxContainer" parent="TabsParent/bio/Vacuum system" unique_id=1222574520]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Vacs"]
+[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Vacs" unique_id=1559311054]
 layout_mode = 2
 text = "Vacs*"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vacuum system/Vacs"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vacuum system/Vacs" unique_id=398780234]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Vacuum system/Vacs/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/bio/Vacuum system/Vacs/AspectRatioContainer" unique_id=1409610336 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vacuum system/Vacs/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vacuum system/Vacs/AspectRatioContainer" unique_id=1560685407]
 layout_mode = 2
 texture = ExtResource("12_a86w8")
 
-[node name="MenuButton" type="MenuButton" parent="TabsParent/bio/Vacuum system/Vacs"]
+[node name="MenuButton" type="MenuButton" parent="TabsParent/bio/Vacuum system/Vacs" unique_id=15940495]
 layout_mode = 2
 text = "Vac ▼"
 flat = false
@@ -562,24 +562,24 @@ popup/item_2/checkable = 2
 popup/item_2/id = 2
 script = ExtResource("17_5v23t")
 
-[node name="-|-4" parent="TabsParent/bio/Vacuum system" instance=ExtResource("13_8exja")]
+[node name="-|-4" parent="TabsParent/bio/Vacuum system" unique_id=1017728404 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Commit" type="VBoxContainer" parent="TabsParent/bio/Vacuum system"]
+[node name="Commit" type="VBoxContainer" parent="TabsParent/bio/Vacuum system" unique_id=2021107730]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Commit"]
+[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Commit" unique_id=966604075]
 layout_mode = 2
 text = "Commt"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="Panel" parent="TabsParent/bio/Vacuum system/Commit"]
+[node name="AspectRatioContainer" type="Panel" parent="TabsParent/bio/Vacuum system/Commit" unique_id=1799190817]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Commit" type="Button" parent="TabsParent/bio/Vacuum system/Commit/AspectRatioContainer"]
+[node name="Commit" type="Button" parent="TabsParent/bio/Vacuum system/Commit/AspectRatioContainer" unique_id=94686265]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -587,7 +587,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="noncommit" type="TextureRect" parent="TabsParent/bio/Vacuum system/Commit/AspectRatioContainer"]
+[node name="noncommit" type="TextureRect" parent="TabsParent/bio/Vacuum system/Commit/AspectRatioContainer" unique_id=796084006]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -603,7 +603,7 @@ texture = ExtResource("17_gbrgi")
 expand_mode = 4
 stretch_mode = 6
 
-[node name="commit" type="TextureRect" parent="TabsParent/bio/Vacuum system/Commit/AspectRatioContainer"]
+[node name="commit" type="TextureRect" parent="TabsParent/bio/Vacuum system/Commit/AspectRatioContainer" unique_id=1612561159]
 visible = false
 layout_mode = 1
 anchors_preset = 14
@@ -620,160 +620,160 @@ texture = ExtResource("13_1vnp5")
 expand_mode = 4
 stretch_mode = 6
 
-[node name="HSeparator" type="HSeparator" parent="TabsParent/bio/Vacuum system/Commit"]
+[node name="HSeparator" type="HSeparator" parent="TabsParent/bio/Vacuum system/Commit" unique_id=1310044591]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 26
 
-[node name="|2" parent="TabsParent/bio" instance=ExtResource("3_5ljfu")]
+[node name="|2" parent="TabsParent/bio" unique_id=875462288 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Distributors" type="HBoxContainer" parent="TabsParent/bio"]
+[node name="Distributors" type="HBoxContainer" parent="TabsParent/bio" unique_id=1591636443]
 layout_mode = 2
 
-[node name="Distributor1" type="VBoxContainer" parent="TabsParent/bio/Distributors"]
+[node name="Distributor1" type="VBoxContainer" parent="TabsParent/bio/Distributors" unique_id=104529400]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Distributors/Distributor1"]
+[node name="Label" type="Label" parent="TabsParent/bio/Distributors/Distributor1" unique_id=514078588]
 layout_mode = 2
 text = "Dist1"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Distributors/Distributor1"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Distributors/Distributor1" unique_id=829017713]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Distributors/Distributor1/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/bio/Distributors/Distributor1/AspectRatioContainer" unique_id=1212634814 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Distributors/Distributor1/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Distributors/Distributor1/AspectRatioContainer" unique_id=252963686]
 layout_mode = 2
 texture = ExtResource("15_hy72e")
 
-[node name="Open" type="Button" parent="TabsParent/bio/Distributors/Distributor1"]
+[node name="Open" type="Button" parent="TabsParent/bio/Distributors/Distributor1" unique_id=109910328]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
 toggle_mode = true
 text = "Wig-l"
 
-[node name="-|-" parent="TabsParent/bio/Distributors" instance=ExtResource("13_8exja")]
+[node name="-|-" parent="TabsParent/bio/Distributors" unique_id=144634951 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Distributor2" type="VBoxContainer" parent="TabsParent/bio/Distributors"]
+[node name="Distributor2" type="VBoxContainer" parent="TabsParent/bio/Distributors" unique_id=1342699183]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Distributors/Distributor2"]
+[node name="Label" type="Label" parent="TabsParent/bio/Distributors/Distributor2" unique_id=671407509]
 layout_mode = 2
 text = "Dist2"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Distributors/Distributor2"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Distributors/Distributor2" unique_id=889530003]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Distributors/Distributor2/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/bio/Distributors/Distributor2/AspectRatioContainer" unique_id=364333052 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Distributors/Distributor2/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Distributors/Distributor2/AspectRatioContainer" unique_id=918776721]
 layout_mode = 2
 texture = ExtResource("15_hy72e")
 
-[node name="Open" type="Button" parent="TabsParent/bio/Distributors/Distributor2"]
+[node name="Open" type="Button" parent="TabsParent/bio/Distributors/Distributor2" unique_id=856248795]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
 toggle_mode = true
 text = "Wig-l"
 
-[node name="-|-2" parent="TabsParent/bio/Distributors" instance=ExtResource("13_8exja")]
+[node name="-|-2" parent="TabsParent/bio/Distributors" unique_id=505190430 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Distributor3" type="VBoxContainer" parent="TabsParent/bio/Distributors"]
+[node name="Distributor3" type="VBoxContainer" parent="TabsParent/bio/Distributors" unique_id=713924042]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Distributors/Distributor3"]
+[node name="Label" type="Label" parent="TabsParent/bio/Distributors/Distributor3" unique_id=1470281238]
 layout_mode = 2
 text = "Dist3"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Distributors/Distributor3"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Distributors/Distributor3" unique_id=547227562]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Distributors/Distributor3/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/bio/Distributors/Distributor3/AspectRatioContainer" unique_id=976383720 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Distributors/Distributor3/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Distributors/Distributor3/AspectRatioContainer" unique_id=976322086]
 layout_mode = 2
 texture = ExtResource("15_hy72e")
 
-[node name="Open" type="Button" parent="TabsParent/bio/Distributors/Distributor3"]
+[node name="Open" type="Button" parent="TabsParent/bio/Distributors/Distributor3" unique_id=371360751]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
 toggle_mode = true
 text = "Wig-l"
 
-[node name="|3" parent="TabsParent/bio" instance=ExtResource("3_5ljfu")]
+[node name="|3" parent="TabsParent/bio" unique_id=884894761 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Test Tubes" type="HBoxContainer" parent="TabsParent/bio"]
+[node name="Test Tubes" type="HBoxContainer" parent="TabsParent/bio" unique_id=2113194396]
 layout_mode = 2
 
-[node name="Extension" type="VBoxContainer" parent="TabsParent/bio/Test Tubes"]
+[node name="Extension" type="VBoxContainer" parent="TabsParent/bio/Test Tubes" unique_id=110524731]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Test Tubes/Extension"]
+[node name="Label" type="Label" parent="TabsParent/bio/Test Tubes/Extension" unique_id=1945525987]
 layout_mode = 2
 text = "Exstn"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Test Tubes/Extension"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Test Tubes/Extension" unique_id=290115010]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Test Tubes/Extension/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/bio/Test Tubes/Extension/AspectRatioContainer" unique_id=962197728 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Test Tubes/Extension/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Test Tubes/Extension/AspectRatioContainer" unique_id=23963537]
 layout_mode = 2
 texture = ExtResource("21_j4lxw")
 
-[node name="Amount" type="SpinBox" parent="TabsParent/bio/Test Tubes/Extension"]
+[node name="Amount" type="SpinBox" parent="TabsParent/bio/Test Tubes/Extension" unique_id=1361834709]
 layout_mode = 2
 theme_override_constants/field_and_buttons_separation = -16
 alignment = 1
 suffix = "%"
 
-[node name="-|-5" parent="TabsParent/bio/Test Tubes" instance=ExtResource("13_8exja")]
+[node name="-|-5" parent="TabsParent/bio/Test Tubes" unique_id=898012537 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="TestTube" type="VBoxContainer" parent="TabsParent/bio/Test Tubes"]
+[node name="TestTube" type="VBoxContainer" parent="TabsParent/bio/Test Tubes" unique_id=762087470]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Test Tubes/TestTube"]
+[node name="Label" type="Label" parent="TabsParent/bio/Test Tubes/TestTube" unique_id=1847023306]
 layout_mode = 2
 text = "'Tube"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Test Tubes/TestTube"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Test Tubes/TestTube" unique_id=470781588]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Test Tubes/TestTube/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/bio/Test Tubes/TestTube/AspectRatioContainer" unique_id=1313675192 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Test Tubes/TestTube/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Test Tubes/TestTube/AspectRatioContainer" unique_id=1757880884]
 layout_mode = 2
 texture = ExtResource("19_gbrgi")
 
-[node name="MenuButton" type="MenuButton" parent="TabsParent/bio/Test Tubes/TestTube"]
+[node name="MenuButton" type="MenuButton" parent="TabsParent/bio/Test Tubes/TestTube" unique_id=1264030872]
 layout_mode = 2
 text = "Tube ▼"
 flat = false
@@ -794,24 +794,24 @@ popup/item_2/checkable = 2
 popup/item_2/id = 2
 script = ExtResource("17_5v23t")
 
-[node name="-|-4" parent="TabsParent/bio/Test Tubes" instance=ExtResource("13_8exja")]
+[node name="-|-4" parent="TabsParent/bio/Test Tubes" unique_id=1018325228 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Commit" type="VBoxContainer" parent="TabsParent/bio/Test Tubes"]
+[node name="Commit" type="VBoxContainer" parent="TabsParent/bio/Test Tubes" unique_id=167934418]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Test Tubes/Commit"]
+[node name="Label" type="Label" parent="TabsParent/bio/Test Tubes/Commit" unique_id=1913103350]
 layout_mode = 2
 text = "Commt"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="Panel" parent="TabsParent/bio/Test Tubes/Commit"]
+[node name="AspectRatioContainer" type="Panel" parent="TabsParent/bio/Test Tubes/Commit" unique_id=701062754]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Commit" type="Button" parent="TabsParent/bio/Test Tubes/Commit/AspectRatioContainer"]
+[node name="Commit" type="Button" parent="TabsParent/bio/Test Tubes/Commit/AspectRatioContainer" unique_id=1053363139]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -819,7 +819,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="noncommit" type="TextureRect" parent="TabsParent/bio/Test Tubes/Commit/AspectRatioContainer"]
+[node name="noncommit" type="TextureRect" parent="TabsParent/bio/Test Tubes/Commit/AspectRatioContainer" unique_id=801857501]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -835,7 +835,7 @@ texture = ExtResource("17_gbrgi")
 expand_mode = 4
 stretch_mode = 6
 
-[node name="commit" type="TextureRect" parent="TabsParent/bio/Test Tubes/Commit/AspectRatioContainer"]
+[node name="commit" type="TextureRect" parent="TabsParent/bio/Test Tubes/Commit/AspectRatioContainer" unique_id=738732485]
 visible = false
 layout_mode = 1
 anchors_preset = 14
@@ -852,30 +852,30 @@ texture = ExtResource("13_1vnp5")
 expand_mode = 4
 stretch_mode = 6
 
-[node name="HSeparator" type="HSeparator" parent="TabsParent/bio/Test Tubes/Commit"]
+[node name="HSeparator" type="HSeparator" parent="TabsParent/bio/Test Tubes/Commit" unique_id=297573610]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 26
 
-[node name="I4" parent="TabsParent/bio" instance=ExtResource("3_5ljfu")]
+[node name="I4" parent="TabsParent/bio" unique_id=955066178 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Bio Arm" type="HBoxContainer" parent="TabsParent/bio"]
+[node name="Bio Arm" type="HBoxContainer" parent="TabsParent/bio" unique_id=323755024]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/bio/Bio Arm"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/bio/Bio Arm" unique_id=2036529255]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabsParent/bio/Bio Arm/VBoxContainer"]
+[node name="Label" type="Label" parent="TabsParent/bio/Bio Arm/VBoxContainer" unique_id=1747720616]
 layout_mode = 2
 text = "Arm"
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Bio Arm/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Bio Arm/VBoxContainer" unique_id=2103771335]
 layout_mode = 2
 texture = ExtResource("17_7rf03")
 
-[node name="BioArm" type="VSlider" parent="TabsParent/bio/Bio Arm"]
+[node name="BioArm" type="VSlider" parent="TabsParent/bio/Bio Arm" unique_id=1774521085]
 layout_mode = 2
 theme_override_styles/slider = SubResource("StyleBoxFlat_4yhf2")
 min_value = -100.0
@@ -883,96 +883,96 @@ step = 5.0
 ticks_on_borders = true
 ticks_position = 1
 
-[node name="-|-" parent="TabsParent/bio" instance=ExtResource("13_8exja")]
+[node name="-|-" parent="TabsParent/bio" unique_id=40018423 instance=ExtResource("13_8exja")]
 visible = false
 layout_mode = 2
 
-[node name="Vibration Motor" type="VBoxContainer" parent="TabsParent/bio"]
+[node name="Vibration Motor" type="VBoxContainer" parent="TabsParent/bio" unique_id=477477659]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Vibration Motor"]
+[node name="Label" type="Label" parent="TabsParent/bio/Vibration Motor" unique_id=1975701780]
 layout_mode = 2
 text = "Vibra"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vibration Motor"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vibration Motor" unique_id=1371154001]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Vibration Motor/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/bio/Vibration Motor/AspectRatioContainer" unique_id=876647492 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vibration Motor/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vibration Motor/AspectRatioContainer" unique_id=504400108]
 layout_mode = 2
 texture = ExtResource("15_hy72e")
 
-[node name="Viberate" type="Button" parent="TabsParent/bio/Vibration Motor"]
+[node name="Viberate" type="Button" parent="TabsParent/bio/Vibration Motor" unique_id=2107721780]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
 toggle_mode = true
 text = "Vibe"
 
-[node name="|5" parent="TabsParent/bio" instance=ExtResource("3_5ljfu")]
+[node name="|5" parent="TabsParent/bio" unique_id=246356454 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Laser" type="VBoxContainer" parent="TabsParent/bio"]
+[node name="Laser" type="VBoxContainer" parent="TabsParent/bio" unique_id=2061166363]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Laser"]
+[node name="Label" type="Label" parent="TabsParent/bio/Laser" unique_id=981908390]
 layout_mode = 2
 text = "Laser"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Laser"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Laser" unique_id=984479080]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Laser/AspectRatioContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/bio/Laser/AspectRatioContainer" unique_id=397578483 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Laser/AspectRatioContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Laser/AspectRatioContainer" unique_id=1767078554]
 layout_mode = 2
 texture = ExtResource("8_yrw8b")
 
-[node name="Failsafe" type="Button" parent="TabsParent/bio/Laser"]
+[node name="Failsafe" type="Button" parent="TabsParent/bio/Laser" unique_id=402186306]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
 toggle_mode = true
 text = "Failsafe"
 
-[node name="Run" type="Button" parent="TabsParent/bio/Laser"]
+[node name="Run" type="Button" parent="TabsParent/bio/Laser" unique_id=1281236772]
 layout_mode = 2
 theme = SubResource("Theme_wshk6")
 text = "Fire"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="TabsParent/bio/Laser"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="TabsParent/bio/Laser" unique_id=1806399772]
 
-[node name="AudioListener2D" type="AudioListener2D" parent="TabsParent/bio/Laser"]
+[node name="AudioListener2D" type="AudioListener2D" parent="TabsParent/bio/Laser" unique_id=1483006243]
 current = true
 
-[node name="|6" parent="TabsParent/bio" instance=ExtResource("3_5ljfu")]
+[node name="|6" parent="TabsParent/bio" unique_id=1567479380 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Drill" type="HBoxContainer" parent="TabsParent/bio"]
+[node name="Drill" type="HBoxContainer" parent="TabsParent/bio" unique_id=401491941]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/bio/Drill"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/bio/Drill" unique_id=1206115854]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabsParent/bio/Drill/VBoxContainer"]
+[node name="Label" type="Label" parent="TabsParent/bio/Drill/VBoxContainer" unique_id=1066046925]
 layout_mode = 2
 text = "Drill"
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Drill/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Drill/VBoxContainer" unique_id=2112379086]
 layout_mode = 2
 texture = ExtResource("17_7rf03")
 
-[node name="Drill" type="VSlider" parent="TabsParent/bio/Drill"]
+[node name="Drill" type="VSlider" parent="TabsParent/bio/Drill" unique_id=1165175477]
 layout_mode = 2
 theme_override_styles/slider = SubResource("StyleBoxFlat_4yhf2")
 min_value = -100.0
@@ -980,26 +980,26 @@ step = 5.0
 ticks_on_borders = true
 ticks_position = 1
 
-[node name="-|-2" parent="TabsParent/bio" instance=ExtResource("13_8exja")]
+[node name="-|-2" parent="TabsParent/bio" unique_id=477800455 instance=ExtResource("13_8exja")]
 visible = false
 layout_mode = 2
 
-[node name="Drill Arm" type="HBoxContainer" parent="TabsParent/bio"]
+[node name="Drill Arm" type="HBoxContainer" parent="TabsParent/bio" unique_id=118985238]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/bio/Drill Arm"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/bio/Drill Arm" unique_id=1078097718]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabsParent/bio/Drill Arm/VBoxContainer"]
+[node name="Label" type="Label" parent="TabsParent/bio/Drill Arm/VBoxContainer" unique_id=1190242939]
 layout_mode = 2
 text = "Arm"
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Drill Arm/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Drill Arm/VBoxContainer" unique_id=271901165]
 layout_mode = 2
 texture = ExtResource("17_7rf03")
 
-[node name="DrillArm" type="VSlider" parent="TabsParent/bio/Drill Arm"]
+[node name="DrillArm" type="VSlider" parent="TabsParent/bio/Drill Arm" unique_id=1560162712]
 layout_mode = 2
 theme_override_styles/slider = SubResource("StyleBoxFlat_4yhf2")
 min_value = -100.0
@@ -1007,11 +1007,11 @@ step = 5.0
 ticks_on_borders = true
 ticks_position = 1
 
-[node name="|7" parent="TabsParent/bio" instance=ExtResource("3_5ljfu")]
+[node name="|7" parent="TabsParent/bio" unique_id=581836857 instance=ExtResource("3_5ljfu")]
 visible = false
 layout_mode = 2
 
-[node name="core" type="HBoxContainer" parent="TabsParent" node_paths=PackedStringArray("LMotor", "RMotor", "DrivingMode", "BrakeIndicator", "Brake", "PTZRenderCam", "PTZSubViewport", "PTZAxis0", "PTZAxis1", "PTZButtons", "PTZRotX", "PTZRotY", "Zoom")]
+[node name="core" type="HBoxContainer" parent="TabsParent" unique_id=893683522 node_paths=PackedStringArray("LMotor", "RMotor", "DrivingMode", "BrakeIndicator", "Brake", "PTZRenderCam", "PTZSubViewport", "PTZAxis0", "PTZAxis1", "PTZButtons", "PTZRotX", "PTZRotY", "Zoom")]
 layout_mode = 2
 alignment = 1
 script = ExtResource("3_grmb5")
@@ -1032,31 +1032,31 @@ PTZRotY = NodePath("PTZ/PTZDisplayContainer/HBoxContainer/PTZRotationP")
 Zoom = NodePath("PTZ/PTZControlContainer/VBoxContainer2/Zoom")
 ROSDependent = true
 
-[node name="|" parent="TabsParent/core" instance=ExtResource("3_5ljfu")]
+[node name="|" parent="TabsParent/core" unique_id=1440631658 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Motor Power" type="VBoxContainer" parent="TabsParent/core"]
+[node name="Motor Power" type="VBoxContainer" parent="TabsParent/core" unique_id=1060483762]
 layout_mode = 2
 
-[node name="Motors" type="HBoxContainer" parent="TabsParent/core/Motor Power"]
+[node name="Motors" type="HBoxContainer" parent="TabsParent/core/Motor Power" unique_id=628250217]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Tank Driving" type="VBoxContainer" parent="TabsParent/core/Motor Power/Motors"]
+[node name="Tank Driving" type="VBoxContainer" parent="TabsParent/core/Motor Power/Motors" unique_id=403885079]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabsParent/core/Motor Power/Motors/Tank Driving"]
+[node name="Label" type="Label" parent="TabsParent/core/Motor Power/Motors/Tank Driving" unique_id=936489685]
 layout_mode = 2
 text = "Tank Driving"
 
-[node name="TankMode" type="Button" parent="TabsParent/core/Motor Power/Motors/Tank Driving"]
+[node name="TankMode" type="Button" parent="TabsParent/core/Motor Power/Motors/Tank Driving" unique_id=2029992189]
 layout_mode = 2
 size_flags_vertical = 3
 toggle_mode = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/core/Motor Power/Motors/Tank Driving/TankMode"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/core/Motor Power/Motors/Tank Driving/TankMode" unique_id=959938551]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1066,10 +1066,10 @@ grow_vertical = 2
 texture = ExtResource("6_lq3nq")
 expand_mode = 2
 
-[node name="-|-" parent="TabsParent/core/Motor Power/Motors" instance=ExtResource("13_8exja")]
+[node name="-|-" parent="TabsParent/core/Motor Power/Motors" unique_id=1969066928 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabsParent/core/Motor Power/Motors"]
+[node name="Label" type="Label" parent="TabsParent/core/Motor Power/Motors" unique_id=1984241064]
 custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
@@ -1078,7 +1078,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="LMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/Motors"]
+[node name="LMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/Motors" unique_id=1911845814]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1089,7 +1089,7 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="RMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/Motors"]
+[node name="RMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/Motors" unique_id=1584715986]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1100,114 +1100,114 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="|2" parent="TabsParent/core" instance=ExtResource("3_5ljfu")]
+[node name="|2" parent="TabsParent/core" unique_id=688276020 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Brake" type="VBoxContainer" parent="TabsParent/core"]
+[node name="Brake" type="VBoxContainer" parent="TabsParent/core" unique_id=398834726]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabsParent/core/Brake"]
+[node name="Label" type="Label" parent="TabsParent/core/Brake" unique_id=617046808]
 layout_mode = 2
 text = "Brake"
 horizontal_alignment = 1
 
-[node name="BrakeContainer" type="AspectRatioContainer" parent="TabsParent/core/Brake"]
+[node name="BrakeContainer" type="AspectRatioContainer" parent="TabsParent/core/Brake" unique_id=36241546]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/core/Brake/BrakeContainer" instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/core/Brake/BrakeContainer" unique_id=167346243 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/core/Brake/BrakeContainer"]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/core/Brake/BrakeContainer" unique_id=1668441410]
 layout_mode = 2
 texture = ExtResource("6_lq3nq")
 expand_mode = 1
 flip_v = true
 
-[node name="Brake" type="TextureRect" parent="TabsParent/core/Brake/BrakeContainer"]
+[node name="Brake" type="TextureRect" parent="TabsParent/core/Brake/BrakeContainer" unique_id=1024015845]
 visible = false
 layout_mode = 2
 texture = ExtResource("7_yrw8b")
 expand_mode = 1
 flip_v = true
 
-[node name="|4" parent="TabsParent/core" instance=ExtResource("3_5ljfu")]
+[node name="|4" parent="TabsParent/core" unique_id=2025257525 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="PTZ" type="HBoxContainer" parent="TabsParent/core"]
+[node name="PTZ" type="HBoxContainer" parent="TabsParent/core" unique_id=1803680846]
 layout_mode = 2
 
-[node name="PTZControlContainer" type="HBoxContainer" parent="TabsParent/core/PTZ"]
+[node name="PTZControlContainer" type="HBoxContainer" parent="TabsParent/core/PTZ" unique_id=725719301]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/core/PTZ/PTZControlContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/core/PTZ/PTZControlContainer" unique_id=1321054299]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="GridContainer" type="GridContainer" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer" unique_id=1656126212]
 layout_mode = 2
 size_flags_vertical = 3
 columns = 3
 
-[node name="Control3" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
+[node name="Control3" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer" unique_id=355714037]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
-[node name="Up" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
+[node name="Up" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer" unique_id=1928961578]
 layout_mode = 2
 size_flags_vertical = 3
 text = "⇧"
 
-[node name="Control4" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
+[node name="Control4" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer" unique_id=1645594235]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
-[node name="Left" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
+[node name="Left" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer" unique_id=1524530958]
 layout_mode = 2
 size_flags_vertical = 3
 text = "⇦"
 
-[node name="Center" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
+[node name="Center" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer" unique_id=808761033]
 layout_mode = 2
 size_flags_vertical = 3
 text = "⊹"
 
-[node name="Right" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
+[node name="Right" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer" unique_id=831844257]
 layout_mode = 2
 size_flags_vertical = 3
 text = "⇨"
 
-[node name="Control" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
+[node name="Control" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer" unique_id=35601517]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
-[node name="Down" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
+[node name="Down" type="Button" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer" unique_id=1948989743]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("3_gwotu")
 text = "⇩"
 
-[node name="Control2" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer"]
+[node name="Control2" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer" unique_id=1418440819]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_gwotu")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="TabsParent/core/PTZ/PTZControlContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabsParent/core/PTZ/PTZControlContainer" unique_id=626989882]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer2"]
+[node name="Panel" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer2" unique_id=807788945]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.01
 
-[node name="Zoom" type="VSlider" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer2"]
+[node name="Zoom" type="VSlider" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer2" unique_id=1978053719]
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 3
@@ -1215,23 +1215,23 @@ theme_override_styles/slider = SubResource("StyleBoxFlat_yplvc")
 page = 5.0
 scrollable = false
 
-[node name="Panel2" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer2"]
+[node name="Panel2" type="Panel" parent="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer2" unique_id=1885918777]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.01
 
-[node name="|" parent="TabsParent/core/PTZ" instance=ExtResource("3_5ljfu")]
+[node name="|" parent="TabsParent/core/PTZ" unique_id=43564292 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="PTZDisplayContainer" type="VBoxContainer" parent="TabsParent/core/PTZ"]
+[node name="PTZDisplayContainer" type="VBoxContainer" parent="TabsParent/core/PTZ" unique_id=1453034868]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/core/PTZ/PTZDisplayContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/core/PTZ/PTZDisplayContainer" unique_id=638513155]
 layout_mode = 2
 
-[node name="PTZRotationY" type="Label" parent="TabsParent/core/PTZ/PTZDisplayContainer/HBoxContainer"]
+[node name="PTZRotationY" type="Label" parent="TabsParent/core/PTZ/PTZDisplayContainer/HBoxContainer" unique_id=725114149]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 1
@@ -1240,7 +1240,7 @@ text = "Y:111"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PTZRotationP" type="Label" parent="TabsParent/core/PTZ/PTZDisplayContainer/HBoxContainer"]
+[node name="PTZRotationP" type="Label" parent="TabsParent/core/PTZ/PTZDisplayContainer/HBoxContainer" unique_id=2004817724]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 20
@@ -1248,12 +1248,12 @@ text = "P:111"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="TabsParent/core/PTZ/PTZDisplayContainer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="TabsParent/core/PTZ/PTZDisplayContainer" unique_id=868814794]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="PTZDisplay" type="SubViewport" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer"]
+[node name="PTZDisplay" type="SubViewport" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer" unique_id=1424542789]
 handle_input_locally = false
 scaling_3d_scale = 2.0
 gui_disable_input = true
@@ -1261,50 +1261,50 @@ oversampling_override = 1.0
 size = Vector2i(128, 128)
 render_target_update_mode = 4
 
-[node name="PTZCamera" type="Camera3D" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay"]
+[node name="PTZCamera" type="Camera3D" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay" unique_id=497353351]
 transform = Transform3D(-1, -6.1817246e-08, 6.1817246e-08, 0, 0.7071068, 0.7071068, -8.742278e-08, 0.7071068, -0.7071068, 0, 1.32, -2.5)
 keep_aspect = 0
 environment = SubResource("Environment_7oid2")
 projection = 1
 size = 3.5
 
-[node name="PTZBase" type="MeshInstance3D" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay"]
+[node name="PTZBase" type="MeshInstance3D" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay" unique_id=1638008976]
 mesh = ExtResource("5_m8v7i")
 skeleton = NodePath("../../../../../../..")
 
-[node name="PTZAxis0" type="MeshInstance3D" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZBase"]
+[node name="PTZAxis0" type="MeshInstance3D" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZBase" unique_id=1104281247]
 mesh = ExtResource("6_yplvc")
 
-[node name="PTZAxis1" type="MeshInstance3D" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZBase/PTZAxis0"]
+[node name="PTZAxis1" type="MeshInstance3D" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZBase/PTZAxis0" unique_id=486900027]
 mesh = ExtResource("7_7oid2")
 
-[node name="|3" parent="TabsParent/core" instance=ExtResource("3_5ljfu")]
+[node name="|3" parent="TabsParent/core" unique_id=1646277923 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="drone" type="HBoxContainer" parent="TabsParent"]
+[node name="drone" type="HBoxContainer" parent="TabsParent" unique_id=781277064]
 visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("11_cjwn0")
 ROSDependent = true
 
-[node name="cams" type="HBoxContainer" parent="TabsParent"]
+[node name="cams" type="HBoxContainer" parent="TabsParent" unique_id=1162334807]
 visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("12_lq3nq")
 
-[node name="debug" type="HBoxContainer" parent="TabsParent"]
+[node name="debug" type="HBoxContainer" parent="TabsParent" unique_id=1671544032]
 visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("7_qq4qf")
 
-[node name="Control" type="Control" parent="TabsParent/debug"]
+[node name="Control" type="Control" parent="TabsParent/debug" unique_id=378194621]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="InfoPane" type="Panel" parent="TabsParent/debug/Control"]
+[node name="InfoPane" type="Panel" parent="TabsParent/debug/Control" unique_id=893392806]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1315,12 +1315,12 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_j4lxw")
 script = ExtResource("31_pbj1l")
 
-[node name="HSeparator" type="HSeparator" parent="."]
+[node name="HSeparator" type="HSeparator" parent="." unique_id=317495895]
 layout_mode = 2
 theme_override_constants/separation = 4
 theme_override_styles/separator = SubResource("StyleBoxLine_7oid2")
 
-[node name="Tabbar" type="HBoxContainer" parent="." node_paths=PackedStringArray("TabsParent")]
+[node name="Tabbar" type="HBoxContainer" parent="." unique_id=1562690810 node_paths=PackedStringArray("TabsParent")]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme = SubResource("Theme_qlcr7")
@@ -1330,79 +1330,79 @@ script = ExtResource("2_gwotu")
 TabsParent = NodePath("../TabsParent")
 selectedTab = 2
 
-[node name="Arm" type="Button" parent="Tabbar"]
+[node name="Arm" type="Button" parent="Tabbar" unique_id=320869231]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Arm"
 
-[node name="Control" type="Control" parent="Tabbar/Arm"]
+[node name="Control" type="Control" parent="Tabbar/Arm" unique_id=458658562]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_yplvc")
 
-[node name="Auto" type="Button" parent="Tabbar"]
+[node name="Auto" type="Button" parent="Tabbar" unique_id=1080011978]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Auto"
 
-[node name="Control" type="Control" parent="Tabbar/Auto"]
+[node name="Control" type="Control" parent="Tabbar/Auto" unique_id=389382782]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_yplvc")
 
-[node name="Bio" type="Button" parent="Tabbar"]
+[node name="Bio" type="Button" parent="Tabbar" unique_id=1444252862]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Bio"
 
-[node name="Control" type="Control" parent="Tabbar/Bio"]
+[node name="Control" type="Control" parent="Tabbar/Bio" unique_id=1616144250]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_yplvc")
 
-[node name="Core" type="Button" parent="Tabbar"]
+[node name="Core" type="Button" parent="Tabbar" unique_id=2036115516]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Core"
 
-[node name="Control" type="Control" parent="Tabbar/Core"]
+[node name="Control" type="Control" parent="Tabbar/Core" unique_id=408770892]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_yplvc")
 
-[node name="Drone" type="Button" parent="Tabbar"]
+[node name="Drone" type="Button" parent="Tabbar" unique_id=248900385]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Drone"
 
-[node name="Control" type="Control" parent="Tabbar/Drone"]
+[node name="Control" type="Control" parent="Tabbar/Drone" unique_id=1011563076]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_yplvc")
 
-[node name="Cams" type="Button" parent="Tabbar"]
+[node name="Cams" type="Button" parent="Tabbar" unique_id=296692404]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Cams"
 
-[node name="Control" type="Control" parent="Tabbar/Cams"]
+[node name="Control" type="Control" parent="Tabbar/Cams" unique_id=1132488513]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_yplvc")
 
-[node name="Debug" type="Button" parent="Tabbar"]
+[node name="Debug" type="Button" parent="Tabbar" unique_id=1745624759]
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
 text = "Debug"
 
-[node name="Control" type="Control" parent="Tabbar/Debug"]
+[node name="Control" type="Control" parent="Tabbar/Debug" unique_id=1104507934]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
