@@ -15,21 +15,20 @@
         inputs.nixpkgs.lib.genAttrs supportedSystems (
           system:
           f {
-            mpkgs = import inputs.modernpkgs { inherit system; };
             pkgs = import inputs.nixpkgs { inherit system; };
+            mpkgs = import inputs.modernpkgs { inherit system; };
             inherit system;
           }
         );
     in
     {
       devShells = forEachSupportedSystem (
-        { mpkgs, pkgs, system }:
+        { system, mpkgs, pkgs }:
         {
           default = pkgs.mkShell {
             packages =
               with mpkgs;
               [
-                dotnet-sdk_10
                 godotPackages_4_6.godot-mono
               ];
 
@@ -40,7 +39,7 @@
       );
 
       packages = forEachSupportedSystem (
-        { mpkgs, pkgs, system }:
+        { pkgs, mpkgs, system }:
         {
           default = mpkgs.stdenv.mkDerivation {
             pname = "basestation-game";
@@ -51,7 +50,6 @@
               mono
               unzip
               makeWrapper
-              dotnet-sdk_10
               godotPackages_4_6.godot-mono
             ];
 
@@ -69,7 +67,7 @@
                 	      export HOME=$TMPDIR
 
                 	      mkdir -p $HOME/.local/share/godot
-                	      ln -s ${pkgs.godotPackages_4_6.export-template-mono}/share/godot/export_templates $HOME/.local/share/godot
+                	      ln -s ${mpkgs.godotPackages_4_6.export-template-mono}/share/godot/export_templates $HOME/.local/share/godot
 
                 	      mkdir -p $out/bin/
                 	      godot-mono --path . --headless --export-release "nix ${system}" $out/bin/basestation-game
