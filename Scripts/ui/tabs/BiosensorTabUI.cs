@@ -1,5 +1,6 @@
 using IPC;
 using Godot;
+using Godot.Collections;
 using RosSharp.RosBridgeClient.Actionlib;
 using RosSharp.RosBridgeClient.MessageTypes.Std;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
@@ -37,7 +38,7 @@ namespace ui
 
         [ExportGroup("Distributors")]
         [Export]
-        public Button[] Distributors;
+        public Array<Button> Distributors;
 
         [ExportGroup("Test Tubes")]
         [Export]

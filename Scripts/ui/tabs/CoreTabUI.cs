@@ -1,5 +1,6 @@
 using IPC;
 using Godot;
+using Godot.Collections;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 using Geometry = RosSharp.RosBridgeClient.MessageTypes.Geometry;
 
@@ -53,7 +54,7 @@ namespace ui
 
         [ExportSubgroup("Controlling")]
         [Export]
-        public Button[] PTZButtons = new Button[5];
+        public Array<Button> PTZButtons;
         [Export]
         public Label PTZRotX, PTZRotY;
 
