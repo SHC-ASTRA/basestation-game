@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bghieuuraujar"
+path="res://.godot/imported/Laser Fire.mp3-a0ec376ef81c757262e8a33aa0875efb.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio/Laser Fire.mp3"
+dest_files=["res://.godot/imported/Laser Fire.mp3-a0ec376ef81c757262e8a33aa0875efb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
