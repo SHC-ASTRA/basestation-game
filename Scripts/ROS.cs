@@ -1,9 +1,7 @@
 using ui;
 using Godot;
-using System.IO;
 using System.Linq;
 using static Godot.OS;
-using System.Threading;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using RosSharp.RosBridgeClient;
@@ -44,7 +42,8 @@ namespace IPC
 
         public async static void StartROS()
         {
-            alerter.Disconnected();
+            // Must use Call so that the UI is updated now rather than after we've finished executing
+            alerter.Call("Disconnected");
             ROSReady = false;
 
             // Pipes docker ps into grep to see if the container is running; if it is, cd's to the ROS/Docker dir and kills the container
@@ -63,21 +62,8 @@ namespace IPC
             RosBridgeErr = RosBridgeReturn["stderr"].As<Godot.FileAccess>();
             RosBridgePID = RosBridgeReturn["pid"].As<int>();
 
-
-            string cfgpath = Path.Combine(Path.GetFullPath("."), "WebsocketIP.cfg");
-            RosBridgeIO.StoreLine(string.Concat("Loading IP config from ", Path.Combine(Path.GetFullPath("."), "WebsocketIP.cfg")));
-            GD.Print($"Loading IP config from {cfgpath}");
-
-            string ip;
-            if (File.Exists(cfgpath))
-                ip = File.ReadAllText(cfgpath);
-            else
-            {
-                GD.Print($"File {cfgpath} does not exist, writing defaults.");
-                ip = $"ws://{ROSIP}:{ROSPort}";
-                File.WriteAllText(cfgpath, ip);
-            }
             ROSSocket = new(new WebSocketNetProtocol(sockAddress));
+
             if (Readvertise)
             {
                 Readvertise = false;
@@ -94,17 +80,20 @@ namespace IPC
                 _ExitTree();
         }
 
+        // Cleans up the ROS socket so that no other ROS clients think
+        // our topics are alive, and then kills the socket, then kills ROSBridge
         public override void _ExitTree()
         {
             foreach (string s in interfaceNames)
                 ROSSocket.Unadvertise(s);
             ROSSocket.Close();
-            Execute(term, ["-c", $"if docker ps | grep docker-ros2-1; then cd {ROSDocker} && docker compose down; fi"]);
+            Execute(term, ["-c", $"if docker ps | grep docker-ros2-1; then cd {ROSDocker} && docker compose down -t 0; fi"]);
             base._ExitTree();
         }
 
         public static bool interfaceExists(string topicName) => interfaceNames.Contains(topicName);
 
+        // Takes in Message Topic type, and the Topic Name, advertises it to ROS
         public static void AdvertiseMessage<T>(string topicName) where T : Message
         {
             GD.Print($"Advertising topic {topicName}");
@@ -112,6 +101,7 @@ namespace IPC
             interfaceNames.Add(topicName);
         }
 
+        /// <summary> Takes in the Service topic name and a handler, which is the <typeparamref name="A"/> Request and out ServiceCallHandler(<typeparamref name="A"/>, <typeparamref name="B"/>) response </summary>
         public static void AdvertiseService<A, B>(string serviceName, ServiceCallHandler<A, B> handler) where A : Message where B : Message
         {
             GD.Print($"Advertising service {serviceName}");
@@ -119,8 +109,27 @@ namespace IPC
             interfaceNames.Add(serviceName);
         }
 
-        // Can I even be forgiven for this?
-        public static ROSActionClient<A, B, C, D, E, F, G> AdvertiseAction<A, B, C, D, E, F, G>(string actionName, A act, SendActionGoalHandler<B> actionGoalHandler, CancelActionGoalHandler actionCancelHandler, GoalStatus goalStatus = null, System.Action feedbackCallback = null, System.Action resultCallback = null, System.Action statusCallback = null)
+        /// <summary>
+        /// Can I even be forgiven for this?
+        /// <para> So, I'm not going to help you with everything. But here's a gist: </para>
+        /// <para><paramref name="actionName"/>: Name of this action client</para>
+        /// <para><paramref name="act"/>: Main, "parent" Action type</para>
+        /// <para><paramref name="actionGoalHandler"/>: A lambda function, called after client receives and internally processes data</para>
+        /// <para><paramref name="actionCancelHandler"/>: A lambda function, called after client receives and internall processes its cancellation</para>
+        /// <para><paramref name="goalStatus"/>: Std_msgs/Action/GoalStatus message, information handled internally by ROSBridge</para>
+        /// <para><paramref name="feedbackCallback"/>: Called when client received action feedback</para>
+        /// <para><paramref name="resultCallback"/>: Called when client received an action result</para>
+        /// <para><paramref name="statusCallback"/>: Called when client goal status changes</para>
+        /// Types should be as follows:
+        /// <para> <typeparamref name="A"/>: TypeAction </para> <para> <typeparamref name="B"/>: TypeActionGoal </para>
+        /// <para> <typeparamref name="C"/>: TypeActionResult </para> <para> <typeparamref name="D"/>: TypeActionFeedback </para>
+        /// <para> <typeparamref name="E"/>: TypeGoal </para> <para> <typeparamref name="F"/>: TypeResult </para>
+        /// <para> <typeparamref name="G"/>: TypeFeedback </para>
+        /// </summary>
+        public static ROSActionClient<A, B, C, D, E, F, G> AdvertiseAction<A, B, C, D, E, F, G>(
+            string actionName, A act, SendActionGoalHandler<B> actionGoalHandler,
+            CancelActionGoalHandler actionCancelHandler, GoalStatus goalStatus = null, System.Action
+            feedbackCallback = null, System.Action resultCallback = null, System.Action statusCallback = null)
         where A : Action<B, C, D, E, F, G>
         where B : ActionGoal<E> where C : ActionResult<F> where D : ActionFeedback<G>
         where E : Message where F : Message where G : Message
@@ -129,18 +138,21 @@ namespace IPC
             return new(actionName, act, actionGoalHandler, actionCancelHandler, goalStatus, feedbackCallback, resultCallback, statusCallback);
         }
 
-        static int requestDelay = 1;
-        public static Task AwaitRosReady()
+        /// <summary> Uses a globally dynamic delay so that topics
+        /// cannot all advertise at once, which causes ROSBridge to fail </summary>
+        public async static Task AwaitRosReady()
         {
-            while (!ROSReady) { Thread.Sleep(1); continue; }
+            while (!ROSReady) { await Task.Delay(1); continue; }
             while (requestDelay < 25)
             {
-                Thread.Sleep(requestDelay++ * 2);
+                await Task.Delay(requestDelay++ * 2);
             }
             requestDelay = 1;
-            return Task.CompletedTask;
         }
+        static int requestDelay = 1;
 
+        /// <summary> Takes in the target Topic name and message instance,
+        /// publishes the latter to the former </summary>
         public static void Publish(string topicName, Message message)
         {
             if (!interfaceExists(topicName))
@@ -149,6 +161,10 @@ namespace IPC
             ROSSocket.Publish(topicName, message);
         }
 
+        /// <summary> Publishes the given <paramref name="args"/> to
+        /// the target <paramref name="serviceName"/>, and returns the
+        /// response as a ServiceResponseHandler(<typeparamref name="P"/>), where P is the
+        /// service's response type </summary>
         public static void PublishServiceGoal<T, P>(
             string serviceName,
             ServiceResponseHandler<P> response,
@@ -161,9 +177,13 @@ namespace IPC
             ROSSocket.CallService<T, P>(serviceName, response, args);
         }
 
+        /// <summary> Goated Chat code, continuously attempts to
+        /// connect to ROSBridge, waiting more and more as it fails.
+        /// Will give up after a decent amount of time </summary>
         public static async Task<bool> WaitForRosbridgeAsync(string host, int port, int timeoutSec = 400, int pollIntervalMs = 2000, int increaseMs = 1000)
         {
             int failCount = 0;
+            int totalFailCount = 0;
             while (true)
             {
                 try
@@ -176,19 +196,21 @@ namespace IPC
                         {
                             client.EndConnect(result);
                             alerter.Connected();
-                            Thread.Sleep(1);
+                            await Task.Delay(1);
                             return true;
                         }
                     }
                 }
                 catch { }
                 GD.Print($"Failed to connect to ROSBridge container. Retrying in {pollIntervalMs}Ms");
+                totalFailCount++;
                 if (++failCount > 4)
                 {
                     GD.Print($"Recorded five or more failures to connect to ROSBridge. Increasing retry time by {increaseMs * 0.001f}s");
                     pollIntervalMs += increaseMs;
                     failCount = 0;
                 }
+                if (totalFailCount > 16) return false;
                 await Task.Delay(pollIntervalMs);
             }
         }
