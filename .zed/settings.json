@@ -14,10 +14,7 @@
     "*.uid",
     "*.old",
     ".godot",
-    "*.tres",
-    "*.tscn",
     ".config",
-    "*.import",
-    "project.godot"
+    "*.import"
   ]
 }

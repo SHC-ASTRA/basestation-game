@@ -50,6 +50,7 @@ namespace ui
                 {
                     buttons[i].Disabled = false;
                     tabs[i].Hide();
+                    // Makes this node not process when it's not visible
                     tabs[i].ProcessMode = ProcessModeEnum.Disabled;
                 }
                 if (buttons[i].ButtonPressed)
@@ -58,6 +59,7 @@ namespace ui
             }
             selectedTab = t;
             buttons[t].Disabled = true;
+            // Makes this node process when it's visible
             tabs[t].ProcessMode = ProcessModeEnum.Inherit;
             tabs[t].Show();
         }

@@ -1,5 +1,6 @@
 using IPC;
 using Godot;
+using System.Linq;
 using RosSharp.RosBridgeClient.Actionlib;
 using RosSharp.RosBridgeClient.MessageTypes.Std;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
@@ -37,7 +38,8 @@ namespace ui
 
         [ExportGroup("Distributors")]
         [Export]
-        public Button[] Distributors;
+        public Node DistributorNode;
+        private Button[] Distributors = new Button[3];
 
         [ExportGroup("Test Tubes")]
         [Export]
@@ -71,12 +73,14 @@ namespace ui
         {
             base._Ready();
 
+            Rate = 50;
+
             VacuumCommit.ButtonDown += () =>
             {
                 VacuumCommitTexture.Visible = true;
                 BVAG.args.valve_id = (sbyte)VacuumSelector.prevIndex;
-                BVAG.args.fan_time_ms = (int)FanTime.Value;
-                BVAG.args.fan_duty_cycle = (sbyte)FanTime.Value;
+                BVAG.args.fan_time_ms = (uint)FanTime.Value;
+                BVAG.args.fan_duty_cycle_percent = (sbyte)FanTime.Value;
                 VacuumClient.PublishActionGoal(BVAG);
             };
             VacuumCommit.ButtonUp += () => { VacuumCommitTexture.Visible = false; };
@@ -86,11 +90,13 @@ namespace ui
             {
                 TestTubeCommitTexture.Visible = true;
                 tubeMsg.tube_id = (sbyte)TestTubeSelector.prevIndex;
-                tubeMsg.extension_percent = (sbyte)ExtensionAmount.Value;
+                tubeMsg.milliliters = (float)ExtensionAmount.Value;
                 ROS.PublishServiceGoal<BioTestTubeRequest, BioTestTubeResponse>(TubeCtrl, (_) => { }, tubeMsg);
             };
             TestTubeCommit.ButtonUp += () => { TestTubeCommitTexture.Visible = false; };
 
+            // Arrays assigned in the editor dont't properly serialize across git. I hate this too.
+            Distributors = DistributorNode.FindChildren("Open").Cast<Button>().ToArray();
 
             LaserFailsafe.Toggled += (bool t) => { if (t) { Source.Stream = Failsafe; Source.Play(); } };
             Laser.Pressed += () => { Source.Stream = Fire; Source.Play(); };
@@ -132,7 +138,7 @@ namespace ui
                 serviceName: TubeCtrl,
                 handler: (BioTestTubeRequest _, out BioTestTubeResponse a) =>
                 {
-                    GD.Print($"Extending tube {_.tube_id}, By {_.extension_percent}%");
+                    GD.Print($"Extending tube {_.tube_id}, By {_.milliliters}%");
                     a = new();
                     return true;
                 }
@@ -143,9 +149,9 @@ namespace ui
 
         public override void EmitToROS()
         {
-            controlMsg.distibutor[0] = Distributors[0].ButtonPressed;
-            controlMsg.distibutor[1] = Distributors[1].ButtonPressed;
-            controlMsg.distibutor[2] = Distributors[2].ButtonPressed;
+            controlMsg.distibutor_id[0] = Distributors[0].ButtonPressed;
+            controlMsg.distibutor_id[1] = Distributors[1].ButtonPressed;
+            controlMsg.distibutor_id[2] = Distributors[2].ButtonPressed;
             ROS.Publish(ctrl, controlMsg);
         }
 

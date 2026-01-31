@@ -1,19 +1,23 @@
 using IPC;
 using Godot;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ui
 {
-    // Base tab UI. Han
+    // Base tab UI. Abstractly handles ROS functions and provides a controller input interface.
     public abstract partial class BaseTabUI : Control
     {
+        public CancellationTokenSource CTS = new();
+        // ROS stuff
         [Export]
         public bool ROSDependent;
 
-        protected double Slow;
+        protected int Rate = 50;
+        public int Delay;
+        private Task Updater;
 
-        protected static Vector2 WindowSize;
-
+        // Controller
         protected static bool UpButtonDown, DownButtonDown, LeftButtonDown, RightButtonDown;
         protected static bool UpButton, DownButton, LeftButton, RightButton;
 
@@ -33,18 +37,25 @@ namespace ui
 
         public override void _Ready()
         {
+            // Start or stop the ROS emitter if this node is visible
+            this.VisibilityChanged += () => { if (this.Visible) Resume(); else Pause(); };
+
+            // Spool this tab in the ROS ecosystem
             Task.Run(async () =>
             {
                 await ROS.AwaitRosReady();
                 AdvertiseToROS();
+                Updater = new Task(() => Update(CTS.Token), CTS.Token);
+                if (CallDeferred("is_visible").AsBool())
+                    Updater.Start();
             });
+
+            base._Ready();
         }
 
         public override void _Process(double delta)
         {
             base._Process(delta);
-
-            WindowSize = GetWindow().Size;
 
             UpButtonDown = Input.IsActionJustPressed("UpBtn");
             DownButtonDown = Input.IsActionJustPressed("DownBtn");
@@ -78,18 +89,43 @@ namespace ui
 
             LeftStick = Input.GetVector("LStickHN", "LStickHP", "LStickVN", "LStickVP");
             RightStick = Input.GetVector("RStickHN", "RStickHP", "RStickVN", "RStickVP");
-
-            Slow += delta;
-            if (Slow < 0.05 || !ROS.ROSReady)
-                return;
-            else Slow = 0;
-
-            EmitToROS();
         }
 
+        // Runs ROS emitter async to the main thread, slightly
+        // more performant doesn't run until ROS is ready
+        private async void Update(CancellationToken token)
+        {
+            while (true)
+            {
+                if (token.IsCancellationRequested)
+                    return;
+                await Task.Delay(Rate + Delay);
+                Delay = 0;
+                EmitToROS();
+            }
+        }
+
+        public async void Pause()
+        {
+            await CTS.CancelAsync();
+            Updater.Dispose();
+        }
+
+        public void Resume()
+        {
+            CTS.Dispose();
+            CTS = new CancellationTokenSource();
+            Updater = new Task(() => Update(CTS.Token), CTS.Token);
+            Updater.Start();
+        }
+
+        /// <summary> Called on Ready, used to advertise associated interfaces to ROS </summary>
         public abstract void AdvertiseToROS();
+
+        /// <summary> Called every (<paramref name="Slow"/>)ms, sends control data to ROS. Can be changed on a per-tab basis </summary>
         public abstract void EmitToROS();
 
+        /// <summary> Cleanup our controls so that clucky doesn't do something stupid while we're offline </summary>
         public override abstract void _ExitTree();
     }
 }
