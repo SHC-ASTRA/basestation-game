@@ -15,17 +15,11 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
     {
         public const string RosMessageName = "astra_msgs/action/BioVacuumResult";
 
-        //  Feedback
-        public uint fan_time_remaining_ms { get; set; }
+        //  Result
+        //  Nothing.
 
         public BioVacuumResult()
         {
-            this.fan_time_remaining_ms = 0;
-        }
-
-        public BioVacuumResult(uint fan_time_remaining_ms)
-        {
-            this.fan_time_remaining_ms = fan_time_remaining_ms;
         }
     }
 }

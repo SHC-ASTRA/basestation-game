@@ -1,5 +1,0 @@
-services:
-  ros2:
-    build: ./build
-    user: astra
-    network_mode: host

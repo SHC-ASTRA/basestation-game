@@ -8,7 +8,9 @@ namespace ui
     // Base tab UI. Abstractly handles ROS functions and provides a controller input interface.
     public abstract partial class BaseTabUI : Control
     {
+        // Crazy shit that allows sub-thread ROS emission with pausing and resuming
         public CancellationTokenSource CTS = new();
+
         // ROS stuff
         [Export]
         public bool ROSDependent;
@@ -92,7 +94,7 @@ namespace ui
         }
 
         // Runs ROS emitter async to the main thread, slightly
-        // more performant doesn't run until ROS is ready
+        // more performant & doesn't run until ROS is ready
         private async void Update(CancellationToken token)
         {
             while (true)
@@ -125,6 +127,9 @@ namespace ui
 
         /// <summary> Called every (<paramref name="Slow"/>)ms, sends control data to ROS. Can be changed on a per-tab basis </summary>
         public abstract void EmitToROS();
+
+        /// <summary> Called every <paramref name="DebugRate"/> ROS emits, sends logs ROS to console </summary>
+        // public abstract string DebugLogROS();
 
         /// <summary> Cleanup our controls so that clucky doesn't do something stupid while we're offline </summary>
         public override abstract void _ExitTree();

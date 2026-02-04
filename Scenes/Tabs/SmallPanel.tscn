@@ -1314,9 +1314,13 @@ size_flags_horizontal = 3
 text = "Arm"
 
 [node name="Control" type="Control" parent="Tabbar/Arm" unique_id=458658562]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("8_yplvc")
 
 [node name="Auto" type="Button" parent="Tabbar" unique_id=1080011978]
@@ -1325,9 +1329,13 @@ size_flags_horizontal = 3
 text = "Auto"
 
 [node name="Control" type="Control" parent="Tabbar/Auto" unique_id=389382782]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("8_yplvc")
 
 [node name="Bio" type="Button" parent="Tabbar" unique_id=1444252862]
@@ -1336,9 +1344,13 @@ size_flags_horizontal = 3
 text = "Bio"
 
 [node name="Control" type="Control" parent="Tabbar/Bio" unique_id=1616144250]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("8_yplvc")
 
 [node name="Core" type="Button" parent="Tabbar" unique_id=2036115516]
@@ -1347,9 +1359,13 @@ size_flags_horizontal = 3
 text = "Core"
 
 [node name="Control" type="Control" parent="Tabbar/Core" unique_id=408770892]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("8_yplvc")
 
 [node name="Drone" type="Button" parent="Tabbar" unique_id=248900385]
@@ -1358,9 +1374,13 @@ size_flags_horizontal = 3
 text = "Drone"
 
 [node name="Control" type="Control" parent="Tabbar/Drone" unique_id=1011563076]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("8_yplvc")
 
 [node name="Cams" type="Button" parent="Tabbar" unique_id=296692404]
@@ -1369,9 +1389,13 @@ size_flags_horizontal = 3
 text = "Cams"
 
 [node name="Control" type="Control" parent="Tabbar/Cams" unique_id=1132488513]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("8_yplvc")
 
 [node name="Debug" type="Button" parent="Tabbar" unique_id=1745624759]
@@ -1381,9 +1405,13 @@ disabled = true
 text = "Debug"
 
 [node name="Control" type="Control" parent="Tabbar/Debug" unique_id=1104507934]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("8_yplvc")
 
 [connection signal="button_up" from="TabsParent/core/PTZ/PTZControlContainer/VBoxContainer/GridContainer/Up" to="TabsParent/core" method="PTZUp"]

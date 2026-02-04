@@ -43,6 +43,7 @@ popup/item_3/id = 3
 script = ExtResource("2_0i5k8")
 
 [node name="Arm" type="OptionButton" parent="VBoxContainer/DD" unique_id=2105235292]
+z_index = 1
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 0
 offset_left = 54.0
@@ -60,16 +61,31 @@ popup/item_1/text = "Socket"
 popup/item_1/id = 1
 
 [node name="Digit" type="HBoxContainer" parent="VBoxContainer/DD/Arm" unique_id=1001382876]
+visible = false
+z_index = 1
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="VBoxContainer/DD/Arm/Digit" unique_id=201599713]
+z_index = 1
+layout_mode = 2
+text = "T"
+
+[node name="Socket" type="HBoxContainer" parent="VBoxContainer/DD/Arm" unique_id=160753198]
+visible = false
+layout_mode = 0
+offset_left = 54.0
+offset_right = 67.0
+offset_bottom = 200.0
+
+[node name="Label" type="Label" parent="VBoxContainer/DD/Arm/Socket" unique_id=1708101927]
 layout_mode = 2
 text = "T"
 
 [node name="Bio" type="OptionButton" parent="VBoxContainer/DD" unique_id=1670087457]
 visible = false
+z_index = 1
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 0
 offset_left = 54.0
@@ -85,12 +101,14 @@ popup/item_0/text = "Bio"
 popup/item_0/id = 0
 
 [node name="Board" type="HBoxContainer" parent="VBoxContainer/DD/Bio" unique_id=1333665152]
+z_index = 1
 layout_mode = 1
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Core" type="OptionButton" parent="VBoxContainer/DD" unique_id=634523336]
 visible = false
+z_index = 1
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 0
 offset_left = 54.0
@@ -112,6 +130,7 @@ popup/item_3/text = "PTZ"
 popup/item_3/id = 3
 
 [node name="Label" type="Label" parent="VBoxContainer/DD/Core" unique_id=944176081]
+z_index = 1
 layout_mode = 0
 offset_left = 65.0
 offset_top = 10.0
@@ -121,6 +140,7 @@ text = "T"
 
 [node name="Auto" type="OptionButton" parent="VBoxContainer/DD" unique_id=154636130]
 visible = false
+z_index = 1
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 0
 offset_left = 54.0
@@ -146,10 +166,10 @@ offset_bottom = 40.0
 text = "T"
 
 [node name="InfoPanel" type="Panel" parent="VBoxContainer" unique_id=1748071550]
-z_index = -1
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2onxw")
 
 [node name="InfoContainer" type="HBoxContainer" parent="VBoxContainer/InfoPanel" unique_id=672243967]
@@ -159,15 +179,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="spacer" type="Panel" parent="VBoxContainer/InfoPanel/InfoContainer" unique_id=72369656]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-
-[node name="Socket" type="HBoxContainer" parent="VBoxContainer/InfoPanel/InfoContainer" unique_id=160753198]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/InfoPanel/InfoContainer/Socket" unique_id=1708101927]
-layout_mode = 2
-text = "T"
+mouse_filter = 2

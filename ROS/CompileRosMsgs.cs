@@ -13,9 +13,9 @@ namespace IPC
         {
             Directory.CreateDirectory(tmp);
 
-            ServiceAutoGen.GenerateDirectoryServices("ROS/Docker/build/astra_msgs/srv", tmp, false);
-            MessageAutoGen.GenerateDirectoryMessages("ROS/Docker/build/astra_msgs/msg", tmp, "astra_msgs", false);
-            ActionAutoGen.GenerateDirectoryActions("ROS/Docker/build/astra_msgs/action", tmp, false);
+            ServiceAutoGen.GenerateDirectoryServices("ROS/astra_msgs/srv", tmp, false);
+            MessageAutoGen.GenerateDirectoryMessages("ROS/astra_msgs/msg", tmp, "astra_msgs", false);
+            ActionAutoGen.GenerateDirectoryActions("ROS/astra_msgs/action", tmp, false);
 
             if (Directory.Exists(successDir))
                 Directory.Delete(successDir, true);
