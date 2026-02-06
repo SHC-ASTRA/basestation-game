@@ -6,7 +6,7 @@ using RosSharp.RosBridgeClient.MessageTypes.Std;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 using RosSharp.RosBridgeClient.MessageTypes.Action;
 
-namespace ui
+namespace UI
 {
     public partial class BiosensorTabUI : BaseTabUI
     {

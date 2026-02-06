@@ -7,13 +7,13 @@
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="3_gwotu"]
 [ext_resource type="PackedScene" uid="uid://cia5qesu3cdf5" path="res://Scenes/Prefabs/midway_Hprogress_bar.tscn" id="3_mxw14"]
 [ext_resource type="Theme" uid="uid://df2oheltoiwvh" path="res://Assets/Themes/ControlIndicators.tres" id="4_th4gl"]
-[ext_resource type="ArrayMesh" uid="uid://d140fswoxqbrf" path="res://PTZ/PTZbase.obj" id="5_m8v7i"]
+[ext_resource type="ArrayMesh" uid="uid://d140fswoxqbrf" path="res://Assets/PTZ/PTZbase.obj" id="5_m8v7i"]
 [ext_resource type="Script" uid="uid://jxxjq8kicbx3" path="res://Scripts/ui/tabs/AutonomyTabUI.cs" id="5_u4qwe"]
 [ext_resource type="Texture2D" uid="uid://d4ba8c5m84h60" path="res://Assets/tire profile.png" id="6_lq3nq"]
 [ext_resource type="Script" uid="uid://d34iyid2av2ba" path="res://Scripts/ui/tabs/BiosensorTabUI.cs" id="6_th4gl"]
-[ext_resource type="ArrayMesh" uid="uid://2wmjb5e4g57j" path="res://PTZ/PTZaxis1.obj" id="6_yplvc"]
+[ext_resource type="ArrayMesh" uid="uid://2wmjb5e4g57j" path="res://Assets/PTZ/PTZaxis1.obj" id="6_yplvc"]
 [ext_resource type="PackedScene" uid="uid://wbjb3q0icoe5" path="res://Scenes/Prefabs/colored_indicator.tscn" id="6_yrw8b"]
-[ext_resource type="ArrayMesh" uid="uid://dwjygjucoh5bb" path="res://PTZ/PTZaxis2.obj" id="7_7oid2"]
+[ext_resource type="ArrayMesh" uid="uid://dwjygjucoh5bb" path="res://Assets/PTZ/PTZaxis2.obj" id="7_7oid2"]
 [ext_resource type="Script" uid="uid://x3w6x56pbn6j" path="res://Scripts/ui/tabs/DebugTabUI.cs" id="7_qq4qf"]
 [ext_resource type="Texture2D" uid="uid://d3qibna8eoiar" path="res://Assets/tire brake.png" id="7_yrw8b"]
 [ext_resource type="Script" uid="uid://bmu4lwo4u52gj" path="res://Scripts/ui/FontScaler.cs" id="8_yplvc"]
@@ -33,7 +33,15 @@
 [ext_resource type="Texture2D" uid="uid://dxunigq7q2nib" path="res://Assets/TestTube.png" id="19_gbrgi"]
 [ext_resource type="Texture2D" uid="uid://c6hbb76buvj34" path="res://addons/map_tile_provider/loader.svg" id="21_j4lxw"]
 [ext_resource type="Texture2D" uid="uid://di6xg4f38cdx1" path="res://Assets/Tank.png" id="25_vwpm1"]
-[ext_resource type="PackedScene" uid="uid://clukwdw6bbmpj" path="res://Scenes/Prefabs/info_pane.tscn" id="32_vwpm1"]
+[ext_resource type="Script" uid="uid://b2jgoochg84tx" path="res://Scripts/ui/tabs/Debug/Arm/Digit.cs" id="32_1hll6"]
+[ext_resource type="Theme" uid="uid://ce3coqe5tlutx" path="res://Assets/Themes/NoAAorCorners.tres" id="33_rj5vk"]
+[ext_resource type="Script" uid="uid://gagedrdwmwe5" path="res://Scripts/ui/tabs/Debug/Arm/Socket.cs" id="33_y01en"]
+[ext_resource type="Script" uid="uid://lsoaxayurser" path="res://Scripts/ui/tabs/Debug/Core/CoreDebug.cs" id="34_f0cuh"]
+[ext_resource type="Script" uid="uid://828pp5i3lp7y" path="res://Scripts/ui/tabs/Debug/Auto/Macula.cs" id="34_w6oot"]
+[ext_resource type="Script" uid="uid://dvlw0c2f7j6ej" path="res://Scripts/ui/tabs/Debug/Voltages.cs" id="34_yphi5"]
+[ext_resource type="Script" uid="uid://drmnq4jeuk5qv" path="res://Scripts/ui/tabs/Debug/Core/IMU.cs" id="35_f0cuh"]
+[ext_resource type="Script" uid="uid://c8aq6qikl23m8" path="res://Scripts/ui/tabs/Debug/Core/PTZ.cs" id="37_b3n4c"]
+[ext_resource type="PackedScene" uid="uid://csgu7b14vfkw3" path="res://Scenes/Prefabs/MotorDebug.tscn" id="37_w6oot"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2hv3"]
 bg_color = Color(0.32156864, 0.63529414, 0.22745098, 1)
@@ -102,6 +110,29 @@ ssao_enabled = true
 ssao_radius = 2.15
 ssao_power = 11.591239
 ssao_sharpness = 1.0
+
+[sub_resource type="Theme" id="Theme_rj5vk"]
+Label/colors/font_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2onxw"]
+bg_color = Color(0.19607843, 0.19607843, 0.19607843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.13682574, 0.13682577, 0.13682562, 1)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6gdgo"]
+bg_color = Color(0.19607843, 0.19607843, 0.19607843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.13682574, 0.13682577, 0.13682562, 1)
+corner_detail = 1
+anti_aliasing = false
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_7oid2"]
 grow_begin = 0.0
@@ -346,7 +377,7 @@ text = "End effector
 Yaw"
 horizontal_alignment = 1
 
-[node name="VSep3" parent="TabsParent/arm" unique_id=1940334204 instance=ExtResource("3_5ljfu")]
+[node name="I4" parent="TabsParent/arm" unique_id=1940334204 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="LA_Gripper" type="VBoxContainer" parent="TabsParent/arm" unique_id=1473515587]
@@ -388,7 +419,7 @@ theme_override_font_sizes/font_size = 22
 text = "Gripper"
 horizontal_alignment = 1
 
-[node name="VSep4" parent="TabsParent/arm" unique_id=46349101 instance=ExtResource("3_5ljfu")]
+[node name="I5" parent="TabsParent/arm" unique_id=46349101 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="Laser" type="VBoxContainer" parent="TabsParent/arm" unique_id=2115507604]
@@ -413,7 +444,7 @@ layout_mode = 2
 texture = ExtResource("8_yrw8b")
 stretch_mode = 3
 
-[node name="i^" parent="TabsParent/arm" unique_id=1987127462 instance=ExtResource("3_5ljfu")]
+[node name="I6" parent="TabsParent/arm" unique_id=1987127462 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="auto" type="HBoxContainer" parent="TabsParent" unique_id=2012457773]
@@ -446,7 +477,7 @@ Fire = ExtResource("13_gbrgi")
 Source = NodePath("Laser/AudioStreamPlayer2D")
 ROSDependent = true
 
-[node name="|" parent="TabsParent/bio" unique_id=1267749996 instance=ExtResource("3_5ljfu")]
+[node name="I" parent="TabsParent/bio" unique_id=1267749996 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="Vacuum system" type="HBoxContainer" parent="TabsParent/bio" unique_id=485832669]
@@ -616,7 +647,7 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 26
 
-[node name="|2" parent="TabsParent/bio" unique_id=875462288 instance=ExtResource("3_5ljfu")]
+[node name="I1" parent="TabsParent/bio" unique_id=875462288 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="Distributors" type="HBoxContainer" parent="TabsParent/bio" unique_id=1591636443]
@@ -709,7 +740,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
 toggle_mode = true
 text = "Wig-l"
 
-[node name="|3" parent="TabsParent/bio" unique_id=884894761 instance=ExtResource("3_5ljfu")]
+[node name="I2" parent="TabsParent/bio" unique_id=884894761 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="Test Tubes" type="HBoxContainer" parent="TabsParent/bio" unique_id=2113194396]
@@ -848,7 +879,7 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 26
 
-[node name="I4" parent="TabsParent/bio" unique_id=955066178 instance=ExtResource("3_5ljfu")]
+[node name="I3" parent="TabsParent/bio" unique_id=955066178 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="Bio Arm" type="HBoxContainer" parent="TabsParent/bio" unique_id=323755024]
@@ -874,7 +905,7 @@ step = 5.0
 ticks_on_borders = true
 ticks_position = 1
 
-[node name="-|-" parent="TabsParent/bio" unique_id=40018423 instance=ExtResource("13_8exja")]
+[node name="I4" parent="TabsParent/bio" unique_id=40018423 instance=ExtResource("13_8exja")]
 visible = false
 layout_mode = 2
 
@@ -905,7 +936,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
 toggle_mode = true
 text = "Vibe"
 
-[node name="|5" parent="TabsParent/bio" unique_id=246356454 instance=ExtResource("3_5ljfu")]
+[node name="I5" parent="TabsParent/bio" unique_id=246356454 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="Laser" type="VBoxContainer" parent="TabsParent/bio" unique_id=2061166363]
@@ -945,7 +976,7 @@ text = "Fire"
 [node name="AudioListener2D" type="AudioListener2D" parent="TabsParent/bio/Laser" unique_id=1483006243]
 current = true
 
-[node name="|6" parent="TabsParent/bio" unique_id=1567479380 instance=ExtResource("3_5ljfu")]
+[node name="I6" parent="TabsParent/bio" unique_id=1567479380 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="Drill" type="HBoxContainer" parent="TabsParent/bio" unique_id=401491941]
@@ -971,7 +1002,7 @@ step = 5.0
 ticks_on_borders = true
 ticks_position = 1
 
-[node name="-|-2" parent="TabsParent/bio" unique_id=477800455 instance=ExtResource("13_8exja")]
+[node name="I7" parent="TabsParent/bio" unique_id=477800455 instance=ExtResource("13_8exja")]
 visible = false
 layout_mode = 2
 
@@ -998,7 +1029,7 @@ step = 5.0
 ticks_on_borders = true
 ticks_position = 1
 
-[node name="|7" parent="TabsParent/bio" unique_id=581836857 instance=ExtResource("3_5ljfu")]
+[node name="I8" parent="TabsParent/bio" unique_id=581836857 instance=ExtResource("3_5ljfu")]
 visible = false
 layout_mode = 2
 
@@ -1024,7 +1055,7 @@ PTZRotY = NodePath("PTZ/PTZDisplayContainer/HBoxContainer/PTZRotationP")
 Zoom = NodePath("PTZ/PTZControlContainer/VBoxContainer2/Zoom")
 ROSDependent = true
 
-[node name="|" parent="TabsParent/core" unique_id=1440631658 instance=ExtResource("3_5ljfu")]
+[node name="I" parent="TabsParent/core" unique_id=1440631658 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="Motor Power" type="VBoxContainer" parent="TabsParent/core" unique_id=1060483762]
@@ -1092,7 +1123,7 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="|2" parent="TabsParent/core" unique_id=688276020 instance=ExtResource("3_5ljfu")]
+[node name="I1" parent="TabsParent/core" unique_id=688276020 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="Brake" type="VBoxContainer" parent="TabsParent/core" unique_id=398834726]
@@ -1124,7 +1155,7 @@ texture = ExtResource("7_yrw8b")
 expand_mode = 1
 flip_v = true
 
-[node name="|4" parent="TabsParent/core" unique_id=2025257525 instance=ExtResource("3_5ljfu")]
+[node name="I2" parent="TabsParent/core" unique_id=2025257525 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="PTZ" type="HBoxContainer" parent="TabsParent/core" unique_id=1803680846]
@@ -1270,7 +1301,7 @@ mesh = ExtResource("6_yplvc")
 [node name="PTZAxis1" type="MeshInstance3D" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZBase/PTZAxis0" unique_id=486900027]
 mesh = ExtResource("7_7oid2")
 
-[node name="|3" parent="TabsParent/core" unique_id=1646277923 instance=ExtResource("3_5ljfu")]
+[node name="I3" parent="TabsParent/core" unique_id=1646277923 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
 [node name="drone" type="HBoxContainer" parent="TabsParent" unique_id=781277064]
@@ -1286,12 +1317,452 @@ layout_mode = 2
 alignment = 1
 script = ExtResource("12_lq3nq")
 
-[node name="debug" type="HBoxContainer" parent="TabsParent" unique_id=1671544032]
+[node name="debug" type="HBoxContainer" parent="TabsParent" unique_id=1671544032 node_paths=PackedStringArray("VoltageController", "InfoContainer", "DD")]
 layout_mode = 2
+theme = SubResource("Theme_rj5vk")
 script = ExtResource("7_qq4qf")
+VoltageController = NodePath("Voltages")
+InfoContainer = NodePath("InfoBox/InfoPanel/InfoContainer")
+DD = NodePath("InfoBox/DD")
 
-[node name="InfoPane" parent="TabsParent/debug" unique_id=180732978 instance=ExtResource("32_vwpm1")]
+[node name="InfoBox" type="HBoxContainer" parent="TabsParent/debug" unique_id=1760587508]
 layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="DD" type="OptionButton" parent="TabsParent/debug/InfoBox" unique_id=138306711]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+alignment = 1
+autowrap_mode = 3
+autowrap_trim_flags = 0
+
+[node name="Arm" type="OptionButton" parent="TabsParent/debug/InfoBox/DD" unique_id=2105235292]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
+offset_left = 50.0
+offset_right = 100.0
+offset_bottom = 200.0
+theme_override_font_sizes/font_size = 26
+alignment = 1
+autowrap_mode = 3
+autowrap_trim_flags = 0
+
+[node name="Digit" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm" unique_id=1001382876 node_paths=PackedStringArray("WristAngle")]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("32_1hll6")
+WristAngle = NodePath("Wrist Angle")
+TopicName = "/arm/feedback/digit"
+
+[node name="Wrist Angle" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Digit" unique_id=201599713]
+z_index = 1
+layout_mode = 2
+text = "digit"
+
+[node name="Socket" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm" unique_id=160753198 node_paths=PackedStringArray("Axis0Angle", "Axis0Current", "Axis0Temp", "Axis0Voltage", "Axis1Angle", "Axis1Current", "Axis1Temp", "Axis1Voltage", "Axis2Angle", "Axis2Current", "Axis2Temp", "Axis2Voltage", "Axis3Angle", "Axis3Current", "Axis3Temp", "Axis3Voltage")]
+visible = false
+layout_mode = 0
+offset_left = 54.0
+offset_right = 67.0
+offset_bottom = 200.0
+script = ExtResource("33_y01en")
+Axis0Angle = NodePath("Axis0/Angle")
+Axis0Current = NodePath("Axis0/Current")
+Axis0Temp = NodePath("Axis0/Temp")
+Axis0Voltage = NodePath("Axis0/Voltage")
+Axis1Angle = NodePath("Axis1/Angle")
+Axis1Current = NodePath("Axis1/Current")
+Axis1Temp = NodePath("Axis1/Temp")
+Axis1Voltage = NodePath("Axis1/Voltage")
+Axis2Angle = NodePath("Axis2/Angle")
+Axis2Current = NodePath("Axis2/Current")
+Axis2Temp = NodePath("Axis2/Temp")
+Axis2Voltage = NodePath("Axis2/Voltage")
+Axis3Angle = NodePath("Axis3/Angle")
+Axis3Current = NodePath("Axis3/Current")
+Axis3Temp = NodePath("Axis3/Temp")
+Axis3Voltage = NodePath("Axis3/Voltage")
+TopicName = "astra_msgs/msg/SocketFeedback"
+
+[node name="Axis0" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm/Socket" unique_id=1375142924]
+layout_mode = 2
+
+[node name="Angle" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis0" unique_id=1708101927]
+layout_mode = 2
+text = "0_Angle: "
+
+[node name="Current" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis0" unique_id=1656623780]
+layout_mode = 2
+text = "0_Curnt: "
+
+[node name="Temp" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis0" unique_id=1481930821]
+layout_mode = 2
+text = "0_Temp: "
+
+[node name="Voltage" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis0" unique_id=729017254]
+layout_mode = 2
+text = "0_Vltge: "
+
+[node name="Axis1" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm/Socket" unique_id=1384752937]
+layout_mode = 2
+
+[node name="Angle" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis1" unique_id=192464927]
+layout_mode = 2
+text = "1_Angle: "
+
+[node name="Current" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis1" unique_id=1546544060]
+layout_mode = 2
+text = "1_Curnt: "
+
+[node name="Temp" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis1" unique_id=894324710]
+layout_mode = 2
+text = "1_Temp: "
+
+[node name="Voltage" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis1" unique_id=1076533793]
+layout_mode = 2
+text = "1_Vltge: "
+
+[node name="Axis2" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm/Socket" unique_id=491791499]
+layout_mode = 2
+
+[node name="Angle" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis2" unique_id=2052908321]
+layout_mode = 2
+text = "2_Angle: "
+
+[node name="Current" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis2" unique_id=345519229]
+layout_mode = 2
+text = "2_Curnt: "
+
+[node name="Temp" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis2" unique_id=382087746]
+layout_mode = 2
+text = "2_Temp: "
+
+[node name="Voltage" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis2" unique_id=1300007202]
+layout_mode = 2
+text = "2_Vltge: "
+
+[node name="Axis3" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm/Socket" unique_id=573211135]
+layout_mode = 2
+
+[node name="Angle" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis3" unique_id=500443457]
+layout_mode = 2
+text = "3_Angle: "
+
+[node name="Current" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis3" unique_id=1704694774]
+layout_mode = 2
+text = "3_Curnt: "
+
+[node name="Temp" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis3" unique_id=1203964648]
+layout_mode = 2
+text = "3_Temp: "
+
+[node name="Voltage" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis3" unique_id=1929233765]
+layout_mode = 2
+text = "3_Vltge: "
+
+[node name="Auto" type="OptionButton" parent="TabsParent/debug/InfoBox/DD" unique_id=154636130]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
+offset_left = 50.0
+offset_right = 100.0
+offset_bottom = 200.0
+theme_override_font_sizes/font_size = 26
+alignment = 1
+autowrap_mode = 3
+autowrap_trim_flags = 0
+
+[node name="Auto" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Auto" unique_id=1545714148]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="TabsParent/debug/InfoBox/DD/Auto/Auto" unique_id=1350297618]
+layout_mode = 2
+text = "auto"
+
+[node name="Macula" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Auto" unique_id=265974109 node_paths=PackedStringArray("DetectedTrue", "ObjectID", "Corner0", "Corner1", "Corner2", "Corner3")]
+visible = false
+layout_mode = 0
+offset_left = 52.0
+offset_top = 2.0
+offset_right = 648.0
+offset_bottom = 198.0
+script = ExtResource("34_w6oot")
+DetectedTrue = NodePath("VBoxContainer/Detected/DetectedTrue")
+ObjectID = NodePath("VBoxContainer2/ObjectID")
+Corner0 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner0")
+Corner1 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner1")
+Corner2 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner2")
+Corner3 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner3")
+TopicName = "/auto/macula"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Auto/Macula" unique_id=828360749]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabsParent/debug/InfoBox/DD/Auto/Macula/VBoxContainer" unique_id=2005253224]
+layout_mode = 2
+text = "Detected
+ Object "
+horizontal_alignment = 1
+
+[node name="Detected" type="TextureRect" parent="TabsParent/debug/InfoBox/DD/Auto/Macula/VBoxContainer" unique_id=1806225110]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("17_gbrgi")
+stretch_mode = 5
+
+[node name="DetectedTrue" type="TextureRect" parent="TabsParent/debug/InfoBox/DD/Auto/Macula/VBoxContainer/Detected" unique_id=1632013878]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_1vnp5")
+expand_mode = 5
+
+[node name="I" type="VSeparator" parent="TabsParent/debug/InfoBox/DD/Auto/Macula" unique_id=2107510265]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Auto/Macula" unique_id=809887758]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ObjectID" type="Label" parent="TabsParent/debug/InfoBox/DD/Auto/Macula/VBoxContainer2" unique_id=1271207357]
+layout_mode = 2
+text = "Object ID:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Auto/Macula/VBoxContainer2" unique_id=487169885]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="spacer" type="Panel" parent="TabsParent/debug/InfoBox/DD/Auto/Macula/VBoxContainer2/HBoxContainer" unique_id=1026498838]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="TabsParent/debug/InfoBox/DD/Auto/Macula/VBoxContainer2/HBoxContainer" unique_id=28778349]
+layout_mode = 2
+columns = 2
+
+[node name="Corner0" type="Label" parent="TabsParent/debug/InfoBox/DD/Auto/Macula/VBoxContainer2/HBoxContainer/GridContainer" unique_id=1454423002]
+layout_mode = 2
+text = "Corner 0: "
+
+[node name="Corner1" type="Label" parent="TabsParent/debug/InfoBox/DD/Auto/Macula/VBoxContainer2/HBoxContainer/GridContainer" unique_id=1958065618]
+layout_mode = 2
+text = "Corner 1:"
+
+[node name="Corner2" type="Label" parent="TabsParent/debug/InfoBox/DD/Auto/Macula/VBoxContainer2/HBoxContainer/GridContainer" unique_id=604608399]
+layout_mode = 2
+text = "Corner 2:"
+
+[node name="Corner3" type="Label" parent="TabsParent/debug/InfoBox/DD/Auto/Macula/VBoxContainer2/HBoxContainer/GridContainer" unique_id=154685937]
+layout_mode = 2
+text = "Corner 3:"
+
+[node name="Bio" type="OptionButton" parent="TabsParent/debug/InfoBox/DD" unique_id=1670087457]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
+offset_left = 50.0
+offset_right = 100.0
+offset_bottom = 200.0
+theme_override_font_sizes/font_size = 26
+alignment = 1
+autowrap_mode = 3
+autowrap_trim_flags = 0
+
+[node name="Board" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Bio" unique_id=1333665152]
+visible = false
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="TabsParent/debug/InfoBox/DD/Bio/Board" unique_id=1000040455]
+layout_mode = 2
+text = "bioboard"
+
+[node name="Core" type="OptionButton" parent="TabsParent/debug/InfoBox/DD" unique_id=634523336]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
+offset_left = 50.0
+offset_right = 100.0
+offset_bottom = 200.0
+theme_override_font_sizes/font_size = 26
+alignment = 1
+autowrap_mode = 3
+autowrap_trim_flags = 0
+
+[node name="IMU" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Core" unique_id=1187356514]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("35_f0cuh")
+
+[node name="Label" type="Label" parent="TabsParent/debug/InfoBox/DD/Core/IMU" unique_id=223430011]
+layout_mode = 2
+text = "imu"
+
+[node name="Motor" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Core" unique_id=523829311]
+visible = false
+layout_mode = 0
+offset_left = 52.0
+offset_top = 2.0
+offset_right = 648.0
+offset_bottom = 198.0
+
+[node name="fl" parent="TabsParent/debug/InfoBox/DD/Core/Motor" unique_id=1654833601 instance=ExtResource("37_w6oot")]
+layout_mode = 2
+
+[node name="fr" parent="TabsParent/debug/InfoBox/DD/Core/Motor" unique_id=977743441 instance=ExtResource("37_w6oot")]
+layout_mode = 2
+
+[node name="bl" parent="TabsParent/debug/InfoBox/DD/Core/Motor" unique_id=1815186568 instance=ExtResource("37_w6oot")]
+layout_mode = 2
+
+[node name="br" parent="TabsParent/debug/InfoBox/DD/Core/Motor" unique_id=1741195114 instance=ExtResource("37_w6oot")]
+layout_mode = 2
+
+[node name="PTZ" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Core" unique_id=1100283050 node_paths=PackedStringArray("ConnectedTrue", "Yaw", "Pitch", "Roll")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("37_b3n4c")
+ConnectedTrue = NodePath("VBoxContainer/HBoxContainer/CenterContainer/Disconnected/Connected")
+Yaw = NodePath("VBoxContainer/Yaw")
+Pitch = NodePath("VBoxContainer/Pitch")
+Roll = NodePath("VBoxContainer/Roll")
+TopicName = "/ptz/feedback"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Core/PTZ" unique_id=986312591]
+layout_mode = 2
+
+[node name="Yaw" type="Label" parent="TabsParent/debug/InfoBox/DD/Core/PTZ/VBoxContainer" unique_id=1722128544]
+layout_mode = 2
+text = "Yaw:      ° |    m/s"
+
+[node name="Pitch" type="Label" parent="TabsParent/debug/InfoBox/DD/Core/PTZ/VBoxContainer" unique_id=1276448062]
+layout_mode = 2
+text = "Pitch:    ° |    m/s"
+
+[node name="Roll" type="Label" parent="TabsParent/debug/InfoBox/DD/Core/PTZ/VBoxContainer" unique_id=2094772596]
+layout_mode = 2
+text = "Roll:     ° |    m/s"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Core/PTZ/VBoxContainer" unique_id=523363318]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="TabsParent/debug/InfoBox/DD/Core/PTZ/VBoxContainer/HBoxContainer" unique_id=2056268511]
+layout_mode = 2
+text = "Camera: "
+
+[node name="CenterContainer" type="BoxContainer" parent="TabsParent/debug/InfoBox/DD/Core/PTZ/VBoxContainer/HBoxContainer" unique_id=958315869]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Disconnected" type="TextureRect" parent="TabsParent/debug/InfoBox/DD/Core/PTZ/VBoxContainer/HBoxContainer/CenterContainer" unique_id=718731255]
+layout_mode = 2
+texture = ExtResource("17_gbrgi")
+expand_mode = 2
+
+[node name="Connected" type="TextureRect" parent="TabsParent/debug/InfoBox/DD/Core/PTZ/VBoxContainer/HBoxContainer/CenterContainer/Disconnected" unique_id=1657142848]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_1vnp5")
+
+[node name="InfoPanel" type="HBoxContainer" parent="TabsParent/debug/InfoBox" unique_id=672243967]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="spacer" type="Panel" parent="TabsParent/debug/InfoBox/InfoPanel" unique_id=72369656]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CoreFeedbackHandler" type="Control" parent="TabsParent/debug/InfoBox/InfoPanel" unique_id=1717182197 node_paths=PackedStringArray("Voltages", "imu", "BL", "BR", "FL", "FR")]
+layout_mode = 2
+script = ExtResource("34_f0cuh")
+Voltages = NodePath("../../../Voltages")
+imu = NodePath("../../DD/Core/IMU")
+BL = NodePath("../../DD/Core/Motor/bl")
+BR = NodePath("../../DD/Core/Motor/br")
+FL = NodePath("../../DD/Core/Motor/fl")
+FR = NodePath("../../DD/Core/Motor/fr")
+TopicName = "/core/newfeedback"
+
+[node name="InfoContainer" type="PanelContainer" parent="TabsParent/debug/InfoBox/InfoPanel" unique_id=1158815868]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2onxw")
+
+[node name="spacer" type="Panel" parent="TabsParent/debug" unique_id=887799847]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("33_rj5vk")
+
+[node name="Voltages" type="PanelContainer" parent="TabsParent/debug" unique_id=368068522 node_paths=PackedStringArray("BatVoltage", "Voltage12", "Voltage5", "Voltage3")]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6gdgo")
+script = ExtResource("34_yphi5")
+BatVoltage = NodePath("InfoContainer/Bat")
+Voltage12 = NodePath("InfoContainer/12v")
+Voltage5 = NodePath("InfoContainer/5v")
+Voltage3 = NodePath("InfoContainer/3v")
+
+[node name="InfoContainer" type="VBoxContainer" parent="TabsParent/debug/Voltages" unique_id=2060477424]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Bat" type="Label" parent="TabsParent/debug/Voltages/InfoContainer" unique_id=1732049824]
+layout_mode = 2
+text = " Bat volt:       "
+
+[node name="12v" type="Label" parent="TabsParent/debug/Voltages/InfoContainer" unique_id=626449123]
+layout_mode = 2
+text = " 12v line:"
+
+[node name="5v" type="Label" parent="TabsParent/debug/Voltages/InfoContainer" unique_id=14336444]
+layout_mode = 2
+text = " 5v line:"
+
+[node name="3v" type="Label" parent="TabsParent/debug/Voltages/InfoContainer" unique_id=990437736]
+layout_mode = 2
+text = " 3v line:"
 
 [node name="HSeparator" type="HSeparator" parent="." unique_id=317495895]
 layout_mode = 2

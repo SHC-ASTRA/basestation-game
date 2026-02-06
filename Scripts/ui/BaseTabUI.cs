@@ -3,7 +3,7 @@ using Godot;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ui
+namespace UI
 {
     // Base tab UI. Abstractly handles ROS functions and provides a controller input interface.
     public abstract partial class BaseTabUI : Control

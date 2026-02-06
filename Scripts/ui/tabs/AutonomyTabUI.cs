@@ -1,7 +1,6 @@
-using IPC;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
-namespace ui
+namespace UI
 {
     public partial class AutonomyTabUI : BaseTabUI
     {

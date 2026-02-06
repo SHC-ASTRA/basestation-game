@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://jvsnkqt3cfhr"
+path="res://.godot/imported/PTZ.obj-acda0a9e5bc685087bcf6d8f1207c166.mesh"
+
+[deps]
+
+files=["res://.godot/imported/PTZ.obj-acda0a9e5bc685087bcf6d8f1207c166.mesh"]
+
+source_file="res://Assets/PTZ/PTZ.obj"
+dest_files=["res://.godot/imported/PTZ.obj-acda0a9e5bc685087bcf6d8f1207c166.mesh", "res://.godot/imported/PTZ.obj-acda0a9e5bc685087bcf6d8f1207c166.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

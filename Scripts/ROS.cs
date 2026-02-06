@@ -1,4 +1,4 @@
-using ui;
+using UI;
 using Godot;
 using System.Linq;
 using static Godot.OS;
@@ -176,6 +176,11 @@ namespace IPC
             if (!interfaceExists(serviceName))
                 return;
             ROSSocket.CallService<T, P>(serviceName, response, args);
+        }
+
+        public static void TopicSubscribe<T>(string topicName, SubscriptionHandler<T> Callback) where T : Message
+        {
+            ROSSocket.Subscribe<T>(topicName, Callback);
         }
 
         /// <summary> Goated Chat code, continuously attempts to
