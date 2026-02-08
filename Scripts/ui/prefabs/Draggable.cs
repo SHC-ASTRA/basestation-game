@@ -2,8 +2,10 @@ using Godot;
 
 namespace UI
 {
-    public partial class Draggable : FoldableContainer
+    public partial class Draggable : Control
     {
+        [Export]
+        private bool Global = true;
         private bool dragging = false;
         private Vector2 originalDownPosition;
 
@@ -11,10 +13,9 @@ namespace UI
         {
             if (@event is InputEventMouseButton)
             {
-                InputEventMouseButton IEMB = @event as InputEventMouseButton;
-                if (IEMB.IsReleased())
+                if ((@event as InputEventMouseButton).IsReleased())
                     dragging = false;
-                else if (IEMB.IsPressed())
+                else if ((@event as InputEventMouseButton).IsPressed())
                 {
                     dragging = true;
                     originalDownPosition = GetLocalMousePosition();
@@ -22,7 +23,10 @@ namespace UI
                 else base._Input(@event);
             }
             if (dragging)
-                SetPosition(GetGlobalMousePosition() - originalDownPosition);
+                if (Global)
+                    SetPosition(GetGlobalMousePosition() - originalDownPosition);
+                else
+                    SetPosition((GetParent() as CanvasItem).GetLocalMousePosition() - originalDownPosition);
         }
     }
 }

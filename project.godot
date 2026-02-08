@@ -39,6 +39,17 @@ project/solution_directory="."
 
 run/main_run_args="basestation-cameras"
 
+[file_customization]
+
+folder_colors={
+"res://Assets/": "teal",
+"res://ROS/": "red",
+"res://Scenes/": "teal",
+"res://Scripts/": "blue",
+"res://addons/": "yellow",
+"res://astra-ros-sharp/": "red"
+}
+
 [gui]
 
 theme/default_font_multichannel_signed_distance_field=true

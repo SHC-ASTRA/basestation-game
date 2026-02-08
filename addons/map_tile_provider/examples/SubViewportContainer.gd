@@ -3,35 +3,39 @@ extends SubViewportContainer
 
 @onready var _map = $SubViewport/Map
 
+@export var popupNode: PackedScene
+
+var lastValidMousePos: Vector2
+
+var pinsParent: Control
+
+var focused: bool
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# _on_resized()
 	_map.recenter()
-
-# func _on_resized():
-# 	$SubViewport.size = self.size
-
+	pinsParent = get_parent().get_child(-1);
 
 func _input(event):
+	# Get the SubViewport global rect (screen coords)
+	var sv_rect = get_global_rect()
 
-	if event is InputEventMouseMotion:
+	# Calculate mouse position relative to the SubViewport
+	var mouse_local_pos = get_viewport().get_mouse_position() - sv_rect.position
+
+	# Normalize position inside the SubViewport rect (clamped 0..1)
+	var norm_pos = Vector2(
+		clamp(mouse_local_pos.x / sv_rect.size.x, 0, 1),
+		clamp(mouse_local_pos.y / sv_rect.size.y, 0, 1)
+	)
+	if focused and event is InputEventMouseMotion:
 		if event.button_mask == 1:
 			_map.shift(event.relative)
 		else:
-			# Get the SubViewport global rect (screen coords)
-			var sv_rect = get_global_rect()
-
-			# Calculate mouse position relative to the SubViewport
-			var mouse_local_pos = get_viewport().get_mouse_position() - sv_rect.position
-
-			# Normalize position inside the SubViewport rect (clamped 0..1)
-			var norm_pos = Vector2(
-				clamp(mouse_local_pos.x / sv_rect.size.x, 0, 1),
-				clamp(mouse_local_pos.y / sv_rect.size.y, 0, 1)
-			)
-
 			if norm_pos.x <= 0 or norm_pos.x >= 1 or norm_pos.y <= 0 or norm_pos.y >= 1:
 				return
+
+			lastValidMousePos = norm_pos
 
 			var layer = _map._zooms[int(_map.zoom)]["layer"]
 			if layer == null:
@@ -62,7 +66,20 @@ func _input(event):
 			_map.longitudeLabel.text = "Longitude: %f" % (_map.longitude + offset.x * deg_per_pix.x)
 
 	elif event is InputEventMouseButton:
-		if event.button_mask == 8:
+		if focused and event.button_mask == 1:
+			if norm_pos.x <= 0 or norm_pos.x >= 1 or norm_pos.y <= 0 or norm_pos.y >= 1:
+				return
+			var ButtonPopup = popupNode.instantiate()
+			pinsParent.add_child(ButtonPopup)
+		elif event.button_mask == 8:
 			_map.zoom += 1
 		elif event.button_mask == 16:
 			_map.zoom -= 1
+
+
+func _on_focus_entered() -> void:
+	focused = true
+
+
+func _on_focus_exited() -> void:
+	focused = false

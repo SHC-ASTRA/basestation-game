@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://dv6648rp4layo"]
+
+[ext_resource type="Script" uid="uid://fw0xlu8w0pc7" path="res://Scripts/ui/prefabs/Draggable.cs" id="1_1bkdm"]
+[ext_resource type="Texture2D" uid="uid://chculdmmnqx3q" path="res://Assets/Pin.png" id="1_vd82r"]
+[ext_resource type="Script" uid="uid://blpfweuu3t6au" path="res://Scripts/ui/MapPin.cs" id="2_qx2vt"]
+
+[node name="CenterContainer" type="BoxContainer" unique_id=534358731]
+offset_right = 32.0
+offset_bottom = 48.0
+mouse_filter = 0
+alignment = 1
+script = ExtResource("1_1bkdm")
+Global = false
+
+[node name="MapPin" type="Button" parent="." unique_id=2043246885 node_paths=PackedStringArray("PopupPanel", "PanelName", "PanelNamePresets", "X", "Y", "DeleteButton", "UnderPin")]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+toggle_mode = true
+action_mode = 0
+icon = ExtResource("1_vd82r")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("2_qx2vt")
+PopupPanel = NodePath("PopupPanel")
+PanelName = NodePath("PopupPanel/VBoxContainer/HBoxContainer/LineEdit")
+PanelNamePresets = NodePath("PopupPanel/VBoxContainer/HBoxContainer/OptionButton")
+X = NodePath("PopupPanel/VBoxContainer/X")
+Y = NodePath("PopupPanel/VBoxContainer/Y")
+DeleteButton = NodePath("PopupPanel/VBoxContainer/DELETE")
+UnderPin = NodePath("UnderPin")
+
+[node name="PopupPanel" type="Panel" parent="MapPin" unique_id=1953657685]
+z_index = 4096
+layout_mode = 0
+offset_left = -34.0
+offset_top = -100.0
+offset_right = 67.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MapPin/PopupPanel" unique_id=18942869]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 97.0
+offset_bottom = 98.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MapPin/PopupPanel/VBoxContainer" unique_id=1218118230]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="MapPin/PopupPanel/VBoxContainer/HBoxContainer" unique_id=474944065]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 9
+placeholder_text = "Pin Name"
+alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="MapPin/PopupPanel/VBoxContainer/HBoxContainer" unique_id=357180912]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+clip_text = true
+selected = 0
+fit_to_longest_item = false
+item_count = 7
+popup/item_0/text = "Start Gate"
+popup/item_0/id = 0
+popup/item_1/text = "GNSS_1"
+popup/item_1/id = 1
+popup/item_2/text = "GNSS_2"
+popup/item_2/id = 2
+popup/item_3/text = "Mallet"
+popup/item_3/id = 3
+popup/item_4/text = "Rock pick"
+popup/item_4/id = 4
+popup/item_5/text = "Bottle"
+popup/item_5/id = 5
+popup/item_6/text = "Misc"
+popup/item_6/id = 6
+
+[node name="X" type="Label" parent="MapPin/PopupPanel/VBoxContainer" unique_id=62739424]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "X:"
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="Y" type="Label" parent="MapPin/PopupPanel/VBoxContainer" unique_id=511655869]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Y:"
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="spacer" type="Panel" parent="MapPin/PopupPanel/VBoxContainer" unique_id=247151263]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DELETE" type="Button" parent="MapPin/PopupPanel/VBoxContainer" unique_id=57582387]
+process_priority = -1
+modulate = Color(1, 0.26666668, 0.27450982, 1)
+z_index = 4096
+z_as_relative = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Delete"
+
+[node name="UnderPin" type="Label" parent="MapPin" unique_id=1197700996]
+layout_mode = 0
+offset_left = -4.0
+offset_top = 45.0
+offset_right = 36.0
+offset_bottom = 68.0
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+autowrap_mode = 1
+autowrap_trim_flags = 0
