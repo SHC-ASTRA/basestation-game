@@ -6,6 +6,7 @@
       follows = "nix-ros-overlay/nixpkgs";
     };
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
+    # astra-msgs.url = "github:SHC-ASTRA/astra_msgs";
   };
   outputs = { self, nix-ros-overlay, modernpkgs, nixpkgs }:
     nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
@@ -15,12 +16,15 @@
           overlays = [ nix-ros-overlay.overlays.default ];
         };
         mpkgs = import modernpkgs { inherit system; };
+
+        # astra_msgs_pkgs = astra-msgs.packages.${system};
       in {
         devShells.default = pkgs.mkShell {
           name = "basestation-game";
           packages = with pkgs; [
             colcon
             mpkgs.godotPackages_4_6.godot-mono
+            # astra_msgs_pkgs.astra-msgs
             (with pkgs.rosPackages.humble;
               buildEnv {
                 paths = [
@@ -33,9 +37,14 @@
                 ];
               })
           ];
-          env = { };
 
-          shellHook = "source ./ROS/astra_msgs/install/setup.bash";
+          # # wrap the installed script so PATH includes the required tools at runtime
+          # # set PATH to include the binaries from buildInputs
+          # postInstall = ''
+          #   wrapProgram $out/start_rosbridge.sh \
+          #     --set PATH ${pkgs.lib.makeBinPath (with pkgs; [ ])}
+          # '';
+          env = { };
         };
 
         default = pkgs.mkDerivation {

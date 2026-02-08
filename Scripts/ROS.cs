@@ -179,9 +179,7 @@ namespace IPC
         }
 
         public static void TopicSubscribe<T>(string topicName, SubscriptionHandler<T> Callback) where T : Message
-        {
-            ROSSocket.Subscribe<T>(topicName, Callback);
-        }
+        => ROSSocket.Subscribe<T>(topicName, Callback);
 
         /// <summary> Goated Chat code, continuously attempts to
         /// connect to ROSBridge, waiting more and more as it fails.

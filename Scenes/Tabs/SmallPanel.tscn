@@ -33,14 +33,14 @@
 [ext_resource type="Texture2D" uid="uid://dxunigq7q2nib" path="res://Assets/TestTube.png" id="19_gbrgi"]
 [ext_resource type="Texture2D" uid="uid://c6hbb76buvj34" path="res://addons/map_tile_provider/loader.svg" id="21_j4lxw"]
 [ext_resource type="Texture2D" uid="uid://di6xg4f38cdx1" path="res://Assets/Tank.png" id="25_vwpm1"]
-[ext_resource type="Script" uid="uid://b2jgoochg84tx" path="res://Scripts/ui/tabs/Debug/Arm/Digit.cs" id="32_1hll6"]
+[ext_resource type="Script" uid="uid://bhjt3qbavbdvy" path="res://Scripts/ui/tabs/Debug/Arm/Digit.cs" id="32_1hll6"]
 [ext_resource type="Theme" uid="uid://ce3coqe5tlutx" path="res://Assets/Themes/NoAAorCorners.tres" id="33_rj5vk"]
-[ext_resource type="Script" uid="uid://gagedrdwmwe5" path="res://Scripts/ui/tabs/Debug/Arm/Socket.cs" id="33_y01en"]
-[ext_resource type="Script" uid="uid://lsoaxayurser" path="res://Scripts/ui/tabs/Debug/Core/CoreDebug.cs" id="34_f0cuh"]
-[ext_resource type="Script" uid="uid://828pp5i3lp7y" path="res://Scripts/ui/tabs/Debug/Auto/Macula.cs" id="34_w6oot"]
-[ext_resource type="Script" uid="uid://dvlw0c2f7j6ej" path="res://Scripts/ui/tabs/Debug/Voltages.cs" id="34_yphi5"]
-[ext_resource type="Script" uid="uid://drmnq4jeuk5qv" path="res://Scripts/ui/tabs/Debug/Core/IMU.cs" id="35_f0cuh"]
-[ext_resource type="Script" uid="uid://c8aq6qikl23m8" path="res://Scripts/ui/tabs/Debug/Core/PTZ.cs" id="37_b3n4c"]
+[ext_resource type="Script" uid="uid://bk76of86v0gei" path="res://Scripts/ui/tabs/Debug/Arm/Socket.cs" id="33_y01en"]
+[ext_resource type="Script" uid="uid://dvbbqam6ey1df" path="res://Scripts/ui/tabs/Debug/Core/CoreDebug.cs" id="34_f0cuh"]
+[ext_resource type="Script" uid="uid://bbgsjrn1gb6hh" path="res://Scripts/ui/tabs/Debug/Auto/Macula.cs" id="34_w6oot"]
+[ext_resource type="Script" uid="uid://bh5pbvuikp8ah" path="res://Scripts/ui/tabs/Debug/Voltages.cs" id="34_yphi5"]
+[ext_resource type="Script" uid="uid://d0rbncujpmaq2" path="res://Scripts/ui/tabs/Debug/Core/IMU.cs" id="35_f0cuh"]
+[ext_resource type="Script" uid="uid://c5iykqlrfowm7" path="res://Scripts/ui/tabs/Debug/Core/PTZ.cs" id="37_b3n4c"]
 [ext_resource type="PackedScene" uid="uid://csgu7b14vfkw3" path="res://Scenes/Prefabs/MotorDebug.tscn" id="37_w6oot"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2hv3"]
@@ -1324,6 +1324,7 @@ script = ExtResource("7_qq4qf")
 VoltageController = NodePath("Voltages")
 InfoContainer = NodePath("InfoBox/InfoPanel/InfoContainer")
 DD = NodePath("InfoBox/DD")
+ROSDependent = true
 
 [node name="InfoBox" type="HBoxContainer" parent="TabsParent/debug" unique_id=1760587508]
 layout_mode = 2
