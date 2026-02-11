@@ -29,11 +29,16 @@
               with pkgs.godotPackages_4_5;
               [
                 godot-mono
+                export-template
                 dotnet-sdk_10
               ];
 
             env = { };
-            shellHook = '''';
+            shellHook = ''
+              echo  Test...
+              godot-template
+              echo Done...
+            '';
           };
         }
       );
@@ -52,6 +57,7 @@
               makeWrapper
               dotnet-sdk_10
               godotPackages_4_5.godot-mono
+              godotPackages_4_5.export-template
             ];
 
             buildInputs = with pkgs; [
@@ -60,6 +66,7 @@
               makeWrapper
               dotnet-sdk_10
               godotPackages_4_5.godot-mono
+              godotPackages_4_5.export-template
             ];
 
             buildPhase = ''

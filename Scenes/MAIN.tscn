@@ -2,10 +2,10 @@
 
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="1_rf5wo"]
 [ext_resource type="PackedScene" uid="uid://dh133i8yuxjts" path="res://Scenes/Tabs/SmallPanel.tscn" id="2_ao1bj"]
-[ext_resource type="Script" uid="uid://cxepc25iuwyh0" path="res://Scripts/ROS.cs" id="3_kgeht"]
+[ext_resource type="Script" uid="uid://8d3j053d5yqx" path="res://Scripts/ROS.cs" id="3_kgeht"]
 [ext_resource type="Theme" uid="uid://ce3coqe5tlutx" path="res://Assets/Themes/NoAAorCorners.tres" id="3_kjvde"]
 [ext_resource type="PackedScene" uid="uid://b4x4xlqbw6usp" path="res://Scenes/Prefabs/cam_button.tscn" id="3_tm5h3"]
-[ext_resource type="Script" uid="uid://sole1bwdttyr" path="res://Scripts/ui/ROSAlerter.cs" id="4_1tvcf"]
+[ext_resource type="Script" uid="uid://dtfjpiprncrb7" path="res://Scripts/ui/ROSAlerter.cs" id="4_1tvcf"]
 [ext_resource type="Texture2D" uid="uid://dobdqxlqjdmjo" path="res://Assets/clucky.png" id="4_kgeht"]
 [ext_resource type="PackedScene" uid="uid://bp5ri1uu6aqdu" path="res://Scenes/Tabs/core.tscn" id="5_125yk"]
 
@@ -62,11 +62,11 @@ size_flags_horizontal = 3
 alignment_horizontal = 0
 
 [node name="Panel" type="Panel" parent="ROS head/ROSAlerter/Panel/AspectRatioContainer"]
-self_modulate = Color(0.78431374, 0.78431374, 0.78431374, 1)
+self_modulate = Color(0.784314, 0.784314, 0.784314, 1)
 layout_mode = 2
 
 [node name="Identifier" type="Panel" parent="ROS head/ROSAlerter/Panel/AspectRatioContainer/Panel"]
-self_modulate = Color(0.8235294, 0.26666668, 0.26666668, 1)
+self_modulate = Color(0.823529, 0.266667, 0.266667, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -124,9 +124,9 @@ layout_mode = 2
 
 [node name="CamButton" parent="LargePanel/Clucky/AspectRatioContainer/CamButtons" instance=ExtResource("3_tm5h3")]
 layout_mode = 0
-offset_left = 75.000015
+offset_left = 75.0
 offset_top = 191.0
-offset_right = 75.000015
+offset_right = 75.0
 offset_bottom = 191.0
 
 [node name="CamButton2" parent="LargePanel/Clucky/AspectRatioContainer/CamButtons" instance=ExtResource("3_tm5h3")]
