@@ -16,17 +16,17 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
         public const string RosMessageName = "astra_msgs/msg/BioDistributor";
 
         //  Topic: /bio/control/distributor
-        public bool[] distibutor_id { get; set; }
+        public bool[] distributor_id { get; set; }
         // (0-2)
 
         public BioDistributor()
         {
-            this.distibutor_id = new bool[3];
+            this.distributor_id = new bool[3];
         }
 
-        public BioDistributor(bool[] distibutor_id)
+        public BioDistributor(bool[] distributor_id)
         {
-            this.distibutor_id = distibutor_id;
+            this.distributor_id = distributor_id;
         }
     }
 }

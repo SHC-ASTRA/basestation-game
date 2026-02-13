@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://csgu7b14vfkw3"]
 
-[ext_resource type="Script" uid="uid://c5iesxcu5d8gc" path="res://Scripts/ui/tabs/Debug/Core/RevMotor.cs" id="1_qb3tj"]
+[ext_resource type="Script" uid="uid://xbb6uaw7pkop" path="res://Scripts/ui/tabs/Debug/Common/RevMotor.cs" id="1_qb3tj"]
 
 [node name="MotorDebug" type="HBoxContainer" unique_id=1815186568 node_paths=PackedStringArray("name", "id", "position", "velocity", "voltage", "current", "temperature")]
 anchors_preset = 15

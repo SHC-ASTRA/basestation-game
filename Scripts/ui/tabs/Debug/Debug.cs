@@ -17,7 +17,7 @@ namespace UI.Debug
             {
                 while (!ROS.ROSReady)
                     await Task.Delay(5);
-                ROS.TopicSubscribe(TopicName, GetFeedbackHandler());
+                ROS.TopicSubscribe<T>(TopicName, GetFeedbackHandler());
             });
         }
 

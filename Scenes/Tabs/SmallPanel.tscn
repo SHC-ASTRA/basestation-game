@@ -33,15 +33,14 @@
 [ext_resource type="Texture2D" uid="uid://dxunigq7q2nib" path="res://Assets/TestTube.png" id="19_gbrgi"]
 [ext_resource type="Texture2D" uid="uid://c6hbb76buvj34" path="res://addons/map_tile_provider/loader.svg" id="21_j4lxw"]
 [ext_resource type="Texture2D" uid="uid://di6xg4f38cdx1" path="res://Assets/Tank.png" id="25_vwpm1"]
-[ext_resource type="Script" uid="uid://bhjt3qbavbdvy" path="res://Scripts/ui/tabs/Debug/Arm/Digit.cs" id="32_1hll6"]
 [ext_resource type="Theme" uid="uid://ce3coqe5tlutx" path="res://Assets/Themes/NoAAorCorners.tres" id="33_rj5vk"]
-[ext_resource type="Script" uid="uid://bk76of86v0gei" path="res://Scripts/ui/tabs/Debug/Arm/Socket.cs" id="33_y01en"]
 [ext_resource type="Script" uid="uid://dvbbqam6ey1df" path="res://Scripts/ui/tabs/Debug/Core/CoreDebug.cs" id="34_f0cuh"]
 [ext_resource type="Script" uid="uid://bbgsjrn1gb6hh" path="res://Scripts/ui/tabs/Debug/Auto/Macula.cs" id="34_w6oot"]
-[ext_resource type="Script" uid="uid://bh5pbvuikp8ah" path="res://Scripts/ui/tabs/Debug/Voltages.cs" id="34_yphi5"]
 [ext_resource type="Script" uid="uid://d0rbncujpmaq2" path="res://Scripts/ui/tabs/Debug/Core/IMU.cs" id="35_f0cuh"]
 [ext_resource type="Script" uid="uid://c5iykqlrfowm7" path="res://Scripts/ui/tabs/Debug/Core/PTZ.cs" id="37_b3n4c"]
-[ext_resource type="PackedScene" uid="uid://csgu7b14vfkw3" path="res://Scenes/Prefabs/MotorDebug.tscn" id="37_w6oot"]
+[ext_resource type="PackedScene" uid="uid://csgu7b14vfkw3" path="res://Scenes/Prefabs/Debug/MotorDebug.tscn" id="37_w6oot"]
+[ext_resource type="Script" uid="uid://c6crq5dxm8acw" path="res://Scripts/ui/tabs/Debug/Arm/ArmDebug.cs" id="40_1gx8n"]
+[ext_resource type="PackedScene" uid="uid://djddm5e7gl0of" path="res://Scenes/Prefabs/Debug/voltages.tscn" id="40_w6oot"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2hv3"]
 bg_color = Color(0.32156864, 0.63529414, 0.22745098, 1)
@@ -454,12 +453,12 @@ alignment = 1
 script = ExtResource("5_u4qwe")
 ROSDependent = true
 
-[node name="bio" type="HBoxContainer" parent="TabsParent" unique_id=194178564 node_paths=PackedStringArray("FanSpeed", "FanTime", "VacuumSelector", "VacuumCommit", "VacuumCommitTexture", "DistributorNode", "ExtensionAmount", "TestTubeSelector", "TestTubeCommit", "TestTubeCommitTexture", "VibrationMotor", "Laser", "LaserFailsafe", "Source")]
+[node name="bio" type="HBoxContainer" parent="TabsParent" unique_id=194178564 node_paths=PackedStringArray("FanDuty", "FanTime", "VacuumSelector", "VacuumCommit", "VacuumCommitTexture", "DistributorNode", "ExtensionAmount", "TestTubeSelector", "TestTubeCommit", "TestTubeCommitTexture", "VibrationMotor", "Laser", "LaserFailsafe", "Source")]
 visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("6_th4gl")
-FanSpeed = NodePath("Vacuum system/Speed/Amount")
+FanDuty = NodePath("Vacuum system/Duty/Amount")
 FanTime = NodePath("Vacuum system/Time/Amount")
 VacuumSelector = NodePath("Vacuum system/Vacs/MenuButton")
 VacuumCommit = NodePath("Vacuum system/Commit/AspectRatioContainer/Commit")
@@ -483,27 +482,27 @@ layout_mode = 2
 [node name="Vacuum system" type="HBoxContainer" parent="TabsParent/bio" unique_id=485832669]
 layout_mode = 2
 
-[node name="Speed" type="VBoxContainer" parent="TabsParent/bio/Vacuum system" unique_id=2097604546]
+[node name="Duty" type="VBoxContainer" parent="TabsParent/bio/Vacuum system" unique_id=2097604546]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Speed" unique_id=248502953]
+[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Duty" unique_id=248502953]
 layout_mode = 2
-text = "Speed"
+text = "Dly-C"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vacuum system/Speed" unique_id=974444698]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vacuum system/Duty" unique_id=974444698]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Vacuum system/Speed/AspectRatioContainer" unique_id=2078662727 instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/bio/Vacuum system/Duty/AspectRatioContainer" unique_id=2078662727 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vacuum system/Speed/AspectRatioContainer" unique_id=432531560]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vacuum system/Duty/AspectRatioContainer" unique_id=432531560]
 layout_mode = 2
 texture = ExtResource("14_s2hv3")
 
-[node name="Amount" type="SpinBox" parent="TabsParent/bio/Vacuum system/Speed" unique_id=152467717]
+[node name="Amount" type="SpinBox" parent="TabsParent/bio/Vacuum system/Duty" unique_id=152467717]
 layout_mode = 2
 theme_override_constants/field_and_buttons_separation = -16
 max_value = 50.0
@@ -1317,11 +1316,10 @@ layout_mode = 2
 alignment = 1
 script = ExtResource("12_lq3nq")
 
-[node name="debug" type="HBoxContainer" parent="TabsParent" unique_id=1671544032 node_paths=PackedStringArray("VoltageController", "InfoContainer", "DD")]
+[node name="debug" type="HBoxContainer" parent="TabsParent" unique_id=1671544032 node_paths=PackedStringArray("InfoContainer", "DD")]
 layout_mode = 2
 theme = SubResource("Theme_rj5vk")
 script = ExtResource("7_qq4qf")
-VoltageController = NodePath("Voltages")
 InfoContainer = NodePath("InfoBox/InfoPanel/InfoContainer")
 DD = NodePath("InfoBox/DD")
 ROSDependent = true
@@ -1351,120 +1349,33 @@ alignment = 1
 autowrap_mode = 3
 autowrap_trim_flags = 0
 
-[node name="Digit" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm" unique_id=1001382876 node_paths=PackedStringArray("WristAngle")]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("32_1hll6")
-WristAngle = NodePath("Wrist Angle")
-TopicName = "/arm/feedback/digit"
-
-[node name="Wrist Angle" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Digit" unique_id=201599713]
-z_index = 1
-layout_mode = 2
-text = "digit"
-
-[node name="Socket" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm" unique_id=160753198 node_paths=PackedStringArray("Axis0Angle", "Axis0Current", "Axis0Temp", "Axis0Voltage", "Axis1Angle", "Axis1Current", "Axis1Temp", "Axis1Voltage", "Axis2Angle", "Axis2Current", "Axis2Temp", "Axis2Voltage", "Axis3Angle", "Axis3Current", "Axis3Temp", "Axis3Voltage")]
+[node name="Motors" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm" unique_id=2134379730 node_paths=PackedStringArray("VoltagesContainer", "SocketVoltages", "A0", "A1", "A2", "A3")]
 visible = false
 layout_mode = 0
 offset_left = 54.0
-offset_right = 67.0
+offset_right = 2206.0
 offset_bottom = 200.0
-script = ExtResource("33_y01en")
-Axis0Angle = NodePath("Axis0/Angle")
-Axis0Current = NodePath("Axis0/Current")
-Axis0Temp = NodePath("Axis0/Temp")
-Axis0Voltage = NodePath("Axis0/Voltage")
-Axis1Angle = NodePath("Axis1/Angle")
-Axis1Current = NodePath("Axis1/Current")
-Axis1Temp = NodePath("Axis1/Temp")
-Axis1Voltage = NodePath("Axis1/Voltage")
-Axis2Angle = NodePath("Axis2/Angle")
-Axis2Current = NodePath("Axis2/Current")
-Axis2Temp = NodePath("Axis2/Temp")
-Axis2Voltage = NodePath("Axis2/Voltage")
-Axis3Angle = NodePath("Axis3/Angle")
-Axis3Current = NodePath("Axis3/Current")
-Axis3Temp = NodePath("Axis3/Temp")
-Axis3Voltage = NodePath("Axis3/Voltage")
-TopicName = "astra_msgs/msg/SocketFeedback"
+script = ExtResource("40_1gx8n")
+VoltagesContainer = NodePath("../../../../VoltagesPanel/VoltagesContainer")
+VoltagesDisplay = ExtResource("40_w6oot")
+SocketVoltages = NodePath("../../../../VoltagesPanel/VoltagesContainer/Voltages")
+A0 = NodePath("Axis0")
+A1 = NodePath("Axis1")
+A2 = NodePath("Axis2")
+A3 = NodePath("Axis3")
+TopicName = "/arm/new_feedback"
 
-[node name="Axis0" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm/Socket" unique_id=1375142924]
+[node name="Axis0" parent="TabsParent/debug/InfoBox/DD/Arm/Motors" unique_id=1815186568 instance=ExtResource("37_w6oot")]
 layout_mode = 2
 
-[node name="Angle" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis0" unique_id=1708101927]
-layout_mode = 2
-text = "0_Angle: "
-
-[node name="Current" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis0" unique_id=1656623780]
-layout_mode = 2
-text = "0_Curnt: "
-
-[node name="Temp" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis0" unique_id=1481930821]
-layout_mode = 2
-text = "0_Temp: "
-
-[node name="Voltage" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis0" unique_id=729017254]
-layout_mode = 2
-text = "0_Vltge: "
-
-[node name="Axis1" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm/Socket" unique_id=1384752937]
+[node name="Axis1" parent="TabsParent/debug/InfoBox/DD/Arm/Motors" unique_id=1727120810 instance=ExtResource("37_w6oot")]
 layout_mode = 2
 
-[node name="Angle" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis1" unique_id=192464927]
-layout_mode = 2
-text = "1_Angle: "
-
-[node name="Current" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis1" unique_id=1546544060]
-layout_mode = 2
-text = "1_Curnt: "
-
-[node name="Temp" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis1" unique_id=894324710]
-layout_mode = 2
-text = "1_Temp: "
-
-[node name="Voltage" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis1" unique_id=1076533793]
-layout_mode = 2
-text = "1_Vltge: "
-
-[node name="Axis2" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm/Socket" unique_id=491791499]
+[node name="Axis2" parent="TabsParent/debug/InfoBox/DD/Arm/Motors" unique_id=1760183454 instance=ExtResource("37_w6oot")]
 layout_mode = 2
 
-[node name="Angle" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis2" unique_id=2052908321]
+[node name="Axis3" parent="TabsParent/debug/InfoBox/DD/Arm/Motors" unique_id=718830640 instance=ExtResource("37_w6oot")]
 layout_mode = 2
-text = "2_Angle: "
-
-[node name="Current" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis2" unique_id=345519229]
-layout_mode = 2
-text = "2_Curnt: "
-
-[node name="Temp" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis2" unique_id=382087746]
-layout_mode = 2
-text = "2_Temp: "
-
-[node name="Voltage" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis2" unique_id=1300007202]
-layout_mode = 2
-text = "2_Vltge: "
-
-[node name="Axis3" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Arm/Socket" unique_id=573211135]
-layout_mode = 2
-
-[node name="Angle" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis3" unique_id=500443457]
-layout_mode = 2
-text = "3_Angle: "
-
-[node name="Current" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis3" unique_id=1704694774]
-layout_mode = 2
-text = "3_Curnt: "
-
-[node name="Temp" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis3" unique_id=1203964648]
-layout_mode = 2
-text = "3_Temp: "
-
-[node name="Voltage" type="Label" parent="TabsParent/debug/InfoBox/DD/Arm/Socket/Axis3" unique_id=1929233765]
-layout_mode = 2
-text = "3_Vltge: "
 
 [node name="Auto" type="OptionButton" parent="TabsParent/debug/InfoBox/DD" unique_id=154636130]
 visible = false
@@ -1635,7 +1546,7 @@ layout_mode = 2
 [node name="fr" parent="TabsParent/debug/InfoBox/DD/Core/Motor" unique_id=977743441 instance=ExtResource("37_w6oot")]
 layout_mode = 2
 
-[node name="bl" parent="TabsParent/debug/InfoBox/DD/Core/Motor" unique_id=1815186568 instance=ExtResource("37_w6oot")]
+[node name="bl" parent="TabsParent/debug/InfoBox/DD/Core/Motor" unique_id=894400081 instance=ExtResource("37_w6oot")]
 layout_mode = 2
 
 [node name="br" parent="TabsParent/debug/InfoBox/DD/Core/Motor" unique_id=1741195114 instance=ExtResource("37_w6oot")]
@@ -1713,13 +1624,13 @@ mouse_filter = 2
 [node name="CoreFeedbackHandler" type="Control" parent="TabsParent/debug/InfoBox/InfoPanel" unique_id=1717182197 node_paths=PackedStringArray("Voltages", "imu", "BL", "BR", "FL", "FR")]
 layout_mode = 2
 script = ExtResource("34_f0cuh")
-Voltages = NodePath("../../../Voltages")
+Voltages = NodePath("../../../VoltagesPanel/VoltagesContainer/Voltages")
 imu = NodePath("../../DD/Core/IMU")
 BL = NodePath("../../DD/Core/Motor/bl")
 BR = NodePath("../../DD/Core/Motor/br")
 FL = NodePath("../../DD/Core/Motor/fl")
 FR = NodePath("../../DD/Core/Motor/fr")
-TopicName = "/core/newfeedback"
+TopicName = "/core/feedback_new"
 
 [node name="InfoContainer" type="PanelContainer" parent="TabsParent/debug/InfoBox/InfoPanel" unique_id=1158815868]
 custom_minimum_size = Vector2(600, 0)
@@ -1734,36 +1645,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("33_rj5vk")
 
-[node name="Voltages" type="PanelContainer" parent="TabsParent/debug" unique_id=368068522 node_paths=PackedStringArray("BatVoltage", "Voltage12", "Voltage5", "Voltage3")]
+[node name="VoltagesPanel" type="PanelContainer" parent="TabsParent/debug" unique_id=368068522]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6gdgo")
-script = ExtResource("34_yphi5")
-BatVoltage = NodePath("InfoContainer/Bat")
-Voltage12 = NodePath("InfoContainer/12v")
-Voltage5 = NodePath("InfoContainer/5v")
-Voltage3 = NodePath("InfoContainer/3v")
 
-[node name="InfoContainer" type="VBoxContainer" parent="TabsParent/debug/Voltages" unique_id=2060477424]
+[node name="VoltagesContainer" type="HBoxContainer" parent="TabsParent/debug/VoltagesPanel" unique_id=449135641]
 layout_mode = 2
-mouse_filter = 2
-alignment = 1
 
-[node name="Bat" type="Label" parent="TabsParent/debug/Voltages/InfoContainer" unique_id=1732049824]
+[node name="Voltages" parent="TabsParent/debug/VoltagesPanel/VoltagesContainer" unique_id=1827939833 instance=ExtResource("40_w6oot")]
 layout_mode = 2
-text = " Bat volt:       "
-
-[node name="12v" type="Label" parent="TabsParent/debug/Voltages/InfoContainer" unique_id=626449123]
-layout_mode = 2
-text = " 12v line:"
-
-[node name="5v" type="Label" parent="TabsParent/debug/Voltages/InfoContainer" unique_id=14336444]
-layout_mode = 2
-text = " 5v line:"
-
-[node name="3v" type="Label" parent="TabsParent/debug/Voltages/InfoContainer" unique_id=990437736]
-layout_mode = 2
-text = " 3v line:"
 
 [node name="HSeparator" type="HSeparator" parent="." unique_id=317495895]
 layout_mode = 2

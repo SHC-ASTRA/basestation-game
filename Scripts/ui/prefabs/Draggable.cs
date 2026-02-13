@@ -6,7 +6,7 @@ namespace UI
     {
         [Export]
         private bool Global = true;
-        private bool dragging = false;
+        private bool Dragging = false;
         private Vector2 originalDownPosition;
 
         public override void _GuiInput(InputEvent @event)
@@ -14,19 +14,27 @@ namespace UI
             if (@event is InputEventMouseButton)
             {
                 if ((@event as InputEventMouseButton).IsReleased())
-                    dragging = false;
+                    Dragging = false;
                 else if ((@event as InputEventMouseButton).IsPressed())
                 {
-                    dragging = true;
+                    Dragging = true;
                     originalDownPosition = GetLocalMousePosition();
                 }
                 else base._Input(@event);
             }
-            if (dragging)
+            if (Dragging)
                 if (Global)
+                {
                     SetPosition(GetGlobalMousePosition() - originalDownPosition);
+                    Dragged();
+                }
                 else
+                {
                     SetPosition((GetParent() as CanvasItem).GetLocalMousePosition() - originalDownPosition);
+                    Dragged();
+                }
         }
+
+        public virtual void Dragged() { }
     }
 }

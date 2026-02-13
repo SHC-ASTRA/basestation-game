@@ -15,7 +15,7 @@ namespace UI
         [Export]
         public bool ROSDependent;
 
-        protected int Rate = 50;
+        protected int Rate = 150;
         public int Delay;
         private Task Updater;
 

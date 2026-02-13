@@ -13,19 +13,19 @@ namespace UI
         ROSActionClient<BioVacuumAction, BioVacuumActionGoal, BioVacuumActionResult, BioVacuumActionFeedback, BioVacuumGoal, BioVacuumResult, BioVacuumFeedback> VacuumClient;
         BioVacuumActionGoal BVAG = new BioVacuumActionGoal(new Header(), new GoalInfo(), new BioVacuumGoal());
         private BioVacuumAction BioVacuumHandler = new();
-        private const string VacuumCtrl = "/valve_fan";
+        private const string VacuumCtrl = "/bio/actions/vacuum";
 
         private BioDistributor controlMsg = new();
         private const string ctrl = "/bio/control/distributor";
 
         private BioTestTubeRequest tubeMsg = new();
-        private const string TubeCtrl = "/bio/control/testtubes";
+        private const string TubeCtrl = "/bio/control/test_tube";
 
         [ExportCategory("CITADEL")]
 
         [ExportGroup("Vacuum system")]
         [Export]
-        public SpinBox FanSpeed;
+        public SpinBox FanDuty;
         [Export]
         public SpinBox FanTime;
         [Export]
@@ -73,14 +73,14 @@ namespace UI
         {
             base._Ready();
 
-            Rate = 50;
+            Rate = 5050;
 
             VacuumCommit.ButtonDown += () =>
             {
                 VacuumCommitTexture.Visible = true;
                 BVAG.args.valve_id = (sbyte)VacuumSelector.prevIndex;
                 BVAG.args.fan_time_ms = (uint)FanTime.Value;
-                BVAG.args.fan_duty_cycle_percent = (sbyte)FanTime.Value;
+                BVAG.args.fan_duty_cycle_percent = (sbyte)FanDuty.Value;
                 VacuumClient.PublishActionGoal(BVAG);
             };
             VacuumCommit.ButtonUp += () => { VacuumCommitTexture.Visible = false; };
@@ -149,9 +149,9 @@ namespace UI
 
         public override void EmitToROS()
         {
-            controlMsg.distibutor_id[0] = Distributors[0].ButtonPressed;
-            controlMsg.distibutor_id[1] = Distributors[1].ButtonPressed;
-            controlMsg.distibutor_id[2] = Distributors[2].ButtonPressed;
+            controlMsg.distributor_id[0] = Distributors[0].ButtonPressed;
+            controlMsg.distributor_id[1] = Distributors[1].ButtonPressed;
+            controlMsg.distributor_id[2] = Distributors[2].ButtonPressed;
             ROS.Publish(ctrl, controlMsg);
         }
 

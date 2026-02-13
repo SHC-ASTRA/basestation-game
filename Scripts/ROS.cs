@@ -50,7 +50,7 @@ namespace IPC
                 OS.DelayMsec(500);
             }
             // ExecuteWithPipe creates three different IOStreams bundled in a dictionary
-            GoDict RosBridgeReturn = ExecuteWithPipe("bash", ["./ROS/rosbridge.sh"]);
+            GoDict RosBridgeReturn = ExecuteWithPipe("bash", ["./start_rosbridge.sh"]);
 
             // Waits for ROSBridge to come up. Necessary as if we don't we might start sending/requesting data before it's ready
             if (!await WaitForRosbridgeAsync(ROSIP, ROSPort, 40, 400))

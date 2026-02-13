@@ -5,8 +5,6 @@ namespace UI.Debug
 {
     public partial class DebugTabUI : BaseTabUI
     {
-        [Export] public Voltages VoltageController;
-
         [Export] public Control InfoContainer;
 
         [Export] public OptionButton DD;

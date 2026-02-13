@@ -18,33 +18,17 @@
         "type": "github"
       }
     },
-    "modernpkgs": {
-      "locked": {
-        "lastModified": 1770617025,
-        "narHash": "sha256-1jZvgZoAagZZB6NwGRv2T2ezPy+X6EFDsJm+YSlsvEs=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "2db38e08fdadcc0ce3232f7279bab59a15b94482",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-25.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nix-ros-overlay": {
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1770739813,
-        "narHash": "sha256-EGJMeJYjkT2unsTsa8PCRMkfzoEswmMMxVZMFylwUTE=",
+        "lastModified": 1770622967,
+        "narHash": "sha256-1LYjTugPSCa/5NkP6/dcZLH5TQYj3R8mAZ/9dgd7jDM=",
         "owner": "lopsided98",
         "repo": "nix-ros-overlay",
-        "rev": "4ab4fc0cd9674c8f006bac4d21d8e7082cffa282",
+        "rev": "d1b9f17eba909116356436d46b5192d299c6b49a",
         "type": "github"
       },
       "original": {
@@ -72,7 +56,6 @@
     },
     "root": {
       "inputs": {
-        "modernpkgs": "modernpkgs",
         "nix-ros-overlay": "nix-ros-overlay",
         "nixpkgs": [
           "nix-ros-overlay",

@@ -11,12 +11,14 @@ else
     source /opt/ros/humble/setup.bash
 fi
 
+source ROS/Compiler/astra_msgs/install/setup.bash
+
 if ! command ros2 interface list | grep astra_msgs; then
     echo "[ERROR] astra_msgs not properly included in path"
     exit
 fi
 
-cd $BS_GAME_WS && nix develop --command ros2 run rosbridge_server rosbridge_websocket \
+cd $BS_GAME_WS && ros2 run rosbridge_server rosbridge_websocket \
 --port 9090 --address "" --url_path "/" --certfile "" \
 --keyfile "" --retry_startup_delay 5 --fragment_timeout 600 \
 --delay_between_message 0 --max_message_size 10000000 \

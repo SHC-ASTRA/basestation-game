@@ -27,10 +27,9 @@ namespace UI.Debug
             base._Ready();
         }
 
-        public override SubscriptionHandler<NewCoreFeedback> GetFeedbackHandler() => new((feedback) =>
+        public override SubscriptionHandler<NewCoreFeedback> GetFeedbackHandler() => new(feedback =>
         {
-            if (!Visible)
-                return;
+            Voltages.Update(feedback.board_voltage);
 
             if (MotorContainer.Visible)
             {
