@@ -16,8 +16,10 @@ The parent repository is located at
   and MsgAutoGenUtilities static classes as all their
   members were static as well.
 
+- Added custom package name support to ActionAutoGen, MessageAutoGen, and ServiceAutoGen
+
 - Removed all Ros1 support (unused in our use case)
 
-- Changed base namespace to RosSharp.RosBridgeClient.CMessageGeneration, for compat with the true package.
+- Changed base namespace to RosSharp.RosBridgeClient.CMessageGeneration, for compat with the original package.
 
 - Minor optimizations

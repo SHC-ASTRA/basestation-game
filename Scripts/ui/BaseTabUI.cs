@@ -3,7 +3,7 @@ using Godot;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ui
+namespace UI
 {
     // Base tab UI. Abstractly handles ROS functions and provides a controller input interface.
     public abstract partial class BaseTabUI : Control
@@ -15,7 +15,7 @@ namespace ui
         [Export]
         public bool ROSDependent;
 
-        protected int Rate = 50;
+        protected int Rate = 150;
         public int Delay;
         private Task Updater;
 

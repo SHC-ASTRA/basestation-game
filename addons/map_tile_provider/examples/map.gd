@@ -5,6 +5,8 @@ signal zoom_changed(float)
 signal latitude_changed(float)
 signal longitude_changed(float)
 
+@export var latitudeLabel : Label
+@export var longitudeLabel : Label
 
 @export var latitude: float = 0.0:
 	set(val):
@@ -35,6 +37,7 @@ signal longitude_changed(float)
 			zoom = val
 			zoom_changed.emit(val)
 
+var loader
 
 # canvas size
 var _size := Vector2i()
@@ -52,17 +55,11 @@ var _size := Vector2i()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	loader = get_child(0)
 	print("_ready")
 	_update_visible_rect()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func recenter():
-	var loader = $MapTileLoader
 	var sprite: Sprite2D
 	var level: Dictionary
 	var layer: Node2D
@@ -121,7 +118,6 @@ func _update_visible_rect() -> void:
 			step = level[key]["sprite"].texture.get_size()
 			break
 
-	var loader = $MapTileLoader
 	var center_tile: Vector3i = loader.gps_to_tile(latitude, longitude, int(zoom))
 	var tile_bounds: Rect2 = loader.get_tile_bounds(center_tile.x, center_tile.y, center_tile.z)
 	var range_x = ((int(_size.x + step.x) - 1) / int(step.x) + 1) / 2 + 1
@@ -183,14 +179,12 @@ func _on_zoom_changed(z: float):
 
 
 func shift(amount: Vector2) -> void:
-	var level = _zooms[int(zoom)]
-	var layer = level["layer"]
+	var layer = _zooms[int(zoom)]["layer"]
 	if layer == null:
 		return # skip layer 0
 
 	var deg_per_pix: Vector2
 	# get current center tile
-	var loader = $MapTileLoader
 	var center_tile = loader.gps_to_tile(latitude, longitude, int(zoom))
 	# determine the degrees per pixel
 	var key = "%d,%d" % [ center_tile.x, center_tile.y ]

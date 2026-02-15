@@ -1,7 +1,7 @@
 using IPC;
 using Godot;
 
-namespace ui
+namespace UI
 {
     ///<summary> Gives the user control over ROSBridge </summary>
     public partial class ROSAlerter : VBoxContainer

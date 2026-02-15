@@ -1,19 +1,22 @@
 {
   inputs = {
     modernpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-25.05";
-      follows = "nix-ros-overlay/nixpkgs";
-    };
+    nixpkgs.follows = "nix-ros-overlay/nixpkgs";
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
+    astra-msgs.url =
+      "github:SHC-ASTRA/astra_msgs/93dc0e0919249d5ff3e3a601c81e5b578cfd46e9";
   };
-  outputs = { self, nix-ros-overlay, modernpkgs, nixpkgs }:
+  outputs = { self, nix-ros-overlay, modernpkgs, nixpkgs, astra-msgs }@inputs:
     nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
           inherit system;
           overlays = [ nix-ros-overlay.overlays.default ];
         };
+        astra_msgs_pkgs = astra-msgs.packages.${system};
+
+        rosDistro = "humble";
+
         mpkgs = import modernpkgs { inherit system; };
       in {
         devShells.default = pkgs.mkShell {
@@ -21,7 +24,7 @@
           packages = with pkgs; [
             colcon
             mpkgs.godotPackages_4_6.godot-mono
-            (with pkgs.rosPackages.humble;
+            (with pkgs.rosPackages.${rosDistro};
               buildEnv {
                 paths = [
                   ros-core
@@ -32,10 +35,26 @@
                   rosbridge-suite
                 ];
               })
+            astra_msgs_pkgs.astra-msgs
           ];
-          env = { };
 
-          shellHook = "source ./ROS/astra_msgs/install/setup.bash";
+          extraPaths = [ ];
+
+          env = {
+            ASTRAMSGS = "${inputs.astra-msgs.outPath}";
+            # ROSBRIDGE =
+            #   "${pkgs.rosPackages.${rosDistro}.rosbridge-suite.outPath}";
+            ROSBRIDGESERVER =
+              "${pkgs.rosPackages.${rosDistro}.rosbridge-server.outPath}";
+            # ROSBRIDGELIBRARY =
+            #   "${pkgs.rosPackages.${rosDistro}.rosbridge-library.outPath}";
+            ROSCOMPILER = "./ROS/Compiler";
+          };
+
+          shellHook = ''
+            dotnet run --no-build --configuration Release --debug False -no-dependencies --project $ROSCOMPILER && \
+                ros2 run rosbridge_server rosbridge_websocket --ros-args --params-file ./ROS/rosbridge_conf.yaml
+          '';
         };
 
         default = pkgs.mkDerivation {
@@ -72,8 +91,6 @@
 
               	      runHook postBuild
             	    '';
-
-          postInstall = "\n";
         };
       });
   nixConfig = {

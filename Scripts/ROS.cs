@@ -1,4 +1,4 @@
-using ui;
+using UI;
 using Godot;
 using System.Linq;
 using static Godot.OS;
@@ -50,7 +50,7 @@ namespace IPC
                 OS.DelayMsec(500);
             }
             // ExecuteWithPipe creates three different IOStreams bundled in a dictionary
-            GoDict RosBridgeReturn = ExecuteWithPipe("bash", ["./ROS/rosbridge.sh"]);
+            GoDict RosBridgeReturn = ExecuteWithPipe("bash", ["./start_rosbridge.sh"]);
 
             // Waits for ROSBridge to come up. Necessary as if we don't we might start sending/requesting data before it's ready
             if (!await WaitForRosbridgeAsync(ROSIP, ROSPort, 40, 400))
@@ -177,6 +177,9 @@ namespace IPC
                 return;
             ROSSocket.CallService<T, P>(serviceName, response, args);
         }
+
+        public static void TopicSubscribe<T>(string topicName, SubscriptionHandler<T> Callback) where T : Message
+        => ROSSocket.Subscribe<T>(topicName, Callback);
 
         /// <summary> Goated Chat code, continuously attempts to
         /// connect to ROSBridge, waiting more and more as it fails.

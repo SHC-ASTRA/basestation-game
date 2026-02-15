@@ -1,6 +1,6 @@
 using Godot;
 
-namespace ui
+namespace UI
 {
     public partial class KeepToScreenRect : Control
     {

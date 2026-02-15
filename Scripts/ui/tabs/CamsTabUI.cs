@@ -1,8 +1,8 @@
 using IPC;
 using Godot;
-using RosSharp.RosBridgeClient.MessageTypes.Astra;
+using RosSharp.RosBridgeClient;
 
-namespace ui
+namespace UI
 {
     public partial class CamsTabUI : BaseTabUI
     {
