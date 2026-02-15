@@ -110,7 +110,7 @@ namespace RosSharp.RosBridgeClient.CMessageGeneration
             return warnings;
         }
 
-        public static List<string> GenerateDirectoryActions(string inPath, string outPath, bool verbose = false)
+        public static List<string> GenerateDirectoryActions(string inPath, string outPath, string rosPackageName = "", bool verbose = false)
         {
             List<string> warnings = new List<string>();
 
@@ -134,7 +134,7 @@ namespace RosSharp.RosBridgeClient.CMessageGeneration
                 }
                 foreach (string file in files)
                 {
-                    warnings.AddRange(GenerateSingleAction(file, outPath, verbose: verbose));
+                    warnings.AddRange(GenerateSingleAction(file, outPath, rosPackageName, verbose: verbose));
                 }
             }
             return warnings;

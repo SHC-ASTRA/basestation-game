@@ -1,31 +1,30 @@
 {
   inputs = {
     modernpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-25.05";
-      follows = "nix-ros-overlay/nixpkgs";
-    };
+    nixpkgs.follows = "nix-ros-overlay/nixpkgs";
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
-    # astra-msgs.url = "github:SHC-ASTRA/astra_msgs";
+    astra-msgs.url =
+      "github:SHC-ASTRA/astra_msgs/93dc0e0919249d5ff3e3a601c81e5b578cfd46e9";
   };
-  outputs = { self, nix-ros-overlay, modernpkgs, nixpkgs }:
+  outputs = { self, nix-ros-overlay, modernpkgs, nixpkgs, astra-msgs }@inputs:
     nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
           inherit system;
           overlays = [ nix-ros-overlay.overlays.default ];
         };
-        mpkgs = import modernpkgs { inherit system; };
+        astra_msgs_pkgs = astra-msgs.packages.${system};
 
-        # astra_msgs_pkgs = astra-msgs.packages.${system};
+        rosDistro = "humble";
+
+        mpkgs = import modernpkgs { inherit system; };
       in {
         devShells.default = pkgs.mkShell {
           name = "basestation-game";
           packages = with pkgs; [
             colcon
             mpkgs.godotPackages_4_6.godot-mono
-            # astra_msgs_pkgs.astra-msgs
-            (with pkgs.rosPackages.humble;
+            (with pkgs.rosPackages.${rosDistro};
               buildEnv {
                 paths = [
                   ros-core
@@ -36,15 +35,27 @@
                   rosbridge-suite
                 ];
               })
+            astra_msgs_pkgs.astra-msgs
           ];
 
-          # # wrap the installed script so PATH includes the required tools at runtime
-          # # set PATH to include the binaries from buildInputs
-          # postInstall = ''
-          #   wrapProgram $out/start_rosbridge.sh \
-          #     --set PATH ${pkgs.lib.makeBinPath (with pkgs; [ ])}
-          # '';
-          env = { };
+          extraPaths = [ ];
+
+          env = {
+            ASTRAMSGS = "${inputs.astra-msgs.outPath}";
+            ROSCOMPILER = "./ROS/Compiler";
+          };
+
+          shellHook = ''
+            dotnet run --no-build --configuration Release --debug False -no-dependencies --project $ROSCOMPILER && \
+                rm -r $ROSCOMPILER/obj && \
+                nohup ros2 run rosbridge_server rosbridge_websocket \
+                    --port 9090 --retry_startup_delay 5 \
+                    --fragment_timeout 600 \
+                    --delay_between_message 0 --max_message_size 10000000 \
+                    --unregister_timeout 10 --call_services_in_new_thread true \
+                    --default_call_service_timeout 1 \
+                    --send_action_goals_in_new_thread true > /dev/null & disown
+          '';
         };
 
         default = pkgs.mkDerivation {
