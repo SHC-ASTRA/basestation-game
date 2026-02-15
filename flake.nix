@@ -42,19 +42,18 @@
 
           env = {
             ASTRAMSGS = "${inputs.astra-msgs.outPath}";
+            # ROSBRIDGE =
+            #   "${pkgs.rosPackages.${rosDistro}.rosbridge-suite.outPath}";
+            ROSBRIDGESERVER =
+              "${pkgs.rosPackages.${rosDistro}.rosbridge-server.outPath}";
+            # ROSBRIDGELIBRARY =
+            #   "${pkgs.rosPackages.${rosDistro}.rosbridge-library.outPath}";
             ROSCOMPILER = "./ROS/Compiler";
           };
 
           shellHook = ''
             dotnet run --no-build --configuration Release --debug False -no-dependencies --project $ROSCOMPILER && \
-                rm -r $ROSCOMPILER/obj && \
-                nohup ros2 run rosbridge_server rosbridge_websocket \
-                    --port 9090 --retry_startup_delay 5 \
-                    --fragment_timeout 600 \
-                    --delay_between_message 0 --max_message_size 10000000 \
-                    --unregister_timeout 10 --call_services_in_new_thread true \
-                    --default_call_service_timeout 1 \
-                    --send_action_goals_in_new_thread true > /dev/null & disown
+                ros2 run rosbridge_server rosbridge_websocket --ros-args --params-file ./ROS/rosbridge_conf.yaml
           '';
         };
 
@@ -92,8 +91,6 @@
 
               	      runHook postBuild
             	    '';
-
-          postInstall = "\n";
         };
       });
   nixConfig = {

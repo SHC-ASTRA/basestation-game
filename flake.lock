@@ -102,11 +102,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1770998552,
-        "narHash": "sha256-CQ9vNu2VnZ5FCfVri2hrf3ZJ20UjELBGDoDZ9NDc9Go=",
+        "lastModified": 1771172542,
+        "narHash": "sha256-qiT521vcXLimteL2SAUszkobUDn8T9+MFT9IFkEr7B8=",
         "owner": "lopsided98",
         "repo": "nix-ros-overlay",
-        "rev": "65c47109870069fc7322a41a0ea77df276965bb3",
+        "rev": "3831205683a7c0b0bf6625cb889a6df310169098",
         "type": "github"
       },
       "original": {
