@@ -5,8 +5,6 @@ using RosSharp.RosBridgeClient.CMessageGeneration;
 
 string pwd = Environment.GetEnvironmentVariable("PWD");
 
-System.Console.Out.Write(pwd);
-
 string successDir = $"{pwd}/ROS/RosSharpInterfaces";
 string tmp = $"{pwd}/ROS/Compiler/tmp";
 
@@ -24,5 +22,15 @@ ServiceAutoGen.GenerateDirectoryServices("./srv", tmp, "astra_msgs", false);
 MessageAutoGen.GenerateDirectoryMessages("./msg", tmp, "astra_msgs", false);
 ActionAutoGen.GenerateDirectoryActions("./action", tmp, "astra_msgs", false);
 
-
-Directory.Move(tmp, successDir);
+if (Directory.Exists(successDir))
+    Directory.Delete(tmp, true);
+else try
+    {
+        Directory.Move(tmp, successDir);
+    }
+    catch (IOException E)
+    {
+        Console.Out.Write("Files in use!");
+        Directory.Delete(tmp, true);
+        return;
+    }

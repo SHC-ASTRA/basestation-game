@@ -52,8 +52,7 @@
           };
 
           shellHook = ''
-            dotnet run --no-build --configuration Release --debug False -no-dependencies --project $ROSCOMPILER && \
-                ros2 run rosbridge_server rosbridge_websocket --ros-args --params-file ./ROS/rosbridge_conf.yaml
+            dotnet run --no-build --configuration Release --debug False --project $ROSCOMPILER
           '';
         };
 

@@ -56,7 +56,6 @@ var _size := Vector2i()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	loader = get_child(0)
-	print("_ready")
 	_update_visible_rect()
 
 func recenter():

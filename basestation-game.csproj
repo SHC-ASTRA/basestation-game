@@ -11,5 +11,7 @@
     <PackageReference Include="WebSocketSharp" Version="1.0.3-rc11">
         <NoWarn>NU1701</NoWarn>
     </PackageReference>
+
+    <Compile Remove="./ROS/Compiler/*" />
   </ItemGroup>
 </Project>
