@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://djddm5e7gl0of"]
+
+[ext_resource type="Script" uid="uid://t7um4faeeyrq" path="res://Scripts/ui/tabs/Debug/Common/Voltages.cs" id="1_bui6t"]
+
+[node name="Voltages" type="VBoxContainer" unique_id=1827939833 node_paths=PackedStringArray("BatVoltage", "Voltage12", "Voltage5", "Voltage3")]
+mouse_filter = 2
+alignment = 1
+script = ExtResource("1_bui6t")
+BatVoltage = NodePath("Bat")
+Voltage12 = NodePath("12v")
+Voltage5 = NodePath("5v")
+Voltage3 = NodePath("3v")
+
+[node name="Bat" type="Label" parent="." unique_id=1699535385]
+layout_mode = 2
+text = " Bat volt:       "
+
+[node name="12v" type="Label" parent="." unique_id=2109350192]
+layout_mode = 2
+text = " 12v line:"
+
+[node name="5v" type="Label" parent="." unique_id=1966226059]
+layout_mode = 2
+text = " 5v line:"
+
+[node name="3v" type="Label" parent="." unique_id=2128181615]
+layout_mode = 2
+text = " 3v line:"

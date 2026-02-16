@@ -21,6 +21,7 @@ run/main_scene="uid://bjwmxrn1okacu"
 run/print_header=false
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 run/low_processor_mode=true
+run/load_shell_environment=true
 boot_splash/show_image=false
 config/icon="res://Assets/icon.svg"
 
@@ -32,10 +33,22 @@ window/size/viewport_height=800
 [dotnet]
 
 project/assembly_name="basestation-game"
+project/solution_directory="."
 
 [editor]
 
 run/main_run_args="basestation-cameras"
+
+[file_customization]
+
+folder_colors={
+"res://Assets/": "teal",
+"res://ROS/": "red",
+"res://Scenes/": "teal",
+"res://Scripts/": "blue",
+"res://addons/": "yellow",
+"res://astra-ros-sharp/": "red"
+}
 
 [gui]
 

@@ -2,7 +2,7 @@ using IPC;
 using Godot;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
-namespace ui
+namespace UI
 {
     public partial class ArmTabUI : BaseTabUI
     {

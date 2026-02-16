@@ -15,13 +15,19 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
     {
         public const string RosMessageName = "astra_msgs/action/BioVacuumFeedback";
 
-        //  Result
-        //  Nothing.
+        //  Feedback
+        public uint fan_time_remaining_ms { get; set; }
         //  Request the valve to open and the duty cycle and duration to run the fan for.
         //  process: open valve n, wait (x)ms, run fan for y, close valve n, wait (x)ms, result
 
         public BioVacuumFeedback()
         {
+            this.fan_time_remaining_ms = 0;
+        }
+
+        public BioVacuumFeedback(uint fan_time_remaining_ms)
+        {
+            this.fan_time_remaining_ms = fan_time_remaining_ms;
         }
     }
 }

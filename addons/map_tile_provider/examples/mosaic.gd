@@ -5,15 +5,15 @@ signal zoom_changed(float)
 signal latitude_changed(float)
 signal longitude_changed(float)
 
-@export var latitude: float = 48.8584:
+@export var latitude: float = 38.37608:
 	set(val):
 		latitude = val
 		latitude_changed.emit(val)
-@export var longitude: float = 2.2945:
+@export var longitude: float = -110.71710:
 	set(val):
 		longitude = val
 		longitude_changed.emit(val)
-@export_range(1, 20) var zoom: float = 15:
+@export_range(1, 20) var zoom: float = 14:
 	set(val):
 		zoom = val
 		zoom_changed.emit(val)

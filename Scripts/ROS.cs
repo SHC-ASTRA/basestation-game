@@ -1,7 +1,7 @@
-using ui;
+using UI;
 using Godot;
 using System.Linq;
-using static Godot.OS;
+using System.Threading;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using RosSharp.RosBridgeClient;
@@ -13,25 +13,19 @@ namespace IPC
 {
     public partial class ROS : Godot.Node
     {
+        public static bool ROSDEBUG;
         public static bool ROSReady = false;
         public static bool Readvertise = false;
-        public static ROS ROSServer;
-        private static Godot.FileAccess RosBridgeIO, RosBridgeErr;
-        private static int RosBridgePID;
+        private static ROSAlerter alerter;
 
+        private static ROSBridgeThread ROSThread;
         public static RosSocket ROSSocket;
+        private static int RosBridgePID;
 
         private readonly static HashSet<string> interfaceNames = new HashSet<string>();
 
         private static readonly string ROSIP = new System.Net.IPAddress(new byte[] { 127, 0, 0, 1 }).ToString();
         private const int ROSPort = 9090;
-        private static readonly string sockAddress = $"ws://{ROSIP}:{ROSPort}";
-
-        public static string term = System.OperatingSystem.IsLinux() ? "bash" : "pwsh";
-
-        private static string ROSDocker = "ROS/Docker";
-
-        private static ROSAlerter alerter;
 
         public override void _Ready()
         {
@@ -42,27 +36,61 @@ namespace IPC
 
         public async static void StartROS()
         {
-            // Must use Call so that the UI is updated now rather than after we've finished executing
-            alerter.Call("Disconnected");
+            alerter.Disconnected();
             ROSReady = false;
 
-            // Pipes docker ps into grep to see if the container is running; if it is, cd's to the ROS/Docker dir and kills the container
-            Execute(term, ["-c", $"if docker ps | grep docker-ros2-1; then cd {ROSDocker} && docker compose down; fi"]);
-            // ExecuteWithPipe creates three different IOStreams bundled in a dictionary
-            Godot.Collections.Dictionary RosBridgeReturn = ExecuteWithPipe(term, ["-c", $"cd {ROSDocker} && docker compose up"]);
+            if (await CheckROSOnce(ROSIP, ROSPort))
+            {
+                if (ROSSocket != null)
+                {
+                    ROSSocket.Close();
+                    ROSSocket = null;
+                }
+                OS.DelayMsec(10);
+            }
+
+            if (ROSThread != null)
+            {
+                ROSThread.Kill();
+                ROSThread.WaitToFinish();
+                ROSThread.Dispose();
+            }
+            ROSThread = new ROSBridgeThread();
+            ROSThread.Start(new Callable(new ROSBridgeThread(), "main"));
+
+            // RosBridgeIO = RosBridgeReturn["stdio"].As<Godot.FileAccess>();
+            // RosBridgeErr = RosBridgeReturn["stderr"].As<Godot.FileAccess>();
+            // RosBridgePID = RosBridgeReturn["pid"].AsInt32();
+
+            // new Thread(() =>
+            // {
+            //     string s;
+            //     while (true)
+            //         while ((s = RosBridgeIO.GetLine()) != "")
+            //         {
+            //             GD.Print(s);
+            //         }
+            // }).Start();
+
+            // new Thread(() =>
+            // {
+            //     string s;
+            //     while (true)
+            //         while ((s = RosBridgeErr.GetLine()) != "")
+            //         {
+            //             GD.Print(s);
+            //         }
+            // }).Start();
+
             // Waits for ROSBridge to come up. Necessary as if we don't we might start sending/requesting data before it's ready
-            if (!await WaitForRosbridgeAsync(ROSIP, ROSPort, 40, 4000))
+            if (!await WaitForRosbridgeAsync(ROSIP, ROSPort, 40, 400))
             {
                 GD.PrintErr("Could not initialize Rosbridge");
                 return;
             }
             GD.Print("Initialized Rosbridge");
 
-            RosBridgeIO = RosBridgeReturn["stdio"].As<Godot.FileAccess>();
-            RosBridgeErr = RosBridgeReturn["stderr"].As<Godot.FileAccess>();
-            RosBridgePID = RosBridgeReturn["pid"].As<int>();
-
-            ROSSocket = new(new WebSocketNetProtocol(sockAddress));
+            ROSSocket = new(new WebSocketNetProtocol($"ws://{ROSIP}:{ROSPort}"));
 
             if (Readvertise)
             {
@@ -84,10 +112,10 @@ namespace IPC
         // our topics are alive, and then kills the socket, then kills ROSBridge
         public override void _ExitTree()
         {
-            foreach (string s in interfaceNames)
-                ROSSocket.Unadvertise(s);
             ROSSocket.Close();
-            Execute(term, ["-c", $"if docker ps | grep docker-ros2-1; then cd {ROSDocker} && docker compose down -t 0; fi"]);
+            ROSThread.Kill();
+            ROSThread.WaitToFinish();
+            ROSThread.Dispose();
             base._ExitTree();
         }
 
@@ -125,6 +153,7 @@ namespace IPC
         /// <para> <typeparamref name="C"/>: TypeActionResult </para> <para> <typeparamref name="D"/>: TypeActionFeedback </para>
         /// <para> <typeparamref name="E"/>: TypeGoal </para> <para> <typeparamref name="F"/>: TypeResult </para>
         /// <para> <typeparamref name="G"/>: TypeFeedback </para>
+        ///  More comments than code ❤
         /// </summary>
         public static ROSActionClient<A, B, C, D, E, F, G> AdvertiseAction<A, B, C, D, E, F, G>(
             string actionName, A act, SendActionGoalHandler<B> actionGoalHandler,
@@ -143,9 +172,9 @@ namespace IPC
         public async static Task AwaitRosReady()
         {
             while (!ROSReady) { await Task.Delay(1); continue; }
-            while (requestDelay < 25)
+            while (requestDelay < 15)
             {
-                await Task.Delay(requestDelay++ * 2);
+                Thread.Sleep(requestDelay++ * 2);
             }
             requestDelay = 1;
         }
@@ -175,31 +204,20 @@ namespace IPC
             ROSSocket.CallService<T, P>(serviceName, response, args);
         }
 
+        public static void TopicSubscribe<T>(string topicName, SubscriptionHandler<T> Callback) where T : Message
+        => ROSSocket.Subscribe<T>(topicName, Callback);
+
         /// <summary> Goated Chat code, continuously attempts to
         /// connect to ROSBridge, waiting more and more as it fails.
         /// Will give up after a decent amount of time </summary>
-        public static async Task<bool> WaitForRosbridgeAsync(string host, int port, int timeoutSec = 400, int pollIntervalMs = 2000, int increaseMs = 1000)
+        private static async Task<bool> WaitForRosbridgeAsync(string host, int port, int timeoutSec = 400, int pollIntervalMs = 2000, int increaseMs = 100)
         {
             int failCount = 0;
             int totalFailCount = 0;
             while (true)
             {
-                try
-                {
-                    using (TcpClient client = new())
-                    {
-                        System.IAsyncResult result = client.BeginConnect(host, port, null, null);
-                        bool success = result.AsyncWaitHandle.WaitOne(pollIntervalMs);
-                        if (success && client.Connected)
-                        {
-                            client.EndConnect(result);
-                            alerter.Connected();
-                            await Task.Delay(1);
-                            return true;
-                        }
-                    }
-                }
-                catch { }
+                if (await CheckROSOnce(host, port, timeoutSec, pollIntervalMs))
+                    return true;
                 GD.Print($"Failed to connect to ROSBridge container. Retrying in {pollIntervalMs}Ms");
                 totalFailCount++;
                 if (++failCount > 4)
@@ -208,8 +226,57 @@ namespace IPC
                     pollIntervalMs += increaseMs;
                     failCount = 0;
                 }
-                if (totalFailCount > 16) return false;
+                if (totalFailCount + 1 == 40) return false;
                 await Task.Delay(pollIntervalMs);
+            }
+        }
+
+        private static async Task<bool> CheckROSOnce(string host, int port, int timeoutSec = 400, int pollIntervalMs = 2000)
+        {
+            try
+            {
+                TcpClient client = new();
+                System.IAsyncResult result = client.BeginConnect(host, port, null, null);
+                if (result.AsyncWaitHandle.WaitOne(pollIntervalMs) && client.Connected)
+                {
+                    client.EndConnect(result);
+                    alerter.Connected();
+                    await Task.Delay(1);
+                    client.Dispose();
+                    return true;
+                }
+                else client.Dispose();
+            }
+            catch { }
+            return false;
+        }
+
+        private partial class ROSBridgeThread : GodotThread
+        {
+            public bool run = true;
+            public bool main()
+            {
+                // ExecuteWithPipe creates three different IOStreams bundled in a dictionary
+                while (run)
+                {
+                    RosBridgePID = OS.Execute("ros2",
+                        ["run", "rosbridge_server", "rosbridge_websocket", "--ros-args", "--params-file", "./ROS/rosbridge_conf.yaml"]
+                    );
+                    if (run)
+                        return false;
+                }
+                ROSSocket.Close();
+                OS.Execute("pkill", ["rosbridge_webso"]);
+                RosBridgePID = -1;
+                return true;
+            }
+
+            public void Kill()
+            {
+                if (ROSSocket != null)
+                    ROSSocket.Close();
+                run = false;
+                OS.Execute("pkill", ["rosbridge_webso"]);
             }
         }
     }

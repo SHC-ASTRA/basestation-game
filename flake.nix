@@ -1,86 +1,100 @@
 {
-  inputs.modernpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+  inputs = {
+    modernpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.follows = "nix-ros-overlay/nixpkgs";
+    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
+    astra-msgs.url =
+      "github:SHC-ASTRA/astra_msgs/93dc0e0919249d5ff3e3a601c81e5b578cfd46e9";
+  };
+  outputs = { self, nix-ros-overlay, modernpkgs, nixpkgs, astra-msgs }@inputs:
+    nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ nix-ros-overlay.overlays.default ];
+        };
+        astra_msgs_pkgs = astra-msgs.packages.${system};
 
-  outputs =
-    inputs:
-    let
-      supportedSystems = [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
+        rosDistro = "humble";
 
-      forEachSupportedSystem =
-        f:
-        inputs.nixpkgs.lib.genAttrs supportedSystems (
-          system:
-          f {
-            pkgs = import inputs.nixpkgs { inherit system; };
-            mpkgs = import inputs.modernpkgs { inherit system; };
-            inherit system;
-          }
-        );
-    in
-    {
-      devShells = forEachSupportedSystem (
-        { system, mpkgs, pkgs }:
-        {
-          default = pkgs.mkShell {
-            packages =
-              with mpkgs;
-              [
-                godotPackages_4_6.godot-mono
-              ];
+        mpkgs = import modernpkgs { inherit system; };
+      in {
+        devShells.default = pkgs.mkShell {
+          name = "basestation-game";
+          packages = with pkgs; [
+            colcon
+            mpkgs.godotPackages_4_6.godot-mono
+            (with pkgs.rosPackages.${rosDistro};
+              buildEnv {
+                paths = [
+                  ros-core
+                  ros2cli
+                  ros2run
+                  ament-cmake-core
+                  python-cmake-module
+                  rosbridge-suite
+                ];
+              })
+            astra_msgs_pkgs.astra-msgs
+          ];
 
-            env = { };
-            shellHook = '''';
+          extraPaths = [ ];
+
+          env = {
+            ASTRAMSGS = "${inputs.astra-msgs.outPath}";
+            # ROSBRIDGE =
+            #   "${pkgs.rosPackages.${rosDistro}.rosbridge-suite.outPath}";
+            ROSBRIDGESERVER =
+              "${pkgs.rosPackages.${rosDistro}.rosbridge-server.outPath}";
+            # ROSBRIDGELIBRARY =
+            #   "${pkgs.rosPackages.${rosDistro}.rosbridge-library.outPath}";
+            ROSCOMPILER = "./ROS/Compiler";
           };
-        }
-      );
 
-      packages = forEachSupportedSystem (
-        { pkgs, mpkgs, system }:
-        {
-          default = mpkgs.stdenv.mkDerivation {
-            pname = "basestation-game";
-            version = "0.1.0";
-            src = ./.;
+          shellHook = ''
+            dotnet run --no-build --configuration Release --debug False --project $ROSCOMPILER
+          '';
+        };
 
-            nativeBuildInputs = with mpkgs; [
-              mono
-              unzip
-              makeWrapper
-              godotPackages_4_6.godot-mono
-            ];
+        default = pkgs.mkDerivation {
+          pname = "basestation-game";
+          version = "0.1.0";
+          src = ./.;
 
-            buildInputs = with mpkgs; [
-              mono
-              unzip
-              makeWrapper
-              dotnet-sdk_10
-              godotPackages_4_6.godot-mono
-            ];
+          nativeBuildInputs = with modernpkgs; [
+            mono
+            unzip
+            makeWrapper
+            godotPackages_4_6.godot-mono
+          ];
 
-            buildPhase = ''
-                	      runHook preBuild
+          buildInputs = with modernpkgs; [
+            mono
+            unzip
+            makeWrapper
+            dotnet-sdk_10
+            godotPackages_4_6.godot-mono
+          ];
 
-                	      export HOME=$TMPDIR
+          buildPhase = ''
+              	      runHook preBuild
 
-                	      mkdir -p $HOME/.local/share/godot
-                	      ln -s ${mpkgs.godotPackages_4_6.export-template-mono}/share/godot/export_templates $HOME/.local/share/godot
+              	      export HOME=$TMPDIR
 
-                	      mkdir -p $out/bin/
-                	      godot-mono --path . --headless --export-release "nix ${system}" $out/bin/basestation-game
-               		      ls > $out/log
+              	      mkdir -p $HOME/.local/share/godot
+              	      ln -s ${modernpkgs.godotPackages_4_6.export-template-mono}/share/godot/export_templates $HOME/.local/share/godot
 
-                	      runHook postBuild
-              	    '';
+              	      mkdir -p $out/bin/
+              	      godot-mono --path . --headless --export-release "nix ${system}" $out/bin/basestation-game
+             		      ls > $out/log
 
-            postInstall = ''
-
-            '';
-          };
-        }
-      );
-    };
+              	      runHook postBuild
+            	    '';
+        };
+      });
+  nixConfig = {
+    extra-substituters = [ "https://ros.cachix.org" ];
+    extra-trusted-public-keys =
+      [ "ros.cachix.org-1:dSyZxI8geDCJrwgvCOHDoAfOm5sV1wCPjBkKL+38Rvo=" ];
+  };
 }

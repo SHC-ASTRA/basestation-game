@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://csgu7b14vfkw3"]
+
+[ext_resource type="Script" uid="uid://xbb6uaw7pkop" path="res://Scripts/ui/tabs/Debug/Common/RevMotor.cs" id="1_qb3tj"]
+
+[node name="MotorDebug" type="HBoxContainer" unique_id=1815186568 node_paths=PackedStringArray("name", "id", "position", "velocity", "voltage", "current", "temperature")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+script = ExtResource("1_qb3tj")
+name = NodePath("name")
+id = NodePath("id")
+position = NodePath("pos")
+velocity = NodePath("vel")
+voltage = NodePath("vol")
+current = NodePath("cur")
+temperature = NodePath("tmp")
+
+[node name="name" type="Label" parent="." unique_id=2133179021]
+layout_mode = 2
+text = "  "
+
+[node name="id" type="Label" parent="." unique_id=1025181026]
+layout_mode = 2
+text = "Id: 0"
+
+[node name="pos" type="Label" parent="." unique_id=7575450]
+layout_mode = 2
+text = "Pos: 0"
+
+[node name="vel" type="Label" parent="." unique_id=1164209547]
+layout_mode = 2
+text = "Vel: 0"
+
+[node name="vol" type="Label" parent="." unique_id=1685893112]
+layout_mode = 2
+text = "Vol: 0"
+
+[node name="cur" type="Label" parent="." unique_id=1401160867]
+layout_mode = 2
+text = "Cur: 0"
+
+[node name="tmp" type="Label" parent="." unique_id=2042900416]
+layout_mode = 2
+text = "Tmp: 0"
