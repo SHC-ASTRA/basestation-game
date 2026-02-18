@@ -1,6 +1,7 @@
 using IPC;
 using Godot;
 using System.Linq;
+using RosSharp.RosBridgeClient;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 using Geometry = RosSharp.RosBridgeClient.MessageTypes.Geometry;
 
@@ -212,8 +213,20 @@ namespace UI
 
         public override void AdvertiseToROS()
         {
-            ROS.AdvertiseMessage<CoreCtrlState>(ctrl);
-            ROS.AdvertiseMessage<Geometry.Twist>(twist);
+            QOS q = new QOS(
+                QOS.Policy.History.RMW_QOS_POLICY_HISTORY_KEEP_LAST,
+                2,
+                QOS.Policy.Reliability.RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT,
+                QOS.Policy.Durability.RMW_QOS_POLICY_DURABILITY_VOLATILE,
+                new QOS.rmw_time_s(1, 0),
+                new QOS.rmw_time_s(0, 500000000),
+                QOS.Policy.Liveliness.RMW_QOS_POLICY_LIVELINESS_SYSTEM_DEFAULT,
+                new QOS.rmw_time_s(5, 0),
+                false
+            );
+
+            ROS.AdvertiseMessage<CoreCtrlState>(ctrl, q);
+            ROS.AdvertiseMessage<Geometry.Twist>(twist, q);
             ROS.AdvertiseMessage<PtzControl>(ptz);
         }
 

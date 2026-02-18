@@ -122,10 +122,10 @@ namespace IPC
         public static bool interfaceExists(string topicName) => interfaceNames.Contains(topicName);
 
         // Takes in Message Topic type, and the Topic Name, advertises it to ROS
-        public static void AdvertiseMessage<T>(string topicName) where T : Message
+        public static void AdvertiseMessage<T>(string topicName, QOS QOSSetting = null) where T : Message
         {
             GD.Print($"Advertising topic {topicName}");
-            ROSSocket.Advertise<T>(topicName);
+            ROSSocket.Advertise<T>(topicName, QOSSetting);
             interfaceNames.Add(topicName);
         }
 
