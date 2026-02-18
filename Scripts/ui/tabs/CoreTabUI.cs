@@ -28,6 +28,8 @@ namespace UI
         [Export]
         public Button DrivingMode;
         [Export]
+        public ProgressBar MaxMotorDrive;
+        [Export]
         public Texture2D Tank, Wheel;
 
         private Geometry.Vector3 Lin = new(), Ang = new();
@@ -129,24 +131,35 @@ namespace UI
             // (In/De)crease boost mode amount. Collector
             // stores the frame delta so that it takes a while to actually
             // increase the max speed
-            if (RightTrigger > 0)
+            if (RightTrigger >= 1f && LeftTrigger >= 1f)
             {
-                MaxSpeedCollector += delta * 15;
+                MaxSpeed = 0.5f;
+                MaxMotorDrive.Value = MaxSpeed * 100f;
+            }
+            else if (RightTrigger >= 1f)
+            {
+                MaxSpeedCollector += delta * 50;
                 if (MaxSpeedCollector > 1)
                 {
                     MaxSpeedCollector = 0;
                     if (MaxSpeed < 1)
+                    {
                         MaxSpeed += (float)delta;
+                        MaxMotorDrive.Value = MaxSpeed * 100f;
+                    }
                 }
             }
-            else if (LeftTrigger > 0)
+            else if (LeftTrigger >= 1f)
             {
-                MaxSpeedCollector -= delta * 15;
+                MaxSpeedCollector -= delta * 50;
                 if (MaxSpeedCollector < -1)
                 {
                     MaxSpeedCollector = 0;
                     if (MaxSpeed > 0)
+                    {
                         MaxSpeed -= (float)delta;
+                        MaxMotorDrive.Value = MaxSpeed * 100f;
+                    }
                 }
             }
 

@@ -82,6 +82,11 @@ Button/font_sizes/font_size = 16
 Button/styles/normal = SubResource("StyleBoxFlat_sxcpo")
 MenuButton/font_sizes/font_size = 16
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3n4c"]
+bg_color = Color(0.18717614, 0.18717614, 0.18717614, 1)
+corner_detail = 1
+anti_aliasing = false
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gwotu"]
 bg_color = Color(0.312836, 0.312836, 0.312836, 1)
 border_width_left = 6
@@ -1032,14 +1037,15 @@ ticks_position = 1
 visible = false
 layout_mode = 2
 
-[node name="core" type="HBoxContainer" parent="TabsParent" unique_id=893683522 node_paths=PackedStringArray("LMotor", "RMotor", "DrivingMode", "BrakeIndicator", "Brake", "PTZRenderCam", "PTZSubViewport", "PTZAxis0", "PTZAxis1", "PTZButtonCont", "PTZRotX", "PTZRotY", "Zoom")]
+[node name="core" type="HBoxContainer" parent="TabsParent" unique_id=893683522 node_paths=PackedStringArray("LMotor", "RMotor", "DrivingMode", "MaxMotorDrive", "BrakeIndicator", "Brake", "PTZRenderCam", "PTZSubViewport", "PTZAxis0", "PTZAxis1", "PTZButtonCont", "PTZRotX", "PTZRotY", "Zoom")]
 visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("3_grmb5")
-LMotor = NodePath("Motor Power/Motors/LMotors")
-RMotor = NodePath("Motor Power/Motors/RMotors")
-DrivingMode = NodePath("Motor Power/Motors/Tank Driving/TankMode")
+LMotor = NodePath("Motor/Motor Drive/LMotors")
+RMotor = NodePath("Motor/Motor Drive/RMotors")
+DrivingMode = NodePath("Motor/Tank Driving/TankMode")
+MaxMotorDrive = NodePath("Motor/Max Speed/Max Speed")
 Tank = ExtResource("25_vwpm1")
 Wheel = ExtResource("6_lq3nq")
 BrakeIndicator = NodePath("Brake/BrakeContainer/ColoredIndicator")
@@ -1057,28 +1063,24 @@ ROSDependent = true
 [node name="I" parent="TabsParent/core" unique_id=1440631658 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Motor Power" type="VBoxContainer" parent="TabsParent/core" unique_id=1060483762]
+[node name="Motor" type="HBoxContainer" parent="TabsParent/core" unique_id=1297897664]
 layout_mode = 2
 
-[node name="Motors" type="HBoxContainer" parent="TabsParent/core/Motor Power" unique_id=628250217]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Tank Driving" type="VBoxContainer" parent="TabsParent/core/Motor Power/Motors" unique_id=403885079]
+[node name="Tank Driving" type="VBoxContainer" parent="TabsParent/core/Motor" unique_id=403885079]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabsParent/core/Motor Power/Motors/Tank Driving" unique_id=936489685]
+[node name="Label" type="Label" parent="TabsParent/core/Motor/Tank Driving" unique_id=936489685]
 layout_mode = 2
 text = "Tank Driving"
 
-[node name="TankMode" type="Button" parent="TabsParent/core/Motor Power/Motors/Tank Driving" unique_id=2029992189]
+[node name="TankMode" type="Button" parent="TabsParent/core/Motor/Tank Driving" unique_id=2029992189]
 layout_mode = 2
 size_flags_vertical = 3
 toggle_mode = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/core/Motor Power/Motors/Tank Driving/TankMode" unique_id=959938551]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/core/Motor/Tank Driving/TankMode" unique_id=959938551]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1088,10 +1090,13 @@ grow_vertical = 2
 texture = ExtResource("6_lq3nq")
 expand_mode = 2
 
-[node name="-|-" parent="TabsParent/core/Motor Power/Motors" unique_id=1969066928 instance=ExtResource("13_8exja")]
+[node name="-|-" parent="TabsParent/core/Motor" unique_id=1969066928 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabsParent/core/Motor Power/Motors" unique_id=1984241064]
+[node name="Motor Drive" type="HBoxContainer" parent="TabsParent/core/Motor" unique_id=1484961092]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabsParent/core/Motor/Motor Drive" unique_id=1984241064]
 custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
@@ -1100,7 +1105,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="LMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/Motors" unique_id=1911845814]
+[node name="LMotors" type="ProgressBar" parent="TabsParent/core/Motor/Motor Drive" unique_id=1911845814]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1111,7 +1116,7 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="RMotors" type="ProgressBar" parent="TabsParent/core/Motor Power/Motors" unique_id=1584715986]
+[node name="RMotors" type="ProgressBar" parent="TabsParent/core/Motor/Motor Drive" unique_id=1584715986]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1121,6 +1126,31 @@ min_value = -1.0
 max_value = 1.0
 fill_mode = 3
 show_percentage = false
+
+[node name="-|-2" parent="TabsParent/core/Motor" unique_id=641610680 instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="Max Speed" type="HBoxContainer" parent="TabsParent/core/Motor" unique_id=793004052]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabsParent/core/Motor/Max Speed" unique_id=903118246]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Max vel"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Max Speed" type="ProgressBar" parent="TabsParent/core/Motor/Max Speed" unique_id=960877541]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("3_gwotu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_b3n4c")
+value = 50.0
+fill_mode = 3
 
 [node name="I1" parent="TabsParent/core" unique_id=688276020 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
