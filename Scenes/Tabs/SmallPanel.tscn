@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://g1fm7oxy6y1p" path="res://Scripts/ui/TabController.cs" id="2_gwotu"]
 [ext_resource type="Script" uid="uid://blj4w3gbpdv55" path="res://Scripts/ui/tabs/ArmTabUI.cs" id="2_qq4qf"]
-[ext_resource type="PackedScene" uid="uid://bpojxp13gdd6l" path="res://Scenes/Prefabs/|.tscn" id="3_5ljfu"]
+[ext_resource type="PackedScene" uid="uid://bpojxp13gdd6l" path="res://Scenes/Prefabs/I.tscn" id="3_5ljfu"]
 [ext_resource type="Script" uid="uid://buiou1q2apvmu" path="res://Scripts/ui/tabs/CoreTabUI.cs" id="3_grmb5"]
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="3_gwotu"]
 [ext_resource type="PackedScene" uid="uid://cia5qesu3cdf5" path="res://Scenes/Prefabs/midway_Hprogress_bar.tscn" id="3_mxw14"]
@@ -10,7 +10,6 @@
 [ext_resource type="ArrayMesh" uid="uid://d140fswoxqbrf" path="res://Assets/PTZ/PTZbase.obj" id="5_m8v7i"]
 [ext_resource type="Script" uid="uid://jxxjq8kicbx3" path="res://Scripts/ui/tabs/AutonomyTabUI.cs" id="5_u4qwe"]
 [ext_resource type="Texture2D" uid="uid://d4ba8c5m84h60" path="res://Assets/tire profile.png" id="6_lq3nq"]
-[ext_resource type="Script" uid="uid://d34iyid2av2ba" path="res://Scripts/ui/tabs/BiosensorTabUI.cs" id="6_th4gl"]
 [ext_resource type="ArrayMesh" uid="uid://2wmjb5e4g57j" path="res://Assets/PTZ/PTZaxis1.obj" id="6_yplvc"]
 [ext_resource type="PackedScene" uid="uid://wbjb3q0icoe5" path="res://Scenes/Prefabs/colored_indicator.tscn" id="6_yrw8b"]
 [ext_resource type="ArrayMesh" uid="uid://dwjygjucoh5bb" path="res://Assets/PTZ/PTZaxis2.obj" id="7_7oid2"]
@@ -19,19 +18,22 @@
 [ext_resource type="Script" uid="uid://bmu4lwo4u52gj" path="res://Scripts/ui/FontScaler.cs" id="8_yplvc"]
 [ext_resource type="Texture2D" uid="uid://bb3iqpbhicn5k" path="res://Assets/Laser.png" id="8_yrw8b"]
 [ext_resource type="Script" uid="uid://dparcksj3vfpt" path="res://Scripts/ui/tabs/DroneTabUI.cs" id="11_cjwn0"]
+[ext_resource type="Script" uid="uid://cekou471j6lnc" path="res://Scripts/ui/tabs/CitadelTabUI.cs" id="11_f0cuh"]
 [ext_resource type="Texture2D" uid="uid://c6jtf76trlo63" path="res://Assets/pump.png" id="12_a86w8"]
 [ext_resource type="Script" uid="uid://b4hy4ahso6mcu" path="res://Scripts/ui/tabs/CamsTabUI.cs" id="12_lq3nq"]
 [ext_resource type="AudioStream" uid="uid://byuaecc3315wy" path="res://Assets/Audio/Laser Ignition.mp3" id="12_wshk6"]
 [ext_resource type="Texture2D" uid="uid://n0hf415uy74" path="res://Assets/CommitPressed.png" id="13_1vnp5"]
-[ext_resource type="PackedScene" uid="uid://d3cdd401jxq8c" path="res://Scenes/Prefabs/_|_.tscn" id="13_8exja"]
+[ext_resource type="PackedScene" uid="uid://d3cdd401jxq8c" path="res://Scenes/Prefabs/II.tscn" id="13_8exja"]
 [ext_resource type="AudioStream" uid="uid://bghieuuraujar" path="res://Assets/Audio/Laser Fire.mp3" id="13_gbrgi"]
 [ext_resource type="Texture2D" uid="uid://dpbar0pn7rw1j" path="res://Assets/Fan.png" id="14_s2hv3"]
 [ext_resource type="Texture2D" uid="uid://b3ka5olqga8db" path="res://Assets/Servo.png" id="15_hy72e"]
 [ext_resource type="Script" uid="uid://c5rge640u0n2w" path="res://Scripts/ui/prefabs/SelectionBox.cs" id="17_5v23t"]
-[ext_resource type="Texture2D" uid="uid://bsxjoonlcnr0j" path="res://Assets/BioArm.png" id="17_7rf03"]
+[ext_resource type="Texture2D" uid="uid://bsxjoonlcnr0j" path="res://Assets/Lance.png" id="17_7rf03"]
 [ext_resource type="Texture2D" uid="uid://b1q25usu0swpw" path="res://Assets/Commit.png" id="17_gbrgi"]
 [ext_resource type="Texture2D" uid="uid://dxunigq7q2nib" path="res://Assets/TestTube.png" id="19_gbrgi"]
 [ext_resource type="Texture2D" uid="uid://c6hbb76buvj34" path="res://addons/map_tile_provider/loader.svg" id="21_j4lxw"]
+[ext_resource type="Script" uid="uid://bq6tdusvafx7" path="res://Scripts/ui/tabs/LanceTabUI.cs" id="23_w6oot"]
+[ext_resource type="Theme" uid="uid://cu430ubalxs23" path="res://Assets/Themes/Spacer.tres" id="24_15sjt"]
 [ext_resource type="Texture2D" uid="uid://di6xg4f38cdx1" path="res://Assets/Tank.png" id="25_vwpm1"]
 [ext_resource type="Theme" uid="uid://ce3coqe5tlutx" path="res://Assets/Themes/NoAAorCorners.tres" id="33_rj5vk"]
 [ext_resource type="Script" uid="uid://dvbbqam6ey1df" path="res://Scripts/ui/tabs/Debug/Core/CoreDebug.cs" id="34_f0cuh"]
@@ -50,21 +52,6 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0, 0, 0, 1)
 corner_detail = 1
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4yhf2"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.16565639, 0.16565642, 0.1656563, 1)
-corner_detail = 1
-expand_margin_left = 2.0
-expand_margin_right = 2.0
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxcpo"]
@@ -458,116 +445,155 @@ alignment = 1
 script = ExtResource("5_u4qwe")
 ROSDependent = true
 
-[node name="bio" type="HBoxContainer" parent="TabsParent" unique_id=194178564 node_paths=PackedStringArray("FanDuty", "FanTime", "VacuumSelector", "VacuumCommit", "VacuumCommitTexture", "DistributorNode", "ExtensionAmount", "TestTubeSelector", "TestTubeCommit", "TestTubeCommitTexture", "VibrationMotor", "Laser", "LaserFailsafe", "Source")]
+[node name="chems" type="HBoxContainer" parent="TabsParent" unique_id=194178564 node_paths=PackedStringArray("FanDuty", "FanTime", "VacuumSelector", "VacuumCommit", "VacuumCommitTexture", "Distributor0", "Distributor1", "Distributor2", "TubesExtensionAmount", "TestTubeSelector", "TestTubeCommit", "TestTubeCommitTexture", "ScytheUp", "ScytheDown", "scytheMovement")]
 visible = false
 layout_mode = 2
 alignment = 1
-script = ExtResource("6_th4gl")
+script = ExtResource("11_f0cuh")
 FanDuty = NodePath("Vacuum system/Duty/Amount")
 FanTime = NodePath("Vacuum system/Time/Amount")
 VacuumSelector = NodePath("Vacuum system/Vacs/MenuButton")
 VacuumCommit = NodePath("Vacuum system/Commit/AspectRatioContainer/Commit")
 VacuumCommitTexture = NodePath("Vacuum system/Commit/AspectRatioContainer/commit")
-DistributorNode = NodePath("Distributors")
-ExtensionAmount = NodePath("Test Tubes/Extension/Amount")
+Distributor0 = NodePath("Distributors/Open")
+Distributor1 = NodePath("Distributors/Open2")
+Distributor2 = NodePath("Distributors/Open3")
+TubesExtensionAmount = NodePath("Test Tubes/Extension/Amount")
 TestTubeSelector = NodePath("Test Tubes/TestTube/MenuButton")
 TestTubeCommit = NodePath("Test Tubes/Commit/AspectRatioContainer/Commit")
 TestTubeCommitTexture = NodePath("Test Tubes/Commit/AspectRatioContainer/commit")
-VibrationMotor = NodePath("Vibration Motor/Viberate")
-Laser = NodePath("Laser/Run")
-LaserFailsafe = NodePath("Laser/Failsafe")
-Failsafe = ExtResource("12_wshk6")
-Fire = ExtResource("13_gbrgi")
-Source = NodePath("Laser/AudioStreamPlayer2D")
+ScytheUp = NodePath("Scythe/VBoxContainer/Up")
+ScytheDown = NodePath("Scythe/VBoxContainer/Down")
+scytheMovement = NodePath("Scythe/ScytheMovement")
 ROSDependent = true
 
-[node name="I" parent="TabsParent/bio" unique_id=1267749996 instance=ExtResource("3_5ljfu")]
+[node name="I" parent="TabsParent/chems" unique_id=1267749996 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Vacuum system" type="HBoxContainer" parent="TabsParent/bio" unique_id=485832669]
+[node name="Scythe" type="HBoxContainer" parent="TabsParent/chems" unique_id=667574736]
 layout_mode = 2
 
-[node name="Duty" type="VBoxContainer" parent="TabsParent/bio/Vacuum system" unique_id=2097604546]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/chems/Scythe" unique_id=1022661310]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabsParent/chems/Scythe/VBoxContainer" unique_id=283404296]
+layout_mode = 2
+text = "Scythe"
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/chems/Scythe/VBoxContainer" unique_id=526825148]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("17_7rf03")
+stretch_mode = 5
+
+[node name="Up" type="Button" parent="TabsParent/chems/Scythe/VBoxContainer" unique_id=32595008]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "⏶"
+
+[node name="Down" type="Button" parent="TabsParent/chems/Scythe/VBoxContainer" unique_id=2125571578]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "⏷"
+
+[node name="ScytheMovement" type="ProgressBar" parent="TabsParent/chems/Scythe" unique_id=1443298775]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("3_gwotu")
+min_value = -1.0
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="I1" parent="TabsParent/chems" unique_id=875462288 instance=ExtResource("3_5ljfu")]
+layout_mode = 2
+
+[node name="Vacuum system" type="HBoxContainer" parent="TabsParent/chems" unique_id=485832669]
+layout_mode = 2
+
+[node name="Duty" type="VBoxContainer" parent="TabsParent/chems/Vacuum system" unique_id=2097604546]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Duty" unique_id=248502953]
+[node name="Label" type="Label" parent="TabsParent/chems/Vacuum system/Duty" unique_id=248502953]
 layout_mode = 2
-text = "Dly-C"
+text = "Duty%"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vacuum system/Duty" unique_id=974444698]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/chems/Vacuum system/Duty" unique_id=974444698]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Vacuum system/Duty/AspectRatioContainer" unique_id=2078662727 instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/chems/Vacuum system/Duty/AspectRatioContainer" unique_id=2078662727 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vacuum system/Duty/AspectRatioContainer" unique_id=432531560]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/chems/Vacuum system/Duty/AspectRatioContainer" unique_id=432531560]
 layout_mode = 2
 texture = ExtResource("14_s2hv3")
 
-[node name="Amount" type="SpinBox" parent="TabsParent/bio/Vacuum system/Duty" unique_id=152467717]
+[node name="Amount" type="SpinBox" parent="TabsParent/chems/Vacuum system/Duty" unique_id=152467717]
 layout_mode = 2
 theme_override_constants/field_and_buttons_separation = -16
 max_value = 50.0
 alignment = 1
 suffix = "%"
 
-[node name="-|-3" parent="TabsParent/bio/Vacuum system" unique_id=1560221724 instance=ExtResource("13_8exja")]
+[node name="-|-3" parent="TabsParent/chems/Vacuum system" unique_id=1560221724 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Time" type="VBoxContainer" parent="TabsParent/bio/Vacuum system" unique_id=1256269669]
+[node name="Time" type="VBoxContainer" parent="TabsParent/chems/Vacuum system" unique_id=1256269669]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Time" unique_id=763811958]
+[node name="Label" type="Label" parent="TabsParent/chems/Vacuum system/Time" unique_id=763811958]
 layout_mode = 2
-text = "RTime"
+text = "RunMs"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vacuum system/Time" unique_id=144117494]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/chems/Vacuum system/Time" unique_id=144117494]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Vacuum system/Time/AspectRatioContainer" unique_id=2132483309 instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/chems/Vacuum system/Time/AspectRatioContainer" unique_id=2132483309 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vacuum system/Time/AspectRatioContainer" unique_id=698679435]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/chems/Vacuum system/Time/AspectRatioContainer" unique_id=698679435]
 layout_mode = 2
 texture = ExtResource("14_s2hv3")
 
-[node name="Amount" type="SpinBox" parent="TabsParent/bio/Vacuum system/Time" unique_id=2022761685]
+[node name="Amount" type="SpinBox" parent="TabsParent/chems/Vacuum system/Time" unique_id=2022761685]
 layout_mode = 2
 theme_override_constants/field_and_buttons_separation = -16
 max_value = 999.0
 alignment = 1
 suffix = "Ms"
 
-[node name="-|-5" parent="TabsParent/bio/Vacuum system" unique_id=640189801 instance=ExtResource("13_8exja")]
+[node name="-|-5" parent="TabsParent/chems/Vacuum system" unique_id=640189801 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Vacs" type="VBoxContainer" parent="TabsParent/bio/Vacuum system" unique_id=1222574520]
+[node name="Vacs" type="VBoxContainer" parent="TabsParent/chems/Vacuum system" unique_id=1222574520]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Vacs" unique_id=1559311054]
+[node name="Label" type="Label" parent="TabsParent/chems/Vacuum system/Vacs" unique_id=1559311054]
 layout_mode = 2
 text = "Vacs*"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vacuum system/Vacs" unique_id=398780234]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/chems/Vacuum system/Vacs" unique_id=398780234]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Vacuum system/Vacs/AspectRatioContainer" unique_id=1409610336 instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/chems/Vacuum system/Vacs/AspectRatioContainer" unique_id=1409610336 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vacuum system/Vacs/AspectRatioContainer" unique_id=1560685407]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/chems/Vacuum system/Vacs/AspectRatioContainer" unique_id=1560685407]
 layout_mode = 2
 texture = ExtResource("12_a86w8")
 
-[node name="MenuButton" type="MenuButton" parent="TabsParent/bio/Vacuum system/Vacs" unique_id=15940495]
+[node name="MenuButton" type="MenuButton" parent="TabsParent/chems/Vacuum system/Vacs" unique_id=15940495]
 layout_mode = 2
 text = "Vac ▼"
 flat = false
@@ -588,24 +614,24 @@ popup/item_2/checkable = 2
 popup/item_2/id = 2
 script = ExtResource("17_5v23t")
 
-[node name="-|-4" parent="TabsParent/bio/Vacuum system" unique_id=1017728404 instance=ExtResource("13_8exja")]
+[node name="-|-4" parent="TabsParent/chems/Vacuum system" unique_id=1017728404 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Commit" type="VBoxContainer" parent="TabsParent/bio/Vacuum system" unique_id=2021107730]
+[node name="Commit" type="VBoxContainer" parent="TabsParent/chems/Vacuum system" unique_id=2021107730]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Vacuum system/Commit" unique_id=966604075]
+[node name="Label" type="Label" parent="TabsParent/chems/Vacuum system/Commit" unique_id=966604075]
 layout_mode = 2
 text = "Commt"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="Panel" parent="TabsParent/bio/Vacuum system/Commit" unique_id=1799190817]
+[node name="AspectRatioContainer" type="Panel" parent="TabsParent/chems/Vacuum system/Commit" unique_id=1799190817]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Commit" type="Button" parent="TabsParent/bio/Vacuum system/Commit/AspectRatioContainer" unique_id=94686265]
+[node name="Commit" type="Button" parent="TabsParent/chems/Vacuum system/Commit/AspectRatioContainer" unique_id=94686265]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -613,7 +639,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="noncommit" type="TextureRect" parent="TabsParent/bio/Vacuum system/Commit/AspectRatioContainer" unique_id=796084006]
+[node name="noncommit" type="TextureRect" parent="TabsParent/chems/Vacuum system/Commit/AspectRatioContainer" unique_id=796084006]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -629,7 +655,7 @@ texture = ExtResource("17_gbrgi")
 expand_mode = 4
 stretch_mode = 6
 
-[node name="commit" type="TextureRect" parent="TabsParent/bio/Vacuum system/Commit/AspectRatioContainer" unique_id=1612561159]
+[node name="commit" type="TextureRect" parent="TabsParent/chems/Vacuum system/Commit/AspectRatioContainer" unique_id=1612561159]
 visible = false
 layout_mode = 1
 anchors_preset = 14
@@ -646,160 +672,81 @@ texture = ExtResource("13_1vnp5")
 expand_mode = 4
 stretch_mode = 6
 
-[node name="HSeparator" type="HSeparator" parent="TabsParent/bio/Vacuum system/Commit" unique_id=1310044591]
+[node name="HSeparator" type="HSeparator" parent="TabsParent/chems/Vacuum system/Commit" unique_id=1310044591]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 26
 
-[node name="I1" parent="TabsParent/bio" unique_id=875462288 instance=ExtResource("3_5ljfu")]
+[node name="I2" parent="TabsParent/chems" unique_id=884894761 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Distributors" type="HBoxContainer" parent="TabsParent/bio" unique_id=1591636443]
+[node name="Distributors" type="VBoxContainer" parent="TabsParent/chems" unique_id=1500397670]
 layout_mode = 2
 
-[node name="Distributor1" type="VBoxContainer" parent="TabsParent/bio/Distributors" unique_id=104529400]
+[node name="Label" type="Label" parent="TabsParent/chems/Distributors" unique_id=514078588]
 layout_mode = 2
-alignment = 1
+text = "Dists"
+horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Distributors/Distributor1" unique_id=514078588]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/chems/Distributors" unique_id=829017713]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/chems/Distributors/AspectRatioContainer" unique_id=1212634814 instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/chems/Distributors/AspectRatioContainer" unique_id=252963686]
+layout_mode = 2
+texture = ExtResource("15_hy72e")
+
+[node name="Open" type="Button" parent="TabsParent/chems/Distributors" unique_id=109910328]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
+toggle_mode = true
 text = "Dist1"
-horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Distributors/Distributor1" unique_id=829017713]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ColoredIndicator" parent="TabsParent/bio/Distributors/Distributor1/AspectRatioContainer" unique_id=1212634814 instance=ExtResource("6_yrw8b")]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Distributors/Distributor1/AspectRatioContainer" unique_id=252963686]
-layout_mode = 2
-texture = ExtResource("15_hy72e")
-
-[node name="Open" type="Button" parent="TabsParent/bio/Distributors/Distributor1" unique_id=109910328]
+[node name="Open2" type="Button" parent="TabsParent/chems/Distributors" unique_id=856248795]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
 toggle_mode = true
-text = "Wig-l"
-
-[node name="-|-" parent="TabsParent/bio/Distributors" unique_id=144634951 instance=ExtResource("13_8exja")]
-layout_mode = 2
-
-[node name="Distributor2" type="VBoxContainer" parent="TabsParent/bio/Distributors" unique_id=1342699183]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="TabsParent/bio/Distributors/Distributor2" unique_id=671407509]
-layout_mode = 2
 text = "Dist2"
-horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Distributors/Distributor2" unique_id=889530003]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ColoredIndicator" parent="TabsParent/bio/Distributors/Distributor2/AspectRatioContainer" unique_id=364333052 instance=ExtResource("6_yrw8b")]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Distributors/Distributor2/AspectRatioContainer" unique_id=918776721]
-layout_mode = 2
-texture = ExtResource("15_hy72e")
-
-[node name="Open" type="Button" parent="TabsParent/bio/Distributors/Distributor2" unique_id=856248795]
+[node name="Open3" type="Button" parent="TabsParent/chems/Distributors" unique_id=371360751]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
 toggle_mode = true
-text = "Wig-l"
-
-[node name="-|-2" parent="TabsParent/bio/Distributors" unique_id=505190430 instance=ExtResource("13_8exja")]
-layout_mode = 2
-
-[node name="Distributor3" type="VBoxContainer" parent="TabsParent/bio/Distributors" unique_id=713924042]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="TabsParent/bio/Distributors/Distributor3" unique_id=1470281238]
-layout_mode = 2
 text = "Dist3"
-horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Distributors/Distributor3" unique_id=547227562]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ColoredIndicator" parent="TabsParent/bio/Distributors/Distributor3/AspectRatioContainer" unique_id=976383720 instance=ExtResource("6_yrw8b")]
+[node name="I3" parent="TabsParent/chems" unique_id=581836857 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Distributors/Distributor3/AspectRatioContainer" unique_id=976322086]
-layout_mode = 2
-texture = ExtResource("15_hy72e")
-
-[node name="Open" type="Button" parent="TabsParent/bio/Distributors/Distributor3" unique_id=371360751]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
-toggle_mode = true
-text = "Wig-l"
-
-[node name="I2" parent="TabsParent/bio" unique_id=884894761 instance=ExtResource("3_5ljfu")]
+[node name="Test Tubes" type="HBoxContainer" parent="TabsParent/chems" unique_id=2113194396]
 layout_mode = 2
 
-[node name="Test Tubes" type="HBoxContainer" parent="TabsParent/bio" unique_id=2113194396]
-layout_mode = 2
-
-[node name="Extension" type="VBoxContainer" parent="TabsParent/bio/Test Tubes" unique_id=110524731]
+[node name="TestTube" type="VBoxContainer" parent="TabsParent/chems/Test Tubes" unique_id=762087470]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Test Tubes/Extension" unique_id=1945525987]
+[node name="Label" type="Label" parent="TabsParent/chems/Test Tubes/TestTube" unique_id=1847023306]
 layout_mode = 2
-text = "Exstn"
+text = "Tube#"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Test Tubes/Extension" unique_id=290115010]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/chems/Test Tubes/TestTube" unique_id=470781588]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Test Tubes/Extension/AspectRatioContainer" unique_id=962197728 instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/chems/Test Tubes/TestTube/AspectRatioContainer" unique_id=1313675192 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Test Tubes/Extension/AspectRatioContainer" unique_id=23963537]
-layout_mode = 2
-texture = ExtResource("21_j4lxw")
-
-[node name="Amount" type="SpinBox" parent="TabsParent/bio/Test Tubes/Extension" unique_id=1361834709]
-layout_mode = 2
-theme_override_constants/field_and_buttons_separation = -16
-alignment = 1
-suffix = "%"
-
-[node name="-|-5" parent="TabsParent/bio/Test Tubes" unique_id=898012537 instance=ExtResource("13_8exja")]
-layout_mode = 2
-
-[node name="TestTube" type="VBoxContainer" parent="TabsParent/bio/Test Tubes" unique_id=762087470]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="TabsParent/bio/Test Tubes/TestTube" unique_id=1847023306]
-layout_mode = 2
-text = "'Tube"
-horizontal_alignment = 1
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Test Tubes/TestTube" unique_id=470781588]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ColoredIndicator" parent="TabsParent/bio/Test Tubes/TestTube/AspectRatioContainer" unique_id=1313675192 instance=ExtResource("6_yrw8b")]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Test Tubes/TestTube/AspectRatioContainer" unique_id=1757880884]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/chems/Test Tubes/TestTube/AspectRatioContainer" unique_id=1757880884]
 layout_mode = 2
 texture = ExtResource("19_gbrgi")
 
-[node name="MenuButton" type="MenuButton" parent="TabsParent/bio/Test Tubes/TestTube" unique_id=1264030872]
+[node name="MenuButton" type="MenuButton" parent="TabsParent/chems/Test Tubes/TestTube" unique_id=1264030872]
 layout_mode = 2
 text = "Tube ▼"
 flat = false
@@ -820,24 +767,53 @@ popup/item_2/checkable = 2
 popup/item_2/id = 2
 script = ExtResource("17_5v23t")
 
-[node name="-|-4" parent="TabsParent/bio/Test Tubes" unique_id=1018325228 instance=ExtResource("13_8exja")]
+[node name="-|-5" parent="TabsParent/chems/Test Tubes" unique_id=898012537 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Commit" type="VBoxContainer" parent="TabsParent/bio/Test Tubes" unique_id=167934418]
+[node name="Extension" type="VBoxContainer" parent="TabsParent/chems/Test Tubes" unique_id=110524731]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Test Tubes/Commit" unique_id=1913103350]
+[node name="Label" type="Label" parent="TabsParent/chems/Test Tubes/Extension" unique_id=1945525987]
+layout_mode = 2
+text = "Exstn"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/chems/Test Tubes/Extension" unique_id=290115010]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/chems/Test Tubes/Extension/AspectRatioContainer" unique_id=962197728 instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/chems/Test Tubes/Extension/AspectRatioContainer" unique_id=23963537]
+layout_mode = 2
+texture = ExtResource("21_j4lxw")
+
+[node name="Amount" type="SpinBox" parent="TabsParent/chems/Test Tubes/Extension" unique_id=1361834709]
+layout_mode = 2
+theme_override_constants/field_and_buttons_separation = -16
+alignment = 1
+suffix = "%"
+
+[node name="-|-4" parent="TabsParent/chems/Test Tubes" unique_id=1018325228 instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="Commit" type="VBoxContainer" parent="TabsParent/chems/Test Tubes" unique_id=167934418]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/chems/Test Tubes/Commit" unique_id=1913103350]
 layout_mode = 2
 text = "Commt"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="Panel" parent="TabsParent/bio/Test Tubes/Commit" unique_id=701062754]
+[node name="AspectRatioContainer" type="Panel" parent="TabsParent/chems/Test Tubes/Commit" unique_id=701062754]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Commit" type="Button" parent="TabsParent/bio/Test Tubes/Commit/AspectRatioContainer" unique_id=1053363139]
+[node name="Commit" type="Button" parent="TabsParent/chems/Test Tubes/Commit/AspectRatioContainer" unique_id=1053363139]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -845,7 +821,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="noncommit" type="TextureRect" parent="TabsParent/bio/Test Tubes/Commit/AspectRatioContainer" unique_id=801857501]
+[node name="noncommit" type="TextureRect" parent="TabsParent/chems/Test Tubes/Commit/AspectRatioContainer" unique_id=801857501]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -861,7 +837,7 @@ texture = ExtResource("17_gbrgi")
 expand_mode = 4
 stretch_mode = 6
 
-[node name="commit" type="TextureRect" parent="TabsParent/bio/Test Tubes/Commit/AspectRatioContainer" unique_id=738732485]
+[node name="commit" type="TextureRect" parent="TabsParent/chems/Test Tubes/Commit/AspectRatioContainer" unique_id=738732485]
 visible = false
 layout_mode = 1
 anchors_preset = 14
@@ -878,164 +854,193 @@ texture = ExtResource("13_1vnp5")
 expand_mode = 4
 stretch_mode = 6
 
-[node name="HSeparator" type="HSeparator" parent="TabsParent/bio/Test Tubes/Commit" unique_id=297573610]
+[node name="HSeparator" type="HSeparator" parent="TabsParent/chems/Test Tubes/Commit" unique_id=297573610]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 26
 
-[node name="I3" parent="TabsParent/bio" unique_id=955066178 instance=ExtResource("3_5ljfu")]
+[node name="I4" parent="TabsParent/chems" unique_id=696292429 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Bio Arm" type="HBoxContainer" parent="TabsParent/bio" unique_id=323755024]
-visible = false
+[node name="drill" type="HBoxContainer" parent="TabsParent" unique_id=836986925 node_paths=PackedStringArray("DrillBoomDown", "DrillBoomUp", "DrillBoomSpeed", "DrillSpeed", "VibrationMotor", "Laser", "LaserFailsafe", "Source")]
+layout_mode = 2
+alignment = 1
+script = ExtResource("23_w6oot")
+DrillBoomDown = NodePath("Faerie/Drill Arm/VBoxContainer/Up")
+DrillBoomUp = NodePath("Faerie/Drill Arm/VBoxContainer/Down")
+DrillBoomSpeed = NodePath("Faerie/Drill Arm/DrillBoom")
+DrillSpeed = NodePath("Faerie/Drill/Scabbard")
+VibrationMotor = NodePath("Faerie/Vibration Motor/Vibrate")
+Laser = NodePath("LIBS/Run")
+LaserFailsafe = NodePath("LIBS/Failsafe")
+Failsafe = ExtResource("12_wshk6")
+Fire = ExtResource("13_gbrgi")
+Source = NodePath("LIBS/AudioStreamPlayer2D")
+ROSDependent = true
+
+[node name="Spacer1" type="Panel" parent="TabsParent/drill" unique_id=1675851712]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("24_15sjt")
+
+[node name="I1" parent="TabsParent/drill" unique_id=366331578 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/bio/Bio Arm" unique_id=2036529255]
+[node name="Faerie" type="HBoxContainer" parent="TabsParent/drill" unique_id=1497499215]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabsParent/bio/Bio Arm/VBoxContainer" unique_id=1747720616]
+[node name="Drill Arm" type="HBoxContainer" parent="TabsParent/drill/Faerie" unique_id=1727290375]
 layout_mode = 2
-text = "Arm"
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Bio Arm/VBoxContainer" unique_id=2103771335]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/drill/Faerie/Drill Arm" unique_id=989000216]
 layout_mode = 2
+
+[node name="Label" type="Label" parent="TabsParent/drill/Faerie/Drill Arm/VBoxContainer" unique_id=608145151]
+layout_mode = 2
+text = "Extend"
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/drill/Faerie/Drill Arm/VBoxContainer" unique_id=1754769565]
+layout_mode = 2
+size_flags_vertical = 3
 texture = ExtResource("17_7rf03")
+stretch_mode = 5
 
-[node name="BioArm" type="VSlider" parent="TabsParent/bio/Bio Arm" unique_id=1774521085]
+[node name="Up" type="Button" parent="TabsParent/drill/Faerie/Drill Arm/VBoxContainer" unique_id=586640079]
 layout_mode = 2
-theme_override_styles/slider = SubResource("StyleBoxFlat_4yhf2")
-min_value = -100.0
-step = 5.0
-ticks_on_borders = true
-ticks_position = 1
+theme_override_font_sizes/font_size = 16
+text = "⏶"
 
-[node name="I4" parent="TabsParent/bio" unique_id=40018423 instance=ExtResource("13_8exja")]
-visible = false
+[node name="Down" type="Button" parent="TabsParent/drill/Faerie/Drill Arm/VBoxContainer" unique_id=46994712]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "⏷"
+
+[node name="DrillBoom" type="ProgressBar" parent="TabsParent/drill/Faerie/Drill Arm" unique_id=697270177]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("3_gwotu")
+min_value = -1.0
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="I1" parent="TabsParent/drill/Faerie" unique_id=1903396092 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
-[node name="Vibration Motor" type="VBoxContainer" parent="TabsParent/bio" unique_id=477477659]
+[node name="Drill" type="HBoxContainer" parent="TabsParent/drill/Faerie" unique_id=1782321491]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/drill/Faerie/Drill" unique_id=1821851037]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabsParent/drill/Faerie/Drill/VBoxContainer" unique_id=652242102]
+layout_mode = 2
+text = "Drill"
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/drill/Faerie/Drill/VBoxContainer" unique_id=551556605]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("17_7rf03")
+stretch_mode = 5
+
+[node name="Scabbard" type="ProgressBar" parent="TabsParent/drill/Faerie/Drill" unique_id=32629802]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("3_gwotu")
+min_value = -1.0
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="I3" parent="TabsParent/drill/Faerie" unique_id=1855687680 instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="Vibration Motor" type="VBoxContainer" parent="TabsParent/drill/Faerie" unique_id=124847091]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Vibration Motor" unique_id=1975701780]
+[node name="Label" type="Label" parent="TabsParent/drill/Faerie/Vibration Motor" unique_id=2017276651]
 layout_mode = 2
-text = "Vibra"
+text = "Vibe Mtr"
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Vibration Motor" unique_id=1371154001]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/drill/Faerie/Vibration Motor" unique_id=1031227397]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Vibration Motor/AspectRatioContainer" unique_id=876647492 instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/drill/Faerie/Vibration Motor/AspectRatioContainer" unique_id=1442484666 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Vibration Motor/AspectRatioContainer" unique_id=504400108]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/drill/Faerie/Vibration Motor/AspectRatioContainer" unique_id=48307766]
 layout_mode = 2
 texture = ExtResource("15_hy72e")
 
-[node name="Viberate" type="Button" parent="TabsParent/bio/Vibration Motor" unique_id=2107721780]
+[node name="Vibrate" type="Button" parent="TabsParent/drill/Faerie/Vibration Motor" unique_id=440189080]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
 toggle_mode = true
 text = "Vibe"
 
-[node name="I5" parent="TabsParent/bio" unique_id=246356454 instance=ExtResource("3_5ljfu")]
+[node name="I2" parent="TabsParent/drill" unique_id=1121401011 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Laser" type="VBoxContainer" parent="TabsParent/bio" unique_id=2061166363]
+[node name="Spacer2" type="Panel" parent="TabsParent/drill" unique_id=2069833836]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("24_15sjt")
+
+[node name="I5" parent="TabsParent/drill" unique_id=1583643552 instance=ExtResource("3_5ljfu")]
+layout_mode = 2
+
+[node name="LIBS" type="VBoxContainer" parent="TabsParent/drill" unique_id=1509199140]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="TabsParent/bio/Laser" unique_id=981908390]
+[node name="Label" type="Label" parent="TabsParent/drill/LIBS" unique_id=1612753013]
 layout_mode = 2
-text = "Laser"
+text = "L.I.B.S."
 horizontal_alignment = 1
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/bio/Laser" unique_id=984479080]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/drill/LIBS" unique_id=1670643125]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ColoredIndicator" parent="TabsParent/bio/Laser/AspectRatioContainer" unique_id=397578483 instance=ExtResource("6_yrw8b")]
+[node name="ColoredIndicator" parent="TabsParent/drill/LIBS/AspectRatioContainer" unique_id=70493964 instance=ExtResource("6_yrw8b")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Laser/AspectRatioContainer" unique_id=1767078554]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/drill/LIBS/AspectRatioContainer" unique_id=80035651]
 layout_mode = 2
 texture = ExtResource("8_yrw8b")
 
-[node name="Failsafe" type="Button" parent="TabsParent/bio/Laser" unique_id=402186306]
+[node name="Failsafe" type="Button" parent="TabsParent/drill/LIBS" unique_id=1290109541]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
 toggle_mode = true
 text = "Failsafe"
 
-[node name="Run" type="Button" parent="TabsParent/bio/Laser" unique_id=1281236772]
+[node name="Run" type="Button" parent="TabsParent/drill/LIBS" unique_id=1922546631]
 layout_mode = 2
 theme = SubResource("Theme_wshk6")
 text = "Fire"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="TabsParent/bio/Laser" unique_id=1806399772]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="TabsParent/drill/LIBS" unique_id=708243836]
 
-[node name="AudioListener2D" type="AudioListener2D" parent="TabsParent/bio/Laser" unique_id=1483006243]
+[node name="AudioListener2D" type="AudioListener2D" parent="TabsParent/drill/LIBS" unique_id=900493122]
 current = true
 
-[node name="I6" parent="TabsParent/bio" unique_id=1567479380 instance=ExtResource("3_5ljfu")]
+[node name="I6" parent="TabsParent/drill" unique_id=223181577 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="Drill" type="HBoxContainer" parent="TabsParent/bio" unique_id=401491941]
-visible = false
+[node name="Spacer4" type="Panel" parent="TabsParent/drill" unique_id=1803546364]
 layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/bio/Drill" unique_id=1206115854]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="TabsParent/bio/Drill/VBoxContainer" unique_id=1066046925]
-layout_mode = 2
-text = "Drill"
-
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Drill/VBoxContainer" unique_id=2112379086]
-layout_mode = 2
-texture = ExtResource("17_7rf03")
-
-[node name="Drill" type="VSlider" parent="TabsParent/bio/Drill" unique_id=1165175477]
-layout_mode = 2
-theme_override_styles/slider = SubResource("StyleBoxFlat_4yhf2")
-min_value = -100.0
-step = 5.0
-ticks_on_borders = true
-ticks_position = 1
-
-[node name="I7" parent="TabsParent/bio" unique_id=477800455 instance=ExtResource("13_8exja")]
-visible = false
-layout_mode = 2
-
-[node name="Drill Arm" type="HBoxContainer" parent="TabsParent/bio" unique_id=118985238]
-visible = false
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/bio/Drill Arm" unique_id=1078097718]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="TabsParent/bio/Drill Arm/VBoxContainer" unique_id=1190242939]
-layout_mode = 2
-text = "Arm"
-
-[node name="TextureRect" type="TextureRect" parent="TabsParent/bio/Drill Arm/VBoxContainer" unique_id=271901165]
-layout_mode = 2
-texture = ExtResource("17_7rf03")
-
-[node name="DrillArm" type="VSlider" parent="TabsParent/bio/Drill Arm" unique_id=1560162712]
-layout_mode = 2
-theme_override_styles/slider = SubResource("StyleBoxFlat_4yhf2")
-min_value = -100.0
-step = 5.0
-ticks_on_borders = true
-ticks_position = 1
-
-[node name="I8" parent="TabsParent/bio" unique_id=581836857 instance=ExtResource("3_5ljfu")]
-visible = false
-layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("24_15sjt")
 
 [node name="core" type="HBoxContainer" parent="TabsParent" unique_id=893683522 node_paths=PackedStringArray("LMotor", "RMotor", "DrivingMode", "MaxMotorDrive", "BrakeIndicator", "Brake", "PTZRenderCam", "PTZSubViewport", "PTZAxis0", "PTZAxis1", "PTZButtonCont", "PTZRotX", "PTZRotY", "Zoom")]
 visible = false
@@ -1347,6 +1352,7 @@ alignment = 1
 script = ExtResource("12_lq3nq")
 
 [node name="debug" type="HBoxContainer" parent="TabsParent" unique_id=1671544032 node_paths=PackedStringArray("InfoContainer", "DD")]
+visible = false
 layout_mode = 2
 theme = SubResource("Theme_rj5vk")
 script = ExtResource("7_qq4qf")
@@ -1699,7 +1705,6 @@ theme_override_constants/separation = -1
 alignment = 2
 script = ExtResource("2_gwotu")
 TabsParent = NodePath("../TabsParent")
-selectedTab = 6
 
 [node name="Arm" type="Button" parent="Tabbar" unique_id=320869231]
 layout_mode = 2
@@ -1731,12 +1736,27 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("8_yplvc")
 
-[node name="Bio" type="Button" parent="Tabbar" unique_id=1444252862]
+[node name="Chems" type="Button" parent="Tabbar" unique_id=1444252862]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Bio"
+text = "Chems"
 
-[node name="Control" type="Control" parent="Tabbar/Bio" unique_id=1616144250]
+[node name="Control" type="Control" parent="Tabbar/Chems" unique_id=1616144250]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("8_yplvc")
+
+[node name="Drill" type="Button" parent="Tabbar" unique_id=1878762257]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Drill"
+
+[node name="Control" type="Control" parent="Tabbar/Drill" unique_id=1724567089]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1794,7 +1814,6 @@ script = ExtResource("8_yplvc")
 [node name="Debug" type="Button" parent="Tabbar" unique_id=1745624759]
 layout_mode = 2
 size_flags_horizontal = 3
-disabled = true
 text = "Debug"
 
 [node name="Control" type="Control" parent="Tabbar/Debug" unique_id=1104507934]
