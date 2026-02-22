@@ -15,7 +15,9 @@ namespace UI
         [Export]
         public bool ROSDependent;
 
+        ///<summary> EmitToROS called every (Rate)ms, with a one-off delay of (Delay)ms </summary>
         protected int Rate = 150;
+        ///<summary> EmitToROS called every (Rate)ms, with a one-off delay of (Delay)ms </summary>
         public int Delay;
         private Task Updater;
 

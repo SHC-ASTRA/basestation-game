@@ -20,12 +20,13 @@ namespace IPC
 
         private static ROSBridgeThread ROSThread;
         public static RosSocket ROSSocket;
-        private static int RosBridgePID;
 
         private readonly static HashSet<string> interfaceNames = new HashSet<string>();
 
         private static readonly string ROSIP = new System.Net.IPAddress(new byte[] { 127, 0, 0, 1 }).ToString();
         private const int ROSPort = 9090;
+
+        private static bool run = true;
 
         public override void _Ready()
         {
@@ -39,6 +40,7 @@ namespace IPC
             alerter.Disconnected();
             ROSReady = false;
 
+            // Check if there's a connected ROSSocket and kill it
             if (await CheckROSOnce(ROSIP, ROSPort))
             {
                 if (ROSSocket != null)
@@ -49,38 +51,21 @@ namespace IPC
                 OS.DelayMsec(10);
             }
 
+            // Check and kill any dangling ROSThread if it exists
             if (ROSThread != null)
             {
+                run = false;
                 ROSThread.Kill();
                 ROSThread.WaitToFinish();
                 ROSThread.Dispose();
             }
+            run = true;
+
+
+            // Spawn ROSBridgeThread instance
             ROSThread = new ROSBridgeThread();
-            ROSThread.Start(new Callable(new ROSBridgeThread(), "main"));
-
-            // RosBridgeIO = RosBridgeReturn["stdio"].As<Godot.FileAccess>();
-            // RosBridgeErr = RosBridgeReturn["stderr"].As<Godot.FileAccess>();
-            // RosBridgePID = RosBridgeReturn["pid"].AsInt32();
-
-            // new Thread(() =>
-            // {
-            //     string s;
-            //     while (true)
-            //         while ((s = RosBridgeIO.GetLine()) != "")
-            //         {
-            //             GD.Print(s);
-            //         }
-            // }).Start();
-
-            // new Thread(() =>
-            // {
-            //     string s;
-            //     while (true)
-            //         while ((s = RosBridgeErr.GetLine()) != "")
-            //         {
-            //             GD.Print(s);
-            //         }
-            // }).Start();
+            //  Spool the thread
+            ROSThread.Start(new Callable(ROSThread, "main"));
 
             // Waits for ROSBridge to come up. Necessary as if we don't we might start sending/requesting data before it's ready
             if (!await WaitForRosbridgeAsync(ROSIP, ROSPort, 40, 400))
@@ -253,21 +238,21 @@ namespace IPC
 
         private partial class ROSBridgeThread : GodotThread
         {
-            public bool run = true;
             public bool main()
             {
-                // ExecuteWithPipe creates three different IOStreams bundled in a dictionary
                 while (run)
                 {
-                    RosBridgePID = OS.Execute("ros2",
+                    // Execute only gives us the PID as an output
+                    OS.Execute("ros2",
                         ["run", "rosbridge_server", "rosbridge_websocket", "--ros-args", "--params-file", "./ROS/rosbridge_conf.yaml"]
                     );
                     if (run)
                         return false;
                 }
-                ROSSocket.Close();
+                if (ROSSocket != null)
+                    ROSSocket.Close();
+                // If it crashed, make. sure. it's. dead.
                 OS.Execute("pkill", ["rosbridge_webso"]);
-                RosBridgePID = -1;
                 return true;
             }
 
@@ -276,6 +261,7 @@ namespace IPC
                 if (ROSSocket != null)
                     ROSSocket.Close();
                 run = false;
+                // Make sure the main thread halts until rosbridge_websocket is dead.
                 OS.Execute("pkill", ["rosbridge_webso"]);
             }
         }

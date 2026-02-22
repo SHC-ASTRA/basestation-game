@@ -7,7 +7,7 @@ namespace UI
     public partial class ArmTabUI : BaseTabUI
     {
         private ArmManual controlMsg = new();
-        private const string ctrl = "/arm/control/manual";
+        private const string ControlTopic = "/arm/control/manual";
 
         [ExportCategory("Arm")]
         [ExportSubgroup("Axese")]
@@ -32,6 +32,7 @@ namespace UI
         private MidwayHProgressBar EndEffectorRoll, EndEffectorYaw;
         [Export]
         private MidwayHProgressBar LinearActuatorDrive, GripperDrive;
+        private int EFRoll, EFYaw;
 
         [ExportSubgroup("Laser")]
         [Export]
@@ -54,8 +55,10 @@ namespace UI
             Axis2drive.Value = RightStick.X;
             Axis3drive.Value = RightStick.Y;
 
-            EndEffectorRoll.Value = (UpButton ? 1 : 0) + (DownButton ? -1 : 0);
-            EndEffectorYaw.Value = (LeftButton ? -1 : 0) + (RightButton ? 1 : 0);
+            EFRoll = (UpButton ? 1 : 0) + (DownButton ? -1 : 0);
+            EndEffectorRoll.Value = EFRoll;
+            EFYaw = (LeftButton ? -1 : 0) + (RightButton ? 1 : 0);
+            EndEffectorYaw.Value = EFYaw;
 
             GripperDrive.Value = RightTrigger - LeftTrigger;
             LinearActuatorDrive.Value = RightBumper - LeftBumper;
@@ -67,39 +70,39 @@ namespace UI
                 BrakeIndicator.Value = b;
                 Brake.Visible = b;
             }
-
-            bool i = Mathf.RoundToInt(YButton) != 0;
-            if (i != LaserState)
+            // Just reusing the variable
+            b = Mathf.RoundToInt(YButton) != 0;
+            if (b != LaserState)
             {
-                LaserState = i;
-                LaserIndicator.Value = i;
-                Laser.Visible = i;
+                LaserState = b;
+                LaserIndicator.Value = b;
+                Laser.Visible = b;
             }
         }
 
         public override void AdvertiseToROS()
         {
-            ROS.AdvertiseMessage<ArmManual>(ctrl);
+            ROS.AdvertiseMessage<ArmManual>(ControlTopic);
         }
 
         public override void EmitToROS()
         {
-            controlMsg.axis0 = Mathf.RoundToInt(Axis0drive.Value);
-            controlMsg.axis1 = Mathf.RoundToInt(Axis1drive.Value);
-            controlMsg.axis2 = Mathf.RoundToInt(Axis2drive.Value);
-            controlMsg.axis3 = Mathf.RoundToInt(Axis3drive.Value);
+            controlMsg.axis0 = Mathf.RoundToInt(LeftStick.X);
+            controlMsg.axis1 = Mathf.RoundToInt(LeftStick.Y);
+            controlMsg.axis2 = Mathf.RoundToInt(RightStick.X);
+            controlMsg.axis3 = Mathf.RoundToInt(RightStick.Y);
 
             controlMsg.brake = BrakeState;
 
-            controlMsg.effector_roll = Mathf.RoundToInt(EndEffectorRoll.Value);
-            controlMsg.effector_yaw = Mathf.RoundToInt(EndEffectorYaw.Value);
+            controlMsg.effector_roll = Mathf.RoundToInt(EFRoll);
+            controlMsg.effector_yaw = Mathf.RoundToInt(EFYaw);
 
-            controlMsg.gripper = Mathf.RoundToInt(GripperDrive.Value);
-            controlMsg.linear_actuator = Mathf.RoundToInt(LinearActuatorDrive.Value);
+            controlMsg.gripper = Mathf.RoundToInt(RightTrigger - LeftTrigger);
+            controlMsg.linear_actuator = Mathf.RoundToInt(RightBumper - LeftBumper);
 
             controlMsg.laser = LaserState ? 1 : 0;
 
-            ROS.Publish(ctrl, controlMsg);
+            ROS.Publish(ControlTopic, controlMsg);
         }
 
         public override void _ExitTree()
@@ -109,7 +112,7 @@ namespace UI
             controlMsg.effector_roll = controlMsg.effector_yaw = 0;
             controlMsg.gripper = 0;
             controlMsg.linear_actuator = controlMsg.laser = 0;
-            ROS.Publish(ctrl, controlMsg);
+            ROS.Publish(ControlTopic, controlMsg);
         }
     }
 }
