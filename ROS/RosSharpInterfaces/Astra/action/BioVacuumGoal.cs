@@ -16,9 +16,9 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
         public const string RosMessageName = "astra_msgs/action/BioVacuumGoal";
 
         //  Goal
-        public sbyte valve_id { get; set; }
+        public byte valve_id { get; set; }
         // (0-2)
-        public sbyte fan_duty_cycle_percent { get; set; }
+        public byte fan_duty_cycle_percent { get; set; }
         // (0-100)
         public uint fan_time_ms { get; set; }
 
@@ -29,7 +29,7 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
             this.fan_time_ms = 0;
         }
 
-        public BioVacuumGoal(sbyte valve_id, sbyte fan_duty_cycle_percent, uint fan_time_ms)
+        public BioVacuumGoal(byte valve_id, byte fan_duty_cycle_percent, uint fan_time_ms)
         {
             this.valve_id = valve_id;
             this.fan_duty_cycle_percent = fan_duty_cycle_percent;

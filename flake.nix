@@ -4,7 +4,7 @@
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
     astra-msgs.url =
-      "github:SHC-ASTRA/astra_msgs/93dc0e0919249d5ff3e3a601c81e5b578cfd46e9";
+      "github:SHC-ASTRA/astra_msgs/2a90e7712424d8f44093334f7a359696d9398216";
   };
   outputs = { self, nix-ros-overlay, modernpkgs, nixpkgs, astra-msgs }@inputs:
     nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:

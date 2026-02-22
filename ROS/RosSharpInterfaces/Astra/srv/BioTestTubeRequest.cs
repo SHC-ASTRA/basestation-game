@@ -17,7 +17,7 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
 
         //  Topic: /bio/control/test_tube
         //  Goal
-        public sbyte tube_id { get; set; }
+        public byte tube_id { get; set; }
         // (0-2)
         public float milliliters { get; set; }
         // (0-10.0)
@@ -28,7 +28,7 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
             this.milliliters = 0.0f;
         }
 
-        public BioTestTubeRequest(sbyte tube_id, float milliliters)
+        public BioTestTubeRequest(byte tube_id, float milliliters)
         {
             this.tube_id = tube_id;
             this.milliliters = milliliters;
