@@ -13,11 +13,12 @@ namespace UI.Debug
         public override void _Ready()
         {
             base._Ready();
+            SubscriptionHandler<T> s = GetFeedbackHandler();
             Task.Run(async () =>
             {
                 while (!ROS.ROSReady)
                     await Task.Delay(5);
-                ROS.TopicSubscribe<T>(TopicName, GetFeedbackHandler());
+                ROS.TopicSubscribe<T>(TopicName, s);
             });
         }
 

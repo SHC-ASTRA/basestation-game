@@ -9,6 +9,10 @@ namespace UI
         private FaerieControl faerie = new();
         private const string FaerieTopic = "/bio/control/faerie";
 
+        private LibsSystemRequest libsIn = new(true);
+        private LibsSystemResponse libsOut = new();
+        private const string LibsTopic = "/bio/control/libs_system";
+
         [ExportCategory("LANCE")]
         [ExportGroup("Faerie")]
         [Export]
@@ -22,14 +26,13 @@ namespace UI
         [Export]
         public ProgressBar DrillSpeed;
         private float _DrillSpeedValue;
-        [Export]
-        public Button VibrationMotor;
 
         [ExportGroup("ARQUEBUS")]
         [Export]
         public Button Laser;
         [Export]
         public Button LaserFailsafe;
+        private bool FailsafeEngaged;
 
         [ExportSubgroup("SFX")]
         [Export]
@@ -45,8 +48,15 @@ namespace UI
 
             Rate = 5;
 
-            LaserFailsafe.Toggled += (bool t) => { if (t) { Source.Stream = Failsafe; Source.Play(); } };
-            Laser.Pressed += () => { Source.Stream = Fire; Source.Play(); };
+            LaserFailsafe.Toggled += (bool t) => { if (t) { Source.Stream = Failsafe; Source.Play(); } FailsafeEngaged = t; };
+            Laser.Pressed += () =>
+            {
+                if (FailsafeEngaged)
+                {
+                    Source.Stream = Fire; Source.Play();
+                    ROS.PublishServiceGoal<LibsSystemRequest, LibsSystemResponse>(LibsTopic, (_) => { }, libsIn);
+                }
+            };
         }
 
         public override void _Process(double d)
@@ -59,13 +69,17 @@ namespace UI
         public override void AdvertiseToROS()
         {
             ROS.AdvertiseMessage<FaerieControl>(FaerieTopic);
+
+            ROS.AdvertiseService<LibsSystemRequest, LibsSystemResponse>(
+                LibsTopic,
+                (LibsSystemRequest i, out LibsSystemResponse o) => { o = libsOut; return true; }
+            );
         }
 
         public override void EmitToROS()
         {
             faerie.move_faerie = _DrillBoomValue;
             faerie.drill_speed = _DrillSpeedValue;
-            faerie.vibration_motor = VibrationMotor.ButtonPressed;
             ROS.Publish(FaerieTopic, faerie);
         }
 

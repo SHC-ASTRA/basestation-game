@@ -11,19 +11,19 @@
 
 namespace RosSharp.RosBridgeClient.MessageTypes.Astra
 {
-    public class BioCCDResponse : Message
+    public class LibsSystemResponse : Message
     {
-        public const string RosMessageName = "astra_msgs/srv/BioCCD";
+        public const string RosMessageName = "astra_msgs/srv/LibsSystem";
 
         //  Result
         public float[] ccd_data { get; set; }
 
-        public BioCCDResponse()
+        public LibsSystemResponse()
         {
-            this.ccd_data = new float[3648];
+            this.ccd_data = new float[800];
         }
 
-        public BioCCDResponse(float[] ccd_data)
+        public LibsSystemResponse(float[] ccd_data)
         {
             this.ccd_data = ccd_data;
         }

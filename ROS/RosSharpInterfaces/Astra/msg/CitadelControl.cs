@@ -11,22 +11,29 @@
 
 namespace RosSharp.RosBridgeClient.MessageTypes.Astra
 {
-    public class ScytheControl : Message
+    public class CitadelControl : Message
     {
-        public const string RosMessageName = "astra_msgs/msg/ScytheControl";
+        public const string RosMessageName = "astra_msgs/msg/CitadelControl";
 
-        //  Topic: /bio/control/scythe
+        //  Topic: /bio/control/citadel
+        public bool[] distributor_id { get; set; }
+        // (0-2)
         public float move_scythe { get; set; }
         // -1 <-> 1; Negative for up, positive for down
+        public bool vibration_motor { get; set; }
 
-        public ScytheControl()
+        public CitadelControl()
         {
+            this.distributor_id = new bool[3];
             this.move_scythe = 0.0f;
+            this.vibration_motor = false;
         }
 
-        public ScytheControl(float move_scythe)
+        public CitadelControl(bool[] distributor_id, float move_scythe, bool vibration_motor)
         {
+            this.distributor_id = distributor_id;
             this.move_scythe = move_scythe;
+            this.vibration_motor = vibration_motor;
         }
     }
 }

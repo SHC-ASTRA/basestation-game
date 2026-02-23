@@ -1,7 +1,6 @@
 using IPC;
 using Godot;
 using RosSharp.RosBridgeClient.Actionlib;
-using RosSharp.RosBridgeClient.MessageTypes.Std;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 using RosSharp.RosBridgeClient.MessageTypes.Action;
 
@@ -19,13 +18,9 @@ namespace UI
         private BioVacuumAction BioVacuumHandler = new();
         private const string VacuumCtrl = "/bio/actions/vacuum";
 
-        // Distributor Message
-        private BioDistributor distributors = new();
-        private const string DistributorTopic = "/bio/control/distributor";
-
-        // Scythe Message
-        private ScytheControl scythe = new();
-        private const string ScytheTopic = "/bio/control/scythe";
+        // Citadel Message
+        private CitadelControl citadelMsg = new();
+        private const string citadelTopic = "/bio/control/citadel";
 
         // TestTube Service
         private BioTestTubeRequest tubeMsg = new();
@@ -69,6 +64,11 @@ namespace UI
         [Export]
         public ProgressBar scytheMovement;
         private float scythePosRel;
+        [Export]
+        public ColoredIndicator VibrationMotorIndicator;
+        [Export]
+        public Button VibrationMotor;
+        private bool vibrate;
 
         public override void _Ready()
         {
@@ -95,6 +95,8 @@ namespace UI
                 ROS.PublishServiceGoal<BioTestTubeRequest, BioTestTubeResponse>(TubeCtrl, (_) => { }, tubeMsg);
             };
             TestTubeCommit.ButtonUp += () => { TestTubeCommitTexture.Visible = false; };
+
+            VibrationMotor.ButtonUp += () => { vibrate = !vibrate; VibrationMotorIndicator.Value = vibrate; };
         }
 
         public override void AdvertiseToROS()
@@ -132,8 +134,7 @@ namespace UI
                 }
             );
 
-            ROS.AdvertiseMessage<BioDistributor>(DistributorTopic);
-            ROS.AdvertiseMessage<ScytheControl>(ScytheTopic);
+            ROS.AdvertiseMessage<CitadelControl>(citadelTopic);
         }
 
         public override void _Process(double d)
@@ -145,19 +146,17 @@ namespace UI
 
         public override void EmitToROS()
         {
-            distributors.distributor_id[0] = Distributor0.ButtonPressed;
-            distributors.distributor_id[1] = Distributor1.ButtonPressed;
-            distributors.distributor_id[2] = Distributor2.ButtonPressed;
-            ROS.Publish(DistributorTopic, distributors);
-
-            scythe.move_scythe = scythePosRel;
-            ROS.Publish(ScytheTopic, scythe);
+            citadelMsg.distributor_id[0] = Distributor0.ButtonPressed;
+            citadelMsg.distributor_id[1] = Distributor1.ButtonPressed;
+            citadelMsg.distributor_id[2] = Distributor2.ButtonPressed;
+            citadelMsg.move_scythe = scythePosRel;
+            citadelMsg.vibration_motor = vibrate;
+            ROS.Publish(citadelTopic, citadelMsg);
         }
 
         public override void _ExitTree()
         {
-            ROS.ROSSocket.Unadvertise(DistributorTopic);
-            ROS.ROSSocket.Unadvertise(ScytheTopic);
+            ROS.ROSSocket.Unadvertise(citadelTopic);
         }
     }
 }

@@ -445,8 +445,7 @@ alignment = 1
 script = ExtResource("5_u4qwe")
 ROSDependent = true
 
-[node name="chems" type="HBoxContainer" parent="TabsParent" unique_id=194178564 node_paths=PackedStringArray("FanDuty", "FanTime", "VacuumSelector", "VacuumCommit", "VacuumCommitTexture", "Distributor0", "Distributor1", "Distributor2", "TubesExtensionAmount", "TestTubeSelector", "TestTubeCommit", "TestTubeCommitTexture", "ScytheUp", "ScytheDown", "scytheMovement")]
-visible = false
+[node name="chems" type="HBoxContainer" parent="TabsParent" unique_id=194178564 node_paths=PackedStringArray("FanDuty", "FanTime", "VacuumSelector", "VacuumCommit", "VacuumCommitTexture", "Distributor0", "Distributor1", "Distributor2", "TubesExtensionAmount", "TestTubeSelector", "TestTubeCommit", "TestTubeCommitTexture", "ScytheUp", "ScytheDown", "scytheMovement", "VibrationMotorIndicator", "VibrationMotor")]
 layout_mode = 2
 alignment = 1
 script = ExtResource("11_f0cuh")
@@ -465,6 +464,8 @@ TestTubeCommitTexture = NodePath("Test Tubes/Commit/AspectRatioContainer/commit"
 ScytheUp = NodePath("Scythe/VBoxContainer/Up")
 ScytheDown = NodePath("Scythe/VBoxContainer/Down")
 scytheMovement = NodePath("Scythe/ScytheMovement")
+VibrationMotorIndicator = NodePath("Scythe/Vibration Motor/AspectRatioContainer/ColoredIndicator")
+VibrationMotor = NodePath("Scythe/Vibration Motor/Vibrate")
 ROSDependent = true
 
 [node name="I" parent="TabsParent/chems" unique_id=1267749996 instance=ExtResource("3_5ljfu")]
@@ -506,6 +507,36 @@ min_value = -1.0
 max_value = 1.0
 fill_mode = 3
 show_percentage = false
+
+[node name="I3" parent="TabsParent/chems/Scythe" unique_id=1710204016 instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="Vibration Motor" type="VBoxContainer" parent="TabsParent/chems/Scythe" unique_id=1698274720]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabsParent/chems/Scythe/Vibration Motor" unique_id=877876215]
+layout_mode = 2
+text = "Vibe Mtr"
+horizontal_alignment = 1
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/chems/Scythe/Vibration Motor" unique_id=1609829629]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColoredIndicator" parent="TabsParent/chems/Scythe/Vibration Motor/AspectRatioContainer" unique_id=1577195286 instance=ExtResource("6_yrw8b")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TabsParent/chems/Scythe/Vibration Motor/AspectRatioContainer" unique_id=120008124]
+layout_mode = 2
+texture = ExtResource("15_hy72e")
+
+[node name="Vibrate" type="Button" parent="TabsParent/chems/Scythe/Vibration Motor" unique_id=700718751]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
+toggle_mode = true
+text = "Vibe"
 
 [node name="I1" parent="TabsParent/chems" unique_id=875462288 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
@@ -862,7 +893,8 @@ theme_override_constants/separation = 26
 [node name="I4" parent="TabsParent/chems" unique_id=696292429 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="drill" type="HBoxContainer" parent="TabsParent" unique_id=836986925 node_paths=PackedStringArray("DrillBoomDown", "DrillBoomUp", "DrillBoomSpeed", "DrillSpeed", "VibrationMotor", "Laser", "LaserFailsafe", "Source")]
+[node name="drill" type="HBoxContainer" parent="TabsParent" unique_id=836986925 node_paths=PackedStringArray("DrillBoomDown", "DrillBoomUp", "DrillBoomSpeed", "DrillSpeed", "Laser", "LaserFailsafe", "Source")]
+visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("23_w6oot")
@@ -870,7 +902,6 @@ DrillBoomDown = NodePath("Faerie/Drill Arm/VBoxContainer/Up")
 DrillBoomUp = NodePath("Faerie/Drill Arm/VBoxContainer/Down")
 DrillBoomSpeed = NodePath("Faerie/Drill Arm/DrillBoom")
 DrillSpeed = NodePath("Faerie/Drill/Scabbard")
-VibrationMotor = NodePath("Faerie/Vibration Motor/Vibrate")
 Laser = NodePath("LIBS/Run")
 LaserFailsafe = NodePath("LIBS/Failsafe")
 Failsafe = ExtResource("12_wshk6")
@@ -955,36 +986,6 @@ min_value = -1.0
 max_value = 1.0
 fill_mode = 3
 show_percentage = false
-
-[node name="I3" parent="TabsParent/drill/Faerie" unique_id=1855687680 instance=ExtResource("13_8exja")]
-layout_mode = 2
-
-[node name="Vibration Motor" type="VBoxContainer" parent="TabsParent/drill/Faerie" unique_id=124847091]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="TabsParent/drill/Faerie/Vibration Motor" unique_id=2017276651]
-layout_mode = 2
-text = "Vibe Mtr"
-horizontal_alignment = 1
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TabsParent/drill/Faerie/Vibration Motor" unique_id=1031227397]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ColoredIndicator" parent="TabsParent/drill/Faerie/Vibration Motor/AspectRatioContainer" unique_id=1442484666 instance=ExtResource("6_yrw8b")]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="TabsParent/drill/Faerie/Vibration Motor/AspectRatioContainer" unique_id=48307766]
-layout_mode = 2
-texture = ExtResource("15_hy72e")
-
-[node name="Vibrate" type="Button" parent="TabsParent/drill/Faerie/Vibration Motor" unique_id=440189080]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s2hv3")
-toggle_mode = true
-text = "Vibe"
 
 [node name="I2" parent="TabsParent/drill" unique_id=1121401011 instance=ExtResource("3_5ljfu")]
 layout_mode = 2

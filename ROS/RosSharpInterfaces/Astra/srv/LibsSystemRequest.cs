@@ -11,23 +11,23 @@
 
 namespace RosSharp.RosBridgeClient.MessageTypes.Astra
 {
-    public class BioCCDRequest : Message
+    public class LibsSystemRequest : Message
     {
-        public const string RosMessageName = "astra_msgs/srv/BioCCD";
+        public const string RosMessageName = "astra_msgs/srv/LibsSystem";
 
-        //  Topic: /bio/feedback/CCD
+        //  Topic: /bio/control/libs_system
         //  Goal
-        public bool request { get; set; }
+        public bool fire_laser { get; set; }
         // Request CCD image
 
-        public BioCCDRequest()
+        public LibsSystemRequest()
         {
-            this.request = false;
+            this.fire_laser = false;
         }
 
-        public BioCCDRequest(bool request)
+        public LibsSystemRequest(bool fire_laser)
         {
-            this.request = request;
+            this.fire_laser = fire_laser;
         }
     }
 }
