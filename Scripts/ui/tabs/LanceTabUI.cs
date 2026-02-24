@@ -46,7 +46,7 @@ namespace UI
         {
             base._Ready();
 
-            Rate = 5;
+            Rate = 15;
 
             LaserFailsafe.Toggled += (bool t) => { if (t) { Source.Stream = Failsafe; Source.Play(); } FailsafeEngaged = t; };
             Laser.Pressed += () =>

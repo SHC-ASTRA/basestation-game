@@ -22,6 +22,7 @@ run/print_header=false
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 run/low_processor_mode=true
 run/load_shell_environment=true
+boot_splash/bg_color=Color(0.57852596, 0.8028288, 0.8470179, 1)
 boot_splash/show_image=false
 config/icon="res://Assets/icon.svg"
 
@@ -29,6 +30,9 @@ config/icon="res://Assets/icon.svg"
 
 window/size/viewport_width=1280
 window/size/viewport_height=800
+window/size/mode=3
+window/size/initial_position_type=4
+window/size/borderless=true
 
 [dotnet]
 
