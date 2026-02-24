@@ -1,5 +1,4 @@
 using Godot;
-using RosSharp.RosBridgeClient;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 namespace UI.Debug
@@ -32,7 +31,7 @@ namespace UI.Debug
             base._Ready();
         }
 
-        public override SubscriptionHandler<SocketFeedback> GetFeedbackHandler() => new((feedback) =>
+        public override void FeedbackHandler()
         {
             if (!Visible)
                 return;
@@ -40,7 +39,7 @@ namespace UI.Debug
             Axis1.Set(feedback.axis1_angle, feedback.axis1_current, feedback.axis1_temp, feedback.axis1_voltage);
             Axis2.Set(feedback.axis2_angle, feedback.axis2_current, feedback.axis2_temp, feedback.axis2_voltage);
             Axis3.Set(feedback.axis3_angle, feedback.axis3_current, feedback.axis3_temp, feedback.axis3_voltage);
-        });
+        }
 
         sealed class Axis(int ID, Label A, Label C, Label T, Label V)
         {

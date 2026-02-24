@@ -27,7 +27,7 @@ namespace UI.Debug
             base._Ready();
         }
 
-        public override SubscriptionHandler<NewCoreFeedback> GetFeedbackHandler() => new(feedback =>
+        public override void FeedbackHandler()
         {
             Voltages.Update(feedback.board_voltage);
 
@@ -38,6 +38,6 @@ namespace UI.Debug
                 FR.Update(feedback.fr_motor);
                 BR.Update(feedback.br_motor);
             }
-        });
+        }
     }
 }

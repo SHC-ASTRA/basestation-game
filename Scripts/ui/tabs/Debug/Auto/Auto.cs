@@ -1,5 +1,4 @@
 using Godot;
-using RosSharp.RosBridgeClient;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 namespace UI.Debug
@@ -16,12 +15,12 @@ namespace UI.Debug
         [Export]
         Label Corner0, Corner1, Corner2, Corner3;
 
-        public override SubscriptionHandler<AutoFeedback> GetFeedbackHandler() => new((feedback) =>
+        public override void FeedbackHandler()
         {
             if (!Visible)
                 return;
 
 
-        });
+        }
     }
 }

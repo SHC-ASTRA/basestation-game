@@ -63,7 +63,7 @@ namespace UI
         {
             base._Process(d);
             DrillSpeed.Value = _DrillSpeedValue = RightTrigger - LeftTrigger;
-            DrillBoomSpeed.Value = _DrillBoomValue = (DrillBoomDown.ButtonPressed ? 1 : 0) - (DrillBoomUp.ButtonPressed ? 1 : 0) + LeftStick.Y;
+            DrillBoomSpeed.Value = _DrillBoomValue = (DrillBoomDown.ButtonPressed ? 1 : 0) - (DrillBoomUp.ButtonPressed ? 1 : 0) + Mathf.Round(LeftStick.Y);
         }
 
         public override void AdvertiseToROS()

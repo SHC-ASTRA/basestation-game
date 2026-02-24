@@ -1,5 +1,4 @@
 using Godot;
-using RosSharp.RosBridgeClient;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 namespace UI.Debug
@@ -8,11 +7,11 @@ namespace UI.Debug
     {
         [Export]
         public Label WristAngle;
-        public override SubscriptionHandler<DigitFeedback> GetFeedbackHandler() => new((feedback) =>
+        public override void FeedbackHandler()
         {
             if (!Visible)
                 return;
             WristAngle.Text = $"Angle: {feedback.wrist_angle.ToString()}°".PadRight("Angle: ".Length + 4);
-        });
+        }
     }
 }

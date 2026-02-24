@@ -13,15 +13,19 @@ namespace UI.Debug
         public override void _Ready()
         {
             base._Ready();
-            SubscriptionHandler<T> s = GetFeedbackHandler();
             Task.Run(async () =>
             {
                 while (!ROS.ROSReady)
                     await Task.Delay(5);
-                ROS.TopicSubscribe<T>(TopicName, s);
+                ROS.TopicSubscribe<T>(TopicName, (feedback) =>
+                {
+                    this.feedback = feedback;
+                    CallDeferred(nameof(FeedbackHandler));
+                });
             });
-        }
 
-        public abstract SubscriptionHandler<T> GetFeedbackHandler();
+        }
+        internal T feedback;
+        public abstract void FeedbackHandler();
     }
 }

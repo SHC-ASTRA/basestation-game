@@ -567,7 +567,7 @@ texture = ExtResource("14_s2hv3")
 [node name="Amount" type="SpinBox" parent="TabsParent/chems/Vacuum system/Duty" unique_id=152467717]
 layout_mode = 2
 theme_override_constants/field_and_buttons_separation = -16
-max_value = 50.0
+max_value = 100000.0
 alignment = 1
 suffix = "%"
 
@@ -597,7 +597,7 @@ texture = ExtResource("14_s2hv3")
 [node name="Amount" type="SpinBox" parent="TabsParent/chems/Vacuum system/Time" unique_id=2022761685]
 layout_mode = 2
 theme_override_constants/field_and_buttons_separation = -16
-max_value = 999.0
+max_value = 9999.0
 alignment = 1
 suffix = "Ms"
 
