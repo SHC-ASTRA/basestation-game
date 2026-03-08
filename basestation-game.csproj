@@ -1,4 +1,4 @@
-<Project Sdk="Godot.NET.Sdk/4.6.0">
+<Project Sdk="Godot.NET.Sdk/4.6.1">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
@@ -11,7 +11,6 @@
     <PackageReference Include="WebSocketSharp" Version="1.0.3-rc11">
         <NoWarn>NU1701</NoWarn>
     </PackageReference>
-
     <Compile Remove="./ROS/Compiler/*" />
   </ItemGroup>
 </Project>

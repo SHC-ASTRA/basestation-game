@@ -446,6 +446,7 @@ script = ExtResource("5_u4qwe")
 ROSDependent = true
 
 [node name="chems" type="HBoxContainer" parent="TabsParent" unique_id=194178564 node_paths=PackedStringArray("FanDuty", "FanTime", "VacuumSelector", "VacuumCommit", "VacuumCommitTexture", "Distributor0", "Distributor1", "Distributor2", "TubesExtensionAmount", "TestTubeSelector", "TestTubeCommit", "TestTubeCommitTexture", "ScytheUp", "ScytheDown", "scytheMovement", "VibrationMotorIndicator", "VibrationMotor")]
+visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("11_f0cuh")
@@ -1353,7 +1354,6 @@ alignment = 1
 script = ExtResource("12_lq3nq")
 
 [node name="debug" type="HBoxContainer" parent="TabsParent" unique_id=1671544032 node_paths=PackedStringArray("InfoContainer", "DD")]
-visible = false
 layout_mode = 2
 theme = SubResource("Theme_rj5vk")
 script = ExtResource("7_qq4qf")
@@ -1367,6 +1367,7 @@ theme_override_constants/separation = 0
 alignment = 1
 
 [node name="DD" type="OptionButton" parent="TabsParent/debug/InfoBox" unique_id=138306711]
+z_index = 10
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 alignment = 1
@@ -1374,7 +1375,6 @@ autowrap_mode = 3
 autowrap_trim_flags = 0
 
 [node name="Arm" type="OptionButton" parent="TabsParent/debug/InfoBox/DD" unique_id=2105235292]
-visible = false
 z_index = 1
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 0
@@ -1555,20 +1555,6 @@ alignment = 1
 autowrap_mode = 3
 autowrap_trim_flags = 0
 
-[node name="IMU" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Core" unique_id=1187356514]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("35_f0cuh")
-
-[node name="Label" type="Label" parent="TabsParent/debug/InfoBox/DD/Core/IMU" unique_id=223430011]
-layout_mode = 2
-text = "imu"
-
 [node name="Motor" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Core" unique_id=523829311]
 visible = false
 layout_mode = 0
@@ -1588,6 +1574,20 @@ layout_mode = 2
 
 [node name="br" parent="TabsParent/debug/InfoBox/DD/Core/Motor" unique_id=1741195114 instance=ExtResource("37_w6oot")]
 layout_mode = 2
+
+[node name="IMU" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Core" unique_id=1187356514]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("35_f0cuh")
+
+[node name="Label" type="Label" parent="TabsParent/debug/InfoBox/DD/Core/IMU" unique_id=223430011]
+layout_mode = 2
+text = "imu"
 
 [node name="PTZ" type="HBoxContainer" parent="TabsParent/debug/InfoBox/DD/Core" unique_id=1100283050 node_paths=PackedStringArray("ConnectedTrue", "Yaw", "Pitch", "Roll")]
 visible = false

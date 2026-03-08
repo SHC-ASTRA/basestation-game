@@ -1,13 +1,20 @@
 {
   inputs = {
-    modernpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    modernpkgs.url = "github:NixOS/nixpkgs/master";
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
-    astra-msgs.url =
-      "github:SHC-ASTRA/astra_msgs/acabfd117d9711afc420612375b4e02f4ce4982d";
+    astra-msgs.url = "github:SHC-ASTRA/astra_msgs/acabfd117d9711afc420612375b4e02f4ce4982d";
   };
-  outputs = { self, nix-ros-overlay, modernpkgs, nixpkgs, astra-msgs }@inputs:
-    nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nix-ros-overlay,
+      modernpkgs,
+      nixpkgs,
+      astra-msgs,
+    }@inputs:
+    nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs {
           inherit system;
@@ -18,13 +25,16 @@
         rosDistro = "humble";
 
         mpkgs = import modernpkgs { inherit system; };
-      in {
+      in
+      {
         devShells.default = pkgs.mkShell {
           name = "basestation-game";
           packages = with pkgs; [
             colcon
+            omnisharp-roslyn
             mpkgs.godotPackages_4_6.godot-mono
-            (with pkgs.rosPackages.${rosDistro};
+            (
+              with pkgs.rosPackages.${rosDistro};
               buildEnv {
                 paths = [
                   ros-core
@@ -34,7 +44,8 @@
                   python-cmake-module
                   rosbridge-suite
                 ];
-              })
+              }
+            )
             astra_msgs_pkgs.astra-msgs
           ];
 
@@ -42,17 +53,15 @@
 
           env = {
             ASTRAMSGS = "${inputs.astra-msgs.outPath}";
-            # ROSBRIDGE =
-            #   "${pkgs.rosPackages.${rosDistro}.rosbridge-suite.outPath}";
-            ROSBRIDGESERVER =
-              "${pkgs.rosPackages.${rosDistro}.rosbridge-server.outPath}";
-            # ROSBRIDGELIBRARY =
-            #   "${pkgs.rosPackages.${rosDistro}.rosbridge-library.outPath}";
+
+            ROSBRIDGESERVER = "${pkgs.rosPackages.${rosDistro}.rosbridge-server.outPath}";
+
             ROSCOMPILER = "./ROS/Compiler";
           };
 
           shellHook = ''
             dotnet run --no-build --configuration Release --debug False --project $ROSCOMPILER
+            rm -r $ROSCOMPILER/obj
           '';
         };
 
@@ -91,10 +100,10 @@
               	      runHook postBuild
             	    '';
         };
-      });
+      }
+    );
   nixConfig = {
     extra-substituters = [ "https://ros.cachix.org" ];
-    extra-trusted-public-keys =
-      [ "ros.cachix.org-1:dSyZxI8geDCJrwgvCOHDoAfOm5sV1wCPjBkKL+38Rvo=" ];
+    extra-trusted-public-keys = [ "ros.cachix.org-1:dSyZxI8geDCJrwgvCOHDoAfOm5sV1wCPjBkKL+38Rvo=" ];
   };
 }
