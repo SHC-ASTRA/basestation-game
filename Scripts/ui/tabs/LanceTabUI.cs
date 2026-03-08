@@ -48,14 +48,29 @@ namespace UI
 
             Rate = 15;
 
-            LaserFailsafe.Toggled += (bool t) => { if (t) { Source.Stream = Failsafe; Source.Play(); } FailsafeEngaged = t; };
+            LaserFailsafe.Toggled += (bool t) =>
+            {
+                // Only play the failsafe engagement sound if
+                // user toggled the failsafe on
+                if (t)
+                {
+                    Source.Stream = Failsafe;
+                    Source.Play();
+                }
+                else libsIn.fire_laser = false;
+                FailsafeEngaged = t;
+            };
             Laser.Pressed += () =>
             {
+                // Only do something is the failsafe is engaged
                 if (FailsafeEngaged)
                 {
-                    Source.Stream = Fire; Source.Play();
+                    Source.Stream = Fire;
+                    Source.Play();
+                    libsIn.fire_laser = true;
                     ROS.PublishServiceGoal<LibsSystemRequest, LibsSystemResponse>(LibsTopic, (_) => { }, libsIn);
                 }
+                else libsIn.fire_laser = false;
             };
         }
 
@@ -63,12 +78,13 @@ namespace UI
         {
             base._Process(d);
             DrillSpeed.Value = _DrillSpeedValue = RightTrigger - LeftTrigger;
+            // Embedded only responds to whole values at the moment. In the future, can remove Mathf.Round
             DrillBoomSpeed.Value = _DrillBoomValue = (DrillBoomDown.ButtonPressed ? 1 : 0) - (DrillBoomUp.ButtonPressed ? 1 : 0) + Mathf.Round(LeftStick.Y);
         }
 
         public override void AdvertiseToROS()
         {
-            ROS.AdvertiseMessage<FaerieControl>(FaerieTopic);
+            ROS.AdvertiseTopic<FaerieControl>(FaerieTopic);
 
             ROS.AdvertiseService<LibsSystemRequest, LibsSystemResponse>(
                 LibsTopic,

@@ -212,9 +212,9 @@ namespace UI
 
         public override void AdvertiseToROS()
         {
-            ROS.AdvertiseMessage<CoreCtrlState>(CoreControlTopic);
-            ROS.AdvertiseMessage<Geometry.Twist>(TwistTopic);
-            ROS.AdvertiseMessage<PtzControl>(PTZTopic);
+            ROS.AdvertiseTopic<CoreCtrlState>(CoreControlTopic);
+            ROS.AdvertiseTopic<Geometry.Twist>(TwistTopic);
+            ROS.AdvertiseTopic<PtzControl>(PTZTopic);
         }
 
         public override void EmitToROS()

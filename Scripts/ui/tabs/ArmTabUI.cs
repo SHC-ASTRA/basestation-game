@@ -82,7 +82,7 @@ namespace UI
 
         public override void AdvertiseToROS()
         {
-            ROS.AdvertiseMessage<ArmManual>(ControlTopic);
+            ROS.AdvertiseTopic<ArmManual>(ControlTopic);
         }
 
         public override void EmitToROS()

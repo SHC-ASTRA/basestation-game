@@ -74,7 +74,7 @@ namespace UI
         {
             base._Ready();
 
-            Rate = 45;
+            Rate = 50;
 
             VacuumCommit.ButtonDown += () =>
             {
@@ -126,15 +126,15 @@ namespace UI
 
             ROS.AdvertiseService<BioTestTubeRequest, BioTestTubeResponse>(
                 serviceName: TubeCtrl,
-                handler: (BioTestTubeRequest _, out BioTestTubeResponse a) =>
+                handler: (BioTestTubeRequest _, out BioTestTubeResponse response) =>
                 {
                     GD.Print($"Extending tube {_.tube_id}, By {_.milliliters}%");
-                    a = new();
+                    response = new();
                     return true;
                 }
             );
 
-            ROS.AdvertiseMessage<CitadelControl>(citadelTopic);
+            ROS.AdvertiseTopic<CitadelControl>(citadelTopic);
         }
 
         public override void _Process(double d)

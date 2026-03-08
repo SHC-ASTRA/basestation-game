@@ -15,13 +15,18 @@ namespace UI
         [Export]
         private Button reconnectButton;
 
-        private Color connected = new Color(0xaafd00ff);
-        private Color disconnected = new Color(0xd24444ff);
+        // Spooky evil magic numbers
+        private readonly Color connected = new Color(0xaafd00ff);
+        private readonly Color disconnected = new Color(0xd24444ff);
 
         public override void _Ready()
         {
             // Forces ROSBridge to throw out its ownership over all current topics and reset itself
-            reconnectButton.Pressed += () => { ROS.Readvertise = true; ROS.StartROS(); };
+            reconnectButton.Pressed += () =>
+            {
+                ROS.Close();
+                ROS.StartROS();
+            };
         }
 
         public void Disconnected()

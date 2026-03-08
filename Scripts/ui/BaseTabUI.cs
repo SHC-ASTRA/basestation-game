@@ -48,7 +48,6 @@ namespace UI
             Task.Run(async () =>
             {
                 await ROS.AwaitRosReady();
-                AdvertiseToROS();
                 Updater = new Task(() => Update(CTS.Token), CTS.Token);
                 if (CallDeferred("is_visible").AsBool())
                     Updater.Start();
@@ -57,6 +56,8 @@ namespace UI
             base._Ready();
         }
 
+        /// <summary> You MUST call this before doing anything if you intend to use controller inputs
+        /// <inheritdoc/> </summary>
         public override void _Process(double delta)
         {
             base._Process(delta);
@@ -99,11 +100,11 @@ namespace UI
         // more performant & doesn't run until ROS is ready
         private async void Update(CancellationToken token)
         {
-            while (true)
+            while (ROS.run)
             {
+                await Task.Delay(Rate + Delay);
                 if (token.IsCancellationRequested)
                     return;
-                await Task.Delay(Rate + Delay);
                 Delay = 0;
                 EmitToROS();
             }
@@ -127,11 +128,13 @@ namespace UI
         /// <summary> Called on Ready, used to advertise associated interfaces to ROS </summary>
         public abstract void AdvertiseToROS();
 
-        /// <summary> Called every (<paramref name="Slow"/>)ms, sends control data to ROS. Can be changed on a per-tab basis </summary>
+        /// <summary> Called every (<paramref name="Slow"/>)ms, sends control data to ROS. <paramref name="Slow"/> can
+        /// be changed on a per-tab basis.
+        /// Aim to reduce the amount of engine-side variables gathered here as possible, and instead store them in the tab.
+        /// Doing so reduces the call overhead, as the C# has to do a translation to get data back from the engine.
+        /// Do Keep in mind though that with higher <paramref name="Slow"/> values, _Process() will be called
+        /// more frequently and thus will have higher overhead than this. Essentially, think about it.</summary>
         public abstract void EmitToROS();
-
-        /// <summary> Called every <paramref name="DebugRate"/> ROS emits, sends logs ROS to console </summary>
-        // public abstract string DebugLogROS();
 
         /// <summary> Cleanup our controls so that clucky doesn't do something stupid while we're offline </summary>
         public override abstract void _ExitTree();
