@@ -278,7 +278,7 @@ namespace IPC
         /// advertises it first and then publishes the message. </summary>
         public static void Publish<T>(string topicName, T message) where T : Message
         {
-            if (!topicExists(topicName))
+            if (!topicExists(topicName) && ROSSocket != null)
                 ROSSocket.Advertise<T>(topicName);
             ROSSocket.Publish(topicName, message);
         }
