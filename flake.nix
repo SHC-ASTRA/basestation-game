@@ -8,10 +8,10 @@
   outputs =
     {
       self,
-      nix-ros-overlay,
-      modernpkgs,
       nixpkgs,
       astra-msgs,
+      modernpkgs,
+      nix-ros-overlay,
     }@inputs:
     nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (
       system:

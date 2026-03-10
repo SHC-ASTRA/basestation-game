@@ -202,10 +202,10 @@ namespace IPC
         public static bool actionExists(string actionName) => actionNames.Contains(actionName);
 
         /// <summary> Takes Message Topic type <typeparamref name="T"/> and the corresponding <paramref name="topicName"/> and then advertises it to ROS </summary>
-        public static void AdvertiseTopic<T>(string topicName) where T : Message
+        public static void AdvertiseTopic<T>(string topicName, QOS q = null) where T : Message
         {
             GD.Print($"Advertising topic {topicName}");
-            ROSSocket.Advertise<T>(topicName);
+            ROSSocket.Advertise<T>(topicName, q);
             topicNames.Add(topicName);
         }
 

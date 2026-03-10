@@ -1,5 +1,6 @@
 using IPC;
 using Godot;
+using RosSharp.RosBridgeClient;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 namespace UI
@@ -82,7 +83,12 @@ namespace UI
 
         public override void AdvertiseToROS()
         {
-            ROS.AdvertiseTopic<ArmManual>(ControlTopic);
+            QOS ControlQOS = QOS.Presets.Default;
+            ControlQOS.HistoryPolicy = QOS.Policy.History.KEEP_LAST;
+            ControlQOS.Depth = 2;
+            ControlQOS.ReliabilityPolicy = QOS.Policy.Reliability.BEST_EFFORT;
+            ControlQOS.DurabilityPolicy = QOS.Policy.Durability.VOLATILE;
+            ROS.AdvertiseTopic<ArmManual>(ControlTopic, ControlQOS);
         }
 
         public override void EmitToROS()
