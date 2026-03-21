@@ -148,6 +148,40 @@
         "type": "github"
       }
     },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1760934318,
+        "narHash": "sha256-/oUYsC0lUCBory65VK+UHqCCsCspbL1Vgfcf1KUYqVw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "87848bf0cc4f87717fc813a4575f07330c3e743c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nuget-packageslock2nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1773452218,
+        "narHash": "sha256-88GWz9ObfVhghgBeUddfxXfQ6EeWAivk4M+Mwq296DE=",
+        "owner": "mdarocha",
+        "repo": "nuget-packageslock2nix",
+        "rev": "f88589e7dd643dbf54ba05e69a63eced3feed7a5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mdarocha",
+        "repo": "nuget-packageslock2nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "astra-msgs": "astra-msgs",
@@ -156,7 +190,8 @@
         "nixpkgs": [
           "nix-ros-overlay",
           "nixpkgs"
-        ]
+        ],
+        "nuget-packageslock2nix": "nuget-packageslock2nix"
       }
     },
     "systems": {

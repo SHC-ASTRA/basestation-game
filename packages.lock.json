@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net8.0": {
+      "Godot.SourceGenerators": {
+        "type": "Direct",
+        "requested": "[4.6.0, )",
+        "resolved": "4.6.0",
+        "contentHash": "zPXb65IjRK6NRAq44Rz5AfI9uZc0RkhOMOVzsYuauaWwbsiKsrM0Dtl1t2A90JGbVV4Tk02qVPa3JrR8haFqIw=="
+      },
+      "GodotSharp": {
+        "type": "Direct",
+        "requested": "[4.6.0, )",
+        "resolved": "4.6.0",
+        "contentHash": "k4VnWoOPueAkTtFoUzhDnP5e4Qs3Gho0ls/0VyHD81F90HeVBvT0YlsGtS5fvkrmxl731d96bKRWNL4+Rd977g=="
+      },
+      "GodotSharpEditor": {
+        "type": "Direct",
+        "requested": "[4.6.0, )",
+        "resolved": "4.6.0",
+        "contentHash": "jpUfzyAJnG65kWsctfdXKTTPDGzv1eHVlGw/E5Fh5Axw8rGeklQJi0isAX1tBxPjcq/AuELYltpfOdUGc9f0kg==",
+        "dependencies": {
+          "GodotSharp": "4.6.0"
+        }
+      },
+      "Newtonsoft.Json": {
+        "type": "Direct",
+        "requested": "[13.0.4, )",
+        "resolved": "13.0.4",
+        "contentHash": "pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A=="
+      },
+      "Siemens.RosSharp.RosBridgeClient.ROS2": {
+        "type": "Direct",
+        "requested": "[2.2.0, )",
+        "resolved": "2.2.0",
+        "contentHash": "+uHglkT1j1PkZrcb0+CDF44b+V6PD30vPzqYMUy6B2uS8fvUJzmZjkfg/EU/GLjNSgwtKxYEjk+QngbNjpD+Bw==",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "9.0.5",
+          "Newtonsoft.Json": "13.0.3",
+          "System.Data.DataSetExtensions": "4.5.0",
+          "System.Runtime.CompilerServices.Unsafe": "6.1.2",
+          "System.Text.Encodings.Web": "9.0.5",
+          "System.Text.Json": "9.0.5",
+          "System.Threading.Channels": "9.0.5",
+          "WebSocketSharp": "1.0.3-rc11"
+        }
+      },
+      "WebSocketSharp": {
+        "type": "Direct",
+        "requested": "[1.0.3-rc11, )",
+        "resolved": "1.0.3-rc11",
+        "contentHash": "7VCF7f7zVMOvLGD8LeGS4DVXc8lOcB6kXnUMeTxigu+PMiU+6wW5Olq2gYrDU8vDRKOwFY+5RyBaLyzb8skEzA=="
+      },
+      "Microsoft.Bcl.AsyncInterfaces": {
+        "type": "Transitive",
+        "resolved": "9.0.5",
+        "contentHash": "eNQDjbtFj8kOLxbckCbn2JXTsnzK8+xkA4jg7NULO9jhIvlOSngC9BFzmiqVPpw1INQaP1pQ3YteY2XhfWNjtQ=="
+      },
+      "System.Data.DataSetExtensions": {
+        "type": "Transitive",
+        "resolved": "4.5.0",
+        "contentHash": "221clPs1445HkTBZPL+K9sDBdJRB8UN8rgjO3ztB0CQ26z//fmJXtlsr6whGatscsKGBrhJl5bwJuKSA8mwFOw=="
+      },
+      "System.IO.Pipelines": {
+        "type": "Transitive",
+        "resolved": "9.0.5",
+        "contentHash": "5WXo+3MGcnYn54+1ojf+kRzKq1Q6sDUnovujNJ2ky1nl1/kP3+PMil9LPbFvZ2mkhvAGmQcY07G2sfHat/v0Fw=="
+      },
+      "System.Runtime.CompilerServices.Unsafe": {
+        "type": "Transitive",
+        "resolved": "6.1.2",
+        "contentHash": "2hBr6zdbIBTDE3EhK7NSVNdX58uTK6iHW/P/Axmm9sl1xoGSLqDvMtpecn226TNwHByFokYwJmt/aQQNlO5CRw=="
+      },
+      "System.Text.Encodings.Web": {
+        "type": "Transitive",
+        "resolved": "9.0.5",
+        "contentHash": "HJPmqP2FsE+WVUUlTsZ4IFRSyzw40yz0ubiTnsaqm+Xo5fFZhVRvx6Zn8tLXj92/6pbre6OA4QL2A2vnCSKxJA=="
+      },
+      "System.Text.Json": {
+        "type": "Transitive",
+        "resolved": "9.0.5",
+        "contentHash": "rnP61ZfloTgPQPe7ecr36loNiGX3g1PocxlKHdY/FUpDSsExKkTxpMAlB4X35wNEPr1X7mkYZuQvW3Lhxmu7KA==",
+        "dependencies": {
+          "System.IO.Pipelines": "9.0.5",
+          "System.Text.Encodings.Web": "9.0.5"
+        }
+      },
+      "System.Threading.Channels": {
+        "type": "Transitive",
+        "resolved": "9.0.5",
+        "contentHash": "mxPWL9cgQos5PipA/1kg+GdG90HmMycQ077S5mlIWu+V1CGgVbmFiWcKRL+EQPSR8pmW1yVfzGEOrv0IJnrphA=="
+      }
+    }
+  }
+}
