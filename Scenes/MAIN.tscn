@@ -93,7 +93,7 @@ text = "Reset ROS"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Core" parent="LargePanel" unique_id=884366184 instance=ExtResource("5_125yk")]
+[node name="core" parent="LargePanel" unique_id=884366184 instance=ExtResource("5_125yk")]
 layout_mode = 2
 size_flags_horizontal = 3
 

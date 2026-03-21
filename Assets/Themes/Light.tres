@@ -2,8 +2,38 @@
 
 [ext_resource type="SystemFont" uid="uid://dppdymum6rgbi" path="res://Assets/Themes/Font.tres" id="1_e3d0t"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pot2s"]
+bg_color = Color(0.77, 0.77, 0.77, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pawb"]
+bg_color = Color(0.75, 0.75, 0.75, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_detail = 1
+anti_aliasing = false
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y35kt"]
 bg_color = Color(0.8, 0.8, 0.8, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jpo6"]
+bg_color = Color(0.75, 0.75, 0.75, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -46,7 +76,10 @@ vertical = true
 default_font = ExtResource("1_e3d0t")
 Button/colors/font_color = Color(0, 0, 0, 1)
 Button/font_sizes/font_size = 36
+Button/styles/hover = SubResource("StyleBoxFlat_pot2s")
+Button/styles/hover_pressed = SubResource("StyleBoxFlat_7pawb")
 Button/styles/normal = SubResource("StyleBoxFlat_y35kt")
+Button/styles/pressed = SubResource("StyleBoxFlat_6jpo6")
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/font_sizes/font_size = 22
 MenuButton/colors/font_color = Color(0, 0, 0, 1)

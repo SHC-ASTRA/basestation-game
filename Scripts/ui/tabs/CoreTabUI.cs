@@ -129,13 +129,22 @@ namespace UI
                 Brake.Visible = b;
             }
 
+            if (UpButtonDown)
+                ptzMsg.pitch += (float)delta;
+            else if (DownButtonDown)
+                ptzMsg.pitch -= (float)delta;
+            if (RightButtonDown)
+                ptzMsg.yaw += (float)delta;
+            else if (LeftButtonDown)
+                ptzMsg.yaw -= (float)delta;
+
             // (In/De)crease boost mode amount. Collector
             // stores the frame delta so that it takes a while to actually
             // increase the max speed
             if (RightTrigger >= 1f && LeftTrigger >= 1f)
             {
                 MaxSpeed = 0.5f;
-                MaxMotorDrive.Value = MaxSpeed * 100f;
+                MaxMotorDrive.Value = 50;
             }
             else if (RightTrigger >= 1f)
             {
@@ -214,10 +223,10 @@ namespace UI
         public override void AdvertiseToROS()
         {
             QOS ControlQOS = QOS.Presets.Default;
-            ControlQOS.HistoryPolicy = QOS.Policy.History.KEEP_LAST;
+            ControlQOS.HistoryPolicy = QOS.Policy.History.Keep_last;
             ControlQOS.Depth = 2;
-            ControlQOS.ReliabilityPolicy = QOS.Policy.Reliability.BEST_EFFORT;
-            ControlQOS.DurabilityPolicy = QOS.Policy.Durability.VOLATILE;
+            ControlQOS.ReliabilityPolicy = QOS.Policy.Reliability.Best_Effort;
+            ControlQOS.DurabilityPolicy = QOS.Policy.Durability.Volatile;
             ROS.AdvertiseTopic<CoreCtrlState>(CoreControlTopic, ControlQOS);
             ROS.AdvertiseTopic<Geometry.Twist>(TwistTopic, ControlQOS);
             ROS.AdvertiseTopic<PtzControl>(PTZTopic);

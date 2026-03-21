@@ -20,11 +20,12 @@ namespace UI.Debug
                 ROS.TopicSubscribe<T>(TopicName, (feedback) =>
                 {
                     this.feedback = feedback;
-                    CallDeferred(nameof(FeedbackHandler));
+                    if (Visible)
+                        CallDeferred(nameof(FeedbackHandler));
                 });
             });
-
         }
+
         internal T feedback;
         public abstract void FeedbackHandler();
     }

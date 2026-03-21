@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://dwah41t06sjef"]
+
+[ext_resource type="Script" uid="uid://d0rbncujpmaq2" path="res://Scripts/ui/tabs/Debug/Core/IMU.cs" id="1_vuhk8"]
+
+[node name="IMU" type="VBoxContainer" unique_id=540080357 node_paths=PackedStringArray("Orientation", "Calibration")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+alignment = 1
+script = ExtResource("1_vuhk8")
+Orientation = NodePath("Orientation")
+Calibration = NodePath("Calibration")
+
+[node name="IMU" type="Label" parent="." unique_id=1879302323]
+layout_mode = 2
+text = "IMU"
+horizontal_alignment = 1
+
+[node name="spacer" type="Panel" parent="." unique_id=1262975240]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Orientation" type="Label" parent="." unique_id=837789928]
+layout_mode = 2
+text = " Hdng:"
+
+[node name="spacer2" type="Panel" parent="." unique_id=803456510]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Calibration" type="Label" parent="." unique_id=665458123]
+layout_mode = 2
+text = " Clbr:"
+
+[node name="spacer3" type="Panel" parent="." unique_id=1555954913]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3

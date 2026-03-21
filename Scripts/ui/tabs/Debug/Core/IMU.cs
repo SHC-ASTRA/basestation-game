@@ -8,8 +8,8 @@ namespace UI.Debug
         public Label Orientation, Calibration;
         public void Update(float o, int calib)
         {
-            Orientation.Text = $" Head: {o}";
-            Calibration.Text = $" Cal: {calib}";
+            Orientation.Text = $" Hdng: {o}";
+            Calibration.Text = $" Clbr: {calib}";
         }
     }
 }
