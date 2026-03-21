@@ -7,11 +7,11 @@ namespace UI
     public partial class LanceTabUI : BaseTabUI
     {
         private FaerieControl faerie = new();
-        private const string FaerieTopic = "/bio/control/faerie";
+        private const string FaerieTopic = "/bio/faerie/control";
 
-        private LibsSystemRequest libsIn = new(true);
-        private LibsSystemResponse libsOut = new();
-        private const string LibsTopic = "/bio/control/libs_system";
+        private FireLibsRequest libsIn = new();
+        private FireLibsResponse libsOut = new();
+        private const string LibsTopic = "/bio/libs/fire";
 
         [ExportCategory("LANCE")]
         [ExportGroup("Faerie")]
@@ -57,7 +57,6 @@ namespace UI
                     Source.Stream = Failsafe;
                     Source.Play();
                 }
-                else libsIn.fire_laser = false;
                 FailsafeEngaged = t;
             };
             Laser.Pressed += () =>
@@ -67,10 +66,10 @@ namespace UI
                 {
                     Source.Stream = Fire;
                     Source.Play();
-                    libsIn.fire_laser = true;
-                    ROS.PublishServiceGoal<LibsSystemRequest, LibsSystemResponse>(LibsTopic, (_) => { }, libsIn);
+                    libsIn.unique_number = new System.Random().NextInt64();
+                    ROS.PublishServiceGoal<FireLibsRequest, FireLibsResponse>(LibsTopic, (_) => { }, libsIn);
+                    FailsafeEngaged = false;
                 }
-                else libsIn.fire_laser = false;
             };
         }
 
@@ -86,9 +85,9 @@ namespace UI
         {
             ROS.AdvertiseTopic<FaerieControl>(FaerieTopic);
 
-            ROS.AdvertiseService<LibsSystemRequest, LibsSystemResponse>(
+            ROS.AdvertiseService<FireLibsRequest, FireLibsResponse>(
                 LibsTopic,
-                (LibsSystemRequest i, out LibsSystemResponse o) => { o = libsOut; return true; }
+                (FireLibsRequest i, out FireLibsResponse o) => { o = libsOut; return true; }
             );
         }
 

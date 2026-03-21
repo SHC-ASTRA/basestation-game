@@ -84,10 +84,10 @@ namespace UI
         public override void AdvertiseToROS()
         {
             QOS ControlQOS = QOS.Presets.Default;
-            ControlQOS.HistoryPolicy = QOS.Policy.History.KEEP_LAST;
+            ControlQOS.HistoryPolicy = QOS.Policy.History.Keep_last;
             ControlQOS.Depth = 2;
-            ControlQOS.ReliabilityPolicy = QOS.Policy.Reliability.BEST_EFFORT;
-            ControlQOS.DurabilityPolicy = QOS.Policy.Durability.VOLATILE;
+            ControlQOS.ReliabilityPolicy = QOS.Policy.Reliability.Best_Effort;
+            ControlQOS.DurabilityPolicy = QOS.Policy.Durability.Volatile;
             ROS.AdvertiseTopic<ArmManual>(ControlTopic, ControlQOS);
         }
 

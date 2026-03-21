@@ -15,7 +15,7 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
     {
         public const string RosMessageName = "astra_msgs/msg/CitadelControl";
 
-        //  Topic: /bio/control/citadel
+        //  Topic: /bio/citadel/control
         public bool[] distributor_id { get; set; }
         // (0-2)
         public float move_scythe { get; set; }

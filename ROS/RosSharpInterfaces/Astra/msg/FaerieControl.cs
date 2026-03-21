@@ -15,25 +15,26 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
     {
         public const string RosMessageName = "astra_msgs/msg/FaerieControl";
 
-        //  Topic: /bio/control/faerie
+        //  Topic: /bio/faerie/control
         public float move_faerie { get; set; }
         // Negative for up, positive for down
         public float drill_speed { get; set; }
         // -1 <-> 1
-        public bool vanity_laser { get; set; }
+        public bool laser { get; set; }
+        // Controls the two red 5v lasers that don't do anything
 
         public FaerieControl()
         {
             this.move_faerie = 0.0f;
             this.drill_speed = 0.0f;
-            this.vanity_laser = false;
+            this.laser = false;
         }
 
-        public FaerieControl(float move_faerie, float drill_speed, bool vanity_laser)
+        public FaerieControl(float move_faerie, float drill_speed, bool laser)
         {
             this.move_faerie = move_faerie;
             this.drill_speed = drill_speed;
-            this.vanity_laser = vanity_laser;
+            this.laser = laser;
         }
     }
 }

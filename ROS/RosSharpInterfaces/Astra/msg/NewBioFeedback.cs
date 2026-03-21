@@ -25,23 +25,23 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
         // Temperature in Celsius from the SHT on the drill
         public float drill_humidity { get; set; }
         // Humidity in percentage from the SHT on the drill
-        public bool ground_contact { get; set; }
-        // If the end of lance is currently pressed in
+        public bool libs_grounded { get; set; }
+        // If LIBS is currently in contact with the ground
 
         public NewBioFeedback()
         {
             this.board_voltage = new BoardVoltage();
             this.drill_temp = 0.0f;
             this.drill_humidity = 0.0f;
-            this.ground_contact = false;
+            this.libs_grounded = false;
         }
 
-        public NewBioFeedback(BoardVoltage board_voltage, float drill_temp, float drill_humidity, bool ground_contact)
+        public NewBioFeedback(BoardVoltage board_voltage, float drill_temp, float drill_humidity, bool libs_grounded)
         {
             this.board_voltage = board_voltage;
             this.drill_temp = drill_temp;
             this.drill_humidity = drill_humidity;
-            this.ground_contact = ground_contact;
+            this.libs_grounded = libs_grounded;
         }
     }
 }

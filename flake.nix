@@ -3,7 +3,7 @@
     modernpkgs.url = "github:NixOS/nixpkgs/master";
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
-    astra-msgs.url = "github:SHC-ASTRA/astra_msgs/acabfd117d9711afc420612375b4e02f4ce4982d";
+    astra-msgs.url = "github:SHC-ASTRA/astra_msgs/acc84fd5e80db956503702839bc5f82b67fb6cae";
   };
   outputs =
     {

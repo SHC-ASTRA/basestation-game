@@ -11,19 +11,19 @@
 
 namespace RosSharp.RosBridgeClient.MessageTypes.Astra
 {
-    public class LibsSystemResponse : Message
+    public class FireLibsResponse : Message
     {
-        public const string RosMessageName = "astra_msgs/srv/LibsSystem";
+        public const string RosMessageName = "astra_msgs/srv/FireLibs";
 
         //  Result
         public float[] ccd_data { get; set; }
 
-        public LibsSystemResponse()
+        public FireLibsResponse()
         {
             this.ccd_data = new float[800];
         }
 
-        public LibsSystemResponse(float[] ccd_data)
+        public FireLibsResponse(float[] ccd_data)
         {
             this.ccd_data = ccd_data;
         }

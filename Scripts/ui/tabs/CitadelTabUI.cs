@@ -16,15 +16,15 @@ namespace UI
         > VacuumClient;
         BioVacuumGoal BVAG = new BioVacuumGoal();
         private BioVacuumAction BioVacuumHandler = new();
-        private const string VacuumCtrl = "/bio/actions/vacuum";
+        private const string VacuumCtrl = "/bio/vacuum";
 
         // Citadel Message
         private CitadelControl citadelMsg = new();
-        private const string citadelTopic = "/bio/control/citadel";
+        private const string citadelTopic = "/bio/citadel/control";
 
         // TestTube Service
         private BioTestTubeRequest tubeMsg = new();
-        private const string TubeCtrl = "/bio/control/test_tube";
+        private const string TubeCtrl = "/bio/test_tube";
 
         [ExportCategory("CITADEL")]
         [ExportGroup("Vacuum system")]
