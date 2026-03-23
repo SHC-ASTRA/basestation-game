@@ -17,10 +17,16 @@ namespace UI.Debug
             {
                 while (!ROS.ROSReady)
                     await Task.Delay(5);
-                ROS.TopicSubscribe<T>(TopicName, GetFeedbackHandler());
+                ROS.TopicSubscribe<T>(TopicName, (feedback) =>
+                {
+                    this.feedback = feedback;
+                    if (Visible)
+                        CallDeferred(nameof(FeedbackHandler));
+                });
             });
         }
 
-        public abstract SubscriptionHandler<T> GetFeedbackHandler();
+        internal T feedback;
+        public abstract void FeedbackHandler();
     }
 }

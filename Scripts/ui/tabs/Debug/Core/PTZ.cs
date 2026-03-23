@@ -1,5 +1,4 @@
 using Godot;
-using RosSharp.RosBridgeClient;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 namespace UI.Debug
@@ -16,7 +15,7 @@ namespace UI.Debug
         [Export]
         public Label Yaw, Pitch, Roll;
 
-        public override SubscriptionHandler<PtzFeedback> GetFeedbackHandler() => new((feedback) =>
+        public override void FeedbackHandler()
         {
             if (!Visible)
                 return;
@@ -33,6 +32,6 @@ namespace UI.Debug
                 lastConnected = feedback.connected;
                 ConnectedTrue.Visible = feedback.connected;
             }
-        });
+        }
     }
 }

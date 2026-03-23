@@ -1,6 +1,7 @@
 using IPC;
 using Godot;
 using System.Linq;
+using RosSharp.RosBridgeClient;
 using RosSharp.RosBridgeClient.MessageTypes.Astra;
 using Geometry = RosSharp.RosBridgeClient.MessageTypes.Geometry;
 
@@ -9,13 +10,13 @@ namespace UI
     public partial class CoreTabUI : BaseTabUI
     {
         private CoreCtrlState controlMsg = new();
-        private const string ctrl = "/core/control/state";
+        private const string CoreControlTopic = "/core/control/state";
 
         private Geometry.Twist twistMsg = new() { angular = new(0, 0, 0), linear = new(0, 0, 0) };
-        private const string twist = "/core/twist";
+        private const string TwistTopic = "/core/twist";
 
         private PtzControl ptzMsg = new();
-        private const string ptz = "/ptz/control";
+        private const string PTZTopic = "/ptz/control";
 
         public bool TankDriving = false;
 
@@ -128,13 +129,22 @@ namespace UI
                 Brake.Visible = b;
             }
 
+            if (UpButtonDown)
+                ptzMsg.pitch += (float)delta;
+            else if (DownButtonDown)
+                ptzMsg.pitch -= (float)delta;
+            if (RightButtonDown)
+                ptzMsg.yaw += (float)delta;
+            else if (LeftButtonDown)
+                ptzMsg.yaw -= (float)delta;
+
             // (In/De)crease boost mode amount. Collector
             // stores the frame delta so that it takes a while to actually
             // increase the max speed
             if (RightTrigger >= 1f && LeftTrigger >= 1f)
             {
                 MaxSpeed = 0.5f;
-                MaxMotorDrive.Value = MaxSpeed * 100f;
+                MaxMotorDrive.Value = 50;
             }
             else if (RightTrigger >= 1f)
             {
@@ -195,7 +205,7 @@ namespace UI
             PTZRotX.Text = "Y:" + ptzMsg.yaw.ToString().PadLeft(3, ' ');
             PTZRotY.Text = "P:" + ptzMsg.pitch.ToString().PadLeft(3, ' ');
 
-            ROS.Publish(ptz, ptzMsg);
+            ROS.Publish(PTZTopic, ptzMsg);
             if (ptzMsg.zoom_level != ZoomAmount)
             {
                 // Don't blame me for this.
@@ -205,16 +215,21 @@ namespace UI
                 //// 3: Absolute zoom control (using zoom_level)
                 ptzMsg.control_mode = 3;
                 ptzMsg.zoom_level = ZoomAmount;
-                ROS.Publish(ptz, ptzMsg);
+                ROS.Publish(PTZTopic, ptzMsg);
                 ptzMsg.control_mode = 1;
             }
         }
 
         public override void AdvertiseToROS()
         {
-            ROS.AdvertiseMessage<CoreCtrlState>(ctrl);
-            ROS.AdvertiseMessage<Geometry.Twist>(twist);
-            ROS.AdvertiseMessage<PtzControl>(ptz);
+            QOS ControlQOS = QOS.Presets.Default;
+            ControlQOS.HistoryPolicy = QOS.Policy.History.Keep_last;
+            ControlQOS.Depth = 2;
+            ControlQOS.ReliabilityPolicy = QOS.Policy.Reliability.Best_Effort;
+            ControlQOS.DurabilityPolicy = QOS.Policy.Durability.Volatile;
+            ROS.AdvertiseTopic<CoreCtrlState>(CoreControlTopic, ControlQOS);
+            ROS.AdvertiseTopic<Geometry.Twist>(TwistTopic, ControlQOS);
+            ROS.AdvertiseTopic<PtzControl>(PTZTopic);
         }
 
         public override void EmitToROS()
@@ -222,12 +237,12 @@ namespace UI
             twistMsg.linear = Lin;
             twistMsg.angular = Ang;
 
-            ROS.Publish(twist, twistMsg);
+            ROS.Publish(TwistTopic, twistMsg);
 
             controlMsg.max_duty = MaxSpeed;
             controlMsg.brake_mode = BrakeState;
 
-            ROS.Publish(ctrl, controlMsg);
+            ROS.Publish(CoreControlTopic, controlMsg);
         }
 
         public override void _ExitTree()
@@ -235,12 +250,12 @@ namespace UI
             twistMsg.linear = new(0, 0, 0);
             twistMsg.angular = new(0, 0, 0);
 
-            ROS.Publish(twist, twistMsg);
+            ROS.Publish(TwistTopic, twistMsg);
 
             controlMsg.max_duty = 0f;
             controlMsg.brake_mode = true;
 
-            ROS.Publish(ctrl, controlMsg);
+            ROS.Publish(CoreControlTopic, controlMsg);
         }
     }
 }

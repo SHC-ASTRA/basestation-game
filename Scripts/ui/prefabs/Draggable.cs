@@ -8,6 +8,15 @@ namespace UI
         private bool Global = true;
         private bool Dragging = false;
         private Vector2 originalDownPosition;
+        private Vector2 dragOffset;
+        private CanvasItem parentCanvas;
+
+        public override void _Ready()
+        {
+            parentCanvas = GetParent() as CanvasItem;
+            dragOffset = Size;
+            dragOffset.X *= 0.5f;
+        }
 
         public override void _GuiInput(InputEvent @event)
         {
@@ -30,7 +39,7 @@ namespace UI
                 }
                 else
                 {
-                    SetPosition((GetParent() as CanvasItem).GetLocalMousePosition() - originalDownPosition);
+                    SetPosition(parentCanvas.GetLocalMousePosition() - dragOffset);
                     Dragged();
                 }
         }

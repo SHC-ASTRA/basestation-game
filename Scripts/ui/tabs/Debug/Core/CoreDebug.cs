@@ -8,36 +8,23 @@ namespace UI.Debug
     {
         [ExportGroup("Board")]
         [Export]
-        Voltages Voltages;
+        Voltages voltages;
 
         [ExportGroup("IMU")]
         [Export]
         IMU imu;
 
         [ExportGroup("Motors")]
-        Control MotorContainer;
         [Export]
-        RevMotor BL, BR, FL, FR;
+        Motors motors;
 
-        public override void _Ready()
+        public override void FeedbackHandler()
         {
-            FL.name.Text = nameof(FL); FR.name.Text = nameof(FR); BL.name.Text = nameof(BL); BR.name.Text = nameof(BR);
+            voltages.Update(feedback.board_voltage);
 
-            MotorContainer = (BL.GetParent() as Control);
-            base._Ready();
+            imu.Update(feedback.orientation, feedback.imu_calib);
+
+            motors.Update(feedback.fl_motor, feedback.bl_motor, feedback.fr_motor, feedback.br_motor);
         }
-
-        public override SubscriptionHandler<NewCoreFeedback> GetFeedbackHandler() => new(feedback =>
-        {
-            Voltages.Update(feedback.board_voltage);
-
-            if (MotorContainer.Visible)
-            {
-                FL.Update(feedback.fl_motor);
-                BL.Update(feedback.bl_motor);
-                FR.Update(feedback.fr_motor);
-                BR.Update(feedback.br_motor);
-            }
-        });
     }
 }

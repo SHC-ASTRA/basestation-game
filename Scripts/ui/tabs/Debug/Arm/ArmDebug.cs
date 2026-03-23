@@ -39,7 +39,7 @@ namespace UI.Debug
             };
         }
 
-        public override SubscriptionHandler<ArmFeedback> GetFeedbackHandler() => new((feedback) =>
+        public override void FeedbackHandler()
         {
             if (!Visible)
                 return;
@@ -51,6 +51,6 @@ namespace UI.Debug
             A1.Update(feedback.axis1_motor);
             A2.Update(feedback.axis2_motor);
             A3.Update(feedback.axis3_motor);
-        });
+        }
     }
 }
