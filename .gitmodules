@@ -1,0 +1,4 @@
+[submodule "astra-ros-sharp"]
+	path = astra-ros-sharp
+	url = git@github.com:SHC-ASTRA/astra-ros-sharp.git
+	branch = stripped-down

@@ -1,6 +1,5 @@
 extends Node2D
 
-
 signal zoom_changed(float)
 signal latitude_changed(float)
 signal longitude_changed(float)
@@ -119,8 +118,8 @@ func _update_visible_rect() -> void:
 
 	var center_tile: Vector3i = loader.gps_to_tile(latitude, longitude, int(zoom))
 	var tile_bounds: Rect2 = loader.get_tile_bounds(center_tile.x, center_tile.y, center_tile.z)
-	var range_x = ((int(_size.x + step.x) - 1) / int(step.x) + 1) / 2 + 1
-	var range_y = ((int(_size.y + step.y) - 1) / int(step.y) + 1) / 2 + 1
+	var range_x = ((int(_size.x + step.x) - 1) / int(step.x) + 1) * 0.5 + 1
+	var range_y = ((int(_size.y + step.y) - 1) / int(step.y) + 1) * 0.5 + 1
 	var base_lon = tile_bounds.position.x + tile_bounds.size.x * 0.5
 	var base_lat = tile_bounds.position.y + tile_bounds.size.y * 0.5
 	for x in range(-range_x, range_x):

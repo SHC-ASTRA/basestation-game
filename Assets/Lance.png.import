@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bsxjoonlcnr0j"
-path="res://.godot/imported/BioArm.png-24a640cf59c01d3899cdfebddae6ea92.ctex"
+path="res://.godot/imported/Lance.png-19a624c646d340828d72dbb3d57c5038.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/BioArm.png"
-dest_files=["res://.godot/imported/BioArm.png-24a640cf59c01d3899cdfebddae6ea92.ctex"]
+source_file="res://Assets/Lance.png"
+dest_files=["res://.godot/imported/Lance.png-19a624c646d340828d72dbb3d57c5038.ctex"]
 
 [params]
 

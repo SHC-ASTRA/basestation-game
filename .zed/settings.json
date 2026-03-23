@@ -13,8 +13,8 @@
     "*.*~",
     "*.uid",
     "*.old",
-    ".godot",
-    ".config",
-    "*.import"
-  ]
+    "*.godot",
+    "*.config",
+    "*.import",
+  ],
 }

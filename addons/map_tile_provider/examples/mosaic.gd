@@ -18,7 +18,7 @@ signal longitude_changed(float)
 		zoom = val
 		zoom_changed.emit(val)
 
-@onready var _map = $VBoxContainer/SubViewportContainer/SubViewport/Map
+@onready var _map = $VBoxContainer/Map/SubViewportContainer/SubViewport/Map
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

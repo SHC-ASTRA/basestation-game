@@ -1,7 +1,5 @@
 using Godot;
 using System.Linq;
-using RosSharp.RosBridgeClient;
-using RosSharp.RosBridgeClient.MessageTypes.Astra;
 using System.Collections.Generic;
 
 namespace UI
@@ -12,8 +10,7 @@ namespace UI
         public Control TabsParent;
         public static Control StaticTabsParent;
 
-        [Export]
-        public short selectedTab = 0;
+        private short selectedTab = 0;
 
         public List<Button> buttons;
         public List<BaseTabUI> tabs;
@@ -36,6 +33,12 @@ namespace UI
             i = 0;
             while (i < tabs.Count)
             {
+                // Automatically set the selected tab and disable the button for the visible tab(s???)
+                if (tabs[i].Visible)
+                {
+                    buttons[i].Disabled = true;
+                    selectedTab = i;
+                }
                 tabs[i].ProcessMode = ProcessModeEnum.Disabled;
                 i++;
             }
