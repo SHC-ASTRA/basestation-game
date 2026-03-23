@@ -15,7 +15,7 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
     {
         public const string RosMessageName = "astra_msgs/srv/BioTestTube";
 
-        //  Topic: /bio/control/test_tube
+        //  Topic: /bio/test_tube
         //  Goal
         public byte tube_id { get; set; }
         // (0-2)

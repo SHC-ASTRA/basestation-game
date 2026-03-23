@@ -20,21 +20,21 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
         // Negative for up, positive for down
         public float drill_speed { get; set; }
         // -1 <-> 1
-        public bool laser { get; set; }
+        public bool drill_laser { get; set; }
         // Controls the two red 5v lasers that don't do anything
 
         public FaerieControl()
         {
             this.move_faerie = 0.0f;
             this.drill_speed = 0.0f;
-            this.laser = false;
+            this.drill_laser = false;
         }
 
-        public FaerieControl(float move_faerie, float drill_speed, bool laser)
+        public FaerieControl(float move_faerie, float drill_speed, bool drill_laser)
         {
             this.move_faerie = move_faerie;
             this.drill_speed = drill_speed;
-            this.laser = laser;
+            this.drill_laser = drill_laser;
         }
     }
 }

@@ -15,6 +15,7 @@ namespace RosSharp.RosBridgeClient.MessageTypes.Astra
     {
         public const string RosMessageName = "astra_msgs/action/BioVacuumGoal";
 
+        //  Topic: /bio/vacuum
         //  Goal
         public byte valve_id { get; set; }
         // (0-2)
