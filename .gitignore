@@ -2,5 +2,8 @@
 *.uid
 *.translation
 
+ROS/Compiler/bin
+ROS/RosSharpInterfaces
+
 .direnv
 WebsocketIP.cfg

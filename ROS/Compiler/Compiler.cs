@@ -37,3 +37,4 @@ else try
         Directory.Delete(tmp, true);
         return;
     }
+return;

@@ -65,7 +65,7 @@ namespace UI
                 "wrist_yaw_joint",
                 "wrist_roll_joint",
                 "ef_gripper_left_joint",
-            ]; ;
+            ];
 
             base._Ready();
         }
