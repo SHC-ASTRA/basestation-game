@@ -1,14 +1,17 @@
 using IPC;
 using Godot;
 using RosSharp.RosBridgeClient;
-using RosSharp.RosBridgeClient.MessageTypes.Astra;
+using RosSharp.RosBridgeClient.MessageTypes.Control;
 
 namespace UI
 {
     public partial class ArmTabUI : BaseTabUI
     {
-        private ArmManual controlMsg = new();
+        private JointJog controlMsg = new();
         private const string ControlTopic = "/arm/control/manual";
+
+        private ArmCtrlState controlTwist = new();
+        private const string ControlState = "/arm/control/state";
 
         [ExportCategory("Arm")]
         [ExportSubgroup("Axese")]
@@ -42,8 +45,28 @@ namespace UI
         private TextureRect Laser;
         public bool LaserState = false;
 
+        private const int
+            Axis0 = 0,
+            Axis1 = 1,
+            Axis2 = 2,
+            Axis3 = 3,
+            WristYaw = 4,
+            WristRoll = 5,
+            EFGripper = 6;
+
         public override void _Ready()
         {
+            controlMsg.velocities = [0d, 0d, 0d, 0d, 0d, 0d, 0d];
+            controlMsg.joint_names = [
+                "axis_0_joint",
+                "axis_1_joint",
+                "axis_2_joint",
+                "axis_3_joint",
+                "wrist_yaw_joint",
+                "wrist_roll_joint",
+                "ef_gripper_left_joint",
+            ]; ;
+
             base._Ready();
         }
 
@@ -88,37 +111,41 @@ namespace UI
             ControlQOS.Depth = 2;
             ControlQOS.ReliabilityPolicy = QOS.Policy.Reliability.Best_Effort;
             ControlQOS.DurabilityPolicy = QOS.Policy.Durability.Volatile;
-            ROS.AdvertiseTopic<ArmManual>(ControlTopic, ControlQOS);
+            ROS.AdvertiseTopic<JointJog>(ControlTopic, ControlQOS);
+            ROS.AdvertiseTopic<ArmCtrlState>(ControlState, ControlQOS);
         }
 
         public override void EmitToROS()
         {
-            controlMsg.axis0 = Mathf.RoundToInt(LeftStick.X);
-            controlMsg.axis1 = Mathf.RoundToInt(LeftStick.Y);
-            controlMsg.axis2 = Mathf.RoundToInt(RightStick.X);
-            controlMsg.axis3 = Mathf.RoundToInt(RightStick.Y);
+            controlMsg.velocities[Axis0] = LeftStick.X;
+            controlMsg.velocities[Axis1] = LeftStick.Y;
+            controlMsg.velocities[Axis2] = RightStick.X;
+            controlMsg.velocities[Axis3] = RightStick.Y;
 
-            controlMsg.brake = BrakeState;
+            controlTwist.brake_mode = BrakeState;
 
-            controlMsg.effector_roll = Mathf.RoundToInt(EFRoll);
-            controlMsg.effector_yaw = Mathf.RoundToInt(EFYaw);
+            controlMsg.velocities[WristRoll] = Mathf.RoundToInt(EFRoll);
+            controlMsg.velocities[WristYaw] = Mathf.RoundToInt(EFYaw);
 
-            controlMsg.gripper = Mathf.RoundToInt(RightTrigger - LeftTrigger);
-            controlMsg.linear_actuator = Mathf.RoundToInt(RightBumper - LeftBumper);
+            controlMsg.velocities[EFGripper] = Mathf.RoundToInt(RightTrigger - LeftTrigger);
+            // controlMsg.linear_actuator = Mathf.RoundToInt(RightBumper - LeftBumper);
 
-            controlMsg.laser = LaserState ? 1 : 0;
+            controlTwist.laser = LaserState;
 
             ROS.Publish(ControlTopic, controlMsg);
+            ROS.Publish(ControlState, controlTwist);
         }
 
         public override void _ExitTree()
         {
-            controlMsg.axis0 = controlMsg.axis1 = controlMsg.axis2 = controlMsg.axis3 = 0;
-            controlMsg.brake = true;
-            controlMsg.effector_roll = controlMsg.effector_yaw = 0;
-            controlMsg.gripper = 0;
-            controlMsg.linear_actuator = controlMsg.laser = 0;
+            controlMsg.velocities[Axis0] = controlMsg.velocities[Axis1] = controlMsg.velocities[Axis2] = controlMsg.velocities[Axis3] = 0;
+            controlTwist.brake_mode = true;
+            controlMsg.velocities[WristRoll] = controlMsg.velocities[WristYaw] = 0;
+            controlMsg.velocities[EFGripper] = 0;
+            // controlMsg.linear_actuator = 0;
+            controlTwist.laser = false;
             ROS.Publish(ControlTopic, controlMsg);
+            ROS.Publish(ControlState, controlTwist);
         }
     }
 }
