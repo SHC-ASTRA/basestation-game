@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using RosSharp.RosBridgeClient.CMessageGeneration;
 
-
 string pwd = Environment.GetEnvironmentVariable("PWD");
 
 string successDir = $"{pwd}/ROS/RosSharpInterfaces";
@@ -16,11 +15,15 @@ if (Directory.Exists(tmp))
 
 Directory.CreateDirectory(tmp);
 
-Directory.SetCurrentDirectory(Environment.GetEnvironmentVariable("ASTRAMSGS"));
+(string, string)[] ToCompile = [("astra_msgs", "ASTRAMSGS"), ("control_msgs", "CONTROLMSGS")];
 
-ServiceAutoGen.GenerateDirectoryServices("./srv", tmp, "astra_msgs", false);
-MessageAutoGen.GenerateDirectoryMessages("./msg", tmp, "astra_msgs", false);
-ActionAutoGen.GenerateDirectoryActions("./action", tmp, "astra_msgs", false);
+foreach ((string, string) ROSNamespace in ToCompile)
+{
+    Directory.SetCurrentDirectory(Environment.GetEnvironmentVariable(ROSNamespace.Item2));
+    ServiceAutoGen.GenerateDirectoryServices("./srv", tmp, ROSNamespace.Item1, false);
+    MessageAutoGen.GenerateDirectoryMessages("./msg", tmp, ROSNamespace.Item1, false);
+    ActionAutoGen.GenerateDirectoryActions("./action", tmp, ROSNamespace.Item1, false);
+}
 
 if (Directory.Exists(successDir))
     Directory.Delete(tmp, true);

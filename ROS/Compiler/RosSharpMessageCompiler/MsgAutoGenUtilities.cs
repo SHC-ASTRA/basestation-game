@@ -215,12 +215,12 @@ namespace RosSharp.RosBridgeClient.CMessageGeneration
 
             // Check if identifier is a ROS message built-in type
             // if (builtInTypeMapping.ContainsKey(identifier) && (identifier.Equals("time") || identifier.Equals("duration")))
-            if (builtInTypeMapping.ContainsKey(identifier) && identifier.Equals("duration"))
-            {
-                throw new MessageParserException(
-                    "Invalid field identifier '" + identifier + "' at " + inFilePath + ":" + lineNum +
-                    ". '" + identifier + "' is a ROS message built-in type.");
-            }
+            // if (builtInTypeMapping.ContainsKey(identifier) && identifier.Equals("duration"))
+            // {
+            //     throw new MessageParserException(
+            //         "Invalid field identifier '" + identifier + "' at " + inFilePath + ":" + lineNum +
+            //         ". '" + identifier + "' is a ROS message built-in type.");
+            // }
 
             // Check if identifier is a C# keyword
             if (!MsgAutoGenUtilities.IsValidIdentifier(identifier))

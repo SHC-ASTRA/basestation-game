@@ -188,7 +188,6 @@ namespace RosSharp.RosBridgeClient.CMessageGeneration
                 else
                 {
                     adjustedIdentifier = identifier;
-                    Console.WriteLine("Warning: Unrecognized identifier: " + identifier);
                 }
 
                 constructor += TWO_TABS + ONE_TAB + "this." + adjustedIdentifier + " = ";
@@ -242,7 +241,6 @@ namespace RosSharp.RosBridgeClient.CMessageGeneration
                 else
                 {
                     adjustedIdentifier = identifier;
-                    Console.WriteLine("Warning: Unrecognized identifier: " + identifier);
                 }
 
                 paramsIn += type + " " + adjustedIdentifier + ", ";
@@ -299,7 +297,6 @@ namespace RosSharp.RosBridgeClient.CMessageGeneration
                 writer.Write(
                     TWO_TABS + "public const string RosMessageName = \"" + rosPackageName + "/" + "action" + "/"
                     + wrapperName + "\";\n");
-                Console.WriteLine("RosMessageName: " + rosPackageName + "/" + wrapperName);
 
                 // Record goal/result/feedback declaration
                 symbolTable.Add(MsgAutoGenUtilities.LowerFirstLetter(type), msgName);

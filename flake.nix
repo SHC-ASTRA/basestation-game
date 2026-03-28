@@ -4,8 +4,7 @@
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
     nuget-packageslock2nix.url = "github:mdarocha/nuget-packageslock2nix"; 
-    astra-msgs.url =
-      "github:SHC-ASTRA/astra_msgs/93dc0e0919249d5ff3e3a601c81e5b578cfd46e9";
+    astra-msgs.url = "github:SHC-ASTRA/astra_msgs/92e0442b59ee624f6979ffec5c88c2f9023b54c3";
   };
   outputs = 
     { self, nix-ros-overlay, modernpkgs, nuget-packageslock2nix, nixpkgs, astra-msgs }@inputs:
@@ -24,56 +23,71 @@
       in {
         devShells.default = pkgs.mkShell {
           name = "basestation-game";
-          packages = with pkgs; [
-            colcon
-            mpkgs.godotPackages_4_6.godot-mono
-            mpkgs.godotPackages_4_6.export-template
-
-            (with pkgs.rosPackages.${rosDistro};
-              buildEnv {
-                paths = [
-                  ros-core
-                  ros2cli
-                  ros2run
-                  ament-cmake-core
-                  python-cmake-module
-                  rosbridge-suite
-                ];
-              })
-            astra_msgs_pkgs.astra-msgs
-          ];
+          packages =
+            (
+              with mpkgs;
+              with mpkgs.godotPackages_4_6;
+              [
+                colcon
+                (
+                  with pkgs.rosPackages.${rosDistro};
+                  buildEnv {
+                    paths = [
+                      ros2cli
+                      ros2run
+                      ros-core
+                      control-msgs
+                      rosbridge-suite
+                      ament-cmake-core
+                      python-cmake-module
+                    ];
+                  }
+                )
+                godot-mono
+                export-template
+                openssl_3_5
+                astra_msgs_pkgs.astra-msgs
+              ]
+            )
+            ++ (with pkgs; [
+              roslyn
+              dotnet-sdk_8
+              omnisharp-roslyn
+            ]);
 
           extraPaths = [ ];
 
           env = {
             ASTRAMSGS = "${inputs.astra-msgs.outPath}";
-            # ROSBRIDGE =
-            #   "${pkgs.rosPackages.${rosDistro}.rosbridge-suite.outPath}";
-            ROSBRIDGESERVER =
-              "${pkgs.rosPackages.${rosDistro}.rosbridge-server.outPath}";
-            # ROSBRIDGELIBRARY =
-            #   "${pkgs.rosPackages.${rosDistro}.rosbridge-library.outPath}";
+
+            CONTROLMSGS = "${pkgs.rosPackages.${rosDistro}.control-msgs.outPath}/share/control_msgs/";
+
+            ROSBRIDGESERVER = "${pkgs.rosPackages.${rosDistro}.rosbridge-server.outPath}";
+
             ROSCOMPILER = "./ROS/Compiler";
           };
 
           shellHook = ''
-            dotnet run --no-build --configuration Release --debug False --project $ROSCOMPILER
-            ln -s -f ${mpkgs.godotPackages_4_6.export-template-mono}/share/godot/export_templates /home/ifeatud/.local/share/godot/export_templates
-
+            if [ ! -d $ROSCOMPILER/bin/Release/net8.0 ]; then
+                dotnet run --configuration Release --debug False --project $ROSCOMPILER
+                rm $ROSCOMPILER/obj -r
+            else
+                dotnet run --no-build --configuration Release --debug False --project $ROSCOMPILER
+            fi
           '';
         };
 
         packages.default = pkgs.buildDotnetModule {
             pname = "basestation-game";
-            version = "0.1.0";
+            version = "0.5.0";
             src = ./.;
 
-            projectFile = ./basestation-game.csproj; # Use the utility to convert your lockfile into Nix dependencies 
+            projectFile = ./basestation-game.csproj; # Use $ dotnet restore to generate the pachage-lock.json file
             nugetDeps = nuget-packageslock2nix.lib { 
               inherit system;
-              name = "MyCoolApp-deps"; 
+              name = "deps"; 
               lockfiles = [ ./packages.lock.json ];
-              excludePackages = [ "Godot.SourceGenerators-4.6.0" "GodotSharp-4.6.0" "GodotSharpEditor-4.6.0" ];
+              excludePackages = [ "Godot.SourceGenerators-4.6.0" "GodotSharp-4.6.0" "GodotSharpEditor-4.6.0" "Godot.NET.Sdk-4.6.0"];
  
             };
 
