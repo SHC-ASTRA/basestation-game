@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://djddm5e7gl0of"]
 
-[ext_resource type="Script" uid="uid://t7um4faeeyrq" path="res://Scripts/ui/tabs/Debug/Common/Voltages.cs" id="1_bui6t"]
+[ext_resource type="Script" uid="uid://dpdvyr3g16u8" path="res://Scripts/ui/tabs/Debug/Common/Voltages.cs" id="1_bui6t"]
 
 [node name="Voltages" type="VBoxContainer" unique_id=1827939833 node_paths=PackedStringArray("BatVoltage", "Voltage12", "Voltage5", "Voltage3")]
 mouse_filter = 2

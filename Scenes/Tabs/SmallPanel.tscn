@@ -1,49 +1,49 @@
 [gd_scene format=3 uid="uid://dh133i8yuxjts"]
 
-[ext_resource type="Script" uid="uid://g1fm7oxy6y1p" path="res://Scripts/ui/TabController.cs" id="2_gwotu"]
-[ext_resource type="Script" uid="uid://blj4w3gbpdv55" path="res://Scripts/ui/tabs/ArmTabUI.cs" id="2_qq4qf"]
+[ext_resource type="Script" uid="uid://c8mky1mmw43v" path="res://Scripts/ui/TabController.cs" id="2_gwotu"]
+[ext_resource type="Script" uid="uid://cw3ilshfy4h26" path="res://Scripts/ui/tabs/ArmTabUI.cs" id="2_qq4qf"]
 [ext_resource type="PackedScene" uid="uid://bpojxp13gdd6l" path="res://Scenes/Prefabs/I.tscn" id="3_5ljfu"]
-[ext_resource type="Script" uid="uid://buiou1q2apvmu" path="res://Scripts/ui/tabs/CoreTabUI.cs" id="3_grmb5"]
+[ext_resource type="Script" uid="uid://b5veim00ct02r" path="res://Scripts/ui/tabs/CoreTabUI.cs" id="3_grmb5"]
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="3_gwotu"]
 [ext_resource type="PackedScene" uid="uid://cia5qesu3cdf5" path="res://Scenes/Prefabs/midway_Hprogress_bar.tscn" id="3_mxw14"]
 [ext_resource type="Theme" uid="uid://df2oheltoiwvh" path="res://Assets/Themes/ControlIndicators.tres" id="4_th4gl"]
 [ext_resource type="ArrayMesh" uid="uid://d140fswoxqbrf" path="res://Assets/PTZ/PTZbase.obj" id="5_m8v7i"]
-[ext_resource type="Script" uid="uid://jxxjq8kicbx3" path="res://Scripts/ui/tabs/AutonomyTabUI.cs" id="5_u4qwe"]
+[ext_resource type="Script" uid="uid://c3cdw00mmatpx" path="res://Scripts/ui/tabs/AutonomyTabUI.cs" id="5_u4qwe"]
 [ext_resource type="Texture2D" uid="uid://d4ba8c5m84h60" path="res://Assets/tire profile.png" id="6_lq3nq"]
 [ext_resource type="ArrayMesh" uid="uid://2wmjb5e4g57j" path="res://Assets/PTZ/PTZaxis1.obj" id="6_yplvc"]
 [ext_resource type="PackedScene" uid="uid://wbjb3q0icoe5" path="res://Scenes/Prefabs/colored_indicator.tscn" id="6_yrw8b"]
 [ext_resource type="ArrayMesh" uid="uid://dwjygjucoh5bb" path="res://Assets/PTZ/PTZaxis2.obj" id="7_7oid2"]
-[ext_resource type="Script" uid="uid://x3w6x56pbn6j" path="res://Scripts/ui/tabs/DebugTabUI.cs" id="7_qq4qf"]
+[ext_resource type="Script" uid="uid://cod2eryks8q72" path="res://Scripts/ui/tabs/DebugTabUI.cs" id="7_qq4qf"]
 [ext_resource type="Texture2D" uid="uid://d3qibna8eoiar" path="res://Assets/tire brake.png" id="7_yrw8b"]
-[ext_resource type="Script" uid="uid://bmu4lwo4u52gj" path="res://Scripts/ui/FontScaler.cs" id="8_yplvc"]
+[ext_resource type="Script" uid="uid://cghn1rxpmcyfu" path="res://Scripts/ui/FontScaler.cs" id="8_yplvc"]
 [ext_resource type="Texture2D" uid="uid://bb3iqpbhicn5k" path="res://Assets/Laser.png" id="8_yrw8b"]
-[ext_resource type="Script" uid="uid://dparcksj3vfpt" path="res://Scripts/ui/tabs/DroneTabUI.cs" id="11_cjwn0"]
-[ext_resource type="Script" uid="uid://cekou471j6lnc" path="res://Scripts/ui/tabs/CitadelTabUI.cs" id="11_f0cuh"]
+[ext_resource type="Script" uid="uid://dppgwc4krywwe" path="res://Scripts/ui/tabs/DroneTabUI.cs" id="11_cjwn0"]
+[ext_resource type="Script" uid="uid://bcl75oq36ralq" path="res://Scripts/ui/tabs/CitadelTabUI.cs" id="11_f0cuh"]
 [ext_resource type="PackedScene" uid="uid://5uqb2dju2jlv" path="res://Scenes/Prefabs/Debug/Core/motor.tscn" id="11_xfr2n"]
 [ext_resource type="PackedScene" uid="uid://dwah41t06sjef" path="res://Scenes/Prefabs/Debug/Core/imu.tscn" id="12_1gx8n"]
 [ext_resource type="Texture2D" uid="uid://c6jtf76trlo63" path="res://Assets/pump.png" id="12_a86w8"]
-[ext_resource type="Script" uid="uid://b4hy4ahso6mcu" path="res://Scripts/ui/tabs/CamsTabUI.cs" id="12_lq3nq"]
+[ext_resource type="Script" uid="uid://h8iwm6pp8q3t" path="res://Scripts/ui/tabs/CamsTabUI.cs" id="12_lq3nq"]
 [ext_resource type="AudioStream" uid="uid://byuaecc3315wy" path="res://Assets/Audio/Laser Ignition.mp3" id="12_wshk6"]
 [ext_resource type="Texture2D" uid="uid://n0hf415uy74" path="res://Assets/CommitPressed.png" id="13_1vnp5"]
 [ext_resource type="PackedScene" uid="uid://b2kcei5w7w7n6" path="res://Scenes/Prefabs/Debug/Core/ptz.tscn" id="13_4j4ic"]
 [ext_resource type="PackedScene" uid="uid://d3cdd401jxq8c" path="res://Scenes/Prefabs/II.tscn" id="13_8exja"]
 [ext_resource type="AudioStream" uid="uid://bghieuuraujar" path="res://Assets/Audio/Laser Fire.mp3" id="13_gbrgi"]
 [ext_resource type="Texture2D" uid="uid://dpbar0pn7rw1j" path="res://Assets/Fan.png" id="14_s2hv3"]
-[ext_resource type="Script" uid="uid://qlnkjw65jydy" path="res://Scripts/ui/NumericInput.cs" id="15_1gx8n"]
+[ext_resource type="Script" uid="uid://grg52rltv7fm" path="res://Scripts/ui/NumericInput.cs" id="15_1gx8n"]
 [ext_resource type="Texture2D" uid="uid://b3ka5olqga8db" path="res://Assets/Servo.png" id="15_hy72e"]
-[ext_resource type="Script" uid="uid://c5rge640u0n2w" path="res://Scripts/ui/prefabs/SelectionBox.cs" id="17_5v23t"]
+[ext_resource type="Script" uid="uid://gdpankcpcbgv" path="res://Scripts/ui/prefabs/SelectionBox.cs" id="17_5v23t"]
 [ext_resource type="Texture2D" uid="uid://bsxjoonlcnr0j" path="res://Assets/Lance.png" id="17_7rf03"]
 [ext_resource type="Texture2D" uid="uid://b1q25usu0swpw" path="res://Assets/Commit.png" id="17_gbrgi"]
 [ext_resource type="Texture2D" uid="uid://dxunigq7q2nib" path="res://Assets/TestTube.png" id="19_gbrgi"]
 [ext_resource type="Texture2D" uid="uid://c6hbb76buvj34" path="res://addons/map_tile_provider/loader.svg" id="21_j4lxw"]
-[ext_resource type="Script" uid="uid://bq6tdusvafx7" path="res://Scripts/ui/tabs/LanceTabUI.cs" id="23_w6oot"]
+[ext_resource type="Script" uid="uid://dstysa30ka6k1" path="res://Scripts/ui/tabs/LanceTabUI.cs" id="23_w6oot"]
 [ext_resource type="Theme" uid="uid://cu430ubalxs23" path="res://Assets/Themes/Spacer.tres" id="24_15sjt"]
 [ext_resource type="Texture2D" uid="uid://di6xg4f38cdx1" path="res://Assets/Tank.png" id="25_vwpm1"]
 [ext_resource type="Theme" uid="uid://ce3coqe5tlutx" path="res://Assets/Themes/NoAAorCorners.tres" id="33_rj5vk"]
-[ext_resource type="Script" uid="uid://dvbbqam6ey1df" path="res://Scripts/ui/tabs/Debug/Core/CoreDebug.cs" id="34_f0cuh"]
-[ext_resource type="Script" uid="uid://bbgsjrn1gb6hh" path="res://Scripts/ui/tabs/Debug/Auto/Macula.cs" id="34_w6oot"]
+[ext_resource type="Script" uid="uid://cpbtfvfq5tnax" path="res://Scripts/ui/tabs/Debug/Core/CoreDebug.cs" id="34_f0cuh"]
+[ext_resource type="Script" uid="uid://cvomm6euvi1p3" path="res://Scripts/ui/tabs/Debug/Auto/Macula.cs" id="34_w6oot"]
 [ext_resource type="PackedScene" uid="uid://csgu7b14vfkw3" path="res://Scenes/Prefabs/Debug/MotorDebug.tscn" id="37_w6oot"]
-[ext_resource type="Script" uid="uid://c6crq5dxm8acw" path="res://Scripts/ui/tabs/Debug/Arm/ArmDebug.cs" id="40_1gx8n"]
+[ext_resource type="Script" uid="uid://chsbwv57xwdjv" path="res://Scripts/ui/tabs/Debug/Arm/ArmDebug.cs" id="40_1gx8n"]
 [ext_resource type="PackedScene" uid="uid://djddm5e7gl0of" path="res://Scenes/Prefabs/Debug/voltages.tscn" id="40_w6oot"]
 
 [sub_resource type="Theme" id="Theme_xfr2n"]
@@ -209,6 +209,7 @@ visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("2_qq4qf")
+ROSDependent = true
 Axis0drive = NodePath("Axese/=/Drive01/Axis0")
 Axis1drive = NodePath("Axese/=/Drive01/Axis1")
 Axis2drive = NodePath("Axese/=/Drive23/Axis2")
@@ -221,7 +222,6 @@ LinearActuatorDrive = NodePath("LA_Gripper/LA/LinearActuator")
 GripperDrive = NodePath("LA_Gripper/Gripper/Gripper")
 LaserIndicator = NodePath("Laser/LaserContainer/ColoredIndicator")
 Laser = NodePath("Laser/LaserContainer/TextureRect")
-ROSDependent = true
 
 [node name="I" parent="TabsParent/arm" unique_id=1744664029 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
@@ -446,6 +446,7 @@ layout_mode = 2
 [node name="auto" type="ScrollContainer" parent="TabsParent" unique_id=247471582 node_paths=PackedStringArray("RadioFeedback", "RadioControl", "Feedback", "Control", "SendControls", "Voltages", "imu", "motors")]
 layout_mode = 2
 script = ExtResource("5_u4qwe")
+ROSDependent = true
 RadioFeedback = NodePath("HBoxContainer/Switches/Feedback")
 RadioControl = NodePath("HBoxContainer/Switches/Control")
 Feedback = NodePath("HBoxContainer/Feedback")
@@ -454,7 +455,6 @@ SendControls = NodePath("HBoxContainer/Control/Send")
 Voltages = NodePath("HBoxContainer/Feedback/InfoContainer/Voltages")
 imu = NodePath("HBoxContainer/Feedback/InfoContainer/IMU")
 motors = NodePath("HBoxContainer/Feedback/InfoContainer/Motor")
-ROSDependent = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/auto" unique_id=1322807190]
 layout_mode = 2
@@ -576,6 +576,7 @@ visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("11_f0cuh")
+ROSDependent = true
 FanDuty = NodePath("Vacuum system/Duty/Amount")
 FanTime = NodePath("Vacuum system/Time/Amount")
 VacuumSelector = NodePath("Vacuum system/Vacs/MenuButton")
@@ -593,7 +594,6 @@ ScytheDown = NodePath("Scythe/VBoxContainer/Down")
 scytheMovement = NodePath("Scythe/ScytheMovement")
 VibrationMotorIndicator = NodePath("Scythe/Vibration Motor/AspectRatioContainer/ColoredIndicator")
 VibrationMotor = NodePath("Scythe/Vibration Motor/Vibrate")
-ROSDependent = true
 
 [node name="I" parent="TabsParent/chems" unique_id=1267749996 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
@@ -1025,16 +1025,16 @@ visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("23_w6oot")
+Failsafe = ExtResource("12_wshk6")
+Fire = ExtResource("13_gbrgi")
+ROSDependent = true
 DrillBoomDown = NodePath("Faerie/Drill Arm/VBoxContainer/Up")
 DrillBoomUp = NodePath("Faerie/Drill Arm/VBoxContainer/Down")
 DrillBoomSpeed = NodePath("Faerie/Drill Arm/DrillBoom")
 DrillSpeed = NodePath("Faerie/Drill/Scabbard")
 Laser = NodePath("LIBS/Run")
 LaserFailsafe = NodePath("LIBS/Failsafe")
-Failsafe = ExtResource("12_wshk6")
-Fire = ExtResource("13_gbrgi")
 Source = NodePath("LIBS/AudioStreamPlayer2D")
-ROSDependent = true
 
 [node name="Spacer1" type="Panel" parent="TabsParent/drill" unique_id=1675851712]
 layout_mode = 2
@@ -1175,12 +1175,13 @@ visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("3_grmb5")
+Tank = ExtResource("25_vwpm1")
+Wheel = ExtResource("6_lq3nq")
+ROSDependent = true
 LMotor = NodePath("Motor/Motor Drive/LMotors")
 RMotor = NodePath("Motor/Motor Drive/RMotors")
 DrivingMode = NodePath("Motor/Tank Driving/TankMode")
 MaxMotorDrive = NodePath("Motor/Max Speed/Max Speed")
-Tank = ExtResource("25_vwpm1")
-Wheel = ExtResource("6_lq3nq")
 BrakeIndicator = NodePath("Brake/BrakeContainer/ColoredIndicator")
 Brake = NodePath("Brake/BrakeContainer/Brake")
 PTZRenderCam = NodePath("PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay/PTZCamera")
@@ -1191,7 +1192,6 @@ PTZButtonCont = NodePath("PTZ/PTZControlContainer/VBoxContainer/GridContainer")
 PTZRotX = NodePath("PTZ/PTZDisplayContainer/HBoxContainer/PTZRotationY")
 PTZRotY = NodePath("PTZ/PTZDisplayContainer/HBoxContainer/PTZRotationP")
 Zoom = NodePath("PTZ/PTZControlContainer/VBoxContainer2/Zoom")
-ROSDependent = true
 
 [node name="I" parent="TabsParent/core" unique_id=1440631658 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
@@ -1484,9 +1484,9 @@ visible = false
 layout_mode = 2
 theme = SubResource("Theme_rj5vk")
 script = ExtResource("7_qq4qf")
+ROSDependent = true
 InfoContainer = NodePath("InfoBox/InfoPanel/InfoContainer")
 DD = NodePath("InfoBox/DD")
-ROSDependent = true
 
 [node name="InfoBox" type="HBoxContainer" parent="TabsParent/debug" unique_id=1760587508]
 layout_mode = 2
@@ -1520,14 +1520,14 @@ offset_left = 54.0
 offset_right = 2206.0
 offset_bottom = 200.0
 script = ExtResource("40_1gx8n")
-VoltagesContainer = NodePath("../../../../VoltagesPanel/VoltagesContainer")
 VoltagesDisplay = ExtResource("40_w6oot")
+TopicName = "/arm/new_feedback"
+VoltagesContainer = NodePath("../../../../VoltagesPanel/VoltagesContainer")
 SocketVoltages = NodePath("../../../../VoltagesPanel/VoltagesContainer/Voltages")
 A0 = NodePath("Axis0")
 A1 = NodePath("Axis1")
 A2 = NodePath("Axis2")
 A3 = NodePath("Axis3")
-TopicName = "/arm/new_feedback"
 
 [node name="Axis0" parent="TabsParent/debug/InfoBox/DD/Arm/Motors" unique_id=994205908 instance=ExtResource("37_w6oot")]
 layout_mode = 2
@@ -1572,13 +1572,13 @@ offset_top = 2.0
 offset_right = 648.0
 offset_bottom = 198.0
 script = ExtResource("34_w6oot")
+TopicName = "/auto/macula"
 DetectedTrue = NodePath("VBoxContainer/Detected/DetectedTrue")
 ObjectID = NodePath("VBoxContainer2/ObjectID")
 Corner0 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner0")
 Corner1 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner1")
 Corner2 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner2")
 Corner3 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner3")
-TopicName = "/auto/macula"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Auto/Macula" unique_id=828360749]
 layout_mode = 2

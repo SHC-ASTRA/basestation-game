@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dwah41t06sjef"]
 
-[ext_resource type="Script" uid="uid://d0rbncujpmaq2" path="res://Scripts/ui/tabs/Debug/Core/IMU.cs" id="1_vuhk8"]
+[ext_resource type="Script" uid="uid://vkxe8nficqtc" path="res://Scripts/ui/tabs/Debug/Core/IMU.cs" id="1_vuhk8"]
 
 [node name="IMU" type="VBoxContainer" unique_id=540080357 node_paths=PackedStringArray("Orientation", "Calibration")]
 anchors_preset = 15

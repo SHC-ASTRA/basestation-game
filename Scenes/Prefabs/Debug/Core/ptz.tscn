@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b2kcei5w7w7n6"]
 
-[ext_resource type="Script" uid="uid://c5iykqlrfowm7" path="res://Scripts/ui/tabs/Debug/Core/PTZ.cs" id="1_mtual"]
+[ext_resource type="Script" uid="uid://b0lt3uth30jd1" path="res://Scripts/ui/tabs/Debug/Core/PTZ.cs" id="1_mtual"]
 [ext_resource type="Texture2D" uid="uid://b1q25usu0swpw" path="res://Assets/Commit.png" id="2_ohy42"]
 [ext_resource type="Texture2D" uid="uid://n0hf415uy74" path="res://Assets/CommitPressed.png" id="3_4ijxy"]
 

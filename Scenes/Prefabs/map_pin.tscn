@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dv6648rp4layo"]
 
 [ext_resource type="Texture2D" uid="uid://chculdmmnqx3q" path="res://Assets/Pin.png" id="1_vd82r"]
-[ext_resource type="Script" uid="uid://rk3aa48a7wuv" path="res://addons/map_tile_provider/examples/MapPin.gd" id="2_qx2vt"]
+[ext_resource type="Script" uid="uid://dqbyx3yiqks3x" path="res://addons/map_tile_provider/examples/MapPin.gd" id="2_qx2vt"]
 
 [node name="MapPin" type="Control" unique_id=1534085220 node_paths=PackedStringArray("pin_button", "popup_panel", "panel_name", "panel_name_presets", "x", "y", "delete_button", "under_pin")]
 self_modulate = Color(1, 1, 1, 0)

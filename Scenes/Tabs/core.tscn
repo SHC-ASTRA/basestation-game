@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bp5ri1uu6aqdu"]
 
 [ext_resource type="PackedScene" uid="uid://bucrqt5wwg5gn" path="res://addons/map_tile_provider/examples/mosaic.tscn" id="1_4plru"]
-[ext_resource type="Script" uid="uid://fw0xlu8w0pc7" path="res://Scripts/ui/prefabs/Draggable.cs" id="1_eb16g"]
+[ext_resource type="Script" uid="uid://b8ehofaxgxgoo" path="res://Scripts/ui/prefabs/Draggable.cs" id="1_eb16g"]
 [ext_resource type="PackedScene" uid="uid://cetxymmi0tyqv" path="res://Scenes/Prefabs/draggable_size_setter.tscn" id="1_u0c8n"]
 
 [node name="Core" type="Control" unique_id=121019408]

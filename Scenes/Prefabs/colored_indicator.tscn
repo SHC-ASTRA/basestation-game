@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://wbjb3q0icoe5"]
+[gd_scene format=3 uid="uid://wbjb3q0icoe5"]
 
-[ext_resource type="Script" uid="uid://crpw6ji6yg4ph" path="res://Scripts/ui/prefabs/ColoredIndicator.cs" id="1_a7jt8"]
+[ext_resource type="Script" uid="uid://dx6gmubh6wqjb" path="res://Scripts/ui/prefabs/ColoredIndicator.cs" id="1_a7jt8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmget"]
 bg_color = Color(0.30980393, 0.7372549, 0.34509805, 1)
@@ -10,7 +10,7 @@ corner_detail = 1
 bg_color = Color(0.94509804, 0.4, 0.37254903, 1)
 corner_detail = 1
 
-[node name="ColoredIndicator" type="BoxContainer"]
+[node name="ColoredIndicator" type="BoxContainer" unique_id=1492238964]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,13 +20,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_a7jt8")
 
-[node name="True" type="Panel" parent="."]
+[node name="True" type="Panel" parent="." unique_id=1243858689]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_lmget")
 
-[node name="False" type="Panel" parent="."]
+[node name="False" type="Panel" parent="." unique_id=718420834]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_a7jt8")
