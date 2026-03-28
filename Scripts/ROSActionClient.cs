@@ -10,7 +10,7 @@ namespace IPC
     /// <para> Look at ROS.AdvertiseAction for more info </para> </summary>
     public class ROSActionClient<A, B, C, D, E, F, G> :
     ActionClient<A, B, C, D, E, F, G>
-    where A : Action<B, C, D, E, F, G>
+    where A : RosSharp.RosBridgeClient.Action<B, C, D, E, F, G>
     where B : ActionGoal<E> where C : ActionResult<F> where D : ActionFeedback<G>
     where E : Message where F : Message where G : Message
     {

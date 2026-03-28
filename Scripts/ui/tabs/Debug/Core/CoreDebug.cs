@@ -1,6 +1,4 @@
 using Godot;
-using RosSharp.RosBridgeClient;
-using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 namespace UI.Debug
 {

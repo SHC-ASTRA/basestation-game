@@ -1,7 +1,6 @@
 using IPC;
 using Godot;
 using RosSharp.RosBridgeClient.Actionlib;
-using RosSharp.RosBridgeClient.MessageTypes.Astra;
 using RosSharp.RosBridgeClient.MessageTypes.Action;
 
 namespace UI

@@ -1,3 +1,5 @@
+global using RosSharp.RosBridgeClient.MessageTypes.Astra;
+
 using UI;
 using Godot;
 using System.Linq;
@@ -16,7 +18,7 @@ namespace IPC
         // Control signals
         // Has ROS finished booting?
         public static bool ROSReady = false;
-        // Is ROS coming down intentional? If not - crashed
+        // Should ROS be up?
         public static bool run = true;
         // Was Close called since the last time StartROS was?
         private static bool closed = false;
@@ -246,7 +248,7 @@ namespace IPC
             string actionName, A act, SendActionGoalHandler<B> actionGoalHandler,
             CancelActionGoalHandler actionCancelHandler, GoalStatus goalStatus = null, System.Action
             feedbackCallback = null, System.Action resultCallback = null, System.Action statusCallback = null)
-        where A : Action<B, C, D, E, F, G>
+        where A : RosSharp.RosBridgeClient.Action<B, C, D, E, F, G>
         where B : ActionGoal<E> where C : ActionResult<F> where D : ActionFeedback<G>
         where E : Message where F : Message where G : Message
         {
@@ -279,7 +281,10 @@ namespace IPC
         public static void Publish<T>(string topicName, T message) where T : Message
         {
             if (!topicExists(topicName) && ROSSocket != null)
+            {
                 ROSSocket.Advertise<T>(topicName);
+                GD.Print("Avertising " + topicName);
+            }
             ROSSocket.Publish(topicName, message);
         }
 

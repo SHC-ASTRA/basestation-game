@@ -2,7 +2,6 @@ using IPC;
 using Godot;
 using System.Linq;
 using RosSharp.RosBridgeClient;
-using RosSharp.RosBridgeClient.MessageTypes.Astra;
 using Geometry = RosSharp.RosBridgeClient.MessageTypes.Geometry;
 
 namespace UI

@@ -2,7 +2,6 @@ using IPC;
 using Godot;
 using UI.Debug;
 using System.Threading.Tasks;
-using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 namespace UI
 {
