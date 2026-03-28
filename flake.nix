@@ -3,7 +3,7 @@
     modernpkgs.url = "github:NixOS/nixpkgs/master";
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
-    astra-msgs.url = "github:SHC-ASTRA/astra_msgs/81fdd193ef83cc944bc149b18bb64b633412d4ef";
+    astra-msgs.url = "github:SHC-ASTRA/astra_msgs/92e0442b59ee624f6979ffec5c88c2f9023b54c3";
   };
   outputs =
     {
@@ -29,30 +29,43 @@
       {
         devShells.default = pkgs.mkShell {
           name = "basestation-game";
-          packages = with pkgs; [
-            colcon
-            omnisharp-roslyn
-            mpkgs.godotPackages_4_6.godot-mono
+          packages =
             (
-              with pkgs.rosPackages.${rosDistro};
-              buildEnv {
-                paths = [
-                  ros-core
-                  ros2cli
-                  ros2run
-                  ament-cmake-core
-                  python-cmake-module
-                  rosbridge-suite
-                ];
-              }
+              with mpkgs;
+              with mpkgs.godotPackages_4_6;
+              [
+                colcon
+                (
+                  with pkgs.rosPackages.${rosDistro};
+                  buildEnv {
+                    paths = [
+                      ros2cli
+                      ros2run
+                      ros-core
+                      control-msgs
+                      rosbridge-suite
+                      ament-cmake-core
+                      python-cmake-module
+                    ];
+                  }
+                )
+                godot-mono
+                openssl_3_5
+                astra_msgs_pkgs.astra-msgs
+              ]
             )
-            astra_msgs_pkgs.astra-msgs
-          ];
+            ++ (with pkgs; [
+              roslyn
+              dotnet-sdk_8
+              omnisharp-roslyn
+            ]);
 
           extraPaths = [ ];
 
           env = {
             ASTRAMSGS = "${inputs.astra-msgs.outPath}";
+
+            CONTROLMSGS = "${pkgs.rosPackages.${rosDistro}.control-msgs.outPath}/share/control_msgs/";
 
             ROSBRIDGESERVER = "${pkgs.rosPackages.${rosDistro}.rosbridge-server.outPath}";
 
@@ -60,45 +73,55 @@
           };
 
           shellHook = ''
-            dotnet run --no-build --configuration Release --debug False --project $ROSCOMPILER
-            rm -r $ROSCOMPILER/obj
+            if [ ! -d $ROSCOMPILER/bin/Release/net8.0 ]; then
+                dotnet run --configuration Release --debug False --project $ROSCOMPILER
+                rm $ROSCOMPILER/obj -r
+            else
+                dotnet run --no-build --configuration Release --debug False --project $ROSCOMPILER
+            fi
           '';
         };
 
-        default = pkgs.mkDerivation {
-          pname = "basestation-game";
-          version = "0.1.0";
-          src = ./.;
+        packages = {
+          default = mpkgs.stdenv.mkDerivation {
+            pname = "basestation-game";
+            version = "0.5.0";
+            src = ./.;
 
-          nativeBuildInputs = with modernpkgs; [
-            mono
-            unzip
-            makeWrapper
-            godotPackages_4_6.godot-mono
-          ];
+            nativeBuildInputs =
+              with mpkgs;
+              with mpkgs.godotPackages_4_6;
+              [
+                mono
+                unzip
+                godot-mono
+                makeWrapper
+                dotnet-sdk_8
+                export-template
+              ];
 
-          buildInputs = with modernpkgs; [
-            mono
-            unzip
-            makeWrapper
-            dotnet-sdk_10
-            godotPackages_4_6.godot-mono
-          ];
+            buildPhase = ''
+                	      runHook preBuild
 
-          buildPhase = ''
-              	      runHook preBuild
+                	      export HOME=$TMPDIR
 
-              	      export HOME=$TMPDIR
+                	      mkdir -p $HOME/.local/share/godot
+                	      ln -s ${mpkgs.godotPackages_4_6.export-template-mono}/share/godot/export_templates $HOME/.local/share/godot
 
-              	      mkdir -p $HOME/.local/share/godot
-              	      ln -s ${modernpkgs.godotPackages_4_6.export-template-mono}/share/godot/export_templates $HOME/.local/share/godot
+                	      mkdir -p $out/bin/
+                	      godot-mono --headless --verbose --export-release "nix ${system}" $out/bin/basestation-game
+               		      ls > $out/log
 
-              	      mkdir -p $out/bin/
-              	      godot-mono --path . --headless --export-release "nix ${system}" $out/bin/basestation-game
-             		      ls > $out/log
+                	      runHook postBuild
+              	    '';
 
-              	      runHook postBuild
-            	    '';
+            installPhase = ''
+              runHook preInstall
+              chmod 775 -R $out
+              ls -lsa $out > $out/log2
+              runHook postInstall
+            '';
+          };
         };
       }
     );
