@@ -98,69 +98,45 @@
               mono
               unzip
               makeWrapper
-              #dotnetCorePackages.sdk_8_0_1xx-bin
               which
               tree
-          #      godotPackages_4_6.export-templates-mono-bin
-
-
             ];
 
             buildInputs = with mpkgs; [
               mono
               unzip
               makeWrapper
-
               tree
-  
-  #godotPackages_4_6.export-templates-mono-bin
-
               which
-              #dotnetCorePackages.sdk_8_0_1xx-bin
               godotPackages_4_6.godot-mono
               godotPackages_4_6.export-template
-
             ];
 
             buildPhase = ''
               runHook preBuild
               export HOME=$TMPDIR
 
-              
-              echo tree $HOME
-              echo "WEEEEEEEE"
-
-              echo "LLLL"
-              echo "$(ls ${mpkgs.godotPackages_4_6.export-template-mono}/share/godot/export_templates/4.6.stable.mono/)"
-              echo "PPPP"
               mkdir -p $HOME/.local/share/godot
-
 
               ln -s ${mpkgs.godotPackages_4_6.export-template-mono}/share/godot/export_templates/ $HOME/.local/share/godot
 
               mkdir -p $out/bin/
 
-
-
        	      godot4.6-mono --path . --headless --verbose --export-release "nix ${system}" $out/bin/basestation-game
 
               cd $out/bin/
-              echo "$(tree -a .)"  
 
-
-              
        	      runHook postBuild'';
-
-              #postInstall = ''
-               #   wrapProgram $out/bin/basestation-game --set DOTNET_ROOT ${mpkgs.dotnetCorePackages.sdk_8_0_1xx-bin}
-                #'';
        
-            preInstall = ''
-              echo "$(tree -a .)"
-            '';
+            preInstall = '' '';
 
             installPhase = ''
-              echo "$(tree -a .)"
+              runHook preInstall
+              mkdir -p $out/bin/
+              mv $out/bin/basestation-game $out/bin/basestation-game.exe
+
+              wrapProgram $out/bin/basestation-game.exe --set DOTNET_ROOT ${mpkgs.dotnetCorePackages.sdk_8_0_1xx-bin}
+              runHook postInstall
             '';
           };
 
