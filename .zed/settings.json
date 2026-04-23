@@ -6,6 +6,7 @@
 
     ".envrc",
     ".direnv",
+    ".directory",
     "flake.lock",
 
     ".vscode",

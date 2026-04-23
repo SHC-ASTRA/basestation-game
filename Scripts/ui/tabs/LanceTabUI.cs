@@ -80,7 +80,7 @@ namespace UI
             DrillBoomSpeed.Value = _DrillBoomValue = (DrillBoomDown.ButtonPressed ? 1 : 0) - (DrillBoomUp.ButtonPressed ? 1 : 0) + Mathf.Round(LeftStick.Y);
         }
 
-        public override void AdvertiseToROS()
+        public override bool AdvertiseToROS()
         {
             ROS.AdvertiseTopic<FaerieControl>(FaerieTopic);
 
@@ -88,6 +88,7 @@ namespace UI
                 LibsTopic,
                 (FireLibsRequest i, out FireLibsResponse o) => { o = libsOut; return true; }
             );
+            return true;
         }
 
         public override void EmitToROS()

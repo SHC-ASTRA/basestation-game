@@ -2,7 +2,12 @@ using System;
 using System.IO;
 using RosSharp.RosBridgeClient.CMessageGeneration;
 
-string pwd = Environment.GetEnvironmentVariable("PWD");
+string? pwd = Environment.GetEnvironmentVariable("PWD");
+if (pwd == null)
+{
+    Console.Out.Write("What.");
+    return;
+}
 
 string successDir = $"{pwd}/ROS/RosSharpInterfaces";
 string tmp = $"{pwd}/ROS/Compiler/tmp";
@@ -19,7 +24,13 @@ Directory.CreateDirectory(tmp);
 
 foreach ((string, string) ROSNamespace in ToCompile)
 {
-    Directory.SetCurrentDirectory(Environment.GetEnvironmentVariable(ROSNamespace.Item2));
+    string? env = Environment.GetEnvironmentVariable(ROSNamespace.Item2);
+    if (env == null)
+    {
+        Console.Out.Write("Namespace environment variable not found, skipping:");
+        continue;
+    }
+    Directory.SetCurrentDirectory(env);
     ServiceAutoGen.GenerateDirectoryServices("./srv", tmp, ROSNamespace.Item1, false);
     MessageAutoGen.GenerateDirectoryMessages("./msg", tmp, ROSNamespace.Item1, false);
     ActionAutoGen.GenerateDirectoryActions("./action", tmp, ROSNamespace.Item1, false);
@@ -33,8 +44,7 @@ else try
     }
     catch (IOException E)
     {
-        Console.Out.Write("Files in use!");
+        Console.Out.Write($"Files in use! {E.StackTrace}");
         Directory.Delete(tmp, true);
-        return;
     }
 return;

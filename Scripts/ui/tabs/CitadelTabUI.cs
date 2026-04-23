@@ -98,7 +98,7 @@ namespace UI
             VibrationMotor.ButtonUp += () => { vibrate = !vibrate; VibrationMotorIndicator.Value = vibrate; };
         }
 
-        public override void AdvertiseToROS()
+        public override bool AdvertiseToROS()
         {
             // HP Lovecraft couldn't dream of something this horrendous
             VacuumClient = ROS.AdvertiseAction<
@@ -134,6 +134,8 @@ namespace UI
             );
 
             ROS.AdvertiseTopic<CitadelControl>(citadelTopic);
+
+            return true;
         }
 
         public override void _Process(double d)

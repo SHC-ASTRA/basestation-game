@@ -5,8 +5,5 @@
     <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Siemens.RosSharp.RosBridgeClient.ROS2" Version="2.2.0" />
-  </ItemGroup>
 
 </Project>

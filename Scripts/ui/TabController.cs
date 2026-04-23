@@ -47,26 +47,21 @@ namespace UI
 
         public void SwitchTab()
         {
-            short i = 0;
-            short t = -1;
-            while (i < buttons.Count)
+            buttons[selectedTab].Disabled = false;
+            tabs[selectedTab].Visible = false;
+            tabs[selectedTab].ProcessMode = ProcessModeEnum.Disabled;
+
+            for (short i = 0; i < buttons.Count; i++)
             {
-                if (i == selectedTab)
-                {
-                    buttons[i].Disabled = false;
-                    tabs[i].Hide();
-                    // Makes this node not process when it's not visible
-                    tabs[i].ProcessMode = ProcessModeEnum.Disabled;
-                }
                 if (buttons[i].ButtonPressed)
-                    t = i;
-                i++;
+                {
+                    selectedTab = i;
+                    buttons[i].Disabled = true;
+                    // Makes this node process when it's visible
+                    tabs[i].ProcessMode = ProcessModeEnum.Inherit;
+                    tabs[i].Visible = true;
+                }
             }
-            selectedTab = t;
-            buttons[t].Disabled = true;
-            // Makes this node process when it's visible
-            tabs[t].ProcessMode = ProcessModeEnum.Inherit;
-            tabs[t].Show();
         }
     }
 }

@@ -2,13 +2,16 @@ global using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 using UI;
 using Godot;
+using IPC.URDF;
 using System.Linq;
+using RosSharp.Urdf;
 using System.Threading;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using RosSharp.RosBridgeClient;
 using System.Collections.Generic;
 using RosSharp.RosBridgeClient.Protocols;
+using RosSharp.RosBridgeClient.UrdfTransfer;
 using RosSharp.RosBridgeClient.MessageTypes.Action;
 
 namespace IPC
@@ -32,7 +35,10 @@ namespace IPC
 
         // The port has to be a string because casting const ints to strings isn't compile-time constant
         // and it's prettier this way.
-        private const string ROSIP = "127.0.0.1", ROSPort = "9090", ROSWS = $"ws://{ROSIP}:{ROSPort}";
+        private const string ROSIP = "127.0.0.1", ROSPort = "9090", ROSWS = $"ws://{ROSIP}:{ROSPort}",
+        CluckyName = "core_rover", TestbedName = "testbed_description";
+
+        public static Robot Clucky, Testbed;
 
         public override void _Ready()
         {
@@ -61,13 +67,28 @@ namespace IPC
 
             ROSSocket = new(new WebSocketNetProtocol(ROSWS));
 
+            UrdfTransferFromRos urdfTransfer = new(ROS.ROSSocket, "/tmp/URDF/", "core_rover", "robot_state_publisher:robot_description");
+            urdfTransfer.Transfer();
+            if (!Task.Run<bool>(() => (urdfTransfer.Status["robotDescriptionReceived"].WaitOne(5000))).Result)
+            {
+                Godot.GD.PushError("Could not download requested URDF!");
+            }
+
+            // URDFDownloader.DownloadURDF(new URDFDownloadParameters(CluckyName, (Robot _) => Clucky = _));
+            // URDFDownloader.DownloadURDF(new URDFDownloadParameters(TestbedName, (Robot _) => Testbed = _));
+
             // Tell all tabs to readvertise
-            foreach (BaseTabUI tabs in TabController.StaticTabsParent.GetChildren().Cast<BaseTabUI>())
-                tabs.AdvertiseToROS();
+            foreach (BaseTabUI tab in TabController.StaticTabsParent.GetChildren().Cast<BaseTabUI>())
+                tab.ShouldEmit = tab.AdvertiseToROS();
 
             GD.Print("\nROS Ready\n");
-            ROSReady = true;
             run = true;
+            ROSReady = true;
+        }
+
+        public static void ReceiveURDF(Robot r)
+        {
+            Clucky = r;
         }
 
         /// <summary> Cleans up the ROS socket so that no other ROS clients think
@@ -114,10 +135,10 @@ namespace IPC
         {
             public bool main()
             {
-                OS.Execute("ros2",
-                    ["run", "rosbridge_server", "rosbridge_websocket", "--ros-args", "--params-file", "./ROS/rosbridge_conf.yaml"]
-                );
-
+                // OS.Execute("ros2",
+                //     ["run", "rosbridge_server", "rosbridge_websocket", "--ros-args", "--params-file", "./ROS/rosbridge_conf.yaml"]
+                // );
+                while (true) ;
                 // Alert the user via logs and on-screen if it does crash
                 if (run)
                     GD.Print("Rosbridge crashed!");
@@ -264,13 +285,10 @@ namespace IPC
 
         /// <summary> Uses a globally dynamic delay so that topics
         /// cannot all advertise at once, which causes ROSBridge to fail </summary>
-        public async static Task AwaitRosReady()
+        public static void AwaitRosReady()
         {
-            while (!ROSReady) { await Task.Delay(2); continue; }
-            while (requestDelay < 15)
-            {
-                Thread.Sleep(requestDelay++ * 2);
-            }
+            while (!ROSReady) Thread.Sleep(2);
+            while (requestDelay < 150) Thread.Sleep(requestDelay++);
             requestDelay = 1;
         }
         static int requestDelay = 1;
@@ -283,7 +301,7 @@ namespace IPC
             if (!topicExists(topicName) && ROSSocket != null)
             {
                 ROSSocket.Advertise<T>(topicName);
-                GD.Print("Avertising " + topicName);
+                // GD.Print("Publishing to " + topicName);
             }
             ROSSocket.Publish(topicName, message);
         }

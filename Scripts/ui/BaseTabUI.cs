@@ -14,6 +14,7 @@ namespace UI
         // ROS stuff
         [Export]
         public bool ROSDependent;
+        public bool ShouldEmit;
 
         ///<summary> EmitToROS called every (Rate)ms, with a one-off delay of (Delay)ms </summary>
         protected int Rate = 120;
@@ -43,15 +44,6 @@ namespace UI
         {
             // Start or stop the ROS emitter if this node is visible
             this.VisibilityChanged += () => { if (this.Visible) Resume(); else Pause(); };
-
-            // Spool this tab in the ROS ecosystem
-            Task.Run(async () =>
-            {
-                await ROS.AwaitRosReady();
-                Updater = new Task(() => Update(CTS.Token), CTS.Token);
-                if (CallDeferred("is_visible").AsBool())
-                    Updater.Start();
-            });
 
             base._Ready();
         }
@@ -119,14 +111,21 @@ namespace UI
 
         public void Resume()
         {
-            CTS.Dispose();
+            if (!ShouldEmit)
+                return;
+            if (CTS != null)
+                CTS.Dispose();
             CTS = new CancellationTokenSource();
-            Updater = new Task(() => Update(CTS.Token), CTS.Token);
-            Updater.Start();
+            Task.Run(() =>
+            {
+                ROS.AwaitRosReady();
+                Updater = new Task(() => Update(CTS.Token), CTS.Token);
+                Updater.Start();
+            });
         }
 
         /// <summary> Called on Ready, used to advertise associated interfaces to ROS </summary>
-        public abstract void AdvertiseToROS();
+        public abstract bool AdvertiseToROS();
 
         /// <summary> Called every (<paramref name="Slow"/>)ms, sends control data to ROS. <paramref name="Slow"/> can
         /// be changed on a per-tab basis.

@@ -219,16 +219,21 @@ namespace UI
             }
         }
 
-        public override void AdvertiseToROS()
+        public override bool AdvertiseToROS()
         {
-            QOS ControlQOS = QOS.Presets.Default;
-            ControlQOS.HistoryPolicy = QOS.Policy.History.Keep_last;
-            ControlQOS.Depth = 2;
-            ControlQOS.ReliabilityPolicy = QOS.Policy.Reliability.Best_Effort;
-            ControlQOS.DurabilityPolicy = QOS.Policy.Durability.Volatile;
+            QOS ControlQOS = new QOS(
+                QOS.Policy.History.Keep_last,
+                2,
+                QOS.Policy.Reliability.Best_Effort,
+                QOS.Policy.Durability.Volatile,
+                QOS.Policy.Duration_Unspecified,
+                QOS.Policy.Duration_Unspecified
+            );
             ROS.AdvertiseTopic<CoreCtrlState>(CoreControlTopic, ControlQOS);
             ROS.AdvertiseTopic<Geometry.Twist>(TwistTopic, ControlQOS);
             ROS.AdvertiseTopic<PtzControl>(PTZTopic);
+
+            return true;
         }
 
         public override void EmitToROS()

@@ -58,15 +58,13 @@ namespace UI
             // };
         }
 
-        public override void AdvertiseToROS()
+        public override bool AdvertiseToROS()
         {
             // ROS.RequestTopic<AutoNav>("");
+            return false;
         }
 
-        public override void _Process(double delta)
-        {
-
-        }
+        public override void _Process(double delta) { }
 
         public void FeedbackHandler()
         {
