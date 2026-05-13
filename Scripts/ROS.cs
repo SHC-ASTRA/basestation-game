@@ -4,14 +4,12 @@ using UI;
 using Godot;
 using IPC.URDF;
 using System.Linq;
-using RosSharp.Urdf;
 using System.Threading;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using RosSharp.RosBridgeClient;
 using System.Collections.Generic;
 using RosSharp.RosBridgeClient.Protocols;
-using RosSharp.RosBridgeClient.UrdfTransfer;
 using RosSharp.RosBridgeClient.MessageTypes.Action;
 
 namespace IPC
@@ -35,10 +33,7 @@ namespace IPC
 
         // The port has to be a string because casting const ints to strings isn't compile-time constant
         // and it's prettier this way.
-        private const string ROSIP = "127.0.0.1", ROSPort = "9090", ROSWS = $"ws://{ROSIP}:{ROSPort}",
-        CluckyName = "core_rover", TestbedName = "testbed_description";
-
-        public static Robot Clucky, Testbed;
+        private const string ROSIP = "127.0.0.1", ROSPort = "9090", ROSWS = $"ws://{ROSIP}:{ROSPort}";
 
         public override void _Ready()
         {
@@ -67,15 +62,15 @@ namespace IPC
 
             ROSSocket = new(new WebSocketNetProtocol(ROSWS));
 
-            UrdfTransferFromRos urdfTransfer = new(ROS.ROSSocket, "/tmp/URDF/", "core_rover", "robot_state_publisher:robot_description");
-            urdfTransfer.Transfer();
-            if (!Task.Run<bool>(() => (urdfTransfer.Status["robotDescriptionReceived"].WaitOne(5000))).Result)
-            {
-                Godot.GD.PushError("Could not download requested URDF!");
-            }
+            // Start the URDF downloads
+            // URDFDownloader.DownloadURDF("Clucky", out Thread clucky, false);
+            // URDFDownloader.DownloadURDF("Arm", out Thread arm, false);
+            // URDFDownloader.DownloadURDF("Testbed", out Thread testbed, false);
 
-            // URDFDownloader.DownloadURDF(new URDFDownloadParameters(CluckyName, (Robot _) => Clucky = _));
-            // URDFDownloader.DownloadURDF(new URDFDownloadParameters(TestbedName, (Robot _) => Testbed = _));
+            // Join all download threads
+            // clucky.Join();
+            // arm.Join();
+            // testbed.Join();
 
             // Tell all tabs to readvertise
             foreach (BaseTabUI tab in TabController.StaticTabsParent.GetChildren().Cast<BaseTabUI>())
@@ -84,11 +79,6 @@ namespace IPC
             GD.Print("\nROS Ready\n");
             run = true;
             ROSReady = true;
-        }
-
-        public static void ReceiveURDF(Robot r)
-        {
-            Clucky = r;
         }
 
         /// <summary> Cleans up the ROS socket so that no other ROS clients think
@@ -135,10 +125,9 @@ namespace IPC
         {
             public bool main()
             {
-                // OS.Execute("ros2",
-                //     ["run", "rosbridge_server", "rosbridge_websocket", "--ros-args", "--params-file", "./ROS/rosbridge_conf.yaml"]
-                // );
-                while (true) ;
+                OS.Execute("ros2",
+                    ["run", "rosbridge_server", "rosbridge_websocket", "--ros-args", "--params-file", "./ROS/rosbridge_conf.yaml"]
+                );
                 // Alert the user via logs and on-screen if it does crash
                 if (run)
                     GD.Print("Rosbridge crashed!");

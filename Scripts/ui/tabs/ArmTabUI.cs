@@ -1,6 +1,5 @@
 using IPC;
 using Godot;
-using IPC.URDF;
 using RosSharp.RosBridgeClient;
 using RosSharp.RosBridgeClient.MessageTypes.Control;
 
@@ -96,12 +95,17 @@ namespace UI
 
         public override bool AdvertiseToROS()
         {
-            if (ROS.Clucky != null)
-            {
-                controlMsg.joint_names = URDFTranslator.JointNames(ROS.Clucky);
-                controlMsg.velocities = new double[controlMsg.joint_names.Length];
-            }
-            else return false;
+            // controlMsg.joint_names = URDFTranslator.JointNames(URDFDownloader.Robots["Arm"]);
+            controlMsg.joint_names = [
+                "axis_0_joint",
+                "axis_1_joint",
+                "axis_2_joint",
+                "axis_3_joint",
+                "wrist_yaw_joint",
+                "wrist_roll_joint",
+                "ef_gripper_left_joint",
+            ];
+            controlMsg.velocities = new double[controlMsg.joint_names.Length];
 
             QOS ControlQOS = new QOS(
                 QOS.Policy.History.Keep_last,
@@ -126,7 +130,6 @@ namespace UI
             controlMsg.velocities[WristYaw] = Mathf.RoundToInt(EFYaw);
             controlMsg.velocities[WristRoll] = Mathf.RoundToInt(EFRoll);
 
-            // controlMsg.linear_actuator = Mathf.RoundToInt(RightBumper - LeftBumper);
             controlMsg.velocities[EFGripper] = Mathf.RoundToInt(RightTrigger - LeftTrigger);
 
             controlTwist.laser = LaserState;
@@ -142,7 +145,6 @@ namespace UI
             controlTwist.brake_mode = true;
             controlMsg.velocities[WristRoll] = controlMsg.velocities[WristYaw] = 0;
             controlMsg.velocities[EFGripper] = 0;
-            // controlMsg.linear_actuator = 0;
             controlTwist.laser = false;
             ROS.Publish(ControlTopic, controlMsg);
             ROS.Publish(ControlState, controlTwist);

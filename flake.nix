@@ -38,6 +38,7 @@
                 with rospkgs.rosPackages.${rosDistro};
                 buildEnv {
                   paths = [
+                    tf2-msgs
                     ros2cli
                     ros2run
                     ros-core

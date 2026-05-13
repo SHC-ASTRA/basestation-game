@@ -1,60 +1,44 @@
 using RosSharp.Urdf;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using RosSharp.RosBridgeClient.UrdfTransfer;
+using RosSharp.RosBridgeClient.MessageTypes.Std;
 
 namespace IPC.URDF
 {
-    public class URDFDownloadParameters
-    {
-        public string RobotName;
-        public System.Action<Robot> Callback;
-
-        public URDFDownloadParameters(string RobotName, System.Action<Robot> Callback)
-        {
-            this.RobotName = RobotName;
-            this.Callback = Callback;
-        }
-    }
     public class URDFDownloader
     {
-        public const string URDFParamName = "robot_state_publisher:robot_description";
+        public static readonly Dictionary<string, Robot> Robots = new();
 
-        public static void DownloadURDF(URDFDownloadParameters Parameters)
+        public static void DownloadURDF(string RobotName, out Thread t, bool debug = false)
         {
-            new Thread(new Downloader(ref Parameters).main).Start();
-        }
-
-        private class Downloader
-        {
-            public URDFDownloadParameters UDP;
-
-            public Downloader(ref URDFDownloadParameters UDP) => this.UDP = UDP;
-
-            public void main()
+            Robots.Add(RobotName, null);
+            t = new Thread(() =>
             {
-                System.IO.Directory.CreateDirectory("/tmp/URDF");
-                UrdfTransferFromRos urdfTransfer = new(ROS.ROSSocket, "/tmp/URDF/", URDFParamName, "core_rover");
-                urdfTransfer.Transfer();
-                if (!Task.Run<bool>(() => (urdfTransfer.Status["robotDescriptionReceived"].WaitOne(5000))).Result)
+                ROS.ROSSocket.Subscribe<String>("/robot_description", (o) =>
                 {
-                    Godot.GD.PushError("Could not download requested URDF!");
-                    UDP.Callback.Invoke(null);
-                }
-                Godot.GD.Print($"{UDP.RobotName} Description received... ");
-                UDP.Callback.Invoke(new Robot($"/tmp/URDF/{UDP.RobotName}"));
-            }
+                    System.IO.File.WriteAllText($"/tmp/URDF/{RobotName}", o.data);
+                    if (debug)
+                        Godot.GD.Print($"Received {RobotName} file!");
+                    Robots[RobotName] = new Robot($"/tmp/URDF/{RobotName}");
+                });
+                ulong n = Godot.Time.GetTicksMsec();
+                while (Robots[RobotName] == null)
+                    if (Godot.Time.GetTicksMsec() > n + 500000)
+                        return;
+                    else continue;
+            });
+            t.Start();
         }
     }
-}
 
-public static class URDFTranslator
-{
-    public static string[] JointNames(Robot R)
+    public static class URDFTranslator
     {
-        List<string> jointnames = new();
-        R.joints.ForEach(x => jointnames.Add(x.name));
-        return jointnames.ToArray();
+        public static string[] JointNames(Robot R)
+        {
+            string[] jointnames = new string[R.joints.Count];
+            for (int i = 0; i < jointnames.Length - 1; i++)
+                jointnames[i] = R.joints[i].name;
+            return jointnames;
+        }
     }
 }
