@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://n0hf415uy74" path="res://Assets/CommitPressed.png" id="3_4ijxy"]
 
 [node name="PTZ" type="HBoxContainer" unique_id=553327230 node_paths=PackedStringArray("ConnectedTrue", "Yaw", "Pitch", "Roll")]
+visible = false
 script = ExtResource("1_mtual")
 ConnectedTrue = NodePath("VBoxContainer/HBoxContainer/CenterContainer/Disconnected/Connected")
 Yaw = NodePath("VBoxContainer/Yaw")

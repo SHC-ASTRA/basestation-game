@@ -2,19 +2,20 @@ using IPC;
 using Godot;
 using System.Linq;
 using RosSharp.RosBridgeClient;
+using RosSharp.RosBridgeClient.MessageTypes.Sensor;
 using Geometry = RosSharp.RosBridgeClient.MessageTypes.Geometry;
 
 namespace UI
 {
     public partial class CoreTabUI : BaseTabUI
     {
-        private CoreCtrlState controlMsg = new();
+        private readonly CoreCtrlState controlMsg = new();
         private const string CoreControlTopic = "/core/control/state";
 
-        private Geometry.Twist twistMsg = new() { angular = new(0, 0, 0), linear = new(0, 0, 0) };
-        private const string TwistTopic = "/core/twist";
+        private readonly Geometry.Twist twistMsg = new() { angular = new(0, 0, 0), linear = new(0, 0, 0) };
+        private const string TwistTopic = "/core/control/cmd_vel";
 
-        private PtzControl ptzMsg = new();
+        private readonly PtzControl ptzMsg = new();
         private const string PTZTopic = "/ptz/control";
 
         public bool TankDriving = false;
@@ -47,8 +48,6 @@ namespace UI
         [ExportGroup("PTZ")]
         [ExportSubgroup("Rendering")]
         [Export]
-        public Camera3D PTZRenderCam;
-        [Export]
         public SubViewport PTZSubViewport;
         [Export]
         public MeshInstance3D PTZAxis0;
@@ -66,6 +65,11 @@ namespace UI
         [Export]
         public VSlider Zoom;
 
+        [ExportGroup("Feedback")]
+        [Export]
+        public Control Needle;
+        private NavSatFix PrevFix = new();
+
         public override void _Ready()
         {
             base._Ready();
@@ -82,21 +86,22 @@ namespace UI
             ptzMsg.control_mode = 1;
 
             // Arrays assigned in the editor dont't properly serialize across git. I hate this too.
-            Button[] PTZButtons = [.. PTZButtonCont.GetChildren().Where(static _ => _ is Button).Cast<Button>()];
+            // Button[] PTZButtons = [.. PTZButtonCont.GetChildren().Where(static _ => _ is Button).Cast<Button>()];
 
             // I know this is ugly...
-            PTZButtons[0].Pressed += () => { ptzMsg.pitch += 5; PushToPTZ(); };
-            PTZButtons[1].Pressed += () => { ptzMsg.yaw -= 5; PushToPTZ(); };
-            PTZButtons[2].Pressed += () => { ptzMsg.pitch = ptzMsg.yaw = 0; PushToPTZ(); };
-            PTZButtons[3].Pressed += () => { ptzMsg.yaw += 5; PushToPTZ(); };
-            PTZButtons[4].Pressed += () => { ptzMsg.pitch -= 5; PushToPTZ(); };
+            // PTZButtons[0].Pressed += () => { ptzMsg.pitch += 5; PushToPTZ(); };
+            // PTZButtons[1].Pressed += () => { ptzMsg.yaw -= 5; PushToPTZ(); };
+            // PTZButtons[2].Pressed += () => { ptzMsg.pitch = ptzMsg.yaw = 0; PushToPTZ(); };
+            // PTZButtons[3].Pressed += () => { ptzMsg.yaw += 5; PushToPTZ(); };
+            // PTZButtons[4].Pressed += () => { ptzMsg.pitch -= 5; PushToPTZ(); };
 
             DrivingMode.Toggled += (pressed) => { TankDriving = pressed; (DrivingMode.GetChild(0) as TextureRect).Texture = pressed ? Tank : Wheel; };
         }
 
         public void Resize()
         {
-            if (this.Size.Y < WindowSize.Y * 0.125f)
+            WindowSize = GetWindow().Size;
+            if (Size.Y < WindowSize.Y * 0.125f)
                 PTZSubViewport.Size = new Vector2I((int)(WindowSize.Y * 0.125f), (int)(WindowSize.Y * 0.125f));
         }
 
@@ -119,6 +124,9 @@ namespace UI
                 Ang.z = -RightStick.X;
             }
 
+            Lin.x *= 1.75;
+            Ang.z *= 1.5;
+
             // If ANY of these buttons are pressed, rover brakes
             bool b = XButton + AButton + BButton > 0;
             if (b != BrakeState)
@@ -136,6 +144,7 @@ namespace UI
                 ptzMsg.yaw += (float)delta;
             else if (LeftButtonDown)
                 ptzMsg.yaw -= (float)delta;
+            ptzMsg.zoom_level += (float)delta * (WhiteButton - BlackButton);
 
             // (In/De)crease boost mode amount. Collector
             // stores the frame delta so that it takes a while to actually
@@ -171,9 +180,6 @@ namespace UI
                     }
                 }
             }
-
-            // Used to keep PTZ in check
-            WindowSize = GetWindow().Size;
         }
 
         // Wraps a value between a low and high numberset
@@ -196,8 +202,8 @@ namespace UI
             // Literally just caching the conversion
             float ZoomAmount = (float)Zoom.Value;
 
-            PTZAxis0.RotationDegrees = Godot.Vector3.Up * ptzMsg.yaw;
-            PTZAxis1.RotationDegrees = Godot.Vector3.Right * ptzMsg.pitch;
+            PTZAxis0.RotationDegrees = Vector3.Up * ptzMsg.yaw;
+            PTZAxis1.RotationDegrees = Vector3.Right * ptzMsg.pitch;
 
             // User feedback
             GD.Print($"Setting PTZ rotation to (X:{ptzMsg.yaw},Y:{ptzMsg.pitch}) and zoom {ZoomAmount}");
@@ -221,7 +227,7 @@ namespace UI
 
         public override bool AdvertiseToROS()
         {
-            QOS ControlQOS = new QOS(
+            QOS ControlQOS = new (
                 QOS.Policy.History.Keep_last,
                 2,
                 QOS.Policy.Reliability.Best_Effort,
@@ -232,6 +238,35 @@ namespace UI
             ROS.AdvertiseTopic<CoreCtrlState>(CoreControlTopic, ControlQOS);
             ROS.AdvertiseTopic<Geometry.Twist>(TwistTopic, ControlQOS);
             ROS.AdvertiseTopic<PtzControl>(PTZTopic);
+
+            const float deg2rad = Mathf.Pi / 180;
+            const float minf = -74f * deg2rad;
+            const float maxf = 130f * deg2rad;
+            ROS.TopicSubscribe<NavSatFix>("/gps/fix", (fix) => {
+                // // Calculates the average velocity of all motors while preventing outliers from impacting it
+                // // That way if the rover is highcentered we don't report a speed of like 3mph
+                // float median = (cf.fl_motor.velocity + cf.fr_motor.velocity + cf.bl_motor.velocity + cf.br_motor.velocity) * 0.25f; // float flMAD = Mathf.Abs(cf.fl_motor.velocity - median); // float frMAD = Mathf.Abs(cf.fr_motor.velocity - median); // float blMAD = Mathf.Abs(cf.bl_motor.velocity - median); // float brMAD = Mathf.Abs(cf.br_motor.velocity - median); // float MAD = (flMAD + frMAD + blMAD + brMAD) * 0.25f * 3f; // float sum = 0; // byte count = 0; // if(flMAD <= MAD) {sum += cf.fl_motor.velocity; count++;} // if(frMAD <= MAD) {sum += cf.fr_motor.velocity; count++;} // if(blMAD <= MAD) {sum += cf.bl_motor.velocity; count++;} // if(brMAD <= MAD) {sum += cf.br_motor.velocity; count++;} // count = byte.Clamp(count, 1, 4); // const float VelRatio = 16f; // float t = Mathf.Clamp((float)(sum / count) / VelRatio / 8, 0, 1); // Needle.SetDeferred(Control.PropertyName.Rotation, minf + t * (maxf - minf));
+
+                double dLat = Mathf.Sin((fix.latitude - PrevFix.latitude) * 0.5);
+                dLat *= dLat;
+                double dLon = Mathf.Sin((fix.longitude - PrevFix.longitude) * 0.5);
+                dLon *= dLon;
+                dLon *= Mathf.Cos(PrevFix.latitude) * Mathf.Cos(fix.latitude);
+
+                double a = dLat + dLon;
+                double c = 2 * Mathf.Atan2(Mathf.Sqrt(a), Mathf.Sqrt(1-a));
+                double d = 3958.8 * c;
+
+                double vel = d / (fix.header.stamp.sec - PrevFix.header.stamp.sec);
+
+                Needle.SetDeferred(Control.PropertyName.Rotation, minf + Mathf.Clamp(d / 8, 0, 1) * (maxf - minf));
+
+                PrevFix = fix;
+            });
+
+            ROS.TopicSubscribe<Imu>("/core/feedback/imu/data", (data) => {
+
+            });
 
             return true;
         }
