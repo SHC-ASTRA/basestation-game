@@ -10,17 +10,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1775016165,
-        "narHash": "sha256-HhA3rx5IIlS6dKg5Eqquvg7XdIXRZlQ6/L6EUu1fx9I=",
+        "lastModified": 1779197793,
+        "narHash": "sha256-Qq1ac/UZAxDJuy2HciWj4Z+wK9190FG/+qNJYEF4IGE=",
         "owner": "SHC-ASTRA",
         "repo": "astra_msgs",
-        "rev": "5a20f3f56964dddf962f651d871d6f3537b1e9f3",
+        "rev": "39f5ed8074cad6d4e442463eb9a384de92de4dde",
         "type": "github"
       },
       "original": {
         "owner": "SHC-ASTRA",
         "repo": "astra_msgs",
-        "rev": "5a20f3f56964dddf962f651d871d6f3537b1e9f3",
+        "rev": "39f5ed8074cad6d4e442463eb9a384de92de4dde",
         "type": "github"
       }
     },
@@ -62,11 +62,11 @@
     },
     "modernpkgs": {
       "locked": {
-        "lastModified": 1778643071,
-        "narHash": "sha256-0nxOs3C7pUKYmiNB7iCRFe/6LLSur2FyQOx4iatyUYc=",
+        "lastModified": 1779059050,
+        "narHash": "sha256-fa5H87giq2k35tSnzs1pvgkhmCsFPzJUrd4pxBppNJw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b69be83792d7b769a768378cf12b282480607737",
+        "rev": "5705e031258ae76b66cbdae2ad7656727db2a5d1",
         "type": "github"
       },
       "original": {
@@ -103,11 +103,11 @@
         "rosdistro": "rosdistro"
       },
       "locked": {
-        "lastModified": 1778411196,
-        "narHash": "sha256-QC5vptkXBbnpJgSqWZ7FoKC1tmByoXRzY2z2OX5XXWw=",
+        "lastModified": 1779051774,
+        "narHash": "sha256-RRo76bLYno8OAOTVFuvHxIviiKQVhwPej7HMHDyTyAM=",
         "owner": "lopsided98",
         "repo": "nix-ros-overlay",
-        "rev": "a1b6285a6f33d0462014bb678f285903bde2af90",
+        "rev": "fc10038ac71699d1d5e75c7ecc5d58ecce9dada6",
         "type": "github"
       },
       "original": {
@@ -163,11 +163,11 @@
     "rosdistro": {
       "flake": false,
       "locked": {
-        "lastModified": 1778246549,
-        "narHash": "sha256-AIO0WXGZ7jxdB4rYljYc5C/IexjC0N3mseM0kLSY9y4=",
+        "lastModified": 1778803943,
+        "narHash": "sha256-yC8eCVZrBr4/qqXamjEWWhUGAd5L9MdmJy+2XYi+mQU=",
         "owner": "ros",
         "repo": "rosdistro",
-        "rev": "d6f0c466e56ea6518bc2340b36107ee631af1287",
+        "rev": "d0289235417ac482484d84136074d6344ac9d2bc",
         "type": "github"
       },
       "original": {

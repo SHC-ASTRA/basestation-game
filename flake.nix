@@ -3,7 +3,7 @@
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
     modernpkgs.url = "github:NixOS/nixpkgs/master";
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
-    astra-msgs.url = "github:SHC-ASTRA/astra_msgs/5a20f3f56964dddf962f651d871d6f3537b1e9f3";
+    astra-msgs.url = "github:SHC-ASTRA/astra_msgs/39f5ed8074cad6d4e442463eb9a384de92de4dde";
   };
   outputs =
     {
@@ -49,11 +49,8 @@
                   ];
                 }
               )
-              roslyn
               godot-mono
-              openssl_3_6
               dotnet-sdk_8
-              omnisharp-roslyn
               astra_msgs_pkgs.astra-msgs
             ]
           );

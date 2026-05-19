@@ -13,16 +13,15 @@ namespace UI
             BioVacuumActionGoal, BioVacuumActionResult, BioVacuumActionFeedback,
             BioVacuumGoal, BioVacuumResult, BioVacuumFeedback
         > VacuumClient;
-        BioVacuumGoal BVAG = new BioVacuumGoal();
-        private BioVacuumAction BioVacuumHandler = new();
+        private readonly BioVacuumGoal BVAG = new ();
         private const string VacuumCtrl = "/bio/vacuum";
 
         // Citadel Message
-        private CitadelControl citadelMsg = new();
+        private readonly CitadelControl citadelMsg = new();
         private const string citadelTopic = "/bio/citadel/control";
 
         // TestTube Service
-        private BioTestTubeRequest tubeMsg = new();
+        private readonly BioTestTubeRequest tubeMsg = new();
         private const string TubeCtrl = "/bio/test_tube";
 
         [ExportCategory("CITADEL")]
@@ -65,9 +64,9 @@ namespace UI
         private float scythePosRel;
         [Export]
         public ColoredIndicator VibrationMotorIndicator;
-        [Export]
-        public Button VibrationMotor;
-        private bool vibrate;
+        // [Export]
+        // public Button VibrationMotor;
+        // private bool vibrate;
 
         public override void _Ready()
         {
@@ -95,7 +94,7 @@ namespace UI
             };
             TestTubeCommit.ButtonUp += () => { TestTubeCommitTexture.Visible = false; };
 
-            VibrationMotor.ButtonUp += () => { vibrate = !vibrate; VibrationMotorIndicator.Value = vibrate; };
+            // VibrationMotor.ButtonUp += () => { vibrate = !vibrate; VibrationMotorIndicator.Value = vibrate; };
         }
 
         public override bool AdvertiseToROS()
@@ -119,7 +118,7 @@ namespace UI
                 },
                 statusCallback: () =>
                 {
-                    GD.Print("\n" + ((ActionStatus)(VacuumClient.goalStatus.status)).ToString() + "\n");
+                    GD.Print("\n" + ((ActionStatus)VacuumClient.goalStatus.status).ToString() + "\n");
                 }
             );
 
@@ -151,7 +150,7 @@ namespace UI
             citadelMsg.distributor_id[1] = Distributor1.ButtonPressed;
             citadelMsg.distributor_id[2] = Distributor2.ButtonPressed;
             citadelMsg.move_scythe = scythePosRel;
-            citadelMsg.vibration_motor = vibrate;
+            // citadelMsg.vibration_motor = vibrate;
             ROS.Publish(citadelTopic, citadelMsg);
         }
 
