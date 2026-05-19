@@ -1,4 +1,5 @@
 using Godot;
+using static UI.Debug.Debug;
 
 namespace UI.Debug
 {
@@ -8,10 +9,10 @@ namespace UI.Debug
         public Label BatVoltage, Voltage12, Voltage5, Voltage3;
         public void Update(BoardVoltage v)
         {
-            BatVoltage.Text = $" Bat volt: {v.vbatt} | {Mathf.RoundToInt(100 * v.vbatt / 14.8f).ToString()}%";
-            Voltage12.Text = $" v12: {v.v12}";
-            Voltage5.Text = $" v5: {v.v5}";
-            Voltage3.Text = $" v3: {v.v3}";
+            SetLabelText(BatVoltage, $" Bat volt: {v.vbatt} | {Mathf.RoundToInt(100 * v.vbatt / 14.8f)}%");
+            SetLabelText(Voltage12, $" v12: {v.v12}");
+            SetLabelText(Voltage5, $" v5: {v.v5}");
+            SetLabelText(Voltage3, $" v3: {v.v3}");
         }
     }
 }

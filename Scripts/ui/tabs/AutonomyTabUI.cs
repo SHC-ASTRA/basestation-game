@@ -40,8 +40,7 @@ namespace UI
                 ROS.TopicSubscribe<NewCoreFeedback>("/core/feedback_new", (feedback) =>
                 {
                     this.feedback = feedback;
-                    if (Visible)
-                        CallDeferred(nameof(FeedbackHandler));
+                    CallDeferred(nameof(FeedbackHandler));
                 });
             });
             // RadioFeedback.Toggled += (bool t) =>

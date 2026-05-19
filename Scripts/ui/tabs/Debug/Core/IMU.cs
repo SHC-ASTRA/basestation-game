@@ -1,4 +1,5 @@
 using Godot;
+using static UI.Debug.Debug;
 
 namespace UI.Debug
 {
@@ -8,8 +9,8 @@ namespace UI.Debug
         public Label Orientation, Calibration;
         public void Update(float o, int calib)
         {
-            Orientation.Text = $" Hdng: {o}";
-            Calibration.Text = $" Clbr: {calib}";
+            SetLabelText(Orientation, $" Hdng: {o}");
+            SetLabelText(Calibration, $" Clbr: {calib}");
         }
     }
 }

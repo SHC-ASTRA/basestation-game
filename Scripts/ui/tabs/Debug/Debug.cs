@@ -5,28 +5,34 @@ using System.Threading.Tasks;
 
 namespace UI.Debug
 {
-    public abstract partial class Debug<T> : Control where T : Message
+    public static partial class Debug
     {
-        [Export]
-        public string TopicName;
-
-        public override void _Ready()
+        public abstract partial class FeedbackProvider<T> : Visibility where T : Message
         {
-            base._Ready();
-            Task.Run(async () =>
+            [Export]
+            public string TopicName;
+
+            public override void _Ready()
             {
-                while (!ROS.ROSReady)
-                    await Task.Delay(5);
-                ROS.TopicSubscribe<T>(TopicName, (feedback) =>
+                base._Ready();
+                Task.Run(async () =>
                 {
-                    this.feedback = feedback;
-                    if (Visible)
+                    while (!ROS.ROSReady)
+                        await Task.Delay(5);
+                    ROS.TopicSubscribe<T>(TopicName, (feedback) =>
+                    {
+                        this.feedback = feedback;
                         CallDeferred(nameof(FeedbackHandler));
+                    });
                 });
-            });
+            }
+
+            internal T feedback;
+            public abstract void FeedbackHandler();
+
         }
 
-        internal T feedback;
-        public abstract void FeedbackHandler();
+        public static void SetLabelText(Label t, string s) =>
+            t.SetDeferred(Label.PropertyName.Text, s);   
     }
 }

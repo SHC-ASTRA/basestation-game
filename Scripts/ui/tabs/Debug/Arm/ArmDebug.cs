@@ -1,8 +1,9 @@
 using Godot;
+using static UI.Debug.Debug;
 
 namespace UI.Debug
 {
-    public partial class ArmDebug : Debug<ArmFeedback>
+    public partial class ArmDebug : FeedbackProvider<ArmFeedback>
     {
         [ExportGroup("Board")]
         [Export]
@@ -31,7 +32,7 @@ namespace UI.Debug
                 {
                     for (int i = VoltagesContainer.GetChildren().Count - 1; i >= 1; i--)
                         VoltagesContainer.GetChild(i).QueueFree();
-                    DigitVoltages = (VoltagesDisplay.Instantiate() as Voltages);
+                    DigitVoltages = VoltagesDisplay.Instantiate() as Voltages;
                     VoltagesContainer.AddChild(DigitVoltages);
                 }
             };
@@ -39,7 +40,7 @@ namespace UI.Debug
 
         public override void FeedbackHandler()
         {
-            if (!Visible)
+            if (!visible)
                 return;
 
             SocketVoltages.Update(feedback.socket_voltage);

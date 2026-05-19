@@ -1,8 +1,9 @@
 using Godot;
+using static UI.Debug.Debug;
 
 namespace UI.Debug
 {
-    public partial class Socket : Debug<SocketFeedback>
+    public partial class Socket : FeedbackProvider<SocketFeedback>
     {
         [ExportGroup("Axis0")]
         [Export]
@@ -32,7 +33,7 @@ namespace UI.Debug
 
         public override void FeedbackHandler()
         {
-            if (!Visible)
+            if (!visible)
                 return;
             Axis0.Set(feedback.axis0_angle, feedback.axis0_current, feedback.axis0_temp, feedback.axis0_voltage);
             Axis1.Set(feedback.axis1_angle, feedback.axis1_current, feedback.axis1_temp, feedback.axis1_voltage);
@@ -42,9 +43,9 @@ namespace UI.Debug
 
         sealed class Axis(int ID, Label A, Label C, Label T, Label V)
         {
-            private int id = ID;
+            private readonly int id = ID;
 
-            private int AngleLength = AngleText.Length + 4,
+            private readonly int AngleLength = AngleText.Length + 4,
             CurrentLength = CurrentText.Length + 4,
             TempLength = TempText.Length + 4,
             VoltageLength = VoltageText.Length + 4;
@@ -52,10 +53,10 @@ namespace UI.Debug
             public Label Angle = A, Current = C, Temp = T, Voltage = V;
             public void Set(float _Angle, float _Current, float _Temp, float _Voltage)
             {
-                Angle.Text = $"{id}{AngleText}{_Angle.ToString()}".PadRight(AngleLength);
-                Current.Text = $"{id}{CurrentText}{_Current.ToString()}".PadRight(CurrentLength);
-                Temp.Text = $"{id}{TempText}{_Temp.ToString()}".PadRight(TempLength);
-                Voltage.Text = $"{id}{VoltageText}{_Voltage.ToString()}".PadRight(VoltageLength);
+                SetLabelText(Angle, $"{id}{AngleText}{_Angle}".PadRight(AngleLength));
+                SetLabelText(Current , $"{id}{CurrentText}{_Current}".PadRight(CurrentLength));
+                SetLabelText(Temp, $"{id}{TempText}{_Temp}".PadRight(TempLength));
+                SetLabelText(Voltage, $"{id}{VoltageText}{_Voltage}".PadRight(VoltageLength));
             }
         }
     }

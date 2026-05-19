@@ -1,16 +1,17 @@
 using Godot;
+using static UI.Debug.Debug;
 
 namespace UI.Debug
 {
-    public partial class Digit : Debug<DigitFeedback>
+    public partial class Digit : FeedbackProvider<DigitFeedback>
     {
         [Export]
         public Label WristAngle;
         public override void FeedbackHandler()
         {
-            if (!Visible)
+            if (!visible)
                 return;
-            WristAngle.Text = $"Angle: {feedback.wrist_angle.ToString()}°".PadRight("Angle: ".Length + 4);
+            SetLabelText(WristAngle, $"Angle: {feedback.wrist_angle}°".PadRight("Angle: ".Length + 4));
         }
     }
 }

@@ -1,8 +1,9 @@
 using Godot;
+using static UI.Debug.Debug;
 
 namespace UI.Debug
 {
-    public partial class Auto : Debug<AutoFeedback>
+    public partial class Auto : FeedbackProvider<AutoFeedback>
     {
         [Export]
         TextureRect DetectedTrue;
@@ -16,10 +17,8 @@ namespace UI.Debug
 
         public override void FeedbackHandler()
         {
-            if (!Visible)
+            if (!visible)
                 return;
-
-
         }
     }
 }

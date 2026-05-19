@@ -1,8 +1,9 @@
 using Godot;
+using static UI.Debug.Debug;
 
 namespace UI.Debug
 {
-    public partial class Macula : Debug<MaculaFeedback>
+    public partial class Macula : FeedbackProvider<MaculaFeedback>
     {
         [Export]
         TextureRect DetectedTrue;
@@ -16,27 +17,27 @@ namespace UI.Debug
 
         public override void FeedbackHandler()
         {
-            if (!Visible)
+            if (!visible)
                 return;
 
             if (prevDetected != feedback.detected)
             {
-                DetectedTrue.Visible = prevDetected = feedback.detected;
+                DetectedTrue.SetDeferred(CanvasItem.MethodName.IsVisible, prevDetected = feedback.detected);
                 if (prevDetected)
                 {
-                    ObjectID.Text = $"Object ID: {feedback.object_id}";
-                    Corner0.Text = $"Corner 0: {string.Join(',', feedback.x0, feedback.y0)}";
-                    Corner1.Text = $"Corner 1: {string.Join(',', feedback.x1, feedback.y1)}";
-                    Corner2.Text = $"Corner 2: {string.Join(',', feedback.x2, feedback.y2)}";
-                    Corner3.Text = $"Corner 3: {string.Join(',', feedback.x3, feedback.y3)}";
+                    SetLabelText(ObjectID, $"Object ID: {feedback.object_id}");
+                    SetLabelText(Corner0, $"Corner 0: {string.Join(',', feedback.x0, feedback.y0)}");
+                    SetLabelText(Corner1, $"Corner 1: {string.Join(',', feedback.x1, feedback.y1)}");
+                    SetLabelText(Corner2, $"Corner 2: {string.Join(',', feedback.x2, feedback.y2)}");
+                    SetLabelText(Corner3, $"Corner 3: {string.Join(',', feedback.x3, feedback.y3)}");
                 }
                 else
                 {
-                    ObjectID.Text = "No object!";
-                    Corner0.Text = "";
-                    Corner1.Text = "";
-                    Corner2.Text = "";
-                    Corner3.Text = "";
+                    SetLabelText(ObjectID, "No object!");
+                    SetLabelText(Corner0, "");
+                    SetLabelText(Corner1, "");
+                    SetLabelText(Corner2, "");
+                    SetLabelText(Corner3, "");
                 }
             }
         }

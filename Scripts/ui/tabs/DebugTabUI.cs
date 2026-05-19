@@ -24,7 +24,7 @@ namespace UI.Debug
             DD.Selected = 0;
 
             // Sub-dropdowns are children of the main dropdown
-            SubDDs = DD.GetChildren().OfType<OptionButton>().ToArray();
+            SubDDs = [.. DD.GetChildren().OfType<OptionButton>()];
 
             DD.ItemSelected += OnMainSelected;
 

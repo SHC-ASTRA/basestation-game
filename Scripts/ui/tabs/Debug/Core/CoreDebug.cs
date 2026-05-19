@@ -1,8 +1,9 @@
 using Godot;
+using static UI.Debug.Debug;
 
 namespace UI.Debug
 {
-    public partial class CoreDebug : Debug<NewCoreFeedback>
+    public partial class CoreDebug : FeedbackProvider<NewCoreFeedback>
     {
         [ExportGroup("Board")]
         [Export]

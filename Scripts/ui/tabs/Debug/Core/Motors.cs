@@ -2,7 +2,7 @@ using Godot;
 
 namespace UI.Debug
 {
-    public partial class Motors : Control
+    public partial class Motors : Visibility
     {
         Control MotorContainer;
         [Export]
@@ -15,18 +15,18 @@ namespace UI.Debug
             FR.name.Text = nameof(FR);
             BR.name.Text = nameof(BR);
 
-            MotorContainer = (FL.GetParent() as Control);
+            MotorContainer = FL.GetParent() as Control;
         }
 
         public void Update(RevMotorState fl, RevMotorState bl, RevMotorState fr, RevMotorState br)
         {
-            if (MotorContainer.Visible)
-            {
-                FL.Update(fl);
-                BL.Update(bl);
-                FR.Update(fr);
-                BR.Update(br);
-            }
+            if (!visible)
+                return;
+                
+            FL.Update(fl);
+            BL.Update(bl);
+            FR.Update(fr);
+            BR.Update(br);
         }
     }
 }

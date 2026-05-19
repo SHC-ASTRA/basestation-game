@@ -5,15 +5,15 @@ namespace UI
 {
     public partial class LanceTabUI : BaseTabUI
     {
-        private FaerieControl faerie = new();
-        private const string FaerieTopic = "/bio/faerie/control";
+        private readonly LanceControl lance = new();
+        private const string LanceTopic = "/bio/lance/control";
 
-        private FireLibsRequest libsIn = new();
-        private FireLibsResponse libsOut = new();
+        private readonly FireLibsRequest libsIn = new();
+        private readonly FireLibsResponse libsOut = new();
         private const string LibsTopic = "/bio/libs/fire";
 
         [ExportCategory("LANCE")]
-        [ExportGroup("Faerie")]
+        [ExportGroup("Lance")]
         [Export]
         public Button DrillBoomDown;
         [Export]
@@ -82,7 +82,7 @@ namespace UI
 
         public override bool AdvertiseToROS()
         {
-            ROS.AdvertiseTopic<FaerieControl>(FaerieTopic);
+            ROS.AdvertiseTopic<LanceControl>(LanceTopic);
 
             ROS.AdvertiseService<FireLibsRequest, FireLibsResponse>(
                 LibsTopic,
@@ -93,14 +93,14 @@ namespace UI
 
         public override void EmitToROS()
         {
-            faerie.move_faerie = _DrillBoomValue;
-            faerie.drill_speed = _DrillSpeedValue;
-            ROS.Publish(FaerieTopic, faerie);
+            lance.move_lance = _DrillBoomValue;
+            lance.drill_speed = _DrillSpeedValue;
+            ROS.Publish(LanceTopic, lance);
         }
 
         public override void _ExitTree()
         {
-            ROS.ROSSocket.Unadvertise(FaerieTopic);
+            ROS.ROSSocket.Unadvertise(LanceTopic);
         }
     }
 }

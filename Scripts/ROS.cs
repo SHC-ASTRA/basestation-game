@@ -29,7 +29,7 @@ namespace IPC
         public static RosSocket ROSSocket;
         private static ROSBridgeThread ROSThread;
 
-        private readonly static HashSet<string> topicNames = new(), actionNames = new(), serviceNames = new();
+        private readonly static HashSet<string> topicNames = [], actionNames = [], serviceNames = [];
 
         // The port has to be a string because casting const ints to strings isn't compile-time constant
         // and it's prettier this way.
@@ -209,9 +209,9 @@ namespace IPC
         // ROS# interaction helpers
         // --------------------------------------
 
-        public static bool topicExists(string topicName) => topicNames.Contains(topicName);
-        public static bool serviceExists(string serviceName) => serviceNames.Contains(serviceName);
-        public static bool actionExists(string actionName) => actionNames.Contains(actionName);
+        public static bool TopicExists(string topicName) => topicNames.Contains(topicName);
+        public static bool ServiceExists(string serviceName) => serviceNames.Contains(serviceName);
+        public static bool ActionExists(string actionName) => actionNames.Contains(actionName);
 
         /// <summary> Takes Message Topic type <typeparamref name="T"/> and the corresponding <paramref name="topicName"/> and then advertises it to ROS </summary>
         public static void AdvertiseTopic<T>(string topicName, QOS qosProfile = null) where T : Message
@@ -287,7 +287,7 @@ namespace IPC
         /// advertises it first and then publishes the message. </summary>
         public static void Publish<T>(string topicName, T message) where T : Message
         {
-            if (!topicExists(topicName) && ROSSocket != null)
+            if (!TopicExists(topicName) && ROSSocket != null)
             {
                 ROSSocket.Advertise<T>(topicName);
                 // GD.Print("Publishing to " + topicName);
@@ -305,7 +305,7 @@ namespace IPC
             T args
         ) where T : Message where P : Message
         {
-            if (!serviceExists(serviceName))
+            if (!ServiceExists(serviceName))
                 return;
             ROSSocket.CallService<T, P>(serviceName, response, args);
         }

@@ -7,7 +7,7 @@ namespace IPC.URDF
 {
     public class URDFDownloader
     {
-        public static readonly Dictionary<string, Robot> Robots = new();
+        public static readonly Dictionary<string, Robot> Robots = [];
 
         public static void DownloadURDF(string RobotName, out Thread t, bool debug = false)
         {
