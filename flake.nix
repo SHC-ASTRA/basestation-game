@@ -50,7 +50,7 @@
                 }
               )
               godot-mono
-              dotnet-sdk_8
+              dotnet-sdk_9
               astra_msgs_pkgs.astra-msgs
             ]
           );
@@ -61,6 +61,8 @@
             CONTROLMSGS = "${rospkgs.rosPackages.${rosDistro}.control-msgs.outPath}/share/control_msgs/";
 
             ROSCOMPILER = "./ROS/Compiler";
+
+            DOTNET_ROOT = "${pkgs.dotnet-sdk_9}";
           };
         };
       }
