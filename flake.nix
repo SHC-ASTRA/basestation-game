@@ -49,6 +49,7 @@
                   ];
                 }
               )
+              roslyn-ls
               godot-mono
               dotnet-sdk_9
               astra_msgs_pkgs.astra-msgs
@@ -64,6 +65,10 @@
 
             DOTNET_ROOT = "${pkgs.dotnet-sdk_9}";
           };
+          shellHook = ''
+            mkdir -p .dev-bin
+            ln -sf "${pkgs.roslyn-ls.outPath}/bin/Microsoft.CodeAnalysis.LanguageServer" .dev-bin/roslyn-ls
+          '';
         };
       }
     );

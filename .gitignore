@@ -8,3 +8,5 @@ ROS/RosSharpInterfaces
 .directory
 .direnv
 WebsocketIP.cfg
+
+.dev-bin

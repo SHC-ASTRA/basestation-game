@@ -18,4 +18,12 @@
     "*.config",
     "*.import",
   ],
+  "lsp": {
+    "roslyn": {
+      "binary": {
+        "path": ".dev-bin/roslyn-ls",
+        "arguments": ["--stdio", "--autoLoadProjects"],
+      },
+    },
+  },
 }
