@@ -19,6 +19,7 @@ namespace UI.Debug
                 {
                     while (!ROS.ROSReady)
                         await Task.Delay(5);
+                    CallDeferredThreadGroup(GodotObject.MethodName.Connect, [Node.SignalName.TreeExiting, Callable.From(() => ROS.TopicUnsubscribe(TopicName))]);
                     ROS.TopicSubscribe<T>(TopicName, (feedback) =>
                     {
                         this.feedback = feedback;
@@ -29,10 +30,9 @@ namespace UI.Debug
 
             internal T feedback;
             public abstract void FeedbackHandler();
-
         }
 
         public static void SetLabelText(Label t, string s) =>
-            t.SetDeferred(Label.PropertyName.Text, s);   
+            t.SetDeferred(Label.PropertyName.Text, s);
     }
 }

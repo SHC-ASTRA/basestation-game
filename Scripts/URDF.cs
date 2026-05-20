@@ -9,12 +9,14 @@ namespace IPC.URDF
     {
         public static readonly Dictionary<string, Robot> Robots = [];
 
+        private const string RobotDescriptionTopic = "/robot_description";
+
         public static void DownloadURDF(string RobotName, out Thread t, bool debug = false)
         {
             Robots.Add(RobotName, null);
             t = new Thread(() =>
             {
-                ROS.ROSSocket.Subscribe<String>("/robot_description", (o) =>
+                ROS.ROSSocket.Subscribe<String>(RobotDescriptionTopic, (o) =>
                 {
                     System.IO.File.WriteAllText($"/tmp/URDF/{RobotName}", o.data);
                     if (debug)
@@ -24,8 +26,12 @@ namespace IPC.URDF
                 ulong n = Godot.Time.GetTicksMsec();
                 while (Robots[RobotName] == null)
                     if (Godot.Time.GetTicksMsec() > n + 500000)
+                    {
+                        ROS.TopicUnsubscribe(RobotDescriptionTopic);
                         return;
+                    }
                     else continue;
+                ROS.TopicUnsubscribe(RobotDescriptionTopic);
             });
             t.Start();
         }

@@ -2,7 +2,6 @@ global using RosSharp.RosBridgeClient.MessageTypes.Astra;
 
 using UI;
 using Godot;
-using IPC.URDF;
 using System.Linq;
 using System.Threading;
 using System.Net.Sockets;
@@ -11,10 +10,11 @@ using RosSharp.RosBridgeClient;
 using System.Collections.Generic;
 using RosSharp.RosBridgeClient.Protocols;
 using RosSharp.RosBridgeClient.MessageTypes.Action;
+using System;
 
 namespace IPC
 {
-    public partial class ROS : Godot.Node
+    public partial class ROS : Node
     {
         // Control signals
         // Has ROS finished booting?
@@ -29,7 +29,7 @@ namespace IPC
         public static RosSocket ROSSocket;
         private static ROSBridgeThread ROSThread;
 
-        private readonly static HashSet<string> topicNames = [], actionNames = [], serviceNames = [];
+        private readonly static HashSet<string> topicNames = [], actionNames = [], serviceNames = [], subscriptionNames = [];
 
         // The port has to be a string because casting const ints to strings isn't compile-time constant
         // and it's prettier this way.
@@ -50,7 +50,7 @@ namespace IPC
             // Spawn ROSBridgeThread instance
             ROSThread = new ROSBridgeThread();
             //  Spool the thread
-            ROSThread.Start(new Callable(ROSThread, "main"));
+            ROSThread.Start(new Callable(ROSThread, nameof(ROSThread.Main)));
 
             // Waits for ROSBridge to come up. Necessary as if we don't we might start sending/requesting data before it's ready
             if (!await WaitForRosbridgeAsync(ROSIP, int.Parse(ROSPort), 40, 400))
@@ -107,6 +107,9 @@ namespace IPC
                 foreach (string actionName in actionNames)
                     GD.Print($"Unadvertising action {actionName}");
                 actionNames.Clear();
+                foreach (string subscriptionName in subscriptionNames)
+                    GD.Print($"Unadvertising action {subscriptionName}");
+                subscriptionNames.Clear();
 
                 // Halt EmitToROS threads
                 run = false;
@@ -123,7 +126,7 @@ namespace IPC
         /// </summary>
         private partial class ROSBridgeThread : GodotThread
         {
-            public bool main()
+            public bool Main()
             {
                 OS.Execute("ros2",
                     ["run", "rosbridge_server", "rosbridge_websocket", "--ros-args", "--params-file", "./ROS/rosbridge_conf.yaml"]
@@ -222,7 +225,17 @@ namespace IPC
         }
 
         public static void TopicSubscribe<T>(string topicName, SubscriptionHandler<T> Callback) where T : Message
-        => ROSSocket.Subscribe<T>(topicName, Callback);
+        {
+            subscriptionNames.Add(topicName);
+            ROSSocket.Subscribe<T>(topicName, Callback);
+        }
+
+        public static void TopicUnsubscribe(string topicName)
+        {
+            try { ROSSocket.Unsubscribe(topicName); }
+            catch { GD.Print($"Topic {topicName} was not an active subscription!"); return; }
+            subscriptionNames.Remove(topicName);
+        }
 
         /// <summary> Takes in the Service topic name and a handler, which is the <typeparamref name="A"/> Request and
         /// out ServiceCallHandler(<typeparamref name="A"/>, <typeparamref name="B"/>) response.

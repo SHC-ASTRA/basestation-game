@@ -107,7 +107,7 @@ namespace UI
             ];
             controlMsg.velocities = new double[controlMsg.joint_names.Length];
 
-            QOS ControlQOS = new QOS(
+            QOS ControlQOS = new(
                 QOS.Policy.History.Keep_last,
                 2,
                 QOS.Policy.Reliability.Best_Effort,
