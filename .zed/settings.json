@@ -8,6 +8,7 @@
     ".direnv",
     ".directory",
     "flake.lock",
+    ".dev-bin",
 
     ".vscode",
 

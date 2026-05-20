@@ -11,10 +11,11 @@
     "*.tscn": true,
     ".direnv": true,
     "flake.lock": true,
+    ".dev-bin": true,
     ".envrc": true,
     ".git*": true,
     "project.godot": true,
     ".godot": true,
-    ".zed": true
-  }
+    ".zed": true,
+  },
 }

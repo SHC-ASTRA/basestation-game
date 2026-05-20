@@ -44,7 +44,9 @@
 [ext_resource type="Script" uid="uid://cvomm6euvi1p3" path="res://Scripts/ui/tabs/Debug/Auto/Macula.cs" id="34_w6oot"]
 [ext_resource type="Texture2D" uid="uid://dv4ufea2ycrd1" path="res://Assets/Speedometer-1-874559948.png" id="35_4j4ic"]
 [ext_resource type="Texture2D" uid="uid://1feh6rrmp0ah" path="res://Assets/Needle.png" id="36_op017"]
+[ext_resource type="Texture2D" uid="uid://cjr2pdef3g7ku" path="res://Assets/Compass.png" id="37_vsiki"]
 [ext_resource type="PackedScene" uid="uid://csgu7b14vfkw3" path="res://Scenes/Prefabs/Debug/MotorDebug.tscn" id="37_w6oot"]
+[ext_resource type="Texture2D" uid="uid://dql75rtmw5x6a" path="res://Assets/Heading_Indicator.png" id="38_41h4a"]
 [ext_resource type="Script" uid="uid://chsbwv57xwdjv" path="res://Scripts/ui/tabs/Debug/Arm/ArmDebug.cs" id="40_1gx8n"]
 [ext_resource type="PackedScene" uid="uid://djddm5e7gl0of" path="res://Scenes/Prefabs/Debug/voltages.tscn" id="40_w6oot"]
 [ext_resource type="Script" uid="uid://dy17nmb5xh4yq" path="res://Scripts/ui/tabs/Debug/Bio/BioDebug.cs" id="44_vsiki"]
@@ -569,6 +571,7 @@ size_flags_vertical = 3
 placeholder_text = "Mission"
 max_length = 1
 script = ExtResource("15_1gx8n")
+allow_fractional = null
 
 [node name="Send" type="Button" parent="TabsParent/auto/HBoxContainer/Control" unique_id=884364114]
 layout_mode = 2
@@ -1179,7 +1182,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("24_15sjt")
 
-[node name="core" type="HBoxContainer" parent="TabsParent" unique_id=893683522 node_paths=PackedStringArray("LMotor", "RMotor", "DrivingMode", "MaxMotorDrive", "BrakeIndicator", "Brake", "PTZSubViewport", "PTZAxis0", "PTZAxis1", "PTZButtonCont", "PTZRotX", "PTZRotY", "Zoom", "Needle")]
+[node name="core" type="HBoxContainer" parent="TabsParent" unique_id=893683522 node_paths=PackedStringArray("LMotor", "RMotor", "DrivingMode", "MaxMotorDrive", "BrakeIndicator", "Brake", "PTZSubViewport", "PTZAxis0", "PTZAxis1", "PTZButtonCont", "PTZRotX", "PTZRotY", "Zoom", "Needle", "HeadingIndicator")]
 layout_mode = 2
 alignment = 1
 script = ExtResource("3_grmb5")
@@ -1198,7 +1201,8 @@ PTZButtonCont = NodePath("PTZ/PTZControlContainer/VBoxContainer/GridContainer")
 PTZRotX = NodePath("PTZ/PTZDisplayContainer/HBoxContainer/PTZRotationY")
 PTZRotY = NodePath("PTZ/PTZDisplayContainer/HBoxContainer/PTZRotationP")
 Zoom = NodePath("PTZ/PTZControlContainer/VBoxContainer2/Zoom")
-Needle = NodePath("TextureRect/NeedleRotator")
+Needle = NodePath("VBoxContainer/Speedometer/NeedleRotator")
+HeadingIndicator = NodePath("VBoxContainer/Compass/Indicator")
 ROSDependent = true
 
 [node name="I" parent="TabsParent/core" unique_id=1440631658 instance=ExtResource("3_5ljfu")]
@@ -1478,12 +1482,16 @@ mesh = ExtResource("7_7oid2")
 [node name="I3" parent="TabsParent/core" unique_id=1646277923 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/core" unique_id=1213675597]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/core" unique_id=1985828704]
 layout_mode = 2
+
+[node name="Speedometer" type="TextureRect" parent="TabsParent/core/VBoxContainer" unique_id=1213675597]
+layout_mode = 2
+size_flags_vertical = 3
 texture = ExtResource("35_4j4ic")
 expand_mode = 3
 
-[node name="NeedleRotator" type="Control" parent="TabsParent/core/TextureRect" unique_id=309083195]
+[node name="NeedleRotator" type="Control" parent="TabsParent/core/VBoxContainer/Speedometer" unique_id=309083195]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1496,11 +1504,11 @@ offset_right = 20.000198
 offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
-rotation = -1.2915436
+rotation = -1.2391838
 scale = Vector2(0.5, 0.5)
 pivot_offset = Vector2(20, 20)
 
-[node name="TextureRect" type="TextureRect" parent="TabsParent/core/TextureRect/NeedleRotator" unique_id=737665468]
+[node name="TextureRect" type="TextureRect" parent="TabsParent/core/VBoxContainer/Speedometer/NeedleRotator" unique_id=737665468]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1517,6 +1525,23 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("36_op017")
 stretch_mode = 5
 
+[node name="Compass" type="TextureRect" parent="TabsParent/core/VBoxContainer" unique_id=1190482543]
+layout_mode = 2
+texture = ExtResource("37_vsiki")
+
+[node name="Indicator" type="TextureRect" parent="TabsParent/core/VBoxContainer/Compass" unique_id=1002970726]
+layout_mode = 0
+offset_left = 107.0
+offset_top = -20.0
+offset_right = 123.00003
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("38_41h4a")
+stretch_mode = 3
+flip_v = true
+
 [node name="I4" parent="TabsParent/core" unique_id=1563915762 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
@@ -1532,6 +1557,7 @@ visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("12_lq3nq")
+ROSDependent = null
 
 [node name="debug" type="HBoxContainer" parent="TabsParent" unique_id=1671544032 node_paths=PackedStringArray("InfoContainer", "DD")]
 visible = false
@@ -1582,7 +1608,7 @@ A0 = NodePath("Axis0")
 A1 = NodePath("Axis1")
 A2 = NodePath("Axis2")
 A3 = NodePath("Axis3")
-TopicName = "/arm/new_feedback"
+TopicName = "/arm/feedback/main"
 
 [node name="Axis0" parent="TabsParent/debug/InfoBox/DD/Arm/Motors" unique_id=994205908 instance=ExtResource("37_w6oot")]
 layout_mode = 2

@@ -1,6 +1,5 @@
 using IPC;
 using Godot;
-using System.Linq;
 using RosSharp.RosBridgeClient;
 using RosSharp.RosBridgeClient.MessageTypes.Sensor;
 using Geometry = RosSharp.RosBridgeClient.MessageTypes.Geometry;
@@ -17,6 +16,9 @@ namespace UI
 
         private readonly PtzControl ptzMsg = new();
         private const string PTZTopic = "/ptz/control";
+
+        private const string GPSTopic = "/gps/fix"/*"/core/feedback/gps/fix"*/;
+        private const string IMUTopic = "/core/imu"/*"/core/feedback/imu/data"*/;
 
         public bool TankDriving = false;
 
@@ -69,6 +71,8 @@ namespace UI
         [Export]
         public Control Needle;
         private NavSatFix PrevFix = new();
+        [Export]
+        public Control HeadingIndicator;
 
         public override void _Ready()
         {
@@ -192,12 +196,12 @@ namespace UI
         // Kinda like EmitToROS but is called on demand instead of constantly
         public void PushToPTZ()
         {
-            if (ptzMsg.pitch > 134)
-                ptzMsg.pitch = 134;
-            else if (ptzMsg.pitch < -134)
-                ptzMsg.pitch = -134;
+            if (ptzMsg.pitch > 134f)
+                ptzMsg.pitch = 134f;
+            else if (ptzMsg.pitch < -134f)
+                ptzMsg.pitch = -134f;
 
-            ptzMsg.yaw = ConstWrap(ptzMsg.yaw, 0, 360);
+            ptzMsg.yaw = ConstWrap(ptzMsg.yaw, 0f, 360f);
 
             // Literally just caching the conversion
             float ZoomAmount = (float)Zoom.Value;
@@ -227,7 +231,7 @@ namespace UI
 
         public override bool AdvertiseToROS()
         {
-            QOS ControlQOS = new (
+            QOS ControlQOS = new(
                 QOS.Policy.History.Keep_last,
                 2,
                 QOS.Policy.Reliability.Best_Effort,
@@ -240,32 +244,38 @@ namespace UI
             ROS.AdvertiseTopic<PtzControl>(PTZTopic);
 
             const float deg2rad = Mathf.Pi / 180;
-            const float minf = -74f * deg2rad;
-            const float maxf = 130f * deg2rad;
-            ROS.TopicSubscribe<NavSatFix>("/gps/fix", (fix) => {
+            const float rad2deg = 180 / Mathf.Pi;
+            ROS.TopicSubscribe<NavSatFix>(GPSTopic, (fix) =>
+            {
+                const float minf = -71f * deg2rad;
+                const float maxf = 127f * deg2rad;
                 // // Calculates the average velocity of all motors while preventing outliers from impacting it
                 // // That way if the rover is highcentered we don't report a speed of like 3mph
                 // float median = (cf.fl_motor.velocity + cf.fr_motor.velocity + cf.bl_motor.velocity + cf.br_motor.velocity) * 0.25f; // float flMAD = Mathf.Abs(cf.fl_motor.velocity - median); // float frMAD = Mathf.Abs(cf.fr_motor.velocity - median); // float blMAD = Mathf.Abs(cf.bl_motor.velocity - median); // float brMAD = Mathf.Abs(cf.br_motor.velocity - median); // float MAD = (flMAD + frMAD + blMAD + brMAD) * 0.25f * 3f; // float sum = 0; // byte count = 0; // if(flMAD <= MAD) {sum += cf.fl_motor.velocity; count++;} // if(frMAD <= MAD) {sum += cf.fr_motor.velocity; count++;} // if(blMAD <= MAD) {sum += cf.bl_motor.velocity; count++;} // if(brMAD <= MAD) {sum += cf.br_motor.velocity; count++;} // count = byte.Clamp(count, 1, 4); // const float VelRatio = 16f; // float t = Mathf.Clamp((float)(sum / count) / VelRatio / 8, 0, 1); // Needle.SetDeferred(Control.PropertyName.Rotation, minf + t * (maxf - minf));
 
-                double dLat = Mathf.Sin((fix.latitude - PrevFix.latitude) * 0.5);
+                double dLat = Mathf.Sin((fix.latitude - PrevFix.latitude) * 0.5d);
                 dLat *= dLat;
-                double dLon = Mathf.Sin((fix.longitude - PrevFix.longitude) * 0.5);
+                double dLon = Mathf.Sin((fix.longitude - PrevFix.longitude) * 0.5d);
                 dLon *= dLon;
                 dLon *= Mathf.Cos(PrevFix.latitude) * Mathf.Cos(fix.latitude);
 
                 double a = dLat + dLon;
-                double c = 2 * Mathf.Atan2(Mathf.Sqrt(a), Mathf.Sqrt(1-a));
-                double d = 3958.8 * c;
+                double c = 2d * Mathf.Atan2(Mathf.Sqrt(a), Mathf.Sqrt(1d - a));
+                double d = 3958.8d * c;
 
                 double vel = d / (fix.header.stamp.sec - PrevFix.header.stamp.sec);
 
-                Needle.SetDeferred(Control.PropertyName.Rotation, minf + Mathf.Clamp(d / 8, 0, 1) * (maxf - minf));
+                Needle.SetDeferred(Control.PropertyName.Rotation, minf + Mathf.Clamp(d / 8d, 0d, 1d) * (maxf - minf));
 
                 PrevFix = fix;
             });
 
-            ROS.TopicSubscribe<Imu>("/core/feedback/imu/data", (data) => {
+            ROS.TopicSubscribe<Imu>(IMUTopic, (data) =>
+            {
+                Geometry.Quaternion q = data.orientation;
+                double ψ = Mathf.Atan2(2d * (q.w * q.z + q.x * q.y), 1d - 2d * (q.y * q.y + q.z * q.z)) * rad2deg;
 
+                HeadingIndicator.SetDeferred(Control.PropertyName.Position, new Vector2((float)(ψ * 1.188889d), -20f));
             });
 
             return true;
@@ -295,6 +305,8 @@ namespace UI
             controlMsg.brake_mode = true;
 
             ROS.Publish(CoreControlTopic, controlMsg);
+            ROS.TopicUnsubscribe(GPSTopic);
+            ROS.TopicUnsubscribe(IMUTopic);
         }
     }
 }
