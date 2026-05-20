@@ -44,6 +44,43 @@ If something doesn't work for whatever reason, you can try a few things:
 
 - Ping Roald Schaum in the ASTRA discord
 
+## Installation
+
+This is a quickstart guide to get basestation-game up and running on any machine,
+for someone that doesn't know anything about basestation-game.
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/SHC-ASTRA/basestation-game --recursive
+   ```
+
+2. If you forgot to clone the repository with submodules, use the following command to clone them:
+
+   ```bash
+   git submodule update --init --recursive
+   ```
+
+3. In the repository's folder, open a nix development shell (this will take a while to download everything):
+
+   ```bash
+   nix develop
+   ```
+
+4. In the dev shell, re-compile astra_msgs for ROS#:
+
+   ```bash
+   ./RecompileC#.sh
+   ```
+
+5. Still in the dev shell, open the Godot editor:
+
+   ```bash
+   godot-mono --editor
+   ```
+
+6. In the Godot editor, press the `F5` key to launch Basestation!
+
 ## Contributors
 
 For anyone adding to this repository, please add your name to the README before
