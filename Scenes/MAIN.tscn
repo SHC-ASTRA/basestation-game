@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://bjwmxrn1okacu"]
 
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="1_rf5wo"]
-[ext_resource type="PackedScene" uid="uid://dh133i8yuxjts" path="res://Scenes/Tabs/SmallPanel.tscn" id="2_ao1bj"]
+[ext_resource type="PackedScene" uid="uid://dh133i8yuxjts" path="res://Scenes/Tabs/Submodule_panel.tscn" id="2_ao1bj"]
 [ext_resource type="Script" uid="uid://dx368xrbsonp5" path="res://Scripts/ROS.cs" id="3_kgeht"]
 [ext_resource type="Theme" uid="uid://ce3coqe5tlutx" path="res://Assets/Themes/NoAAorCorners.tres" id="3_kjvde"]
 [ext_resource type="Script" uid="uid://begll5nkhpe3d" path="res://Scripts/ui/ROSAlerter.cs" id="4_1tvcf"]
-[ext_resource type="PackedScene" uid="uid://bp5ri1uu6aqdu" path="res://Scenes/Tabs/core.tscn" id="5_125yk"]
+[ext_resource type="PackedScene" uid="uid://bp5ri1uu6aqdu" path="res://Scenes/Tabs/map.tscn" id="5_125yk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1tvcf"]
 bg_color = Color(1, 1, 1, 1)
@@ -89,11 +89,12 @@ layout_mode = 2
 theme = ExtResource("3_kjvde")
 text = "Reset ROS"
 
-[node name="LargePanel" type="HBoxContainer" parent="." unique_id=93932864]
+[node name="LargePanel" type="PanelContainer" parent="." unique_id=795586899]
+self_modulate = Color(0.9257303, 1.207246, 1.207246, 0.23529412)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="core" parent="LargePanel" unique_id=884366184 instance=ExtResource("5_125yk")]
+[node name="DD" parent="LargePanel" unique_id=884366184 instance=ExtResource("5_125yk")]
 layout_mode = 2
 size_flags_horizontal = 3
 
