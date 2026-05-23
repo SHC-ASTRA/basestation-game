@@ -1,10 +1,12 @@
 using Godot;
 using static UI.Debug.Debug;
 
-namespace UI.Debug
+namespace UI.Debug.Arm
 {
     public partial class ArmDebug : FeedbackProvider<ArmFeedback>
     {
+        public static RevMotorState Axis0, Axis1, Axis2, Axis3;
+
         [ExportGroup("Board")]
         [Export]
         HBoxContainer VoltagesContainer;
@@ -16,7 +18,7 @@ namespace UI.Debug
 
         [ExportGroup("Motors")]
         [Export]
-        RevMotor A0, A1, A2, A3;
+        public RevMotor A0, A1, A2, A3;
 
         public override void _Ready()
         {
@@ -40,6 +42,10 @@ namespace UI.Debug
 
         public override void FeedbackHandler()
         {
+            Axis0 = feedback.axis0_motor;
+            Axis1 = feedback.axis1_motor;
+            Axis2 = feedback.axis2_motor;
+            Axis3 = feedback.axis3_motor;
             if (!visible)
                 return;
 

@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://bp5ri1uu6aqdu"]
+
+[ext_resource type="PackedScene" uid="uid://bucrqt5wwg5gn" path="res://addons/map_tile_provider/examples/mosaic.tscn" id="1_4plru"]
+[ext_resource type="Script" uid="uid://b8ehofaxgxgoo" path="res://Scripts/ui/prefabs/Draggable.cs" id="1_eb16g"]
+[ext_resource type="PackedScene" uid="uid://cetxymmi0tyqv" path="res://Scenes/Prefabs/draggable_size_setter.tscn" id="1_u0c8n"]
+[ext_resource type="Texture2D" uid="uid://d2k3n8dm1qbwc" path="res://Assets/Upper arm.png" id="4_pt7o4"]
+[ext_resource type="Texture2D" uid="uid://bg3ns2msci2kh" path="res://Assets/Forearm.png" id="5_j0pq6"]
+[ext_resource type="Texture2D" uid="uid://dvx1qxejhdnl6" path="res://Assets/End Effector.png" id="6_sec3w"]
+
+[node name="Core" type="Control" unique_id=121019408]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VScrollBar" type="VBoxContainer" parent="." unique_id=780462811]
+layout_mode = 0
+offset_right = 61.0
+offset_bottom = 31.0
+
+[node name="Map" type="HBoxContainer" parent="VScrollBar" unique_id=365359251]
+layout_mode = 2
+
+[node name="Map" parent="VScrollBar/Map" unique_id=1112474284 node_paths=PackedStringArray("target") instance=ExtResource("1_u0c8n")]
+layout_mode = 2
+folded = true
+title = "Map"
+target = NodePath("../../../DraggableArea/Sandbox/Map")
+
+[node name="Arm" type="HBoxContainer" parent="VScrollBar" unique_id=1010241831]
+layout_mode = 2
+
+[node name="Arm" parent="VScrollBar/Arm" unique_id=1232276190 node_paths=PackedStringArray("target") instance=ExtResource("1_u0c8n")]
+layout_mode = 2
+folded = true
+title = "Arm"
+target = NodePath("../../../DraggableArea/Sandbox/Arm")
+
+[node name="DraggableArea" type="Node" parent="." unique_id=2137241488]
+
+[node name="Sandbox" type="Control" parent="DraggableArea" unique_id=1259495816]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Map" type="FoldableContainer" parent="DraggableArea/Sandbox" unique_id=1597852753]
+visible = false
+layout_mode = 0
+offset_left = 708.0
+offset_top = 161.0
+offset_right = 769.0
+offset_bottom = 192.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+title = "Map"
+title_alignment = 1
+script = ExtResource("1_eb16g")
+
+[node name="mosaic" parent="DraggableArea/Sandbox/Map" unique_id=565245909 instance=ExtResource("1_4plru")]
+layout_mode = 2
+latitude = 38.36
+longitude = -110.705
+zoom = 14.0
+
+[node name="Arm" type="FoldableContainer" parent="DraggableArea/Sandbox" unique_id=1617268404]
+visible = false
+layout_mode = 0
+offset_left = 708.0
+offset_top = 161.0
+offset_right = 769.0
+offset_bottom = 192.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+title = "Arm"
+title_alignment = 1
+script = ExtResource("1_eb16g")
+
+[node name="Control" type="CenterContainer" parent="DraggableArea/Sandbox/Arm" unique_id=578285442]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+
+[node name="Arm Controller" type="Control" parent="DraggableArea/Sandbox/Arm/Control" unique_id=220036010]
+layout_mode = 2
+
+[node name="Upper Arm" type="TextureRect" parent="DraggableArea/Sandbox/Arm/Control/Arm Controller" unique_id=1340220548]
+texture_filter = 1
+layout_mode = 0
+offset_left = -10.0
+offset_right = 10.0
+offset_bottom = 120.0
+pivot_offset = Vector2(10, 120)
+texture = ExtResource("4_pt7o4")
+expand_mode = 3
+stretch_mode = 1
+
+[node name="Forearm" type="TextureRect" parent="DraggableArea/Sandbox/Arm/Control/Arm Controller/Upper Arm" unique_id=1534915160]
+layout_mode = 0
+offset_top = -100.0
+offset_right = 20.0
+pivot_offset = Vector2(10, 100)
+texture = ExtResource("5_j0pq6")
+stretch_mode = 1
+
+[node name="EF" type="TextureRect" parent="DraggableArea/Sandbox/Arm/Control/Arm Controller/Upper Arm/Forearm" unique_id=394359181]
+layout_mode = 0
+offset_left = -15.0
+offset_top = -50.0
+offset_right = 35.0
+pivot_offset = Vector2(50, 100)
+texture = ExtResource("6_sec3w")
