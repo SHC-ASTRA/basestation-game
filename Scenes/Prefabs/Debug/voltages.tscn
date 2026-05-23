@@ -1,28 +1,79 @@
 [gd_scene format=3 uid="uid://djddm5e7gl0of"]
 
 [ext_resource type="Script" uid="uid://dpdvyr3g16u8" path="res://Scripts/ui/tabs/Debug/Common/Voltages.cs" id="1_bui6t"]
+[ext_resource type="PackedScene" uid="uid://gtge14xtuggr" path="res://Scenes/Prefabs/Debug/colored_label.tscn" id="2_4no57"]
+[ext_resource type="PackedScene" uid="uid://d3cdd401jxq8c" path="res://Scenes/Prefabs/II.tscn" id="2_mmpqb"]
 
-[node name="Voltages" type="VBoxContainer" unique_id=1827939833 node_paths=PackedStringArray("BatVoltage", "Voltage12", "Voltage5", "Voltage3")]
+[node name="Voltages" type="HBoxContainer" unique_id=70608907 node_paths=PackedStringArray("NameLabel", "BatVoltage", "Voltage12", "Voltage5", "Voltage3")]
+offset_right = 120.0
+offset_bottom = 123.0
 mouse_filter = 2
 alignment = 1
 script = ExtResource("1_bui6t")
-BatVoltage = NodePath("Bat")
-Voltage12 = NodePath("12v")
-Voltage5 = NodePath("5v")
-Voltage3 = NodePath("3v")
+NameLabel = NodePath("Label")
+BatVoltage = NodePath("HBoxContainer/Bat")
+Voltage12 = NodePath("HBoxContainer/12v")
+Voltage5 = NodePath("HBoxContainer/5v")
+Voltage3 = NodePath("HBoxContainer/3v")
 
-[node name="Bat" type="Label" parent="." unique_id=1699535385]
+[node name="-|-2" parent="." unique_id=570232658 instance=ExtResource("2_mmpqb")]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-text = " Bat volt:       "
 
-[node name="12v" type="Label" parent="." unique_id=2109350192]
+[node name="Label" type="Label" parent="." unique_id=622305399]
+custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
-text = " 12v line:"
+text = "Core"
+horizontal_alignment = 1
+autowrap_mode = 3
 
-[node name="5v" type="Label" parent="." unique_id=1966226059]
+[node name="-|-3" parent="." unique_id=1046998220 instance=ExtResource("2_mmpqb")]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-text = " 5v line:"
 
-[node name="3v" type="Label" parent="." unique_id=2128181615]
+[node name="-|-" parent="." unique_id=641558121 instance=ExtResource("2_mmpqb")]
 layout_mode = 2
-text = " 3v line:"
+
+[node name="HBoxContainer" type="VBoxContainer" parent="." unique_id=576894738]
+layout_mode = 2
+alignment = 1
+
+[node name="Bat" parent="HBoxContainer" unique_id=2078657142 instance=ExtResource("2_4no57")]
+layout_mode = 2
+High = 16.8
+Middle = 14.28
+Low = 13.2
+HighColor = Color(0, 1, 0, 1)
+MiddleColor = Color(1, 1, 0, 1)
+LowColor = Color(1, 0, 0, 1)
+BaseText = "Batt:"
+
+[node name="12v" parent="HBoxContainer" unique_id=1081796011 instance=ExtResource("2_4no57")]
+layout_mode = 2
+High = 12.4
+Middle = 12.2
+Low = 12.0
+HighColor = Color(1, 0, 0, 1)
+MiddleColor = Color(0, 1, 0, 1)
+LowColor = Color(1, 0, 0, 1)
+BaseText = "12v line:"
+
+[node name="5v" parent="HBoxContainer" unique_id=267619850 instance=ExtResource("2_4no57")]
+layout_mode = 2
+High = 5.2
+Middle = 5.0
+Low = 4.8
+HighColor = Color(1, 0, 0, 1)
+MiddleColor = Color(0, 1, 0, 1)
+LowColor = Color(1, 0, 0, 1)
+BaseText = "5v line:"
+
+[node name="3v" parent="HBoxContainer" unique_id=1875522038 instance=ExtResource("2_4no57")]
+layout_mode = 2
+High = 3.4
+Middle = 3.3
+Low = 3.2
+HighColor = Color(1, 0, 0, 1)
+MiddleColor = Color(0, 1, 0, 1)
+LowColor = Color(1, 0, 0, 1)
+BaseText = "3v line:"

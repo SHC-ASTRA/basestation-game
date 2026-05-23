@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://5uqb2dju2jlv"]
 
-[ext_resource type="Script" uid="uid://copn7a1ckca51" path="res://Scripts/ui/tabs/Debug/Core/Motors.cs" id="1_61wfa"]
+[ext_resource type="Script" uid="uid://clamhi5wpft5c" path="res://Scripts/ui/tabs/Debug/Core/Motors.cs" id="1_61wfa"]
 [ext_resource type="PackedScene" uid="uid://csgu7b14vfkw3" path="res://Scenes/Prefabs/Debug/MotorDebug.tscn" id="1_fac7i"]
 
 [node name="Motor" type="VBoxContainer" unique_id=582299627 node_paths=PackedStringArray("FL", "BL", "FR", "BR")]

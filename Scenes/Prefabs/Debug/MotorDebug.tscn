@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://csgu7b14vfkw3"]
 
 [ext_resource type="Script" uid="uid://xbb6uaw7pkop" path="res://Scripts/ui/tabs/Debug/Common/RevMotor.cs" id="1_qb3tj"]
+[ext_resource type="PackedScene" uid="uid://gtge14xtuggr" path="res://Scenes/Prefabs/Debug/colored_label.tscn" id="2_i6qaf"]
 
 [node name="MotorDebug" type="HBoxContainer" unique_id=1815186568 node_paths=PackedStringArray("name", "id", "position", "velocity", "voltage", "current", "temperature")]
 anchors_preset = 15
@@ -15,7 +16,7 @@ name = NodePath("name")
 id = NodePath("id")
 position = NodePath("pos")
 velocity = NodePath("vel")
-voltage = NodePath("vol")
+voltage = NodePath("vtg")
 current = NodePath("cur")
 temperature = NodePath("tmp")
 
@@ -35,14 +36,32 @@ text = "Pos: 0"
 layout_mode = 2
 text = "Vel: 0"
 
-[node name="vol" type="Label" parent="." unique_id=1685893112]
+[node name="vtg" parent="." unique_id=2078657142 instance=ExtResource("2_i6qaf")]
 layout_mode = 2
-text = "Vol: 0"
+High = 16.8
+Middle = 14.4
+Low = 13.2
+HighColor = Color(0, 1, 0, 1)
+MiddleColor = Color(1, 0.49019608, 0, 1)
+LowColor = Color(1, 0, 0, 1)
+BaseText = "Vtg:"
 
-[node name="cur" type="Label" parent="." unique_id=1401160867]
+[node name="cur" parent="." unique_id=249504896 instance=ExtResource("2_i6qaf")]
 layout_mode = 2
-text = "Cur: 0"
+High = 100.0
+Middle = 1.4
+Low = null
+HighColor = Color(1, 0, 0, 1)
+MiddleColor = Color(0, 1, 0, 1)
+LowColor = Color(1, 0.49019608, 0, 1)
+BaseText = "Cur:"
 
-[node name="tmp" type="Label" parent="." unique_id=2042900416]
+[node name="tmp" parent="." unique_id=1943733058 instance=ExtResource("2_i6qaf")]
 layout_mode = 2
-text = "Tmp: 0"
+High = 100.0
+Middle = 60.0
+Low = 24.0
+HighColor = Color(1, 0, 0, 1)
+MiddleColor = Color(1, 0.49019608, 0, 1)
+LowColor = Color(0, 1, 0, 1)
+BaseText = "Tmp:"

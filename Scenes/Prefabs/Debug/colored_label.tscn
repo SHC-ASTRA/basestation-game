@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://gtge14xtuggr"]
+
+[ext_resource type="Script" uid="uid://c1grn8l4wy2u3" path="res://Scripts/ui/ColoredLabel.cs" id="1_owno1"]
+
+[node name="colored_label" type="HBoxContainer" unique_id=2078657142 node_paths=PackedStringArray("BaseLabel", "ValueLabel")]
+alignment = 1
+script = ExtResource("1_owno1")
+BaseLabel = NodePath("Label")
+ValueLabel = NodePath("Value")
+
+[node name="Label" type="Label" parent="." unique_id=1306371495]
+layout_mode = 2
+text = " Label:"
+
+[node name="Value" type="Label" parent="." unique_id=571645825]
+layout_mode = 2
+text = "Value"

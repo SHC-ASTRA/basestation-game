@@ -8,15 +8,18 @@ namespace UI.Debug
         [Export]
         public Label name;
         [Export]
-        Label id, position, velocity, voltage, current, temperature;
+        Label id, position, velocity;
+        [Export]
+        ColoredLabel voltage, current, temperature;
+
         public void Update(RevMotorState R)
         {
             SetLabelText(id, $"id: {R.id}");
             SetLabelText(position, $"pos: {R.position}");
             SetLabelText(velocity, $"vel: {R.velocity}");
-            SetLabelText(voltage, $"vol: {R.voltage}");
-            SetLabelText(current, $"cur: {R.current}");
-            SetLabelText(temperature, $"temp: {R.temperature}");
+            voltage.SetValue("[VALUE]v", R.voltage);
+            current.SetValue("[VALUE]a", R.current);
+            temperature.SetValue("[VALUE]c", R.temperature);
         }
     }
 }
