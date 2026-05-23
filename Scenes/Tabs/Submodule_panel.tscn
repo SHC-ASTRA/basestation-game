@@ -13,7 +13,6 @@
 [ext_resource type="ArrayMesh" uid="uid://2wmjb5e4g57j" path="res://Assets/PTZ/PTZaxis1.obj" id="6_yplvc"]
 [ext_resource type="PackedScene" uid="uid://wbjb3q0icoe5" path="res://Scenes/Prefabs/colored_indicator.tscn" id="6_yrw8b"]
 [ext_resource type="ArrayMesh" uid="uid://dwjygjucoh5bb" path="res://Assets/PTZ/PTZaxis2.obj" id="7_7oid2"]
-[ext_resource type="Script" uid="uid://cod2eryks8q72" path="res://Scripts/ui/tabs/DebugTabUI.cs" id="7_qq4qf"]
 [ext_resource type="Texture2D" uid="uid://d3qibna8eoiar" path="res://Assets/tire brake.png" id="7_yrw8b"]
 [ext_resource type="Script" uid="uid://cghn1rxpmcyfu" path="res://Scripts/ui/FontScaler.cs" id="8_yplvc"]
 [ext_resource type="Texture2D" uid="uid://bb3iqpbhicn5k" path="res://Assets/Laser.png" id="8_yrw8b"]
@@ -47,9 +46,11 @@
 [ext_resource type="Texture2D" uid="uid://cjr2pdef3g7ku" path="res://Assets/Compass.png" id="37_vsiki"]
 [ext_resource type="PackedScene" uid="uid://csgu7b14vfkw3" path="res://Scenes/Prefabs/Debug/MotorDebug.tscn" id="37_w6oot"]
 [ext_resource type="Texture2D" uid="uid://dql75rtmw5x6a" path="res://Assets/Heading_Indicator.png" id="38_41h4a"]
-[ext_resource type="Script" uid="uid://chsbwv57xwdjv" path="res://Scripts/ui/tabs/Debug/Arm/ArmDebug.cs" id="40_1gx8n"]
+[ext_resource type="Script" uid="uid://dun7de1xdakgb" path="res://Scripts/ui/tabs/Debug/Arm/ArmDebug.cs" id="40_1gx8n"]
 [ext_resource type="PackedScene" uid="uid://djddm5e7gl0of" path="res://Scenes/Prefabs/Debug/voltages.tscn" id="40_w6oot"]
+[ext_resource type="Script" uid="uid://cod2eryks8q72" path="res://Scripts/ui/tabs/DebugTabUI.cs" id="41_41h4a"]
 [ext_resource type="Script" uid="uid://dy17nmb5xh4yq" path="res://Scripts/ui/tabs/Debug/Bio/BioDebug.cs" id="44_vsiki"]
+[ext_resource type="Script" uid="uid://c1grn8l4wy2u3" path="res://Scripts/ui/ColoredLabel.cs" id="49_e8fxv"]
 
 [sub_resource type="Theme" id="Theme_xfr2n"]
 CheckButton/font_sizes/font_size = 18
@@ -210,7 +211,6 @@ custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
 [node name="arm" type="HBoxContainer" parent="TabsParent" unique_id=748735401 node_paths=PackedStringArray("Axis0drive", "Axis1drive", "Axis2drive", "Axis3drive", "BrakeIndicator", "Brake", "EndEffectorRoll", "EndEffectorYaw", "LinearActuatorDrive", "GripperDrive", "LaserIndicator", "Laser")]
-visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("2_qq4qf")
@@ -252,7 +252,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Axis0" parent="TabsParent/arm/Axese/=/Drive01" unique_id=1119868046 instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
@@ -264,7 +264,7 @@ offset_bottom = 27.0
 text = " 0"
 
 [node name="Axis1" parent="TabsParent/arm/Axese/=/Drive01" unique_id=889509728 instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
@@ -281,19 +281,20 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Axis2" parent="TabsParent/arm/Axese/=/Drive23" unique_id=478997247 instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
 [node name="Label" type="Label" parent="TabsParent/arm/Axese/=/Drive23/Axis2" unique_id=1533000581]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 0
 offset_right = 15.0
 offset_bottom = 27.0
 text = " 2"
 
 [node name="Axis3" parent="TabsParent/arm/Axese/=/Drive23" unique_id=101876443 instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
@@ -347,17 +348,15 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Roll" parent="TabsParent/arm/EE/EER" unique_id=2025476360 instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(220, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
 [node name="Label" type="Label" parent="TabsParent/arm/EE/EER" unique_id=1254608191]
-custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 1
-text = "End effector
-Roll"
+text = "EE Roll"
 horizontal_alignment = 1
 
 [node name="EEY" type="PanelContainer" parent="TabsParent/arm/EE" unique_id=1758748205]
@@ -365,7 +364,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Yaw" parent="TabsParent/arm/EE/EEY" unique_id=965329038 instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(220, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
@@ -374,8 +373,7 @@ Min = -1.0
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 1
-text = "End effector
-Yaw"
+text = "EE Yaw"
 horizontal_alignment = 1
 
 [node name="I4" parent="TabsParent/arm" unique_id=1940334204 instance=ExtResource("3_5ljfu")]
@@ -390,16 +388,15 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="LinearActuator" parent="TabsParent/arm/LA_Gripper/LA" unique_id=2126170413 instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(220, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
 [node name="Label" type="Label" parent="TabsParent/arm/LA_Gripper/LA" unique_id=1741239318]
-custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 1
-text = "Linear Actuator"
+text = "Lin Act"
 horizontal_alignment = 1
 
 [node name="Gripper" type="PanelContainer" parent="TabsParent/arm/LA_Gripper" unique_id=1647281021]
@@ -407,13 +404,12 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Gripper" parent="TabsParent/arm/LA_Gripper/Gripper" unique_id=829445497 instance=ExtResource("3_mxw14")]
-custom_minimum_size = Vector2(220, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 Max = 1.0
 Min = -1.0
 
 [node name="Label" type="Label" parent="TabsParent/arm/LA_Gripper/Gripper" unique_id=343951693]
-custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 22
@@ -571,7 +567,6 @@ size_flags_vertical = 3
 placeholder_text = "Mission"
 max_length = 1
 script = ExtResource("15_1gx8n")
-allow_fractional = null
 
 [node name="Send" type="Button" parent="TabsParent/auto/HBoxContainer/Control" unique_id=884364114]
 layout_mode = 2
@@ -1183,6 +1178,7 @@ size_flags_horizontal = 3
 theme = ExtResource("24_15sjt")
 
 [node name="core" type="HBoxContainer" parent="TabsParent" unique_id=893683522 node_paths=PackedStringArray("LMotor", "RMotor", "DrivingMode", "MaxMotorDrive", "BrakeIndicator", "Brake", "PTZSubViewport", "PTZAxis0", "PTZAxis1", "PTZButtonCont", "PTZRotX", "PTZRotY", "Zoom", "Needle", "HeadingIndicator")]
+visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("3_grmb5")
@@ -1460,7 +1456,7 @@ scaling_3d_scale = 2.0
 gui_disable_input = true
 oversampling_override = 1.0
 size = Vector2i(128, 128)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="PTZCamera" type="Camera3D" parent="TabsParent/core/PTZ/PTZDisplayContainer/SubViewportContainer/PTZDisplay" unique_id=497353351]
 transform = Transform3D(-1, -6.1817246e-08, 6.1817246e-08, 0, 0.7071068, 0.7071068, -8.742278e-08, 0.7071068, -0.7071068, 0, 1.32, -2.5)
@@ -1557,13 +1553,12 @@ visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("12_lq3nq")
-ROSDependent = null
 
 [node name="debug" type="HBoxContainer" parent="TabsParent" unique_id=1671544032 node_paths=PackedStringArray("InfoContainer", "DD")]
 visible = false
 layout_mode = 2
 theme = SubResource("Theme_rj5vk")
-script = ExtResource("7_qq4qf")
+script = ExtResource("41_41h4a")
 InfoContainer = NodePath("InfoBox/InfoPanel/InfoContainer")
 DD = NodePath("InfoBox/DD")
 ROSDependent = true
@@ -1601,14 +1596,14 @@ offset_left = 54.0
 offset_right = 2206.0
 offset_bottom = 200.0
 script = ExtResource("40_1gx8n")
-VoltagesContainer = NodePath("../../../../VoltagesPanel/VoltagesContainer")
+VoltagesContainer = NodePath("../../../../VoltagesPanel/HBoxContainer/VoltagesContainer")
 VoltagesDisplay = ExtResource("40_w6oot")
-SocketVoltages = NodePath("../../../../VoltagesPanel/VoltagesContainer/Voltages")
+SocketVoltages = NodePath("../../../../VoltagesPanel/HBoxContainer/VoltagesContainer/Voltages")
 A0 = NodePath("Axis0")
 A1 = NodePath("Axis1")
 A2 = NodePath("Axis2")
 A3 = NodePath("Axis3")
-TopicName = "/arm/feedback/main"
+TopicName = "/arm/feedback"
 
 [node name="Axis0" parent="TabsParent/debug/InfoBox/DD/Arm/Motors" unique_id=994205908 instance=ExtResource("37_w6oot")]
 layout_mode = 2
@@ -1745,13 +1740,13 @@ offset_left = 54.0
 offset_right = 442.0
 offset_bottom = 98.0
 script = ExtResource("44_vsiki")
-VoltagesContainer = NodePath("../../../../VoltagesPanel/VoltagesContainer")
+VoltagesContainer = NodePath("../../../../VoltagesPanel/HBoxContainer/VoltagesContainer")
 VoltagesDisplay = ExtResource("40_w6oot")
-BioVoltages = NodePath("../../../../VoltagesPanel/VoltagesContainer/Voltages")
+BioVoltages = NodePath("../../../../VoltagesPanel/HBoxContainer/VoltagesContainer/Voltages")
 DrillTemp = NodePath("VBoxContainer/DrillTemp")
 DrillHumidity = NodePath("VBoxContainer/DrillHumidity")
 GroundContact = NodePath("HBoxContainer/CenterContainer/NonContact/Contacting")
-TopicName = "/bio/new_feedback"
+TopicName = "/bio/feedback/main"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Bio/Board" unique_id=970322762]
 layout_mode = 2
@@ -1848,7 +1843,7 @@ mouse_filter = 2
 [node name="CoreFeedbackHandler" type="Control" parent="TabsParent/debug/InfoBox/InfoPanel" unique_id=1717182197 node_paths=PackedStringArray("voltages", "imu", "motors")]
 layout_mode = 2
 script = ExtResource("34_f0cuh")
-voltages = NodePath("../../../VoltagesPanel/VoltagesContainer/Voltages")
+voltages = NodePath("../../../VoltagesPanel/HBoxContainer/VoltagesContainer/Voltages")
 imu = NodePath("../../DD/Core/IMU")
 motors = NodePath("../../DD/Core/Motor")
 TopicName = "/core/feedback_new"
@@ -1871,10 +1866,47 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6gdgo")
 
-[node name="VoltagesContainer" type="HBoxContainer" parent="TabsParent/debug/VoltagesPanel" unique_id=449135641]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/debug/VoltagesPanel" unique_id=1610650175]
 layout_mode = 2
 
-[node name="Voltages" parent="TabsParent/debug/VoltagesPanel/VoltagesContainer" unique_id=414851339 instance=ExtResource("40_w6oot")]
+[node name="Batt" type="VBoxContainer" parent="TabsParent/debug/VoltagesPanel/HBoxContainer" unique_id=1399132531]
+layout_mode = 2
+alignment = 1
+
+[node name="Bat" type="VBoxContainer" parent="TabsParent/debug/VoltagesPanel/HBoxContainer/Batt" unique_id=1415719959 node_paths=PackedStringArray("BaseLabel", "ValueLabel")]
+layout_mode = 2
+alignment = 1
+script = ExtResource("49_e8fxv")
+High = 16.8
+Middle = 14.28
+Low = 13.2
+HighColor = Color(0, 1, 0, 1)
+MiddleColor = Color(1, 1, 0, 1)
+LowColor = Color(1, 0, 0, 1)
+BaseLabel = NodePath("Label")
+BaseText = "Batt:"
+ValueLabel = NodePath("Value")
+
+[node name="Label" type="Label" parent="TabsParent/debug/VoltagesPanel/HBoxContainer/Batt/Bat" unique_id=1306371495]
+layout_mode = 2
+text = "Batt:"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="TabsParent/debug/VoltagesPanel/HBoxContainer/Batt/Bat" unique_id=571645825]
+layout_mode = 2
+text = "Value"
+horizontal_alignment = 1
+
+[node name="-|-2" parent="TabsParent/debug/VoltagesPanel/HBoxContainer" unique_id=492812664 instance=ExtResource("13_8exja")]
+layout_mode = 2
+
+[node name="VoltagesContainer" type="HBoxContainer" parent="TabsParent/debug/VoltagesPanel/HBoxContainer" unique_id=449135641]
+layout_mode = 2
+
+[node name="Voltages" parent="TabsParent/debug/VoltagesPanel/HBoxContainer/VoltagesContainer" unique_id=414851339 instance=ExtResource("40_w6oot")]
+layout_mode = 2
+
+[node name="-|-" parent="TabsParent/debug/VoltagesPanel/HBoxContainer" unique_id=872007712 instance=ExtResource("13_8exja")]
 layout_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="." unique_id=317495895]

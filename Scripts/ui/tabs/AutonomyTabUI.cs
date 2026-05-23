@@ -1,6 +1,7 @@
 using IPC;
 using Godot;
 using UI.Debug;
+using UI.Debug.Core;
 using System.Threading.Tasks;
 
 namespace UI
@@ -67,6 +68,9 @@ namespace UI
 
         public void FeedbackHandler()
         {
+            if (!Visible)
+                return;
+
             Voltages.Update(feedback.board_voltage);
 
             motors.Update(feedback.fl_motor, feedback.bl_motor, feedback.fr_motor, feedback.br_motor);
