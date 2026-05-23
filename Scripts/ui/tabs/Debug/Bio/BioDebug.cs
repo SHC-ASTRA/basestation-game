@@ -1,7 +1,7 @@
 using Godot;
 using static UI.Debug.Debug;
 
-namespace UI.Debug
+namespace UI.Debug.Bio
 {
     public partial class BioDebug : FeedbackProvider<NewBioFeedback>
     {
@@ -22,7 +22,7 @@ namespace UI.Debug
         [ExportGroup("")]
         [Export]
         TextureRect GroundContact;
-        bool prevContact;
+        private static bool prevContact;
 
         public override void _Ready()
         {
@@ -44,15 +44,16 @@ namespace UI.Debug
 
         public override void FeedbackHandler()
         {
-            if(!visible)
+            if (!visible)
                 return;
-            
+
             BioVoltages.Update(feedback.board_voltage);
 
             SetLabelText(DrillTemp, $"Drill Temp: {feedback.drill_temp}");
             SetLabelText(DrillHumidity, $"Drill Humidity: {feedback.drill_humidity}");
-            GroundContact.SetDeferred(CanvasItem.MethodName.IsVisible, prevContact = feedback.libs_grounded);
+            if (prevContact != feedback.libs_grounded)
+                GroundContact.SetDeferred(CanvasItem.MethodName.IsVisible, prevContact = feedback.libs_grounded);
         }
     }
-    
+
 }

@@ -1,7 +1,7 @@
 using Godot;
 using static UI.Debug.Debug;
 
-namespace UI.Debug
+namespace UI.Debug.Auto
 {
     public partial class Auto : FeedbackProvider<AutoFeedback>
     {
@@ -17,8 +17,6 @@ namespace UI.Debug
 
         public override void FeedbackHandler()
         {
-            if (!visible)
-                return;
         }
     }
 }

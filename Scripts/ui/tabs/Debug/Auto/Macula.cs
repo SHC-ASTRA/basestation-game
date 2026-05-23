@@ -1,7 +1,7 @@
 using Godot;
 using static UI.Debug.Debug;
 
-namespace UI.Debug
+namespace UI.Debug.Auto
 {
     public partial class Macula : FeedbackProvider<MaculaFeedback>
     {

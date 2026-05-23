@@ -1,7 +1,7 @@
 using Godot;
 using static UI.Debug.Debug;
 
-namespace UI.Debug
+namespace UI.Debug.Core
 {
     public partial class PTZ : FeedbackProvider<PtzFeedback>
     {
@@ -28,10 +28,7 @@ namespace UI.Debug
                 .PadRight(crlength));
 
             if (lastConnected != feedback.connected)
-            {
-                lastConnected = feedback.connected;
-                ConnectedTrue.SetDeferred(CanvasItem.PropertyName.Visible, feedback.connected);
-            }
+                ConnectedTrue.SetDeferred(CanvasItem.PropertyName.Visible, lastConnected = feedback.connected);
         }
     }
 }
