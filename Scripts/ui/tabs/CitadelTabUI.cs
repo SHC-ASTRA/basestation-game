@@ -14,15 +14,15 @@ namespace UI
             BioVacuumGoal, BioVacuumResult, BioVacuumFeedback
         > VacuumClient;
         private readonly BioVacuumGoal BVAG = new();
-        private const string VacuumCtrl = "/bio/vacuum";
+        private const string VacuumCtrl = "/bio/control/vacuum";
 
         // Citadel Message
         private readonly CitadelControl citadelMsg = new();
-        private const string citadelTopic = "/bio/citadel/control";
+        private const string citadelTopic = "/bio/control/citadel";
 
         // TestTube Service
         private readonly BioTestTubeRequest tubeMsg = new();
-        private const string TubeCtrl = "/bio/test_tube";
+        private const string TubeCtrl = "/bio/control/test_tube";
 
         [ExportCategory("CITADEL")]
         [ExportGroup("Vacuum system")]

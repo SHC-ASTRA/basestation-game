@@ -6,7 +6,7 @@ namespace UI
     public partial class LanceTabUI : BaseTabUI
     {
         private readonly LanceControl lance = new();
-        private const string LanceTopic = "/bio/lance/control";
+        private const string LanceTopic = "/bio/control/lance";
 
         private readonly FireLibsRequest libsIn = new();
         private readonly FireLibsResponse libsOut = new();

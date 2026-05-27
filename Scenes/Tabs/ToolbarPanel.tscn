@@ -1804,7 +1804,7 @@ A0 = NodePath("Axis0")
 A1 = NodePath("Axis1")
 A2 = NodePath("Axis2")
 A3 = NodePath("Axis3")
-TopicName = "/arm/feedback"
+TopicName = "/arm/feedback/main"
 
 [node name="Axis0" parent="TabsParent/debug/InfoBox/DD/Arm/Motors" unique_id=994205908 instance=ExtResource("37_w6oot")]
 layout_mode = 2
@@ -2047,7 +2047,7 @@ script = ExtResource("34_f0cuh")
 voltages = NodePath("../../../VoltagesPanel/HBoxContainer/VoltagesContainer/Voltages")
 imu = NodePath("../../DD/Core/IMU")
 motors = NodePath("../../DD/Core/Motor")
-TopicName = "/core/feedback_new"
+TopicName = "/core/feedback/main"
 
 [node name="InfoContainer" type="PanelContainer" parent="TabsParent/debug/InfoBox/InfoPanel" unique_id=1158815868]
 custom_minimum_size = Vector2(600, 0)

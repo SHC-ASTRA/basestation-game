@@ -38,7 +38,7 @@ namespace UI
             {
                 while (!ROS.ROSReady)
                     await Task.Delay(5);
-                ROS.TopicSubscribe<NewCoreFeedback>("/core/feedback_new", (feedback) =>
+                ROS.TopicSubscribe<NewCoreFeedback>("/core/feedback/main", (feedback) =>
                 {
                     this.feedback = feedback;
                     CallDeferred(nameof(FeedbackHandler));
