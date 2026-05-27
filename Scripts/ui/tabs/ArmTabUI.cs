@@ -7,10 +7,10 @@ namespace UI
 {
     public partial class ArmTabUI : BaseTabUI
     {
-        private JointJog controlMsg = new();
+        private readonly JointJog controlMsg = new();
         private const string ControlTopic = "/arm/control/manual";
 
-        private ArmCtrlState controlTwist = new();
+        private readonly ArmCtrlState controlTwist = new();
         private const string ControlState = "/arm/control/state";
 
         [ExportCategory("Arm")]

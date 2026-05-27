@@ -13,7 +13,7 @@ namespace UI
             BioVacuumActionGoal, BioVacuumActionResult, BioVacuumActionFeedback,
             BioVacuumGoal, BioVacuumResult, BioVacuumFeedback
         > VacuumClient;
-        private readonly BioVacuumGoal BVAG = new ();
+        private readonly BioVacuumGoal BVAG = new();
         private const string VacuumCtrl = "/bio/vacuum";
 
         // Citadel Message
@@ -48,25 +48,11 @@ namespace UI
 
         [ExportGroup("Test Tubes")]
         [Export]
-        public SpinBox TubesExtensionAmount;
-        [Export]
-        public SelectionBox TestTubeSelector;
+        public SpinBox TestTubeSelector;
         [Export]
         public Button TestTubeCommit;
         [Export]
         public TextureRect TestTubeCommitTexture;
-
-        [ExportGroup("Scythe")]
-        [Export]
-        public Button ScytheUp, ScytheDown;
-        [Export]
-        public ProgressBar scytheMovement;
-        private float scythePosRel;
-        [Export]
-        public ColoredIndicator VibrationMotorIndicator;
-        // [Export]
-        // public Button VibrationMotor;
-        // private bool vibrate;
 
         public override void _Ready()
         {
@@ -84,17 +70,14 @@ namespace UI
             };
             VacuumCommit.ButtonUp += () => { VacuumCommitTexture.Visible = false; };
 
-
             TestTubeCommit.ButtonDown += () =>
             {
                 TestTubeCommitTexture.Visible = true;
-                tubeMsg.tube_id = (byte)TestTubeSelector.prevIndex;
-                tubeMsg.milliliters = (float)TubesExtensionAmount.Value;
+                tubeMsg.tube_id = (byte)Mathf.RoundToInt(TestTubeSelector.Value);
+                tubeMsg.extended = true;
                 ROS.PublishServiceGoal<BioTestTubeRequest, BioTestTubeResponse>(TubeCtrl, (_) => { }, tubeMsg);
             };
             TestTubeCommit.ButtonUp += () => { TestTubeCommitTexture.Visible = false; };
-
-            // VibrationMotor.ButtonUp += () => { vibrate = !vibrate; VibrationMotorIndicator.Value = vibrate; };
         }
 
         public override bool AdvertiseToROS()
@@ -126,7 +109,7 @@ namespace UI
                 serviceName: TubeCtrl,
                 handler: (BioTestTubeRequest _, out BioTestTubeResponse response) =>
                 {
-                    GD.Print($"Extending tube {_.tube_id}, By {_.milliliters}%");
+                    GD.Print($"Extending tube {_.tube_id}, By {_.extended}%");
                     response = new();
                     return true;
                 }
@@ -137,20 +120,11 @@ namespace UI
             return true;
         }
 
-        public override void _Process(double d)
-        {
-            base._Process(d);
-            scythePosRel = (ScytheUp.ButtonPressed ? 1 : 0) - (ScytheDown.ButtonPressed ? 1 : 0) + LeftStick.Y;
-            scytheMovement.Value = scythePosRel;
-        }
-
         public override void EmitToROS()
         {
-            citadelMsg.distributor_id[0] = Distributor0.ButtonPressed;
-            citadelMsg.distributor_id[1] = Distributor1.ButtonPressed;
-            citadelMsg.distributor_id[2] = Distributor2.ButtonPressed;
-            citadelMsg.move_scythe = scythePosRel;
-            // citadelMsg.vibration_motor = vibrate;
+            citadelMsg.distributors_ctrl[0] = Distributor0.ButtonPressed;
+            citadelMsg.distributors_ctrl[1] = Distributor1.ButtonPressed;
+            citadelMsg.distributors_ctrl[2] = Distributor2.ButtonPressed;
             ROS.Publish(citadelTopic, citadelMsg);
         }
 

@@ -21,10 +21,20 @@ namespace UI
         [Export]
         public ProgressBar DrillBoomSpeed;
         private float _DrillBoomValue;
+
         [ExportSubgroup("Scabbard")]
         [Export]
         public ProgressBar DrillSpeed;
-        private float _DrillSpeedValue;
+        private double _DrillSpeedValue;
+
+        [ExportGroup("Vacuum")]
+        [Export]
+        public Button VacuumBoomDown;
+        [Export]
+        public Button VacuumBoomUp;
+        [Export]
+        public ProgressBar VacuumBoomSpeed;
+        private float _VacuumBoomValue;
 
         [ExportGroup("ARQUEBUS")]
         [Export]
@@ -41,13 +51,15 @@ namespace UI
         [Export]
         public AudioStreamPlayer2D Source;
 
+        private double LastTriggerV;
+
         public override void _Ready()
         {
             base._Ready();
 
-            Rate = 15;
+            Rate = 45;
 
-            LaserFailsafe.Toggled += (bool t) =>
+            LaserFailsafe.Toggled += (t) =>
             {
                 // Only play the failsafe engagement sound if
                 // user toggled the failsafe on
@@ -75,9 +87,12 @@ namespace UI
         public override void _Process(double d)
         {
             base._Process(d);
-            DrillSpeed.Value = _DrillSpeedValue = RightTrigger - LeftTrigger;
+            double TriggerV = Mathf.Round(RightTrigger - LeftTrigger);
+            DrillSpeed.Value = _DrillSpeedValue = Mathf.Clamp(_DrillSpeedValue += TriggerV != LastTriggerV ? TriggerV * 0.1 : 0, -1, 1);
+            LastTriggerV = TriggerV;
             // Embedded only responds to whole values at the moment. In the future, can remove Mathf.Round
             DrillBoomSpeed.Value = _DrillBoomValue = (DrillBoomDown.ButtonPressed ? 1 : 0) - (DrillBoomUp.ButtonPressed ? 1 : 0) + Mathf.Round(LeftStick.Y);
+            VacuumBoomSpeed.Value = _VacuumBoomValue = (VacuumBoomDown.ButtonPressed ? 1 : 0) - (VacuumBoomUp.ButtonPressed ? 1 : 0) + Mathf.Round(RightStick.Y);
         }
 
         public override bool AdvertiseToROS()
@@ -93,8 +108,10 @@ namespace UI
 
         public override void EmitToROS()
         {
-            lance.move_lance = _DrillBoomValue;
-            lance.drill_speed = _DrillSpeedValue;
+            lance.drill_arm_ctrl = _DrillBoomValue;
+            lance.drill_speed = (float)_DrillSpeedValue;
+            lance.drill_laser = AButton > 0;
+            lance.vacuum_arm_ctrl = _VacuumBoomValue;
             ROS.Publish(LanceTopic, lance);
         }
 

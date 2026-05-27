@@ -17,8 +17,8 @@ namespace UI
         private readonly PtzControl ptzMsg = new();
         private const string PTZTopic = "/ptz/control";
 
-        private const string GPSTopic = "/gps/fix"/*"/core/feedback/gps/fix"*/;
-        private const string IMUTopic = "/core/imu"/*"/core/feedback/imu/data"*/;
+        private const string GPSTopic = "/core/feedback/gps/fix";
+        private const string IMUTopic = "/core/feedback/imu/data";
 
         public bool TankDriving = false;
 
@@ -273,9 +273,8 @@ namespace UI
             ROS.TopicSubscribe<Imu>(IMUTopic, (data) =>
             {
                 Geometry.Quaternion q = data.orientation;
-                double ψ = Mathf.Atan2(2d * (q.w * q.z + q.x * q.y), 1d - 2d * (q.y * q.y + q.z * q.z)) * rad2deg;
-
-                HeadingIndicator.SetDeferred(Control.PropertyName.Position, new Vector2((float)(ψ * 1.188889d), -20f));
+                double phi = Mathf.Atan2(2d * (q.w * q.z + q.x * q.y), 1d - 2d * (q.y * q.y + q.z * q.z)) * rad2deg;
+                HeadingIndicator.SetDeferred(Control.PropertyName.Position, new Vector2((float)(phi * 1.188889d), -20f));
             });
 
             return true;

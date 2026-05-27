@@ -10,7 +10,6 @@ using RosSharp.RosBridgeClient;
 using System.Collections.Generic;
 using RosSharp.RosBridgeClient.Protocols;
 using RosSharp.RosBridgeClient.MessageTypes.Action;
-using System;
 
 namespace IPC
 {

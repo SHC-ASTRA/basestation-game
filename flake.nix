@@ -3,7 +3,8 @@
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
     modernpkgs.url = "github:NixOS/nixpkgs/master";
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
-    astra-msgs.url = "github:SHC-ASTRA/astra_msgs/39f5ed8074cad6d4e442463eb9a384de92de4dde";
+    astra-msgs.url = "github:SHC-ASTRA/astra_msgs/2303314514094c1bdefe7a60aad32cbba419b3ba";
+    basestation-cameras.url = "github:SHC-ASTRA/basestation-cameras";
   };
   outputs =
     {
@@ -12,6 +13,7 @@
       astra-msgs,
       modernpkgs,
       nix-ros-overlay,
+      basestation-cameras,
     }@inputs:
     nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (
       system:
@@ -53,6 +55,8 @@
               godot-mono
               dotnet-sdk_9
               astra_msgs_pkgs.astra-msgs
+              basestation-cameras.packages.${pkgs.stdenv.hostPlatform.system}.default
+              basestation-cameras.packages.${pkgs.stdenv.hostPlatform.system}.cameracli
             ]
           );
 

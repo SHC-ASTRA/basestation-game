@@ -10,17 +10,36 @@
         ]
       },
       "locked": {
-        "lastModified": 1779197793,
-        "narHash": "sha256-Qq1ac/UZAxDJuy2HciWj4Z+wK9190FG/+qNJYEF4IGE=",
+        "lastModified": 1779843574,
+        "narHash": "sha256-PmPEjt24MaDaKHae9KaRgYvZrqhUTlIHZudsuQpq0cg=",
         "owner": "SHC-ASTRA",
         "repo": "astra_msgs",
-        "rev": "39f5ed8074cad6d4e442463eb9a384de92de4dde",
+        "rev": "2303314514094c1bdefe7a60aad32cbba419b3ba",
         "type": "github"
       },
       "original": {
         "owner": "SHC-ASTRA",
         "repo": "astra_msgs",
-        "rev": "39f5ed8074cad6d4e442463eb9a384de92de4dde",
+        "rev": "2303314514094c1bdefe7a60aad32cbba419b3ba",
+        "type": "github"
+      }
+    },
+    "basestation-cameras": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1777845357,
+        "narHash": "sha256-lXmTr0mOAB+ifQWT6x70Nq6DKmIIau6GjHonkiUd2lA=",
+        "owner": "SHC-ASTRA",
+        "repo": "basestation-cameras",
+        "rev": "926bc78e60f232cc1046efd5efd3fc4c6a77367b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SHC-ASTRA",
+        "repo": "basestation-cameras",
         "type": "github"
       }
     },
@@ -45,6 +64,24 @@
     "flake-utils_2": {
       "inputs": {
         "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_3": {
+      "inputs": {
+        "systems": "systems_3"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -98,8 +135,8 @@
     },
     "nix-ros-overlay_2": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
-        "nixpkgs": "nixpkgs_2",
+        "flake-utils": "flake-utils_3",
+        "nixpkgs": "nixpkgs_3",
         "rosdistro": "rosdistro"
       },
       "locked": {
@@ -135,6 +172,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1735563628,
+        "narHash": "sha256-OnSAY7XDSx7CtDoqNh8jwVwh4xNL/2HaJxGjryLWzX8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b134951a4c9f3c995fd7be05f3243f8ecd65d798",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1771369470,
         "narHash": "sha256-0NBlEBKkN3lufyvFegY4TYv5mCNHbi5OmBDrzihbBMQ=",
         "owner": "NixOS",
@@ -152,6 +205,7 @@
     "root": {
       "inputs": {
         "astra-msgs": "astra-msgs",
+        "basestation-cameras": "basestation-cameras",
         "modernpkgs": "modernpkgs",
         "nix-ros-overlay": "nix-ros-overlay_2",
         "nixpkgs": [
@@ -192,6 +246,21 @@
       }
     },
     "systems_2": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_3": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

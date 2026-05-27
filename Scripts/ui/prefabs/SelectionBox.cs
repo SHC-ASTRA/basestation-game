@@ -1,22 +1,25 @@
 using Godot;
 
-public partial class SelectionBox : MenuButton
+namespace UI
 {
-    public int prevIndex;
-
-    public override void _Ready()
+    public partial class SelectionBox : MenuButton
     {
-        base._Ready();
-        GetPopup().IndexPressed += (index) =>
+        public int prevIndex;
+
+        public override void _Ready()
         {
-            PopupMenu PM = GetPopup();
-            PM.SetItemChecked(prevIndex, false);
-            PM.SetItemDisabled(prevIndex, false);
+            base._Ready();
+            GetPopup().IndexPressed += (index) =>
+            {
+                PopupMenu PM = GetPopup();
+                PM.SetItemChecked(prevIndex, false);
+                PM.SetItemDisabled(prevIndex, false);
 
-            prevIndex = (int)index;
+                prevIndex = (int)index;
 
-            PM.SetItemChecked(prevIndex, true);
-            PM.SetItemDisabled(prevIndex, false);
-        };
+                PM.SetItemChecked(prevIndex, true);
+                PM.SetItemDisabled(prevIndex, false);
+            };
+        }
     }
 }
