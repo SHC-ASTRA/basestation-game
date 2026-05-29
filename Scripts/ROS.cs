@@ -1,27 +1,25 @@
-global using RosSharp.RosBridgeClient.MessageTypes.Astra;
-
 using UI;
 using Godot;
-using System.Linq;
-using System.Threading;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using static UI.TabController;
 using RosSharp.RosBridgeClient;
 using System.Collections.Generic;
 using RosSharp.RosBridgeClient.Protocols;
 using RosSharp.RosBridgeClient.MessageTypes.Action;
+using System;
 
 namespace IPC
 {
     public partial class ROS : Node
     {
         // Control signals
-        // Has ROS finished booting?
-        public static bool ROSReady = false;
+        public static Action ROSCOMINGUP;
+        public static bool ROSUP = false;
         // Should ROS be up?
-        public static bool run = true;
+        public static bool ROSShouldBeUp = true;
         // Was Close called since the last time StartROS was?
-        private static bool closed = false;
+        private static bool IsClosed = false;
 
         private static ROSAlerter alerter;
 
@@ -32,7 +30,7 @@ namespace IPC
 
         // The port has to be a string because casting const ints to strings isn't compile-time constant
         // and it's prettier this way.
-        private const string ROSIP = "127.0.0.1", ROSPort = "9090", ROSWS = $"ws://{ROSIP}:{ROSPort}";
+        private const string ROSIP = "127.0.0.1", ROSPort = "28852", ROSWS = $"ws://{ROSIP}:{ROSPort}";
 
         public override void _Ready()
         {
@@ -43,8 +41,7 @@ namespace IPC
 
         public async static void StartROS()
         {
-            ROSReady = false;
-            closed = false;
+            IsClosed = false;
 
             // Spawn ROSBridgeThread instance
             ROSThread = new ROSBridgeThread();
@@ -52,7 +49,7 @@ namespace IPC
             ROSThread.Start(new Callable(ROSThread, nameof(ROSThread.Main)));
 
             // Waits for ROSBridge to come up. Necessary as if we don't we might start sending/requesting data before it's ready
-            if (!await WaitForRosbridgeAsync(ROSIP, int.Parse(ROSPort), 40, 400))
+            if (!await WaitForRosbridgeAsync(ROSIP, int.Parse(ROSPort), 400))
             {
                 GD.PrintErr("Could not initialize Rosbridge");
                 return;
@@ -71,13 +68,17 @@ namespace IPC
             // arm.Join();
             // testbed.Join();
 
-            // Tell all tabs to readvertise
-            foreach (BaseTabUI tab in TabController.StaticTabsParent.GetChildren().Cast<BaseTabUI>())
-                tab.ShouldEmit = tab.AdvertiseToROS();
+            // Tell active tab to readvertise
+            if (!StaticTabController.tabs[StaticTabController.selectedTab].Started)
+            {
+                StaticTabController.tabs[StaticTabController.selectedTab].Started = true;
+                StaticTabController.tabs[StaticTabController.selectedTab].STARTTAB();
+            }
 
             GD.Print("\nROS Ready\n");
-            run = true;
-            ROSReady = true;
+            ROSUP = true;
+            ROSShouldBeUp = true;
+            ROSCOMINGUP.Invoke();
         }
 
         /// <summary> Cleans up the ROS socket so that no other ROS clients think
@@ -85,14 +86,14 @@ namespace IPC
         public static void Close()
         {
             // If the thread is already closed, calling Close would cause a lot of null access errors.
-            if (closed)
+            if (IsClosed)
                 return;
-            closed = true;
+            IsClosed = true;
 
             alerter.Disconnected();
 
             // This will take time so we can kill it and then clean up ROSSocket while it works
-            ROSThread.Kill();
+            ROSBridgeThread.Kill();
             // ROSSocket may already be closed / crashed from an error, we should check first
             if (ROSSocket != null)
             {
@@ -111,13 +112,21 @@ namespace IPC
                 subscriptionNames.Clear();
 
                 // Halt EmitToROS threads
-                run = false;
+                ROSUP = false;
+                ROSShouldBeUp = false;
                 // Wipe ROSSocket from the face of the earth
                 ROSSocket.Close();
                 ROSSocket = null;
             }
             ROSThread.WaitToFinish();
             ROSThread.Dispose();
+        }
+
+        public static void RegsiterOnROSStart(Action _)
+        {
+            if (!ROSUP)
+                ROSCOMINGUP += _.Invoke;
+            else _.Invoke();
         }
 
         /// <summary> Godot-managed thread. Holds open the ROSBridge server in a blocking way.
@@ -131,16 +140,17 @@ namespace IPC
                     ["run", "rosbridge_server", "rosbridge_websocket", "--ros-args", "--params-file", "./ROS/rosbridge_conf.yaml"]
                 );
                 // Alert the user via logs and on-screen if it does crash
-                if (run)
+                if (ROSShouldBeUp)
                     GD.Print("Rosbridge crashed!");
+                ROSUP = false;
                 alerter.CallDeferred(nameof(alerter.Disconnected));
-
                 return true;
             }
 
-            public void Kill()
+            public static void Kill()
             {
-                run = false;
+                ROSShouldBeUp = false;
+                ROSUP = false;
                 // Make sure the main thread halts until rosbridge_websocket is dead.
                 OS.Execute("pkill", ["rosbridge_webso"]);
             }
@@ -155,7 +165,7 @@ namespace IPC
         // _ExitTree() is not called if the editor stop button is clicked
         public override void _Notification(int notif)
         {
-            if (notif == SceneTree.NotificationPredelete)
+            if (notif == NotificationPredelete)
                 Close();
         }
 
@@ -166,13 +176,13 @@ namespace IPC
         /// <summary> Goated Chat code, continuously attempts to
         /// connect to ROSBridge, waiting more and more as it fails.
         /// Will give up after a decent amount of time </summary>
-        private static async Task<bool> WaitForRosbridgeAsync(string host, int port, int timeoutSec = 400, int pollIntervalMs = 2000, int increaseMs = 100)
+        private static async Task<bool> WaitForRosbridgeAsync(string host, int port, int pollIntervalMs = 2000, int increaseMs = 100)
         {
             int failCount = 0;
             int totalFailCount = 0;
             while (true)
             {
-                if (await CheckROSOnce(host, port, timeoutSec, pollIntervalMs))
+                if (await CheckROSOnce(host, port, pollIntervalMs))
                     return true;
                 GD.Print($"Failed to connect to ROSBridge container. Retrying in {pollIntervalMs}Ms");
                 totalFailCount++;
@@ -187,7 +197,7 @@ namespace IPC
             }
         }
 
-        private static async Task<bool> CheckROSOnce(string host, int port, int timeoutSec = 400, int pollIntervalMs = 2000)
+        private static async Task<bool> CheckROSOnce(string host, int port, int pollIntervalMs = 2000)
         {
             try
             {
@@ -222,6 +232,7 @@ namespace IPC
             ROSSocket.Advertise<T>(topicName, qosProfile);
             topicNames.Add(topicName);
         }
+        public static void UnadvertiseTopic(string topicName) => ROSSocket.Unadvertise(topicName);
 
         public static void TopicSubscribe<T>(string topicName, SubscriptionHandler<T> Callback) where T : Message
         {
@@ -247,6 +258,7 @@ namespace IPC
             ROSSocket.AdvertiseService<A, B>(serviceName, handler);
             serviceNames.Add(serviceName);
         }
+        public static void UnadvertiseService(string topicName) => ROSSocket.UnadvertiseService(topicName);
 
         /// <summary>
         /// Can I even be forgiven for this?
@@ -283,16 +295,7 @@ namespace IPC
             actionNames.Add(actionName);
             return _;
         }
-
-        /// <summary> Uses a globally dynamic delay so that topics
-        /// cannot all advertise at once, which causes ROSBridge to fail </summary>
-        public static void AwaitRosReady()
-        {
-            while (!ROSReady) Thread.Sleep(2);
-            while (requestDelay < 150) Thread.Sleep(requestDelay++);
-            requestDelay = 1;
-        }
-        static int requestDelay = 1;
+        public static void UnadvertiseAction(string topicName) => ROSSocket.UnadvertiseAction(topicName);
 
         /// <summary> Takes in the target Topic name and message instance,
         /// publishes the latter to the former. If the topic doesn't exist,
