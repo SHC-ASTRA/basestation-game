@@ -220,6 +220,7 @@ custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
 [node name="arm" type="HBoxContainer" parent="TabsParent" unique_id=748735401 node_paths=PackedStringArray("Axis0drive", "Axis1drive", "Axis2drive", "Axis3drive", "BrakeIndicator", "Brake", "EndEffectorRoll", "EndEffectorYaw", "LinearActuatorDrive", "GripperDrive", "LaserIndicator", "Laser")]
+visible = false
 layout_mode = 2
 alignment = 1
 script = ExtResource("2_qq4qf")
@@ -1511,17 +1512,14 @@ flip_v = true
 [node name="I4" parent="TabsParent/core" unique_id=1563915762 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
 
-[node name="cams" type="HBoxContainer" parent="TabsParent" unique_id=1162334807 node_paths=PackedStringArray("Streams", "Addstream", "Grid", "Mode", "ID", "Address", "Rows", "Columns", "Commit", "Committing", "ActiveCams", "Query")]
-visible = false
+[node name="cams" type="HBoxContainer" parent="TabsParent" unique_id=1162334807 node_paths=PackedStringArray("Streams", "Grid", "Mode", "ID", "Rows", "Columns", "Commit", "Committing", "ActiveCams", "Query")]
 layout_mode = 2
 alignment = 1
 script = ExtResource("12_lq3nq")
 Streams = NodePath("Stream")
-Addstream = NodePath("Stream/Add")
 Grid = NodePath("Grid")
 Mode = NodePath("Mode/PanelContainer/Stream Mode")
 ID = NodePath("Stream/CamID")
-Address = NodePath("Stream/Add/StreamAddr")
 Rows = NodePath("Grid/Rows2")
 Columns = NodePath("Grid/Columns2")
 Commit = NodePath("Commit/AspectRatioContainer/Commit")
@@ -1554,14 +1552,12 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_kpyjk")
 [node name="Stream Mode" type="MenuButton" parent="TabsParent/cams/Mode/PanelContainer" unique_id=864611066]
 layout_mode = 2
 text = "Add Stream"
-item_count = 3
+item_count = 2
 popup/item_0/text = "Add Stream"
 popup/item_0/checked = true
 popup/item_0/id = 0
-popup/item_1/text = "Remove Stream"
-popup/item_1/id = 1
-popup/item_2/text = "Grid"
-popup/item_2/id = 2
+popup/item_1/text = "Grid"
+popup/item_1/id = 2
 
 [node name="-|-" parent="TabsParent/cams" unique_id=507980683 instance=ExtResource("13_8exja")]
 layout_mode = 2
@@ -1577,20 +1573,6 @@ horizontal_alignment = 1
 
 [node name="CamID" type="LineEdit" parent="TabsParent/cams/Stream" unique_id=1458282666]
 layout_mode = 2
-caret_blink = true
-
-[node name="Add" type="VBoxContainer" parent="TabsParent/cams/Stream" unique_id=1318522231]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="TabsParent/cams/Stream/Add" unique_id=1160060809]
-layout_mode = 2
-text = "
-Stream Address"
-horizontal_alignment = 1
-
-[node name="StreamAddr" type="LineEdit" parent="TabsParent/cams/Stream/Add" unique_id=2075099789]
-layout_mode = 2
-placeholder_text = "rtsp://"
 caret_blink = true
 
 [node name="Grid" type="VBoxContainer" parent="TabsParent/cams" unique_id=1122255937]
