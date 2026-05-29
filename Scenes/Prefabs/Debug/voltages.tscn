@@ -10,22 +10,19 @@ offset_bottom = 123.0
 mouse_filter = 2
 alignment = 1
 script = ExtResource("1_bui6t")
-NameLabel = NodePath("Label")
+NameLabel = NodePath("Name")
 BatVoltage = NodePath("HBoxContainer/Bat")
 Voltage12 = NodePath("HBoxContainer/12v")
 Voltage5 = NodePath("HBoxContainer/5v")
 Voltage3 = NodePath("HBoxContainer/3v")
 
-[node name="-|-2" parent="." unique_id=570232658 instance=ExtResource("2_mmpqb")]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-
-[node name="Label" type="Label" parent="." unique_id=622305399]
+[node name="Name" type="Label" parent="." unique_id=622305399]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
+size_flags_vertical = 1
 text = "Core"
-horizontal_alignment = 1
 autowrap_mode = 3
+uppercase = true
 
 [node name="-|-3" parent="." unique_id=1046998220 instance=ExtResource("2_mmpqb")]
 modulate = Color(1, 1, 1, 0)

@@ -54,6 +54,8 @@ namespace UI.Debug.Bio
             if (prevContact != feedback.libs_grounded)
                 GroundContact.SetDeferred(CanvasItem.MethodName.IsVisible, prevContact = feedback.libs_grounded);
         }
+
+        public override string TopicName() => FEEDBACK.BIOMAIN;
     }
 
 }

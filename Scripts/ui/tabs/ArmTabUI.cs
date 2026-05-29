@@ -8,10 +8,8 @@ namespace UI
     public partial class ArmTabUI : BaseTabUI
     {
         private readonly JointJog controlMsg = new();
-        private const string ControlTopic = "/arm/control/manual";
 
         private readonly ArmCtrlState controlTwist = new();
-        private const string ControlState = "/arm/control/state";
 
         [ExportCategory("Arm")]
         [ExportSubgroup("Axese")]
@@ -54,11 +52,6 @@ namespace UI
             WristRoll = 5,
             EFGripper = 6;
 
-        public override void _Ready()
-        {
-            base._Ready();
-        }
-
         public override void _Process(double delta)
         {
             base._Process(delta);
@@ -93,7 +86,26 @@ namespace UI
             }
         }
 
-        public override bool AdvertiseToROS()
+        public override void EmitToROS()
+        {
+            controlMsg.velocities[Axis0] = LeftStick.X;
+            controlMsg.velocities[Axis1] = LeftStick.Y;
+            controlMsg.velocities[Axis2] = RightStick.X;
+            controlMsg.velocities[Axis3] = RightStick.Y;
+
+            controlMsg.velocities[WristYaw] = Mathf.RoundToInt(EFYaw);
+            controlMsg.velocities[WristRoll] = Mathf.RoundToInt(EFRoll);
+
+            controlMsg.velocities[EFGripper] = Mathf.RoundToInt(RightTrigger - LeftTrigger);
+
+            controlTwist.laser = LaserState;
+            controlTwist.brake_mode = BrakeState;
+
+            ROS.Publish(CONTROL.ARMCONTROLMANUAL, controlMsg);
+            ROS.Publish(CONTROL.ARMCONTROLSTATE, controlTwist);
+        }
+
+        public override void STARTTAB()
         {
             // controlMsg.joint_names = URDFTranslator.JointNames(URDFDownloader.Robots["Arm"]);
             controlMsg.joint_names = [
@@ -115,39 +127,29 @@ namespace UI
                 QOS.Policy.Duration_Unspecified,
                 QOS.Policy.Duration_Unspecified
             );
-            ROS.AdvertiseTopic<JointJog>(ControlTopic, ControlQOS);
-            ROS.AdvertiseTopic<ArmCtrlState>(ControlState, ControlQOS);
-            return true;
+            ROS.AdvertiseTopic<JointJog>(CONTROL.ARMCONTROLMANUAL, ControlQOS);
+            ROS.AdvertiseTopic<ArmCtrlState>(CONTROL.ARMCONTROLSTATE, ControlQOS);
         }
 
-        public override void EmitToROS()
+        public override void STOPTAB()
         {
-            controlMsg.velocities[Axis0] = LeftStick.X;
-            controlMsg.velocities[Axis1] = LeftStick.Y;
-            controlMsg.velocities[Axis2] = RightStick.X;
-            controlMsg.velocities[Axis3] = RightStick.Y;
+            controlMsg.velocities[Axis0] = 0;
+            controlMsg.velocities[Axis1] = 0;
+            controlMsg.velocities[Axis2] = 0;
+            controlMsg.velocities[Axis3] = 0;
 
-            controlMsg.velocities[WristYaw] = Mathf.RoundToInt(EFYaw);
-            controlMsg.velocities[WristRoll] = Mathf.RoundToInt(EFRoll);
+            controlMsg.velocities[WristYaw] = 0;
+            controlMsg.velocities[WristRoll] = 0;
 
-            controlMsg.velocities[EFGripper] = Mathf.RoundToInt(RightTrigger - LeftTrigger);
-
-            controlTwist.laser = LaserState;
-            controlTwist.brake_mode = BrakeState;
-
-            ROS.Publish(ControlTopic, controlMsg);
-            ROS.Publish(ControlState, controlTwist);
-        }
-
-        public override void _ExitTree()
-        {
-            controlMsg.velocities[Axis0] = controlMsg.velocities[Axis1] = controlMsg.velocities[Axis2] = controlMsg.velocities[Axis3] = 0;
-            controlTwist.brake_mode = true;
-            controlMsg.velocities[WristRoll] = controlMsg.velocities[WristYaw] = 0;
             controlMsg.velocities[EFGripper] = 0;
+
+            ROS.Publish(CONTROL.ARMCONTROLMANUAL, controlMsg);
+            ROS.UnadvertiseTopic(CONTROL.ARMCONTROLMANUAL);
+
             controlTwist.laser = false;
-            ROS.Publish(ControlTopic, controlMsg);
-            ROS.Publish(ControlState, controlTwist);
+            controlTwist.brake_mode = true;
+            ROS.Publish(CONTROL.ARMCONTROLSTATE, controlTwist);
+            ROS.UnadvertiseTopic(CONTROL.ARMCONTROLSTATE);
         }
     }
 }

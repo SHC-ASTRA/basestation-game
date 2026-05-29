@@ -41,5 +41,7 @@ namespace UI.Debug.Auto
                 }
             }
         }
+
+        public override string TopicName() => FEEDBACK.AUTOMACULA;
     }
 }

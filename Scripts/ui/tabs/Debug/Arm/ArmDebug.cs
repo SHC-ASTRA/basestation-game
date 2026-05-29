@@ -1,5 +1,6 @@
 using Godot;
 using static UI.Debug.Debug;
+using static Globals.TOPICS.FEEDBACK;
 
 namespace UI.Debug.Arm
 {
@@ -39,6 +40,8 @@ namespace UI.Debug.Arm
                 }
             };
         }
+
+        public override string TopicName() => ARMMAIN;
 
         public override void FeedbackHandler()
         {

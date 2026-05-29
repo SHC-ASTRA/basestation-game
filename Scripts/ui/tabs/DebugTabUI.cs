@@ -88,8 +88,8 @@ namespace UI.Debug
             ActivePanel = null;
         }
 
-        public override bool AdvertiseToROS() { return false; }
         public override void EmitToROS() { }
-        public override void _ExitTree() { }
+        public override void STARTTAB() { }
+        public override void STOPTAB() { }
     }
 }

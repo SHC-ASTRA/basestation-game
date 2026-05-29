@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://dh133i8yuxjts"]
 
-[ext_resource type="Script" uid="uid://dqi0np3jimftm" path="res://Scripts/ui/TabController.cs" id="2_gwotu"]
-[ext_resource type="Script" uid="uid://x6xgb74rpqmy" path="res://Scripts/ui/tabs/ArmTabUI.cs" id="2_qq4qf"]
+[ext_resource type="Script" uid="uid://c8mky1mmw43v" path="res://Scripts/ui/TabController.cs" id="2_gwotu"]
+[ext_resource type="Script" uid="uid://cw3ilshfy4h26" path="res://Scripts/ui/tabs/ArmTabUI.cs" id="2_qq4qf"]
 [ext_resource type="PackedScene" uid="uid://bpojxp13gdd6l" path="res://Scenes/Prefabs/I.tscn" id="3_5ljfu"]
-[ext_resource type="Script" uid="uid://blhvukoughjrd" path="res://Scripts/ui/tabs/CoreTabUI.cs" id="3_grmb5"]
+[ext_resource type="Script" uid="uid://b5veim00ct02r" path="res://Scripts/ui/tabs/CoreTabUI.cs" id="3_grmb5"]
 [ext_resource type="Theme" uid="uid://dfxg1gnuaoylo" path="res://Assets/Themes/Light.tres" id="3_gwotu"]
 [ext_resource type="PackedScene" uid="uid://cia5qesu3cdf5" path="res://Scenes/Prefabs/midway_Hprogress_bar.tscn" id="3_mxw14"]
 [ext_resource type="Theme" uid="uid://df2oheltoiwvh" path="res://Assets/Themes/ControlIndicators.tres" id="4_th4gl"]
 [ext_resource type="ArrayMesh" uid="uid://d140fswoxqbrf" path="res://Assets/PTZ/PTZbase.obj" id="5_m8v7i"]
-[ext_resource type="Script" uid="uid://bcitja1iicue1" path="res://Scripts/ui/tabs/AutonomyTabUI.cs" id="5_u4qwe"]
+[ext_resource type="Script" uid="uid://c3cdw00mmatpx" path="res://Scripts/ui/tabs/AutonomyTabUI.cs" id="5_u4qwe"]
 [ext_resource type="Texture2D" uid="uid://d4ba8c5m84h60" path="res://Assets/tire profile.png" id="6_lq3nq"]
 [ext_resource type="ArrayMesh" uid="uid://2wmjb5e4g57j" path="res://Assets/PTZ/PTZaxis1.obj" id="6_yplvc"]
 [ext_resource type="PackedScene" uid="uid://wbjb3q0icoe5" path="res://Scenes/Prefabs/colored_indicator.tscn" id="6_yrw8b"]
@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://d3qibna8eoiar" path="res://Assets/tire brake.png" id="7_yrw8b"]
 [ext_resource type="Script" uid="uid://cghn1rxpmcyfu" path="res://Scripts/ui/FontScaler.cs" id="8_yplvc"]
 [ext_resource type="Texture2D" uid="uid://bb3iqpbhicn5k" path="res://Assets/Laser.png" id="8_yrw8b"]
-[ext_resource type="Script" uid="uid://rd52dmwfpqdw" path="res://Scripts/ui/tabs/CitadelTabUI.cs" id="11_f0cuh"]
+[ext_resource type="Script" uid="uid://bcl75oq36ralq" path="res://Scripts/ui/tabs/CitadelTabUI.cs" id="11_f0cuh"]
 [ext_resource type="PackedScene" uid="uid://5uqb2dju2jlv" path="res://Scenes/Prefabs/Debug/Core/motor.tscn" id="11_xfr2n"]
 [ext_resource type="PackedScene" uid="uid://dwah41t06sjef" path="res://Scenes/Prefabs/Debug/Core/imu.tscn" id="12_1gx8n"]
 [ext_resource type="Texture2D" uid="uid://c6jtf76trlo63" path="res://Assets/pump.png" id="12_a86w8"]
@@ -33,22 +33,22 @@
 [ext_resource type="Texture2D" uid="uid://bsxjoonlcnr0j" path="res://Assets/Lance.png" id="17_7rf03"]
 [ext_resource type="Texture2D" uid="uid://b1q25usu0swpw" path="res://Assets/Commit.png" id="17_gbrgi"]
 [ext_resource type="Texture2D" uid="uid://dxunigq7q2nib" path="res://Assets/TestTube.png" id="19_gbrgi"]
-[ext_resource type="Script" uid="uid://kyujnwhq7x10" path="res://Scripts/ui/tabs/LanceTabUI.cs" id="23_w6oot"]
+[ext_resource type="Script" uid="uid://dstysa30ka6k1" path="res://Scripts/ui/tabs/LanceTabUI.cs" id="23_w6oot"]
 [ext_resource type="Theme" uid="uid://cu430ubalxs23" path="res://Assets/Themes/Spacer.tres" id="24_15sjt"]
 [ext_resource type="Texture2D" uid="uid://di6xg4f38cdx1" path="res://Assets/Tank.png" id="25_vwpm1"]
 [ext_resource type="Theme" uid="uid://ce3coqe5tlutx" path="res://Assets/Themes/NoAAorCorners.tres" id="33_rj5vk"]
-[ext_resource type="Script" uid="uid://0q5w18s6g2le" path="res://Scripts/ui/tabs/Debug/Core/CoreDebug.cs" id="34_f0cuh"]
-[ext_resource type="Script" uid="uid://bbgsjrn1gb6hh" path="res://Scripts/ui/tabs/Debug/Auto/Macula.cs" id="34_w6oot"]
+[ext_resource type="Script" uid="uid://cpbtfvfq5tnax" path="res://Scripts/ui/tabs/Debug/Core/CoreDebug.cs" id="34_f0cuh"]
+[ext_resource type="Script" uid="uid://cvomm6euvi1p3" path="res://Scripts/ui/tabs/Debug/Auto/Macula.cs" id="34_w6oot"]
 [ext_resource type="Texture2D" uid="uid://dv4ufea2ycrd1" path="res://Assets/Speedometer-1-874559948.png" id="35_4j4ic"]
 [ext_resource type="Texture2D" uid="uid://1feh6rrmp0ah" path="res://Assets/Needle.png" id="36_op017"]
 [ext_resource type="Texture2D" uid="uid://cjr2pdef3g7ku" path="res://Assets/Compass.png" id="37_vsiki"]
 [ext_resource type="PackedScene" uid="uid://csgu7b14vfkw3" path="res://Scenes/Prefabs/Debug/MotorDebug.tscn" id="37_w6oot"]
 [ext_resource type="Texture2D" uid="uid://dql75rtmw5x6a" path="res://Assets/Heading_Indicator.png" id="38_41h4a"]
-[ext_resource type="Script" uid="uid://duhadbonohgc6" path="res://Scripts/ui/tabs/Debug/Arm/ArmDebug.cs" id="40_1gx8n"]
+[ext_resource type="Script" uid="uid://dun7de1xdakgb" path="res://Scripts/ui/tabs/Debug/Arm/ArmDebug.cs" id="40_1gx8n"]
 [ext_resource type="PackedScene" uid="uid://djddm5e7gl0of" path="res://Scenes/Prefabs/Debug/voltages.tscn" id="40_w6oot"]
 [ext_resource type="Script" uid="uid://cod2eryks8q72" path="res://Scripts/ui/tabs/DebugTabUI.cs" id="41_41h4a"]
-[ext_resource type="Script" uid="uid://dfdi3kkwd078a" path="res://Scripts/ui/tabs/Debug/Bio/BioDebug.cs" id="44_vsiki"]
-[ext_resource type="Script" uid="uid://2s7jlwxag6mh" path="res://Scripts/ui/ColoredLabel.cs" id="49_e8fxv"]
+[ext_resource type="Script" uid="uid://dy17nmb5xh4yq" path="res://Scripts/ui/tabs/Debug/Bio/BioDebug.cs" id="44_vsiki"]
+[ext_resource type="Script" uid="uid://c1grn8l4wy2u3" path="res://Scripts/ui/ColoredLabel.cs" id="49_e8fxv"]
 
 [sub_resource type="Theme" id="Theme_xfr2n"]
 CheckButton/font_sizes/font_size = 18
@@ -236,6 +236,7 @@ GripperDrive = NodePath("LA_Gripper/Gripper/Gripper")
 LaserIndicator = NodePath("Laser/LaserContainer/ColoredIndicator")
 Laser = NodePath("Laser/LaserContainer/TextureRect")
 ROSDependent = true
+ShouldEmit = true
 
 [node name="I" parent="TabsParent/arm" unique_id=1744664029 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
@@ -466,6 +467,7 @@ Voltages = NodePath("HBoxContainer/Feedback/InfoContainer/Voltages")
 imu = NodePath("HBoxContainer/Feedback/InfoContainer/IMU")
 motors = NodePath("HBoxContainer/Feedback/InfoContainer/Motor")
 ROSDependent = true
+ShouldEmit = null
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TabsParent/auto" unique_id=1322807190]
 layout_mode = 2
@@ -600,6 +602,7 @@ TestTubeSelector = NodePath("Test Tubes/Test Tubes/TubeNum")
 TestTubeCommit = NodePath("Test Tubes/Commit/AspectRatioContainer/Commit")
 TestTubeCommitTexture = NodePath("Test Tubes/Commit/AspectRatioContainer/commit")
 ROSDependent = true
+ShouldEmit = true
 
 [node name="I1" parent="TabsParent/chems" unique_id=875462288 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
@@ -934,6 +937,7 @@ Failsafe = ExtResource("12_wshk6")
 Fire = ExtResource("13_gbrgi")
 Source = NodePath("LIBS/AudioStreamPlayer2D")
 ROSDependent = true
+ShouldEmit = true
 
 [node name="Spacer1" type="Panel" parent="TabsParent/drill" unique_id=1675851712]
 layout_mode = 2
@@ -1165,6 +1169,7 @@ Zoom = NodePath("PTZ/PTZControlContainer/VBoxContainer2/Zoom")
 Needle = NodePath("VBoxContainer/Speedometer/NeedleRotator")
 HeadingIndicator = NodePath("VBoxContainer/Compass/Indicator")
 ROSDependent = true
+ShouldEmit = true
 
 [node name="I" parent="TabsParent/core" unique_id=1440631658 instance=ExtResource("3_5ljfu")]
 layout_mode = 2
@@ -1524,6 +1529,7 @@ Committing = NodePath("Commit/AspectRatioContainer/commit")
 ActiveCams = NodePath("Streams")
 Query = NodePath("Query/AspectRatioContainer/Query")
 ROSDependent = null
+ShouldEmit = null
 
 [node name="Spacer3" type="Panel" parent="TabsParent/cams" unique_id=261988570]
 layout_mode = 2
@@ -1765,6 +1771,7 @@ script = ExtResource("41_41h4a")
 InfoContainer = NodePath("InfoBox/InfoPanel/InfoContainer")
 DD = NodePath("InfoBox/DD")
 ROSDependent = true
+ShouldEmit = null
 
 [node name="InfoBox" type="HBoxContainer" parent="TabsParent/debug" unique_id=1760587508]
 layout_mode = 2
@@ -1773,7 +1780,7 @@ alignment = 1
 
 [node name="DD" type="OptionButton" parent="TabsParent/debug/InfoBox" unique_id=138306711]
 z_index = 10
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 alignment = 1
 autowrap_mode = 3
@@ -1782,7 +1789,7 @@ autowrap_trim_flags = 0
 [node name="Arm" type="OptionButton" parent="TabsParent/debug/InfoBox/DD" unique_id=2105235292]
 visible = false
 z_index = 1
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 0
 offset_left = 50.0
 offset_right = 100.0
@@ -1806,7 +1813,6 @@ A0 = NodePath("Axis0")
 A1 = NodePath("Axis1")
 A2 = NodePath("Axis2")
 A3 = NodePath("Axis3")
-TopicName = "/arm/feedback/main"
 
 [node name="Axis0" parent="TabsParent/debug/InfoBox/DD/Arm/Motors" unique_id=994205908 instance=ExtResource("37_w6oot")]
 layout_mode = 2
@@ -1823,7 +1829,7 @@ layout_mode = 2
 [node name="Auto" type="OptionButton" parent="TabsParent/debug/InfoBox/DD" unique_id=154636130]
 visible = false
 z_index = 1
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 0
 offset_left = 50.0
 offset_right = 100.0
@@ -1856,7 +1862,6 @@ Corner0 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner0")
 Corner1 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner1")
 Corner2 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner2")
 Corner3 = NodePath("VBoxContainer2/HBoxContainer/GridContainer/Corner3")
-TopicName = "/auto/macula"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Auto/Macula" unique_id=828360749]
 layout_mode = 2
@@ -1927,7 +1932,7 @@ text = "Corner 3:"
 [node name="Bio" type="OptionButton" parent="TabsParent/debug/InfoBox/DD" unique_id=1670087457]
 visible = false
 z_index = 1
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 0
 offset_left = 50.0
 offset_right = 100.0
@@ -1949,7 +1954,6 @@ BioVoltages = NodePath("../../../../VoltagesPanel/HBoxContainer/VoltagesContaine
 DrillTemp = NodePath("VBoxContainer/DrillTemp")
 DrillHumidity = NodePath("VBoxContainer/DrillHumidity")
 GroundContact = NodePath("HBoxContainer/CenterContainer/NonContact/Contacting")
-TopicName = "/bio/feedback/main"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabsParent/debug/InfoBox/DD/Bio/Board" unique_id=970322762]
 layout_mode = 2
@@ -1997,7 +2001,7 @@ texture = ExtResource("13_1vnp5")
 [node name="Core" type="OptionButton" parent="TabsParent/debug/InfoBox/DD" unique_id=634523336]
 visible = false
 z_index = 1
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 0
 offset_left = 50.0
 offset_right = 100.0
@@ -2039,17 +2043,16 @@ theme_override_constants/separation = 0
 
 [node name="spacer" type="Panel" parent="TabsParent/debug/InfoBox/InfoPanel" unique_id=72369656]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="CoreFeedbackHandler" type="Control" parent="TabsParent/debug/InfoBox/InfoPanel" unique_id=1717182197 node_paths=PackedStringArray("voltages", "imu", "motors")]
+[node name="CoreFeedbackController" type="Control" parent="TabsParent/debug/InfoBox/InfoPanel" unique_id=1717182197 node_paths=PackedStringArray("voltages", "imu", "motors")]
 layout_mode = 2
 script = ExtResource("34_f0cuh")
 voltages = NodePath("../../../VoltagesPanel/HBoxContainer/VoltagesContainer/Voltages")
 imu = NodePath("../../DD/Core/IMU")
 motors = NodePath("../../DD/Core/Motor")
-TopicName = "/core/feedback/main"
 
 [node name="InfoContainer" type="PanelContainer" parent="TabsParent/debug/InfoBox/InfoPanel" unique_id=1158815868]
 custom_minimum_size = Vector2(600, 0)

@@ -11,7 +11,7 @@ namespace UI.Debug
 
         public override void _Ready()
         {
-            ROS.TopicSubscribe<BatteryState>("/core/feedback/battery", (v) =>
+            ROS.TopicSubscribe<BatteryState>(FEEDBACK.BATTERY, (v) =>
                 BatVoltage.SetValue("[VALUE1]v | [VALUE2]%", v.voltage, v.percentage));
         }
     }

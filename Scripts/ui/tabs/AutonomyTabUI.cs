@@ -34,16 +34,6 @@ namespace UI
         public override void _Ready()
         {
             base._Ready();
-            Task.Run(async () =>
-            {
-                while (!ROS.ROSReady)
-                    await Task.Delay(5);
-                ROS.TopicSubscribe<NewCoreFeedback>("/core/feedback/main", (feedback) =>
-                {
-                    this.feedback = feedback;
-                    CallDeferred(nameof(FeedbackHandler));
-                });
-            });
             // RadioFeedback.Toggled += (bool t) =>
             // {
             //     RadioControl.SetPressedNoSignal(!t);
@@ -56,12 +46,6 @@ namespace UI
             //     Control.Visible = t;
             //     Feedback.Visible = !t;
             // };
-        }
-
-        public override bool AdvertiseToROS()
-        {
-            // ROS.RequestTopic<AutoNav>("");
-            return false;
         }
 
         public override void _Process(double delta) { }
@@ -79,6 +63,19 @@ namespace UI
         }
 
         public override void EmitToROS() { }
-        public override void _ExitTree() { }
+        public override void STARTTAB()
+        {
+            // ROS.RequestTopic<AutoNav>("");
+
+            ROS.TopicSubscribe<NewCoreFeedback>(FEEDBACK.COREMAIN, (feedback) =>
+            {
+                this.feedback = feedback;
+                CallDeferred(nameof(FeedbackHandler));
+            });
+        }
+        public override void STOPTAB()
+        {
+            ROS.TopicUnsubscribe(FEEDBACK.COREMAIN);
+        }
     }
 }

@@ -30,5 +30,7 @@ namespace UI.Debug.Core
             if (lastConnected != feedback.connected)
                 ConnectedTrue.SetDeferred(CanvasItem.PropertyName.Visible, lastConnected = feedback.connected);
         }
+
+        public override string TopicName() => FEEDBACK.F_PTZ;
     }
 }

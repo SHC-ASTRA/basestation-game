@@ -25,5 +25,7 @@ namespace UI.Debug.Core
 
             motors.Update(feedback.fl_motor, feedback.bl_motor, feedback.fr_motor, feedback.br_motor);
         }
+
+        public override string TopicName() => FEEDBACK.COREMAIN;
     }
 }

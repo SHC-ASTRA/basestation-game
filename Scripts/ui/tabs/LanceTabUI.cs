@@ -6,11 +6,9 @@ namespace UI
     public partial class LanceTabUI : BaseTabUI
     {
         private readonly LanceControl lance = new();
-        private const string LanceTopic = "/bio/control/lance";
 
         private readonly FireLibsRequest libsIn = new();
         private readonly FireLibsResponse libsOut = new();
-        private const string LibsTopic = "/bio/libs/fire";
 
         [ExportCategory("LANCE")]
         [ExportGroup("Lance")]
@@ -72,13 +70,13 @@ namespace UI
             };
             Laser.Pressed += () =>
             {
-                // Only do something is the failsafe is engaged
+                // Only do something if the failsafe is engaged
                 if (FailsafeEngaged)
                 {
                     Source.Stream = Fire;
                     Source.Play();
                     libsIn.unique_number = new System.Random().NextInt64();
-                    ROS.PublishServiceGoal<FireLibsRequest, FireLibsResponse>(LibsTopic, (_) => { }, libsIn);
+                    ROS.PublishServiceGoal<FireLibsRequest, FireLibsResponse>(CONTROL.LIBSTOPIC, (_) => { }, libsIn);
                     FailsafeEngaged = false;
                 }
             };
@@ -95,29 +93,35 @@ namespace UI
             VacuumBoomSpeed.Value = _VacuumBoomValue = (VacuumBoomDown.ButtonPressed ? 1 : 0) - (VacuumBoomUp.ButtonPressed ? 1 : 0) + Mathf.Round(RightStick.Y);
         }
 
-        public override bool AdvertiseToROS()
-        {
-            ROS.AdvertiseTopic<LanceControl>(LanceTopic);
-
-            ROS.AdvertiseService<FireLibsRequest, FireLibsResponse>(
-                LibsTopic,
-                (FireLibsRequest i, out FireLibsResponse o) => { o = libsOut; return true; }
-            );
-            return true;
-        }
-
         public override void EmitToROS()
         {
             lance.drill_arm_ctrl = _DrillBoomValue;
             lance.drill_speed = (float)_DrillSpeedValue;
-            lance.drill_laser = AButton > 0;
             lance.vacuum_arm_ctrl = _VacuumBoomValue;
-            ROS.Publish(LanceTopic, lance);
+            lance.drill_laser = AButton > 0;
+            ROS.Publish(CONTROL.LANCECONTROL, lance);
         }
 
-        public override void _ExitTree()
+        public override void STARTTAB()
         {
-            ROS.ROSSocket.Unadvertise(LanceTopic);
+            ROS.AdvertiseTopic<LanceControl>(CONTROL.LANCECONTROL);
+
+            ROS.AdvertiseService<FireLibsRequest, FireLibsResponse>(
+                CONTROL.LIBSTOPIC,
+                (FireLibsRequest i, out FireLibsResponse o) => { o = libsOut; return true; }
+            );
+        }
+
+        public override void STOPTAB()
+        {
+            lance.drill_arm_ctrl = 0;
+            lance.drill_speed = 0;
+            lance.vacuum_arm_ctrl = 0;
+            lance.drill_laser = false;
+            ROS.Publish(CONTROL.LANCECONTROL, lance);
+            ROS.UnadvertiseTopic(CONTROL.LANCECONTROL);
+
+            ROS.UnadvertiseService(CONTROL.LIBSTOPIC);
         }
     }
 }

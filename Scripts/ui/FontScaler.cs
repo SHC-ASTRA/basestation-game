@@ -34,7 +34,7 @@ namespace UI
 
         public override void _ExitTree()
         {
-            this.Disconnect("resized", c);
+            Disconnect("resized", c);
             base._ExitTree();
         }
     }

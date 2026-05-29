@@ -9,23 +9,19 @@ namespace UI.Debug
     {
         public abstract partial class FeedbackProvider<T> : Visibility where T : Message
         {
-            [Export]
-            public string TopicName;
-
+            public abstract string TopicName();
             public override void _Ready()
             {
                 base._Ready();
-                Task.Run(async () =>
+                ROS.RegsiterOnROSStart(() => Task.Run(async () =>
                 {
-                    while (!ROS.ROSReady)
-                        await Task.Delay(5);
-                    CallDeferredThreadGroup(GodotObject.MethodName.Connect, [Node.SignalName.TreeExiting, Callable.From(() => ROS.TopicUnsubscribe(TopicName))]);
-                    ROS.TopicSubscribe<T>(TopicName, (feedback) =>
+                    CallDeferredThreadGroup(GodotObject.MethodName.Connect, [Node.SignalName.TreeExiting, Callable.From(() => ROS.TopicUnsubscribe(TopicName()))]);
+                    ROS.TopicSubscribe<T>(TopicName(), (feedback) =>
                     {
                         this.feedback = feedback;
                         CallDeferred(nameof(FeedbackHandler));
                     });
-                });
+                }));
             }
 
             internal T feedback;

@@ -15,8 +15,8 @@ namespace UI.Debug.Auto
         [Export]
         Label Corner0, Corner1, Corner2, Corner3;
 
-        public override void FeedbackHandler()
-        {
-        }
+        public override string TopicName() => "";
+
+        public override void FeedbackHandler() { }
     }
 }
