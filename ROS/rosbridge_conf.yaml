@@ -10,3 +10,4 @@
     default_call_service_timeout: 1.0
     send_action_goals_in_new_thread: true
     params_timeout: 5.0
+    port: 28852
