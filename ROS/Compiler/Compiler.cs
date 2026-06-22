@@ -20,7 +20,7 @@ if (Directory.Exists(tmp))
 
 Directory.CreateDirectory(tmp);
 
-(string, string)[] ToCompile = [("astra_msgs", "ASTRAMSGS"), ("control_msgs", "CONTROLMSGS")];
+(string, string)[] ToCompile = [("astra_msgs", "ASTRAMSGS"), ("control_msgs", "CONTROLMSGS"), ("diagnostic_msgs", "DIAGNOSTICMSGS")];
 
 foreach ((string, string) ROSNamespace in ToCompile)
 {
@@ -31,9 +31,12 @@ foreach ((string, string) ROSNamespace in ToCompile)
         continue;
     }
     Directory.SetCurrentDirectory(env);
-    ServiceAutoGen.GenerateDirectoryServices("./srv", tmp, ROSNamespace.Item1, false);
-    MessageAutoGen.GenerateDirectoryMessages("./msg", tmp, ROSNamespace.Item1, false);
-    ActionAutoGen.GenerateDirectoryActions("./action", tmp, ROSNamespace.Item1, false);
+    if (Path.Exists("./srv"))
+        ServiceAutoGen.GenerateDirectoryServices("./srv", tmp, ROSNamespace.Item1, false);
+    if (Path.Exists("./msg"))
+        MessageAutoGen.GenerateDirectoryMessages("./msg", tmp, ROSNamespace.Item1, false);
+    if (Path.Exists("./action"))
+        ActionAutoGen.GenerateDirectoryActions("./action", tmp, ROSNamespace.Item1, false);
 }
 
 if (Directory.Exists(successDir))
