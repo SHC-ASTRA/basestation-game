@@ -46,6 +46,7 @@
                     ros-core
                     control-msgs
                     rosbridge-suite
+                    diagnostic-msgs
                     ament-cmake-core
                     python-cmake-module
                   ];
@@ -64,6 +65,11 @@
             ASTRAMSGS = "${inputs.astra-msgs.outPath}";
 
             CONTROLMSGS = "${rospkgs.rosPackages.${rosDistro}.control-msgs.outPath}/share/control_msgs/";
+            DIAGNOSTICMSGS = "${
+              rospkgs.rosPackages.${rosDistro}.diagnostic-msgs.outPath
+            }/share/diagnostic_msgs/";
+
+            ROSBRIDGE = "${rospkgs.rosPackages.${rosDistro}.rosbridge-suite.outPath}";
 
             ROSCOMPILER = "./ROS/Compiler";
 

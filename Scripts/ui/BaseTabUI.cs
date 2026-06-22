@@ -112,8 +112,13 @@ namespace UI
                 // all advertise at once, which causes ROSBridge to fail
                 ROS.RegsiterOnROSStart(() =>
                 {
-                    while (requestDelay < 5) Thread.Sleep(requestDelay++);
+                    while (requestDelay < 10) Thread.Sleep(requestDelay++);
                     requestDelay = 1;
+                    if (CTS.Token.IsCancellationRequested)
+                    {
+                        CTS?.Dispose();
+                        CTS = new CancellationTokenSource();
+                    }
                     Updater = new(() => Update(CTS.Token), CTS.Token);
                     Updater.Start();
                 });

@@ -55,7 +55,7 @@ namespace UI
         {
             base._Ready();
 
-            Rate = 45;
+            Rate = 200;
 
             LaserFailsafe.Toggled += (t) =>
             {

@@ -232,7 +232,11 @@ namespace IPC
             ROSSocket.Advertise<T>(topicName, qosProfile);
             topicNames.Add(topicName);
         }
-        public static void UnadvertiseTopic(string topicName) => ROSSocket.Unadvertise(topicName);
+        public static void UnadvertiseTopic(string topicName)
+        {
+            if (topicName.Contains(topicName))
+                ROSSocket.Unadvertise(topicName);
+        }
 
         public static void TopicSubscribe<T>(string topicName, SubscriptionHandler<T> Callback) where T : Message
         {

@@ -55,7 +55,7 @@ namespace UI
         {
             base._Ready();
 
-            Rate = 50;
+            Rate = 500;
 
             VacuumCommit.ButtonDown += () =>
             {
