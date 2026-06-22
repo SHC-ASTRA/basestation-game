@@ -6,6 +6,8 @@ Rover Challenge 2025-26.
 ASTRA is a project under the AutoSat branch of Space Hardware Club at the
 University of Alabama in Huntsville.
 
+This program failed to function whatsoever at competition the cycle it was introduced. The reason is still unknown, as no testing has been able to reproduce this phenomenon.
+
 ## If you're on basestation and no one is there to help you
 
 1. Make sure everything is plugged in correctly:
@@ -17,7 +19,7 @@ University of Alabama in Huntsville.
    
     C. A keyboard, mouse, and controller plugged into the left hand side of basestation is optimal.
    
-    D. The deck should be plugged in to the USB-C cable which comes through the mid-left hole
+    D. The deck should be plugged in to the USB-C cable which comes through the mid-right hole
 
 3. Turn on the UGREEN and make sure the output is enabled as well.
 
@@ -39,8 +41,11 @@ If something doesn't work for whatever reason, you can try a few things:
 
 - Close the window and the Godot game engine, restart from #1
 
-- Open the Godot editor, open the ROS folder on the bottom right and run
-  CompileRosMsgs.cs by right clicking on it, then re-run the program.
+- Run the following command in the basestation-game repository:
+   ```bash
+   ./RecompileC#.sh
+   ```
+  Relaunch the godot editor and press F5 once again.
 
 - Ping Roald Schaum in the ASTRA discord
 
